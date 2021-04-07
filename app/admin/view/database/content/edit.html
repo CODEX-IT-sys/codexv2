@@ -10,7 +10,8 @@
         <div class="layui-form-item">
             <label class="layui-form-label">词条内容</label>
             <div class="layui-input-block">
-                <textarea name="content" rows="20" class="layui-textarea editor" 词条内容 placeholder="请输入词条内容">{$row.content|raw|default=''}</textarea>
+                <!--<textarea name="content" rows="20" class="layui-textarea editor" 词条内容 placeholder="请输入词条内容">{$row.content|raw|default=''}</textarea>-->
+                <input type="text" name="content" class="layui-input" lay-verify="required" placeholder="请输入内容" value="{$row.content|raw|default=''}">
             </div>
         </div>
         <div class="hr-line"></div>

@@ -3,12 +3,13 @@
 namespace app\admin\controller;
 
 
+use app\admin\model\setting\DatabaseContent;
 use app\admin\model\SystemAdmin;
 use app\admin\model\SystemQuick;
 use app\common\controller\AdminController;
 use think\App;
 use think\facade\Env;
-
+use think\facade\Cache;
 class Index extends AdminController
 {
 
@@ -36,6 +37,24 @@ class Index extends AdminController
             ->order('sort', 'desc')
             ->limit(8)
             ->select();
+        //单位
+        $dw=DatabaseContent::where('list_id',1)->select();
+        Cache::set('dw',$dw);
+        //币种
+        $bz=DatabaseContent::where('list_id',10)->select();
+        Cache::set('bz',$bz);
+        //服务
+        $fw=DatabaseContent::where('list_id',2)->select();
+        Cache::set('fw',$fw);
+        //语种
+        $yz=DatabaseContent::where('list_id',3)->select();
+        Cache::set('yz',$yz);
+        //文件类型
+        $file_type=DatabaseContent::where('list_id',4)->select();
+        Cache::set('file_type',$file_type);
+        //税率
+        $sl=DatabaseContent::where('list_id',9)->select();
+        Cache::set('sl',$sl);
         $this->assign('quicks', $quicks);
         return $this->fetch();
     }

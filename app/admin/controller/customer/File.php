@@ -2,83 +2,67 @@
 
 namespace app\admin\controller\customer;
 
-use app\admin\model\MainCompany;
-use app\admin\model\customer\Customer;
-use app\admin\model\SystemAdmin;
 use app\common\controller\AdminController;
 use EasyAdmin\annotation\ControllerAnnotation;
 use EasyAdmin\annotation\NodeAnotation;
 use think\App;
 use think\facade\Cache;
-
 /**
- * @ControllerAnnotation(title="customer_contract")
+ * @ControllerAnnotation(title="customer_file")
  */
-class Contract extends AdminController
+class File extends AdminController
 {
 
     use \app\admin\traits\Curd;
-    protected $relationSerach = true;
 
     public function __construct(App $app)
     {
         parent::__construct($app);
-
-        $this->model = new \app\admin\model\customer\CustomerContract();
-        //主体公司
-        $a = MainCompany::field('id,chinese_company_name')->select();
-
-//        客户
-        $b = Customer::field('id,company_name')->select();
-        //销售人员
-        $c = SystemAdmin::wherein('auth_ids', [9])->select();
+        //单位
         $d = Cache::get('dw');
+        //服务
         $g = Cache::get('fw');
+        //语种
         $h = Cache::get('yz');
-        $e = Cache::get('bz');
-
-//        dump($g);die;
-        $this->assign(['a' => $a, 'b' => $b, 'c' => $c, 'd' => $d, 'e' => $e
-            , 'g' => $g, 'h' => '$h', 'g' => $g, 'h' => $h
+        //文件类型
+        $f = Cache::get('file_type');
+        //税率
+        $s = Cache::get('sl');
+        $this->assign([
+           'd'=>$d,'g'=>$g,'h'=>$h,'f'=>$f,'s'=>$s
         ]);
-        $this->assign('getInvoicingRulesList', $this->model->getInvoicingRulesList());
-        $this->assign('getConfidentialityAgreementList', $this->model->getConfidentialityAgreementList());
 
+        $this->model = new \app\admin\model\customer\CustomerFile();
+        
     }
-
 
     /**
      * @NodeAnotation(title="列表")
      */
     public function index()
     {
-        $this->relationSearch = false;
 
         if ($this->request->isAjax()) {
             if (input('selectFields')) {
                 return $this->selectList();
             }
-            list($page, $limit, $where) = $this->writeauth();
+            list($page, $limit, $where) = $this->buildTableParames();
             $count = $this->model
-                ->withJoin(['customerInformation', 'sale', 'company', 'write', 'dw', 'bz', 'fw', 'yz'], 'LEFT')
                 ->where($where)
                 ->count();
             $list = $this->model
-                ->withJoin(['customerInformation', 'sale', 'company', 'write', 'dw', 'bz', 'fw', 'yz'], 'LEFT')
                 ->where($where)
-//                ->wherein('writer_id',$admin['id'])
                 ->page($page, $limit)
                 ->order($this->sort)
                 ->select();
             $data = [
-                'code' => 0,
-                'msg' => '',
+                'code'  => 0,
+                'msg'   => '',
                 'count' => $count,
-                'data' => $list,
+                'data'  => $list,
             ];
             return json($data);
         }
-//        return json($data);
         return $this->fetch();
     }
 
@@ -89,18 +73,14 @@ class Contract extends AdminController
     {
         if ($this->request->isAjax()) {
             $post = $this->request->post();
-//            $post['effective_date']=strtotime($post['effective_date']);
-//            $post['expiration_date']=strtotime($post['expiration_date']);
-            $admin = session('admin');
-            $post['writer_id'] = $admin['id'];
-//            dump($post);die;
             $rule = [];
             $this->validate($post, $rule);
-
             try {
+                $post['vat']=$post['unit_price']*
+
                 $save = $this->model->save($post);
             } catch (\Exception $e) {
-                $this->error('保存失败:' . $e->getMessage());
+                $this->error('保存失败:'.$e->getMessage());
             }
             $save ? $this->success('保存成功') : $this->error('保存失败');
         }
@@ -129,4 +109,5 @@ class Contract extends AdminController
         return $this->fetch();
     }
 
+    
 }

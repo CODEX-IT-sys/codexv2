@@ -3,6 +3,7 @@
 namespace app\admin\model\customer;
 
 use app\admin\model\MainCompany;
+use app\admin\model\setting\DatabaseContent;
 use app\admin\model\SystemAdmin;
 use app\common\model\TimeModel;
 
@@ -18,8 +19,13 @@ class CustomerContract extends TimeModel
     //关联客户
     public function customerInformation()
     {
-        return $this->belongsTo(Customer::class, 'customer_id', 'id');
+        return $this->belongsTo('app\admin\model\customer\Customer', 'customer_id', 'id');
     }
+//
+//    public function cate()
+//{
+//    return $this->belongsTo('app\admin\model\MallCate', 'cate_id', 'id');
+//}
 
 
     public function getInvoicingRulesList()
@@ -35,26 +41,44 @@ class CustomerContract extends TimeModel
     protected $type = [
         'effective_date' => 'timestamp',
         'expiration_date' => 'timestamp',
-
     ];
 
     //关联销售
     public function sale()
     {
-        return $this->belongsTo(SystemAdmin::class, 'sales_id', 'id');
+        return $this->belongsTo('app\admin\model\SystemAdmin', 'sales_id', 'id');
     }
 
     //关联公司
     public function company()
     {
-        return $this->belongsTo(MainCompany::class, 'company_id', 'id');
+        return $this->belongsTo('app\admin\model\MainCompany', 'company_id', 'id');
     }
     //关联录入人
     public function write()
     {
-        return $this->belongsTo(SystemAdmin::class, 'writer_id', 'id');
+        return $this->belongsTo('app\admin\model\SystemAdmin', 'writer_id', 'id');
     }
-
+    //关联单位
+    public function dw()
+    {
+        return $this->belongsTo('app\admin\model\setting\DatabaseContent', 'unit', 'id');
+    }
+    //关联币种
+    public function bz()
+    {
+        return $this->belongsTo('app\admin\model\setting\DatabaseContent', 'currency', 'id');
+    }
+    //关联语种
+    public function yz()
+    {
+        return $this->belongsTo('app\admin\model\setting\DatabaseContent', 'language', 'id');
+    }
+    //关联服务
+    public function fw()
+    {
+        return $this->belongsTo('app\admin\model\setting\DatabaseContent', 'service', 'id');
+    }
     //
     //添加两个字段;
     protected $append = ['remaining', 'status'];

@@ -14,8 +14,10 @@
 namespace app\common\controller;
 
 
+use app\admin\model\customer\Customer;
 use app\BaseController;
 use EasyAdmin\tool\CommonTool;
+use think\App;
 use think\facade\Env;
 use think\Model;
 
@@ -146,7 +148,7 @@ class AdminController extends BaseController
     {
         $get = $this->request->get('', null, null);
         $page = isset($get['page']) && !empty($get['page']) ? $get['page'] : 1;
-        $limit = isset($get['limit']) && !empty($get['limit']) ? $get['limit'] : 15;
+        $limit = isset($get['limit']) && !empty($get['limit']) ? $get['limit'] : 50;
         $filters = isset($get['filter']) && !empty($get['filter']) ? $get['filter'] : '{}';
         $ops = isset($get['op']) && !empty($get['op']) ? $get['op'] : '{}';
         // json转数组
@@ -154,7 +156,6 @@ class AdminController extends BaseController
         $ops = json_decode($ops, true);
         $where = [];
         $excludes = [];
-
         // 判断是否关联查询
         $tableName = CommonTool::humpToLine(lcfirst($this->model->getName()));
 
@@ -191,6 +192,64 @@ class AdminController extends BaseController
         }
         return [$page, $limit, $where, $excludes];
     }
+    //需要只显示自己录入的数据
+    protected function writeauth($excludeFields = [])
+    {
+        $get = $this->request->get('', null, null);
+        $page = isset($get['page']) && !empty($get['page']) ? $get['page'] : 1;
+        $limit = isset($get['limit']) && !empty($get['limit']) ? $get['limit'] : 50;
+        $filters = isset($get['filter']) && !empty($get['filter']) ? $get['filter'] : '{}';
+        $ops = isset($get['op']) && !empty($get['op']) ? $get['op'] : '{}';
+        // json转数组
+        $filters = json_decode($filters, true);
+        $ops = json_decode($ops, true);
+        $where = [];
+        $excludes = [];
+        $admin = session('admin');
+
+        // 判断是否关联查询
+        $tableName = CommonTool::humpToLine(lcfirst($this->model->getName()));
+
+        foreach ($filters as $key => $val) {
+            if (in_array($key, $excludeFields)) {
+                $excludes[$key] = $val;
+                continue;
+            }
+            $op = isset($ops[$key]) && !empty($ops[$key]) ? $ops[$key] : '%*%';
+            if ($this->relationSearch && count(explode('.', $key)) == 1) {
+                $key = "{$tableName}.{$key}";
+            }
+            switch (strtolower($op)) {
+                case '=':
+                    $where[] = [$key, '=', $val];
+                    break;
+                case '%*%':
+                    $where[] = [$key, 'LIKE', "%{$val}%"];
+                    break;
+                case '*%':
+                    $where[] = [$key, 'LIKE', "{$val}%"];
+                    break;
+                case '%*':
+                    $where[] = [$key, 'LIKE', "%{$val}"];
+                    break;
+                case 'range':
+                    [$beginTime, $endTime] = explode(' - ', $val);
+                    $where[] = [$key, '>=', strtotime($beginTime)];
+                    $where[] = [$key, '<=', strtotime($endTime)];
+                    break;
+                default:
+                    $where[] = [$key, $op, "%{$val}"];
+                    if ($admin['id'] != 1) {
+                        $where[] = ['writer_id','=',$admin['id']];
+                    }
+
+            }
+        }
+
+//        dump($where);die;
+        return [$page, $limit, $where, $excludes];
+    }
+
 
     /**
      * 下拉选择列表
@@ -205,5 +264,6 @@ class AdminController extends BaseController
             ->select();
         $this->success(null, $data);
     }
+
 
 }

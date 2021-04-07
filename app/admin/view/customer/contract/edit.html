@@ -48,7 +48,7 @@
             <div class="layui-input-block">
                 <select name="service" lay-verify="required" lay-search>
                     <option value="">请选择服务</option>
-                    {foreach $g as $k1=>$v }
+                    {foreach $g as $k=>$v }
                     <option value="{$v.id}" {if condition="$row.service eq $v.id"} selected = "selected"{/if}>{$v.content}</option>
                     {/foreach}
                 </select>
