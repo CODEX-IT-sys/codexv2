@@ -17,10 +17,13 @@ class CustomerDemand extends TimeModel
         return ['1'=>'yes','2'=>'no','0'=>'N/A',];
     }
 
+
+
+
     //合同关联
     public function contract()
     {
-        return $this->belongsTo('app\admin\model\customer\CustomerContract', 'cid', 'id');
+        return $this->belongsTo('app\admin\model\customer\CustomerContract', 'contract_id', 'id');
     }
     //录入人关联
     public function write()

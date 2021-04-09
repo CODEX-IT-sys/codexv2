@@ -120,8 +120,8 @@ class Index extends AdminController
             }
 
             // 判断是否为演示站点
-            $example = Env::get('easyadmin.example', 0);
-            $example == 1 && $this->error('演示站点不允许修改密码');
+//            $example = Env::get('easyadmin.example', 0);
+//            $example == 1 && $this->error('演示站点不允许修改密码');
 
             try {
                 $save = $row->save([

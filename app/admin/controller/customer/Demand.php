@@ -39,7 +39,7 @@ class Demand extends AdminController
     {
         if ($this->request->isAjax()) {
             $post = $this->request->post();
-
+        dump($post);die;
             $rule = [];
             $this->validate($post, $rule);
             try {

@@ -74,7 +74,7 @@ class AdminController extends BaseController
      * 是否关联查询
      * @var bool
      */
-    protected $relationSearch = false;
+    protected $relationSearch = true;
 
     /**
      * 模板布局, false取消
