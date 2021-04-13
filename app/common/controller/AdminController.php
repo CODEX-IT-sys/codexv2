@@ -74,7 +74,7 @@ class AdminController extends BaseController
      * 是否关联查询
      * @var bool
      */
-    protected $relationSearch = true;
+    protected $relationSearch = false;
 
     /**
      * 模板布局, false取消
@@ -170,24 +170,24 @@ class AdminController extends BaseController
             }
             switch (strtolower($op)) {
                 case '=':
-                    $where[] = [$key, '=', $val];
+                    $where[] = ["$key", '=', "$val"];
                     break;
                 case '%*%':
-                    $where[] = [$key, 'LIKE', "%{$val}%"];
+                    $where[] = ["$key", 'LIKE', "%{$val}%"];
                     break;
                 case '*%':
-                    $where[] = [$key, 'LIKE', "{$val}%"];
+                    $where[] = ["$key", 'LIKE', "{$val}%"];
                     break;
                 case '%*':
-                    $where[] = [$key, 'LIKE', "%{$val}"];
+                    $where[] = ["$key", 'LIKE', "%{$val}"];
                     break;
                 case 'range':
-                    [$beginTime, $endTime] = explode(' - ', $val);
-                    $where[] = [$key, '>=', strtotime($beginTime)];
-                    $where[] = [$key, '<=', strtotime($endTime)];
+                    [$beginTime, $endTime] = explode(' - ', "$val");
+                    $where[] = ["$key", '>=', strtotime($beginTime)];
+                    $where[] = ["$key", '<=', strtotime($endTime)];
                     break;
                 default:
-                    $where[] = [$key, $op, "%{$val}"];
+                    $where[] = ["$key", $op, "%{$val}"];
             }
         }
         return [$page, $limit, $where, $excludes];
@@ -263,6 +263,11 @@ class AdminController extends BaseController
             ->field($fields)
             ->select();
         $this->success(null, $data);
+    }
+
+    public function admininfo()
+    {
+        return session('admin');
     }
 
 

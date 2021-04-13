@@ -18,6 +18,7 @@ define(["jquery", "easy-admin"], function ($, ea) {
                 init: init,
                 skin: 'line  ' //行边框风格
                 ,even: true, //开启隔行背景
+                toolbar: ['refresh','add','delete'],
                 text: {
                     none: '暂无相关数据' //默认：无数据。注：该属性为 layui 2.2.5 开始新增
                 }

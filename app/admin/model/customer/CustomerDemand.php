@@ -17,9 +17,6 @@ class CustomerDemand extends TimeModel
         return ['1'=>'yes','2'=>'no','0'=>'N/A',];
     }
 
-
-
-
     //合同关联
     public function contract()
     {
@@ -44,6 +41,11 @@ class CustomerDemand extends TimeModel
     public function customerInformation()
     {
         return $this->belongsTo('app\admin\model\customer\Customer', 'customer_id', 'id');
+    }
+    //关联单位
+    public function dw()
+    {
+        return $this->belongsTo('app\admin\model\setting\DatabaseContent', 'unit', 'id');
     }
 
 

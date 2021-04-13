@@ -20,6 +20,7 @@ class Index extends AdminController
      */
     public function index()
     {
+        echo lang('hello');
         return $this->fetch('', [
             'admin' => session('admin'),
         ]);
@@ -32,6 +33,7 @@ class Index extends AdminController
      */
     public function welcome()
     {
+        cookie('think_lang','en-us');
         $quicks = SystemQuick::field('id,title,icon,href')
             ->where(['status' => 1])
             ->order('sort', 'desc')

@@ -9,7 +9,7 @@ define(["jquery", "easy-admin"], function ($, ea) {
         delete_url: 'customer.demand/delete',
         export_url: 'customer.demand/export',
         modify_url: 'customer.demand/modify',
-        file_url:'customer.file/index'
+        file_url:'customer.filaa/index'
     };
 
     var Controller = {
@@ -19,6 +19,7 @@ define(["jquery", "easy-admin"], function ($, ea) {
                 init: init,
                 skin: 'line  ' //行边框风格
                 ,even: true, //开启隔行背景
+                toolbar: ['refresh','add','delete'],
                 cols: [[
                     {type: 'checkbox'},
                     {field: 'id', title: 'id'},
@@ -36,7 +37,6 @@ define(["jquery", "easy-admin"], function ($, ea) {
                                 text: '文件信息',
                                 url: init.file_url,
                                 method: 'open',
-                                auth: 'stock',
                                 field:'id',
                                 class: 'layui-btn layui-btn-xs layui-btn-normal',
                                 extend: 'data-full="true"',
