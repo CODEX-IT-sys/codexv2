@@ -10,7 +10,7 @@ use think\App;
 use app\admin\traits\Curd;
 use app\admin\model\SystemAdmin;
 /**
- * @ControllerAnnotation(title="customer_demand")
+ * @ControllerAnnotation(title="customer_demand")来稿需求
  */
 class Demand extends AdminController
 {
@@ -69,13 +69,13 @@ class Demand extends AdminController
             list($page, $limit, $where) = $this->buildTableParames();
 
             $count = $this->model
-                ->withJoin(['write','contract','xm','customerInformation','company'])
+                ->withJoin(['write','contract','xm','customerInformation','company'],'LEFT')
                 ->where($where)
                 ->count();
             $list = $this->model
                 ->where($where)
 //                ->with(['write','contract.customerInformation','contract.company','xm'])
-                ->withJoin(['write','contract','xm','customerInformation','company'])
+                ->withJoin(['write','contract','xm','customerInformation','company'],'LEFT')
                 ->page($page, $limit)
                 ->order($this->sort)
                 ->select();

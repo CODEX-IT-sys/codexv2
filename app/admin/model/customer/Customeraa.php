@@ -3,13 +3,15 @@
 namespace app\admin\model\customer;
 
 use app\common\model\TimeModel;
+use think\model\concern\SoftDelete;
 //文件模型
 class Customeraa extends TimeModel
 {
 
     protected $name = "customer_filaa";
-
-    protected $deleteTime = false;
+    use SoftDelete;
+    protected $deleteTime = 'delete_time';
+//    protected $deleteTime = false;
     protected $type = [
         'customer_submit_date' => 'timestamp',
     ];
@@ -24,7 +26,7 @@ class Customeraa extends TimeModel
         $status = ['1'=>'接受','2'=>'拒绝','0'=>'未确定',];
         return $status;
     }
-    //关联文件
+    //关联来稿需求
     public function demand()
     {
         return $this->belongsTo('app\admin\model\customer\CustomerDemand', 'demand_id', 'id');
@@ -59,6 +61,11 @@ class Customeraa extends TimeModel
     public function dw()
     {
         return $this->belongsTo('app\admin\model\setting\DatabaseContent', 'unit', 'id');
+    }
+    //关联客户信息
+    public function customerInformation()
+    {
+        return $this->belongsTo('app\admin\model\customer\Customer', 'customer_id', 'id');
     }
 
 

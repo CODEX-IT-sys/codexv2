@@ -4,7 +4,7 @@ namespace app\admin\model\customer;
 
 use app\admin\model\SystemAdmin;
 use app\common\model\TimeModel;
-
+//来稿需求
 class CustomerDemand extends TimeModel
 {
 
@@ -46,6 +46,11 @@ class CustomerDemand extends TimeModel
     public function dw()
     {
         return $this->belongsTo('app\admin\model\setting\DatabaseContent', 'unit', 'id');
+    }
+    //关联文件
+    public function  file()
+    {
+        return $this->hasMany('app\admin\model\setting\Customeraa','demand_id','id');
     }
 
 

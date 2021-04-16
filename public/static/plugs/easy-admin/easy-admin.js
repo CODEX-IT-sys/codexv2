@@ -17,7 +17,7 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
         table_elem: '#currentTable',
         table_render_id: 'currentTableRenderId',
         upload_url: 'ajax/upload',
-        upload_exts: 'doc|gif|ico|icon|jpg|mp3|mp4|p12|pem|png|rar',
+        upload_exts: 'doc|gif|ico|icon|jpg|mp3|mp4|p12|pem|png|rar|pdf',
     };
 
     var admin = {

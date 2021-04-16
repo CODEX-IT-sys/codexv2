@@ -1,0 +1,382 @@
+@charset "utf-8";
+/* CSS Document */
+html, body, div, span, applet, object, iframe,h1, h2, h3, h4, h5, h6, p, blockquote, pre,a, abbr, acronym, address, big, cite, code,del, dfn, em, img, ins, kbd, q, s, samp,small, strike, strong, sub, sup, tt,var,b, u, i, center,dl, dt, dd, ol, ul, li,fieldset, form, label, legend,caption, tbody, tfoot, thead,th,article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, rsection, summary,time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font: inherit;
+	vertical-align: baseline;
+}
+::-webkit-scrollbar {
+  width: 5px;
+	height: 5px;
+}
+::-webkit-scrollbar-track {
+  background: rgba(91, 108, 199,.1);
+}
+::-webkit-scrollbar-thumb {
+  background: #a0a2a6;
+}
+::-webkit-scrollbar-thumb:window-inactive {
+  background: #a0a2a6;
+}
+::-webkit-scrollbar-thumb:vertical:hover {
+  background: #a0a2a6;
+}
+
+html {
+	font-size: 62.5%;
+	-webkit-text-size-adjust: 100%;
+}
+body {
+	font-family: "arial","PingFangSC-Regular", "Microsoft Yahei", "Hiragino Sans GB", "Helvetica Neue";
+	font-size: 14px;
+	line-height: 1.6;
+	font-weight:normal;
+	color: #000;
+	background-color: #fff;
+}
+
+em {
+	display: block;
+}
+
+address,caption,cite,code,dfn,em,strong,th,var {
+	font-style: normal;
+}
+
+ul,ol {
+	list-style-type: none;
+}
+
+em,strong,th,address {
+	font-style: normal;
+	font-weight: normal;
+	text-align: left;
+}
+
+h1,h2,h3,h4,h5,h6 {
+	font-weight: normal;
+	font-size: 100%;
+}
+
+img,object,embed {
+	border: 0;
+	vertical-align: top;
+}
+
+hr {
+	display: none;
+}
+
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+	font-size: 100%;
+}
+
+li {
+	list-style-type: none;
+}
+
+strong {
+	font-weight: bold;
+}
+input, textarea, select {
+	outline:none;
+}
+img {
+	height: auto;
+	border: 0px;
+	vertical-align:bottom;
+	-ms-interpolation-mode: bicubic;
+	display: block;
+}
+ul, ol, li, dl {
+	list-style: none;
+}
+i {
+	font-style: normal;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,q:before, q:after {
+	content: '';
+	content: none;
+}
+a {
+	text-decoration: none;
+}
+a,button,input,textarea,dt,dd,.tab,.nav li h3 { 
+	tap-highlight-color:rgba(0,0,0,0);
+	-webkit-tap-highlight-color:rgba(0,0,0,0);
+	-webkit-appearance: none;
+}
+a, a:link {
+	text-decoration: none;
+}
+a:hover {
+	text-decoration:none;
+}
+
+.cl:after {
+	content:"";
+	display:block;
+	height:0;
+	clear:both;
+	visibility:hidden;
+}
+.cl {
+	zoom:1;
+}
+html,body {
+	height: 100%;
+}
+
+/*----start------------------------------------------------------*/
+.tbShow {
+	margin: 0 auto;
+	word-wrap:break-word;
+	height: 100%;
+}
+
+/* 布局纵向 */
+.a4-endwise{
+  width: 794px;
+  height: 1123px;
+}
+/* 布局横向 */
+.a4-broadwise{
+  width: 1123px;
+  height: 794px;
+}
+
+.tbWrap {
+	position: relative;
+	padding: 30px 15px 0;
+	height: calc(100% - 40px);
+}
+.tbWatermark {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%,-50%);
+	width: 90%;
+	max-width: 570px;
+	z-index: -1;
+}
+.tbWatermark img {
+	width: 100%;
+}
+
+.tbHeader {
+	border-bottom: 1px solid #000;
+}
+.tbHeader ul {
+	display: flex;
+}
+.tbHeader li {
+	flex: 0 0 33.33%;
+	display: flex;
+	align-items: center;
+}
+.tbHeader.half li {
+	flex: 1;
+}
+.tbHeader li img {
+	width: auto;
+}
+.tbHeader li:last-child {
+	justify-content: flex-end;
+}
+.header_logo img {
+	height: 50px;
+}
+.header_logoshow img {
+	height: 44px;
+}
+.tbHeader li.header_title {
+	justify-content: center;
+	font-weight: bold;
+	text-align: center;
+}
+.header_title dt {
+	font-size: 16px;
+	color: #000080;
+}
+.header_title dd {
+	font-size: 20px;
+	color: #0000ff;
+}
+.header_title .info_com {
+	font-size: 16px;
+}
+
+.art_title {
+	font-size: 16px;
+	font-weight: bold;
+	color: #000;
+	text-align: center;
+	margin: 5px 0;
+}
+.artitle_far {
+	margin: 30px 0;
+	font-size: 20px;
+}
+
+.artItem ul {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	align-items: center;
+}
+.artItem li {
+	font-size: 15px;
+	flex: 0 0 50%;
+	margin-bottom: 10px;
+}
+.artItem li:nth-child(even) {
+	text-align: right;
+}
+.artItem li b {
+	font-weight: bold;
+	color: #000;
+}
+.artItem li span {
+	color: #333;
+}
+
+.artTable table tr th,.artTable table tr td {
+	border: 1px solid #000;
+	padding: 5px;
+	height: 25px;
+	text-align: center;
+	vertical-align: middle;
+}
+.artTable table tr th {
+	font-size: 14px;
+	font-weight: bold;
+}
+.artTable table tr td {
+	font-size: 14px;
+}
+.artTable table tr td b {
+	font-weight: bold;
+}
+.artTable.textLeft table tr th,
+.artTable.textLeft table tr td {
+	text-align: left;
+}
+.artAttach {
+	color: #000;
+	text-align: right;
+	margin: 20px 0 0;
+}
+.artAttach h5 {
+	font-size: 18px;
+	font-weight: bold;
+	margin-bottom: 5px;
+}
+.artAttach span {
+	font-size: 14px;
+}
+
+.artRemark {
+	margin: 20px 0 0;
+}
+.artRemark h5 {
+	font-weight: bold;
+}
+.tbShow_cn .artRemark h5 {
+	font-weight: inherit;
+}
+.artRemark li dl {
+	display: flex;
+}
+.artRemark li dt {
+	margin-right: 10px;
+}
+
+.artSignature {
+	display: flex;
+	justify-content: flex-end;
+	margin: 10px 0;
+}
+.artSignature span {
+	border-bottom: 1px solid #000;
+	min-width: 150px;
+}
+
+.artTip {
+	margin: 15px 0 0;
+}
+
+.artInfo {
+	margin: 15px 0 0;
+}
+.artInfo li dl {
+	display: flex;
+}
+.artInfo h5 {
+	font-weight: bold;
+}
+
+.artInfo li dt {
+	margin-right: 10px;
+}
+.bank_cn h5 {
+	font-weight: inherit;
+}
+.bank_cn ul {
+	padding-left: 200px;
+}
+
+.artBelongs {
+	text-align: right;
+	margin: 40px 0 0;
+}
+.artBelongs em {
+	text-align: right;
+}
+
+.artThanks {
+	text-align: center;
+	font-size: 16px;
+	font-weight: bold;
+	margin: 20px 0 0;
+}
+
+.tbFooter {
+	border-top: 1px solid #000;
+	padding-top: 5px;
+	margin: 20px 0 0;
+	color: #808080;
+	font-size: 13px;
+	position: absolute;
+	bottom: 10px;
+	left: 0;
+	width: 100%;
+}
+.tbFooter dl {
+	display: flex;
+}
+.tbFooter dt {
+	margin-right: 10px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

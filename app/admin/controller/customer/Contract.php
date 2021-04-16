@@ -11,7 +11,7 @@ use EasyAdmin\annotation\NodeAnotation;
 use think\App;
 use think\facade\Cache;
 
-/**
+/**合同
  * @ControllerAnnotation(title="customer_contract")
  */
 class Contract extends AdminController
@@ -119,6 +119,8 @@ class Contract extends AdminController
             $rule = [];
             $this->validate($post, $rule);
             try {
+                $admin = session('admin');
+                $post['up_id'] = $admin['id'];
                 $save = $row->save($post);
             } catch (\Exception $e) {
                 $this->error('保存失败');

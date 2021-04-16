@@ -9,7 +9,8 @@ define(["jquery", "easy-admin"], function ($, ea) {
         delete_url: 'customer.demand/delete',
         export_url: 'customer.demand/export',
         modify_url: 'customer.demand/modify',
-        file_url:'customer.filaa/index'
+        file_url:'customer.filaa/index',
+            quotation_url:'customer.quotation/index'
     };
 
     var Controller = {
@@ -19,7 +20,14 @@ define(["jquery", "easy-admin"], function ($, ea) {
                 init: init,
                 skin: 'line  ' //行边框风格
                 ,even: true, //开启隔行背景
-                toolbar: ['refresh','add','delete'],
+                toolbar: ['refresh','add','delete',                    [{
+                    text: '报价单',
+                    url: init.quotation_url,
+                    method: 'open',
+                    auth:'delete',
+                    class: 'layui-btn layui-btn-normal layui-btn-sm',
+                    extend: 'data-full="true"',
+                }],],
                 cols: [[
                     {type: 'checkbox'},
                     {field: 'id', title: 'id'},

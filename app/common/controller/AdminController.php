@@ -50,6 +50,7 @@ class AdminController extends BaseController
      * @var array
      */
     protected $allowModifyFields = [
+        'customer_file_name',
         'status',
         'sort',
         'remark',
