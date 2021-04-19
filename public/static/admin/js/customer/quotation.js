@@ -13,7 +13,6 @@ define(["jquery", "easy-admin",], function ($, ea) {
     };
 
     var Controller = {
-
         index: function () {
             ea.table.render({
                 init: init,

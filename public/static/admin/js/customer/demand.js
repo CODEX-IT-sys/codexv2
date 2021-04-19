@@ -10,7 +10,7 @@ define(["jquery", "easy-admin"], function ($, ea) {
         export_url: 'customer.demand/export',
         modify_url: 'customer.demand/modify',
         file_url:'customer.filaa/index',
-            quotation_url:'customer.quotation/index'
+        quotation_url:'customer.quotation/index'
     };
 
     var Controller = {
@@ -46,6 +46,7 @@ define(["jquery", "easy-admin"], function ($, ea) {
                                 url: init.file_url,
                                 method: 'open',
                                 field:'id',
+                                auth:'file',
                                 class: 'layui-btn layui-btn-xs layui-btn-normal',
                                 extend: 'data-full="true"',
                             }],

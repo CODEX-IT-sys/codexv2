@@ -42,11 +42,12 @@ class Demand extends AdminController
             $rule = [];
             $this->validate($post, $rule);
             try {
-                $contract= CustomerContract::field('id,company_id,customer_id')->find($post['cid']);
+                $contract= CustomerContract::field('id,company_id,customer_id')->find($post['contract_id']);
                 $admin= session('admin');
                 $post['writer_id']=$admin['id'];
                 $post['company_id']=$contract['company_id'];
                 $post['customer_id']=$contract['customer_id'];
+//                dump($post);die;
                 $save = $this->model->save($post);
             } catch (\Exception $e) {
                 $this->error('保存失败:'.$e->getMessage());

@@ -19,7 +19,7 @@ class Content extends AdminController
     public function __construct(App $app)
     {
         parent::__construct($app);
-        $a=DatabaseDirectory::field('id,title')->select();
+
         $a=DatabaseDirectory::field('id,title')->select();
         $this->assign([
             'a'=>$a
@@ -28,7 +28,9 @@ class Content extends AdminController
         
     }
 
-
+    /**
+     * @NodeAnotation(title="词库内容")
+     */
     public function index()
     {
 

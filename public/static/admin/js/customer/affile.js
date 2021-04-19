@@ -10,7 +10,6 @@ define(["jquery", "easy-admin"], function ($, ea) {
         export_url: 'customer.filaa/export',
         modify_url: 'customer.filaa/modify',
         quotation_url: 'customer.filaa/quotation',
-        quotation_approve: 'customer.filaa/approve',
     };
 
     var Controller = {
@@ -22,33 +21,6 @@ define(["jquery", "easy-admin"], function ($, ea) {
                 size:'sm', //小尺寸的表格
                 limit:5,
                 totalRow:true,
-                toolbar: ['refresh',
-                    [{
-                        text: '添加',
-                        url: init.add_url+'?id='+demand_id,
-                        method: 'open',
-                        auth: 'add',
-                        class: 'layui-btn layui-btn-normal layui-btn-sm',
-                        icon: 'fa fa-plus ',
-                        extend: 'data-full="true"',
-                    }],
-                    [{
-                        text: '生成报价单',
-                        url: init.quotation_url,
-                        method: 'request',
-                        auth: 'quotation',
-                        checkbox:true,
-                        class: 'layui-btn layui-btn-normal layui-btn-sm',
-                    }],
-                    [{
-                        text: '批量接受',
-                        url: init.quotation_approve,
-                        method: 'request',
-                        auth: 'approve',
-                        checkbox:true,
-                        class: 'layui-btn layui-btn-normal layui-btn-sm',
-                    }],
-                    'delete',],
                 where: {id: demand_id},//如果无需传递额外参数，可不加该参数
                 cols: [[
                     {field: 'customer_file_code', title: '文件编号',fixed:true,width:200},

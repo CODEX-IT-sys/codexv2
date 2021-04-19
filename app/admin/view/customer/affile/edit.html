@@ -8,7 +8,7 @@
             </div>
         </div>-->
 
-
+        {in name="$st['auth_ids']" value="1"}
         <div class="layui-form-item">
             <label class="layui-form-label">文件状态</label>
             <div class="layui-input-block">
@@ -17,6 +17,7 @@
                 {/foreach}
             </div>
         </div>
+        {/in}
         <input type="hidden" name="demand_id" value="{$row.demand_id|default=''}">
         <div class="layui-form-item">
             <label class="layui-form-label required">文件名称</label>

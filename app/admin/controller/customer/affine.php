@@ -6,11 +6,11 @@ use app\common\controller\AdminController;
 use EasyAdmin\annotation\ControllerAnnotation;
 use EasyAdmin\annotation\NodeAnotation;
 use think\App;
-
+use think\facade\Db;
 /**
- * @ControllerAnnotation(title="customer_information")客户
+ * @ControllerAnnotation(title="customer_filaa")
  */
-class Information extends AdminController
+class affine extends AdminController
 {
 
     use \app\admin\traits\Curd;
@@ -19,13 +19,13 @@ class Information extends AdminController
     {
         parent::__construct($app);
 
-        $this->model = new \app\admin\model\customer\Customer();
+        $this->model = new \app\admin\model\CustomerFilaa();
         
     }
 
 
     /**
-     * @NodeAnotation(title="列表")
+     * @NodeAnotation(title="来稿确认列表")
      */
     public function index()
     {
@@ -36,13 +36,20 @@ class Information extends AdminController
             list($page, $limit, $where) = $this->buildTableParames();
             $count = $this->model
                 ->where($where)
+                ->withJoin(['type', 'rate', 'yz', 'dw','customerInformation'], 'LEFT')
                 ->count();
             $list = $this->model
-                ->withJoin(['write'], 'LEFT')
                 ->where($where)
+                ->withJoin(['type', 'rate', 'yz', 'dw','customerInformation'], 'LEFT')
                 ->page($page, $limit)
                 ->order($this->sort)
-                ->select();
+                ->select()->toArray();
+//            foreach ($list as $k => $v) {
+//                foreach ($v['service'] as $k1 => $v1) {
+//                    $v['service'][$k1] = Db::name('database_content')->where('id', $v1)->value('content');
+//                }
+//                $list[$k]['fw'] = implode(",", $v['service']);
+//            }
             $data = [
                 'code' => 0,
                 'msg' => '',
@@ -53,27 +60,4 @@ class Information extends AdminController
         }
         return $this->fetch();
     }
-
-    /**
-     * @NodeAnotation(title="添加")
-     */
-    public function add()
-    {
-        if ($this->request->isAjax()) {
-            $post = $this->request->post();
-            $rule = [];
-            $this->validate($post, $rule);
-            try {
-                $admin = session('admin');
-                $post['writer_id'] = $admin['id'];
-                $save = $this->model->save($post);
-            } catch (\Exception $e) {
-                $this->error('保存失败:'.$e->getMessage());
-            }
-            $save ? $this->success('保存成功') : $this->error('保存失败');
-        }
-        return $this->fetch();
-    }
-
-
 }

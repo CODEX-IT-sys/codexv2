@@ -5,7 +5,7 @@
             <label class="layui-form-label">合同</label>
             <div class="layui-input-block">
                 <!--<input type="text" name="cid" class="layui-input" lay-verify="required" placeholder="请输入合同id" value="">-->
-                <select name="cid" lay-verify="required" lay-search>
+                <select name="contract_id" lay-verify="required" lay-search>
                     <option value="">请选择一个合同</option>
                     {foreach $a as $key=>$v }
                     <option value="{$v.id}">{$v.contract_code}</option>
