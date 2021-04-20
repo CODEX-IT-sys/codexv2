@@ -20,7 +20,23 @@ class affine extends AdminController
 {
 
     use \app\admin\traits\Curd;
-
+    /**
+     * 允许修改的字段
+     * @var array
+     */
+    protected $allowModifyFields = [
+        'customer_file_name',
+        'page',
+        'number_of_words',
+        'unit_price',
+        'quotation_number',
+        'status',
+        'sort',
+        'remark',
+        'is_delete',
+        'is_auth',
+        'title',
+    ];
     public function __construct(App $app)
     {
         parent::__construct($app);

@@ -10,7 +10,7 @@ define(["jquery", "easy-admin"], function ($, ea) {
         export_url: 'customer.information/export',
         modify_url: 'customer.information/modify',
     };
-
+    var soulTable = layui.soulTable;
     var Controller = {
 
         index: function () {
@@ -43,6 +43,10 @@ define(["jquery", "easy-admin"], function ($, ea) {
                     {width: 250, title: '操作', templet: ea.table.tool},
 
                 ]],
+                done: function() {
+                    // 在 done 中开启
+                    soulTable.render(this)
+                }
             });
 
             ea.listen();

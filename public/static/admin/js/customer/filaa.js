@@ -12,7 +12,7 @@ define(["jquery", "easy-admin"], function ($, ea) {
         quotation_url: 'customer.filaa/quotation',
         quotation_approve: 'customer.filaa/approve',
     };
-
+    var soulTable = layui.soulTable;
     var Controller = {
         index: function () {
             ea.table.render({
@@ -80,6 +80,10 @@ define(["jquery", "easy-admin"], function ($, ea) {
                     {width: 250, title: '操作', templet: ea.table.tool},
 
                 ]],
+                done: function() {
+                    // 在 done 中开启
+                    soulTable.render(this)
+                }
             });
 
             ea.listen();

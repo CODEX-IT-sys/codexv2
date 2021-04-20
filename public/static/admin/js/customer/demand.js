@@ -1,5 +1,9 @@
-define(["jquery", "easy-admin"], function ($, ea) {
+define(["jquery", "easy-admin","treetable",], function ($, ea) {
 
+    var soulTable = layui.soulTable;
+    var tableReload = layui.table;
+    console.log(soulTable);
+    console.log(tableReload);
     var init = {
         table_elem: '#currentTable',
         table_render_id: 'currentTableRenderId',
@@ -13,14 +17,15 @@ define(["jquery", "easy-admin"], function ($, ea) {
         quotation_url:'customer.quotation/index'
     };
 
+
     var Controller = {
 
         index: function () {
-            ea.table.render({
+          var aa=  ea.table.render({
                 init: init,
                 skin: 'line  ' //行边框风格
                 ,even: true, //开启隔行背景
-                toolbar: ['refresh','add','delete',                    [{
+                toolbar: ['refresh','add','delete', [{
                     text: '报价单',
                     url: init.quotation_url,
                     method: 'open',
@@ -54,7 +59,23 @@ define(["jquery", "easy-admin"], function ($, ea) {
                     },
 
                 ]],
+                filter: {
+                items:['column','data','condition','editCondition','excel','clearCache'],
+                    cache: true
+                },
+                done: function() {
+                    // 在 done 中开启
+                    soulTable.render(this)
+                }
             });
+            $('#reload').on('click', function() {
+                // 表格重载
+                aa.reload()
+            })
+            $('#clear').on('click', function() {
+                soulTable.clearCache(aa.config.id)
+                layer.msg('已还原！', {icon: 1, time: 1000})
+            })
 
             ea.listen();
         },

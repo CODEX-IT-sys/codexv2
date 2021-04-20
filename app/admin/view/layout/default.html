@@ -11,6 +11,7 @@
     <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
     <link rel="stylesheet" href="__STATIC__/admin/css/public.css?v={$version}" media="all">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/layui-soul-table/docs/soulTable.css" media="all"/>
     <script>
         window.CONFIG = {
             ADMIN: "{$adminModuleName|default='admin'}",
@@ -22,8 +23,10 @@
         };
     </script>
     <script src="__STATIC__/plugs/layui-v2.5.6/layui.all.js?v={$version}" charset="utf-8"></script>
+    <!--<script src="__STATIC__/plugs/layui-soul-table/ext/soulTable.js?v={$version}" charset="utf-8"></script>-->
     <script src="__STATIC__/plugs/require-2.3.6/require.js?v={$version}" charset="utf-8"></script>
     <script src="__STATIC__/config-admin.js?v={$version}" charset="utf-8"></script>
+
 </head>
 <body>
 {__CONTENT__}

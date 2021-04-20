@@ -11,7 +11,7 @@ define(["jquery", "easy-admin",], function ($, ea) {
         modify_url: 'customer.quotation/modify',
         print_url: 'customer.quotation/print_view',
     };
-
+    var soulTable = layui.soulTable;
     var Controller = {
         index: function () {
             ea.table.render({
@@ -40,6 +40,10 @@ define(["jquery", "easy-admin",], function ($, ea) {
                     },
 
                 ]],
+                done: function() {
+                    // 在 done 中开启
+                    soulTable.render(this)
+                }
             });
             /**
              * 查看公告信息

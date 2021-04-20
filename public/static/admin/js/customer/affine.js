@@ -11,7 +11,7 @@ define(["jquery", "easy-admin"], function ($, ea) {
         approve_url: 'customer.affine/approve',
     };
 
-
+    var soulTable = layui.soulTable;
 
 
     var Controller = {
@@ -65,6 +65,10 @@ define(["jquery", "easy-admin"], function ($, ea) {
                     {width: 250, title: '操作', templet: ea.table.tool},
 
                 ]],
+                done: function() {
+                    // 在 done 中开启
+                    soulTable.render(this)
+                }
             });
             ea.listen();
         },
@@ -129,6 +133,10 @@ define(["jquery", "easy-admin"], function ($, ea) {
                     {width: 250, title: '操作', templet: ea.table.tool},
 
                 ]],
+                done: function() {
+                    // 在 done 中开启
+                    soulTable.render(this)
+                }
             });
             ea.listen();
         },
@@ -194,6 +202,10 @@ define(["jquery", "easy-admin"], function ($, ea) {
                     {width: 250, title: '操作', templet: ea.table.tool},
 
                 ]],
+                done: function() {
+                    // 在 done 中开启
+                    soulTable.render(this)
+                }
             });
             ea.listen();
         },
@@ -249,6 +261,10 @@ define(["jquery", "easy-admin"], function ($, ea) {
                     {width: 250, title: '操作', templet: ea.table.tool},
 
                 ]],
+                done: function() {
+                    // 在 done 中开启
+                    soulTable.render(this)
+                }
             });
             ea.listen();
         },
