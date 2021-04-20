@@ -1,13 +1,5 @@
 <div class="layuimini-container">
     <form id="app-form" class="layui-form layuimini-form">
-        <div class="layui-form-item">
-            <label class="layui-form-label">文件状态</label>
-            <div class="layui-input-block">
-                {foreach $filestatus as $k=>$v}
-                <input type="radio" name="file_status" value="{$k}" title="{$v}">
-                {/foreach}
-            </div>
-        </div>
 
         <input type="hidden" name="demand_id" value="{$a}">
         <div class="layui-form-item">

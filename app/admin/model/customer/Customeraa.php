@@ -14,6 +14,7 @@ class Customeraa extends TimeModel
 //    protected $deleteTime = false;
     protected $type = [
         'customer_submit_date' => 'timestamp',
+        'completion_date' => 'timestamp',
     ];
 
     public function getServiceAttr($val)
@@ -23,7 +24,7 @@ class Customeraa extends TimeModel
     public function getFileStatusList()
     {
 
-        $status = ['1'=>'接受','2'=>'拒绝','0'=>'未确定',];
+        $status = ['1'=>'拒绝','2'=>'接受','0'=>'未确定',3=>'已批准'];
         return $status;
     }
     //关联来稿需求

@@ -63,6 +63,7 @@ class Filaa extends AdminController
         ]);
 //        dump($a);die;
         $this->model = new \app\admin\model\customer\Customeraa();
+//        dump($this->model->getFileStatusList());
         $this->assign('filestatus', $this->model->getFileStatusList());
 
     }
@@ -221,7 +222,6 @@ class Filaa extends AdminController
             //客户信息
             $e = Customer::find($c['customer_id']);
             //合同编码 $c['contract_code']
-
             $info = [];
             // 报价单编码
             $info['quotation_code'] = 'Q-' . $e['company_code'] . '-' . date('Ymd') . '-' . ($d + 1);

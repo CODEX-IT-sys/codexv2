@@ -12,9 +12,21 @@
         <div class="layui-form-item">
             <label class="layui-form-label">文件状态</label>
             <div class="layui-input-block">
-                {foreach $filestatus as $k=>$v}
-                <input type="radio" name="file_status" value="{$k}" title="{$v}" {in name="k" value="$row.cooperation_first"}checked=""{/in}>
-                {/foreach}
+                <input type="radio" name="file_status" value="1" title="拒绝"
+                       {if (1==$row.file_status)}
+                       checked='checked'
+                       {/if}
+                >
+                <input type="radio" name="file_status" value="2" title="接受"
+                       {if (2==$row.file_status)}
+                       checked='checked'
+                       {/if}
+                >
+                <input type="radio" name="file_status" value="0" title="未确认"
+                       {if (0==$row.file_status)}
+                       checked='checked'
+                       {/if}
+                >
             </div>
         </div>
         <input type="hidden" name="demand_id" value="{$row.demand_id|default=''}">
