@@ -123,14 +123,14 @@
             <label class="layui-form-label">翻译开始时间</label>
             <div class="layui-input-block">
                 <input type="text" name="tr_start_time" data-date="" data-date-type="datetime" class="layui-input"
-                       placeholder="请选择翻译开始时间" value="">
+                       placeholder="请选择翻译开始时间" value="{$row.tr_start_time|default=''}">
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">翻译交付时间</label>
             <div class="layui-input-block">
                 <input type="text" name="tr_end_time" data-date="" data-date-type="datetime" class="layui-input"
-                       placeholder="请选择翻译交付时间" value="">
+                       placeholder="请选择翻译交付时间" value="{$row.tr_end_time|default=''}">
             </div>
         </div>
         <div class="layui-form-item">
@@ -143,7 +143,7 @@
             <label class="layui-form-label">预排交付时间</label>
             <div class="layui-input-block">
                 <input type="text" name="before_ty_time" data-date="" data-date-type="datetime" class="layui-input"
-                       placeholder="请选择预排交付时间" value="">
+                       placeholder="请选择预排交付时间" value="{$row.before_ty_time|default=''}">
             </div>
         </div>
         <div class="layui-form-item">
@@ -156,7 +156,7 @@
             <label class="layui-form-label">后排交付时间</label>
             <div class="layui-input-block">
                 <input type="text" name="after_ty_time" data-date="" data-date-type="datetime" class="layui-input"
-                       placeholder="请选择后排交付时间" value="">
+                       placeholder="请选择后排交付时间" value="{$row.after_ty_time|default=''}">
             </div>
         </div>
         <div class="layui-form-item">
@@ -169,7 +169,7 @@
             <label class="layui-form-label">校对开始时间</label>
             <div class="layui-input-block">
                 <input type="text" name="pr_start_time" data-date="" data-date-type="datetime" class="layui-input"
-                       placeholder="请选择校对开始时间" value="">
+                       placeholder="请选择校对开始时间" value="{$row.pr_start_time|default=''}">
             </div>
         </div>
 
@@ -177,7 +177,7 @@
             <label class="layui-form-label">校对交付时间</label>
             <div class="layui-input-block">
                 <input type="text" name="pr_end_time" data-date="" data-date-type="datetime" class="layui-input"
-                       placeholder="请选择校对交付时间" value="">
+                       placeholder="请选择校对交付时间" value="{$row.pr_end_time|default=''}">
             </div>
         </div>
         <div class="layui-form-item">
@@ -281,5 +281,19 @@
         },
         data: g
     })
-
+    //服务
+    var fw = '<?php echo  json_encode($fw);?>';
+    var fw = JSON.parse(fw);
+        xmSelect.render({
+        el: '#service',
+        language: 'zn',
+        tips: '请选择服务',
+        name: 'service',
+        filterable: true,
+        toolbar: {
+            show: true,
+            list: ['ALL', 'CLEAR', 'REVERSE']
+        },
+        data: fw
+    })
 </script>

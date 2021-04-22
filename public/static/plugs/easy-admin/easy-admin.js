@@ -1456,5 +1456,7 @@ define(["jquery", "tableSelect", "ckeditor", "soulTable",], function ($, tableSe
             },
         },
     };
+
+
     return admin;
 });

@@ -33,28 +33,59 @@ class Customeraa extends TimeModel
         }
        return  implode(",", $arr);
     }
+
+    //文件分类
+    public function getFileCateAttr($val)
+    {
+        $val= explode(",", $val);
+        $arr=[];
+        foreach ($val as $k1 => $v1) {
+            $arr[] = Db::name('database_content')->where('id', $v1)->value('content');
+        }
+        return  implode(",", $arr);
+    }
+    //翻译人员proofreader_id
+    public function getTranslationIdAttr($val)
+    {
+        $val= explode(",", $val);
+        $arr=[];
+        foreach ($val as $k1 => $v1) {
+            $arr[] = Db::name('system_admin')->where('id', $v1)->value('username');
+        }
+        return  implode(",", $arr);
+    }
+    //校对人员
+    public function getProofreaderIdAttr($val)
+    {
+        $val= explode(",", $val);
+        $arr=[];
+        foreach ($val as $k1 => $v1) {
+            $arr[] = Db::name('system_admin')->where('id', $v1)->value('username');
+        }
+        return  implode(",", $arr);
+    }
     public function getBeforeTyIdAttr($val)
     {
-//        $val= explode(",", $val);
-//        $arr=[];
-//        foreach ($val as $k1 => $v1) {
-//            $arr[] = Db::name('database_content')->where('id', $v1)->value('content');
-//        }
-//        return  implode(",", $arr);
+        $val= explode(",", $val);
+        $arr=[];
+        foreach ($val as $k1 => $v1) {
+            $arr[] = Db::name('system_admin')->where('id', $v1)->value('username');
+        }
+        return  implode(",", $arr);
     }
     public function getAfterTyIdAttr($val)
     {
-//        $val= explode(",", $val);
-//        $arr=[];
-//        foreach ($val as $k1 => $v1) {
-//            $arr[] = Db::name('database_content')->where('id', $v1)->value('content');
-//        }
-//        return  implode(",", $arr);
+        $val= explode(",", $val);
+        $arr=[];
+        foreach ($val as $k1 => $v1) {
+            $arr[] = Db::name('system_admin')->where('id', $v1)->value('username');
+        }
+        return  implode(",", $arr);
     }
     public function getFileStatusList()
     {
 
-        $status = ['1'=>'拒绝','2'=>'接受','0'=>'未确定',3=>'已批准'];
+        $status = ['1'=>'拒绝','2'=>'接受','0'=>'未确定',3=>'已批准',4=>'已交付'];
         return $status;
     }
     //关联来稿需求

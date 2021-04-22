@@ -91,6 +91,10 @@ define(["jquery", "easy-admin"], function ($, ea) {
                     // 在 done 中开启
                     soulTable.render(this)
                 }
+                ,autoColumnWidth: {
+                    init: true
+                },
+
             });
 
             ea.listen();

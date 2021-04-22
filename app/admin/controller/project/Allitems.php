@@ -2,6 +2,7 @@
 
 namespace app\admin\controller\project;
 
+use app\admin\model\customer\Customeraa;
 use app\common\controller\AdminController;
 use EasyAdmin\annotation\ControllerAnnotation;
 use EasyAdmin\annotation\NodeAnotation;
@@ -82,13 +83,6 @@ class Allitems extends AdminController
                 ->page($page, $limit)
                 ->order($this->sort)
                 ->select()->toArray();
-//            dump($list);die;
-//            foreach ($list as $k => $v) {
-//                foreach ($v['service'] as $k1 => $v1) {
-//                    $v['service'][$k1] = Db::name('database_content')->where('id', $v1)->value('content');
-//                }
-//                $list[$k]['fw'] = implode(",", $v['service']);
-//            }
             $data = [
                 'code' => 0,
                 'msg' => '',
@@ -105,6 +99,7 @@ class Allitems extends AdminController
      */
     public function handover()
     {
+
         if ($this->request->isAjax()) {
             if (input('selectFields')) {
                 return $this->selectList();
@@ -113,21 +108,20 @@ class Allitems extends AdminController
             $count = $this->model
                 ->where($where)
                 ->where('file_status', 4)
-                ->withJoin(['type', 'rate', 'yz', 'dw', 'customerInformation', 'xm'], 'LEFT')
+                ->withJoin(['type', 'rate', 'yz', 'dw', 'customerInformation', 'xm',
+                    'assignor', 'tyevel', 'trevel'
+                ], 'LEFT')
                 ->count();
             $list = $this->model
                 ->where($where)
                 ->where('file_status', 4)
-                ->withJoin(['type', 'rate', 'yz', 'dw', 'customerInformation', 'xm'], 'LEFT')
+                ->withJoin(['type', 'rate', 'yz', 'dw', 'customerInformation', 'xm',
+                    'assignor', 'tyevel', 'trevel'
+                ], 'LEFT')
                 ->page($page, $limit)
                 ->order($this->sort)
                 ->select()->toArray();
-            foreach ($list as $k => $v) {
-                foreach ($v['service'] as $k1 => $v1) {
-                    $v['service'][$k1] = Db::name('database_content')->where('id', $v1)->value('content');
-                }
-                $list[$k]['fw'] = implode(",", $v['service']);
-            }
+
             $data = [
                 'code' => 0,
                 'msg' => '',
@@ -152,21 +146,19 @@ class Allitems extends AdminController
             $count = $this->model
                 ->where($where)
                 ->where('file_status', 3)
-                ->withJoin(['type', 'rate', 'yz', 'dw', 'customerInformation', 'xm'], 'LEFT')
+                ->withJoin(['type', 'rate', 'yz', 'dw', 'customerInformation', 'xm',
+                    'assignor', 'tyevel', 'trevel'
+                ], 'LEFT')
                 ->count();
             $list = $this->model
                 ->where($where)
                 ->where('file_status', 3)
-                ->withJoin(['type', 'rate', 'yz', 'dw', 'customerInformation', 'xm'], 'LEFT')
+                ->withJoin(['type', 'rate', 'yz', 'dw', 'customerInformation', 'xm',
+                    'assignor', 'tyevel', 'trevel'
+                ], 'LEFT')
                 ->page($page, $limit)
                 ->order($this->sort)
                 ->select()->toArray();
-            foreach ($list as $k => $v) {
-                foreach ($v['service'] as $k1 => $v1) {
-                    $v['service'][$k1] = Db::name('database_content')->where('id', $v1)->value('content');
-                }
-                $list[$k]['fw'] = implode(",", $v['service']);
-            }
             $data = [
                 'code' => 0,
                 'msg' => '',
@@ -200,7 +192,7 @@ class Allitems extends AdminController
         foreach ($cate as $k => $v) {
             $c[$k]['name'] = $v['content'];
             $c[$k]['value'] = $v['id'];
-            if (in_array($v['id'], $value)) {
+            if (in_array($v['content'], $value)) {
                 $c[$k]['selected'] = true;
             }
         }
@@ -209,7 +201,7 @@ class Allitems extends AdminController
         foreach ($tr as $k => $v1) {
             $d[$k]['name'] = $v1['username'];
             $d[$k]['value'] = $v1['id'];
-            if (in_array($v1['id'], $trvalue)) {
+            if (in_array($v1['username'], $trvalue)) {
                 $d[$k]['selected'] = true;
             }
         }
@@ -218,7 +210,7 @@ class Allitems extends AdminController
         foreach ($yp as $k => $v1) {
             $e[$k]['name'] = $v1['username'];
             $e[$k]['value'] = $v1['id'];
-            if (in_array($v1['id'], $ypvalue)) {
+            if (in_array($v1['username'], $ypvalue)) {
                 $e[$k]['selected'] = true;
             }
         }
@@ -227,7 +219,7 @@ class Allitems extends AdminController
         foreach ($hp as $k => $v1) {
             $f[$k]['name'] = $v1['username'];
             $f[$k]['value'] = $v1['id'];
-            if (in_array($v1['id'], $hpvalue)) {
+            if (in_array($v1['username'], $hpvalue)) {
                 $f[$k]['selected'] = true;
             }
         }
@@ -236,8 +228,19 @@ class Allitems extends AdminController
         foreach ($xd as $k => $v1) {
             $g[$k]['name'] = $v1['username'];
             $g[$k]['value'] = $v1['id'];
-            if (in_array($v1['id'], $xdvalue)) {
+            if (in_array($v1['username'], $xdvalue)) {
                 $g[$k]['selected'] = true;
+            }
+        }
+        //服务
+        $fw = Cache::get('fw');
+        $n = [];
+        $value = explode(',', $row['service']);
+        foreach ($fw as $k => $v) {
+            $n[$k]['name'] = $v['content'];
+            $n[$k]['value'] = $v['id'];
+            if (in_array($v['content'], $value)) {
+                $n[$k]['selected'] = true;
             }
         }
         empty($row) && $this->error('数据不存在');
@@ -246,7 +249,6 @@ class Allitems extends AdminController
             $rule = [];
             $this->validate($post, $rule);
             try {
-                $post['service'] = implode(",", ($post['service']));
                 $save = $row->save($post);
             } catch (\Exception $e) {
                 $this->error('保存失败', $e->getMessage());
@@ -255,9 +257,58 @@ class Allitems extends AdminController
         }
         $this->assign('row', $row);
         $this->assign([
-            'c' => $c, 'd' => $d, 'e' => $e, 'f' => $f, 'g' => $g
+            'c' => $c, 'd' => $d, 'e' => $e, 'f' => $f, 'g' => $g,'fw'=>$n
         ]);
         return $this->fetch();
+    }
+    /**
+     * @NodeAnotation(title="交稿")
+     */
+    public function deliver($id)
+    {
+
+        try {
+            $res=Customeraa::find($id);
+            $res->file_status=4;
+            $res->save();
+        } catch (\Exception $e) {
+            // 这是进行异常捕获
+            $this->error('交稿失败', $e->getMessage());
+        }
+        $this->success('交稿成功') ;
+    }
+
+    /**
+     * @NodeAnotation(title="总经理批准")
+     */
+    public function general()
+    {
+        $post = $this->request->post();
+        try {
+            $admin=$this->admininfo();
+            //分配权限时注意一下,此处暂不写验证是否当前职位
+            Customeraa::wherein('id',$post['id'])->update(['general_approval'=>$admin['username']]);
+        } catch (\Exception $e) {
+            // 这是进行异常捕获
+            $this->error('批准失败', $e->getMessage());
+        }
+        $this->success('批准成功') ;
+    }
+
+    /**
+     * @NodeAnotation(title="项目经理批准")
+     */
+    public function m()
+    {
+        $post = $this->request->post();
+        try {
+            $admin=$this->admininfo();
+            Customeraa::wherein('id',$post['id'])->update(['m_approval'=>$admin['username']]);
+        } catch (\Exception $e) {
+            // 这是进行异常捕获
+            $this->error('批准失败', $e->getMessage());
+        }
+        $this->success('批准成功') ;
     }
 
 

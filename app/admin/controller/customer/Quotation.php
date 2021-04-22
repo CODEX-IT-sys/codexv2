@@ -98,10 +98,7 @@ class Quotation extends AdminController
         $num1 = 0;
         $num2 = 0;
         foreach ($b as $k => $v) {
-            foreach ($v['service'] as $k1 => $v1) {
-                $v['service'][$k1] = Db::name('database_content')->where('id', $v1)->value('content');
-            }
-            $b[$k]['fw'] = implode(",", $v['service']);
+
             $num1 += $v['quotation_price'];//报价金额
             $num2 += $v['vat'];//报价金额
         }
