@@ -63,9 +63,9 @@ class Quotation extends AdminController
     {
         $post = $this->request->post();
         $rule = [
-            'id|ID'    => 'require',
+            'id|ID' => 'require',
             'field|字段' => 'require',
-            'value|值'  => 'require',
+            'value|值' => 'require',
         ];
         $this->validate($post, $rule);
         $row = $this->model->find($post['id']);
@@ -92,23 +92,23 @@ class Quotation extends AdminController
     {
         $id = $this->request->param('id');
         //报价单信息
-        $a = CustomerqQuotation::with(['customerInformation', 'contract.bz','company'])->where('id', $id)->find()->toArray();
+        $a = CustomerqQuotation::with(['customerInformation', 'contract.bz', 'company'])->where('id', $id)->find()->toArray();
 //        dump($a);
         $b = Customeraa::where('id', 'in', json_decode($a['quotation_file']))->with(['type', 'rate', 'yz', 'dw',])->select()->toArray();
-        $num1=0;
-        $num2=0;
+        $num1 = 0;
+        $num2 = 0;
         foreach ($b as $k => $v) {
             foreach ($v['service'] as $k1 => $v1) {
                 $v['service'][$k1] = Db::name('database_content')->where('id', $v1)->value('content');
             }
             $b[$k]['fw'] = implode(",", $v['service']);
-            $num1+=$v['quotation_price'];//报价金额
-            $num2+=$v['vat'];//报价金额
+            $num1 += $v['quotation_price'];//报价金额
+            $num2 += $v['vat'];//报价金额
         }
-        $num3=$num1-$num2;//报价金额
-        $a['num1']=$num1;
-        $a['num2']=$num2;
-        $a['num3']=$num3;
+        $num3 = $num1 - $num2;//报价金额
+        $a['num1'] = $num1;
+        $a['num2'] = $num2;
+        $a['num3'] = $num3;
 
         $this->assign(['a' => $a, 'b' => $b]);
 

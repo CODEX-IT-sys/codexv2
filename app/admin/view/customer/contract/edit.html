@@ -1,14 +1,15 @@
 <div class="layuimini-container">
     <form id="app-form" class="layui-form layuimini-form">
-        
+
         <div class="layui-form-item">
             <label class="layui-form-label">主题公司id </label>
             <div class="layui-input-block">
                 <!--<input type="text" name="company_id" class="layui-input" lay-verify="required" placeholder="请输入主题公司id" value="{$row.company_id|default=''}">-->
                 <select name="company_id" lay-verify="required" lay-search>
-                    <option value="">请选择一个主体公司 </option>
+                    <option value="">请选择一个主体公司</option>
                     {foreach $a as $key=>$v }
-                    <option value="{$v.id}"{if condition="$row.company_id eq $v.id"} selected = "selected"{/if}>{$v.chinese_company_name}</option>
+                    <option value="{$v.id}" {if condition="$row.company_id eq $v.id" } selected="selected" {
+                    /if}>{$v.chinese_company_name}</option>
                     {/foreach}
                 </select>
             </div>
@@ -18,9 +19,10 @@
             <div class="layui-input-block">
 
                 <select name="customer_id" lay-verify="required" lay-search>
-                    <option value="">请选择一个客户公司 </option>
+                    <option value="">请选择一个客户公司</option>
                     {foreach $b as $key=>$v }
-                    <option value="{$v.id}"{if condition="$row.customer_id eq $v.id"} selected = "selected"{/if}>{$v.company_name}</option>
+                    <option value="{$v.id}" {if condition="$row.customer_id eq $v.id" } selected="selected" {
+                    /if}>{$v.company_name}</option>
                     {/foreach}
                 </select>
             </div>
@@ -32,7 +34,8 @@
                 <select name="sales_id" lay-verify="required" lay-search>
                     <option value="">请选择一个销售</option>
                     {foreach $c as $k2=>$v }
-                    <option value="{$v.id}" {if condition="$row.sales_id eq $v.id"} selected = "selected"{/if}>{$v.username}</option>
+                    <option value="{$v.id}" {if condition="$row.sales_id eq $v.id" } selected="selected" {
+                    /if}>{$v.username}</option>
                     {/foreach}
                 </select>
             </div>
@@ -40,7 +43,8 @@
         <div class="layui-form-item">
             <label class="layui-form-label">合同签订人</label>
             <div class="layui-input-block">
-                <input type="text" name="contract_signer" class="layui-input" lay-verify="required" placeholder="请输入合同签订人" value="{$row.contract_signer|default=''}">
+                <input type="text" name="contract_signer" class="layui-input" lay-verify="required"
+                       placeholder="请输入合同签订人" value="{$row.contract_signer|default=''}">
             </div>
         </div>
         <div class="layui-form-item">
@@ -49,7 +53,8 @@
                 <select name="service" lay-verify="required" lay-search>
                     <option value="">请选择服务</option>
                     {foreach $g as $k=>$v }
-                    <option value="{$v.id}" {if condition="$row.service eq $v.id"} selected = "selected"{/if}>{$v.content}</option>
+                    <option value="{$v.id}" {if condition="$row.service eq $v.id" } selected="selected" {
+                    /if}>{$v.content}</option>
                     {/foreach}
                 </select>
             </div>
@@ -61,7 +66,8 @@
                 <select name="language" lay-verify="required" lay-search>
                     <option value="">请选择语种</option>
                     {foreach $h as $k1=>$v }
-                    <option value="{$v.id}" {if condition="$row.language eq $v.id"} selected = "selected"{/if}>{$v.content}</option>
+                    <option value="{$v.id}" {if condition="$row.language eq $v.id" } selected="selected" {
+                    /if}>{$v.content}</option>
                     {/foreach}
                 </select>
             </div>
@@ -74,7 +80,8 @@
                 <select name="currency" lay-verify="required" lay-search>
                     <option value="">请选择币种</option>
                     {foreach $e as $k1=>$v }
-                    <option value="{$v.id}" {if condition="$row.currency eq $v.id"} selected = "selected"{/if}>{$v.content}</option>
+                    <option value="{$v.id}" {if condition="$row.currency eq $v.id" } selected="selected" {
+                    /if}>{$v.content}</option>
                     {/foreach}
                 </select>
             </div>
@@ -82,7 +89,8 @@
         <div class="layui-form-item">
             <label class="layui-form-label">单价</label>
             <div class="layui-input-block">
-                <input type="text" name="unit_price" class="layui-input" lay-verify="required" placeholder="请输入单价" value="{$row.unit_price|default=''}">
+                <input type="text" name="unit_price" class="layui-input" lay-verify="required" placeholder="请输入单价"
+                       value="{$row.unit_price|default=''}">
             </div>
         </div>
         <div class="layui-form-item">
@@ -92,7 +100,8 @@
                 <select name="unit" lay-verify="required" lay-search>
                     <option value="">请选择一个单位</option>
                     {foreach $d as $k1=>$v }
-                    <option value="{$v.id}" {if condition="$row.unit eq $v.id"} selected = "selected"{/if}>{$v.content}</option>
+                    <option value="{$v.id}" {if condition="$row.unit eq $v.id" } selected="selected" {
+                    /if}>{$v.content}</option>
                     {/foreach}
                 </select>
             </div>
@@ -100,26 +109,29 @@
         <div class="layui-form-item">
             <label class="layui-form-label">预计销售额</label>
             <div class="layui-input-block">
-                <input type="text" name="estimated_sales" class="layui-input" lay-verify="required" placeholder="请输入预计销售额" value="{$row.estimated_sales|default=''}">
+                <input type="text" name="estimated_sales" class="layui-input" lay-verify="required"
+                       placeholder="请输入预计销售额" value="{$row.estimated_sales|default=''}">
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">税率</label>
             <div class="layui-input-block">
-                <input type="text" name="tax_rate" class="layui-input" lay-verify="required" placeholder="请输入税率" value="{$row.tax_rate|default=''}">
+                <input type="text" name="tax_rate" class="layui-input" lay-verify="required" placeholder="请输入税率"
+                       value="{$row.tax_rate|default=''}">
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">客户税号</label>
             <div class="layui-input-block">
-                <input type="text" name="customer_tax_number" class="layui-input" lay-verify="required" placeholder="请输入客户税号" value="{$row.customer_tax_number|default=''}">
+                <input type="text" name="customer_tax_number" class="layui-input" lay-verify="required"
+                       placeholder="请输入客户税号" value="{$row.customer_tax_number|default=''}">
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">银行信息</label>
             <div class="layui-input-block">
                 <!--<input type="text" name="bank_information" class="layui-input" lay-verify="required" placeholder="请输入银行信息" value="{$row.bank_information|default=''}">-->
-                <textarea name="bank_information"  placeholder="客户银行信息" class="layui-textarea">
+                <textarea name="bank_information" placeholder="客户银行信息" class="layui-textarea">
                     {$row.bank_information|default=''}
                 </textarea>
             </div>
@@ -128,7 +140,8 @@
             <label class="layui-form-label">开票规则</label>
             <div class="layui-input-block">
                 {foreach $getInvoicingRulesList as $k=>$v}
-                <input type="radio" name="invoicing_rules" value="{$k}" title="{$v}" {in name="k" value="$row.invoicing_rules"}checked=""{/in}>
+                <input type="radio" name="invoicing_rules" value="{$k}" title="{$v}" {in name="k"
+                       value="$row.invoicing_rules" }checked="" {/in}>
                 {/foreach}
             </div>
         </div>
@@ -136,14 +149,16 @@
         <div class="layui-form-item">
             <label class="layui-form-label">结算方式</label>
             <div class="layui-input-block">
-                <input type="text" name="account_period" class="layui-input" lay-verify="required" placeholder="请输入结算方式" value="{$row.account_period|default=''}">
+                <input type="text" name="account_period" class="layui-input" lay-verify="required" placeholder="请输入结算方式"
+                       value="{$row.account_period|default=''}">
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">有无保密协议</label>
             <div class="layui-input-block">
                 {foreach $getConfidentialityAgreementList as $k=>$v}
-                <input type="radio" name="confidentiality_agreement" value="{$k}" title="{$v}" {in name="k" value="$row.confidentiality_agreement"}checked=""{/in}>
+                <input type="radio" name="confidentiality_agreement" value="{$k}" title="{$v}" {in name="k"
+                       value="$row.confidentiality_agreement" }checked="" {/in}>
                 {/foreach}
             </div>
         </div>
@@ -151,32 +166,36 @@
         <div class="layui-form-item">
             <label class="layui-form-label">生效日期</label>
             <div class="layui-input-block">
-                <input type="date" data-date="" data-date-type="date" name="effective_date" class="layui-input" lay-verify="required" placeholder="请输入生效日期" value="{$row.effective_date|default=''}">
+                <input type="date" data-date="" data-date-type="date" name="effective_date" class="layui-input"
+                       lay-verify="required" placeholder="请输入生效日期" value="{$row.effective_date|default=''}">
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">失效日期</label>
             <div class="layui-input-block">
-                <input type="date" data-date="" data-date-type="date" name="expiration_date" class="layui-input" lay-verify="required" placeholder="请输入失效日期" value="{$row.expiration_date|default=''}">
+                <input type="date" data-date="" data-date-type="date" name="expiration_date" class="layui-input"
+                       lay-verify="required" placeholder="请输入失效日期" value="{$row.expiration_date|default=''}">
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">合同收件人</label>
             <div class="layui-input-block">
-                <input type="text" name="recipient" class="layui-input" lay-verify="required" placeholder="请输入合同收件人" value="{$row.recipient|default=''}">
+                <input type="text" name="recipient" class="layui-input" lay-verify="required" placeholder="请输入合同收件人"
+                       value="{$row.recipient|default=''}">
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">合同收件地址</label>
             <div class="layui-input-block">
-                <input type="text" name="recipient_address" class="layui-input" lay-verify="required" placeholder="请输入合同收件地址" value="{$row.recipient_address|default=''}">
+                <input type="text" name="recipient_address" class="layui-input" lay-verify="required"
+                       placeholder="请输入合同收件地址" value="{$row.recipient_address|default=''}">
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">备注</label>
             <div class="layui-input-block">
                 <!--<input type="text" name="remarks" class="layui-input" lay-verify="required" placeholder="请输入备注" value="{$row.remarks|default=''}">-->
-                <textarea name="remarks"  placeholder="备注" class="layui-textarea">
+                <textarea name="remarks" placeholder="备注" class="layui-textarea">
                     {$row.remarks|default=''}
                 </textarea>
             </div>

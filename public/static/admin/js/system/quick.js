@@ -27,7 +27,14 @@ define(["jquery", "easy-admin", "iconPickerFa", "autocomplete"], function ($, ea
                     {field: 'icon', width: 80, title: '图标', templet: ea.table.icon},
                     {field: 'href', minWidth: 120, title: '快捷链接'},
                     {field: 'remark', minWidth: 80, title: '备注信息'},
-                    {field: 'status', title: '状态', width: 85, search: 'select', selectList: {0: '禁用', 1: '启用'}, templet: ea.table.switch},
+                    {
+                        field: 'status',
+                        title: '状态',
+                        width: 85,
+                        search: 'select',
+                        selectList: {0: '禁用', 1: '启用'},
+                        templet: ea.table.switch
+                    },
                     {field: 'create_time', minWidth: 80, title: '创建时间', search: 'range'},
                     {width: 250, title: '操作', templet: ea.table.tool, operat: ['edit', 'delete']}
                 ]],

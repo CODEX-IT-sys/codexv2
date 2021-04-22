@@ -14,6 +14,7 @@ use EasyAdmin\annotation\NodeAnotation;
 use think\App;
 use think\facade\Cache;
 use think\facade\Db;
+use app\admin\model\SystemAdmin;
 
 /**
  * @ControllerAnnotation(title="customer_filaa")文件
@@ -41,6 +42,7 @@ class Filaa extends AdminController
         'is_auth',
         'title',
     ];
+
 //    protected $layout=false;
     public function __construct(App $app)
     {
@@ -49,6 +51,11 @@ class Filaa extends AdminController
         $d = Cache::get('dw');
         //服务
         $g = Cache::get('fw');
+        $n = [];
+        foreach ($g as $k => $v) {
+            $n[$k]['name'] = $v['content'];
+            $n[$k]['value'] = $v['id'];
+        }
         //语种
         $h = Cache::get('yz');
         //文件类型
@@ -56,15 +63,18 @@ class Filaa extends AdminController
         //税率
         $s = Cache::get('sl');
 
+        //项目经理
+        $b = SystemAdmin::wherein('auth_ids', [12])->select();
 
         $admin = $this->admininfo();
         $this->assign([
-            'd' => $d, 'g' => $g, 'h' => $h, 'f' => $f, 's' => $s, 'st' => $admin,
+            'd' => $d, 'g' => $n, 'h' => $h, 'f' => $f, 's' => $s, 'st' => $admin, 'b' => $b
         ]);
+//        $this->assign('filestatus', $this->model->getFileStatusList());
 //        dump($a);die;
         $this->model = new \app\admin\model\customer\Customeraa();
 //        dump($this->model->getFileStatusList());
-        $this->assign('filestatus', $this->model->getFileStatusList());
+
 
     }
 
@@ -81,7 +91,10 @@ class Filaa extends AdminController
             list($page, $limit, $where) = $this->buildTableParames();
             $count = $this->model
                 ->where($where)
-                ->withJoin(['type', 'rate', 'yz', 'dw','customerInformation'], 'LEFT')
+                ->withJoin(['type', 'rate', 'yz', 'dw', 'customerInformation'
+                    ,
+
+                ], 'LEFT')
                 ->when($a, function ($query, $a) {
                     // 满足条件后执行
                     return $query->where('demand_id', $a);
@@ -89,7 +102,7 @@ class Filaa extends AdminController
                 ->count();
             $list = $this->model
                 ->where($where)
-                ->withJoin(['type', 'rate', 'yz', 'dw','customerInformation'], 'LEFT')
+                ->withJoin(['type', 'rate', 'yz', 'dw', 'customerInformation'], 'LEFT')
                 ->when($a, function ($query, $a) {
                     // 满足条件后执行
                     return $query->where('demand_id', $a);
@@ -97,12 +110,7 @@ class Filaa extends AdminController
                 ->page($page, $limit)
                 ->order($this->sort)
                 ->select()->toArray();
-            foreach ($list as $k => $v) {
-                foreach ($v['service'] as $k1 => $v1) {
-                    $v['service'][$k1] = Db::name('database_content')->where('id', $v1)->value('content');
-                }
-                $list[$k]['fw'] = implode(",", $v['service']);
-            }
+
             $data = [
                 'code' => 0,
                 'msg' => '',
@@ -114,8 +122,6 @@ class Filaa extends AdminController
         $this->assign(['demand_id' => $a]);
         return $this->fetch();
     }
-
-
 
 
     /**
@@ -138,8 +144,10 @@ class Filaa extends AdminController
                 $post['quotation_price'] = $post['unit_price'] * $post['quotation_number'] + $post['vat'];
                 //客户id参数为来稿的id
                 $post['customer_id'] = CustomerDemand::where('id', $post['demand_id'])->value('customer_id');
+//                是否首次合作
+                $post['cooperation_first'] = CustomerDemand::where('id', $post['demand_id'])->value('cooperation_first');
                 //文件状态为接受时生成文件编号
-              if( isset($post['file_status'])){
+                if (isset($post['file_status'])) {
                     if ($post['file_status'] == 1) {
 //                    客户公司编码
                         $company_code = Customer::where('id', $post['customer_id'])->value('company_code');
@@ -160,14 +168,23 @@ class Filaa extends AdminController
     }
 
 
-
-
     /**
      * @NodeAnotation(title="编辑")
      */
     public function edit($id)
     {
         $row = $this->model->find($id);
+        //服务
+        $g = Cache::get('fw');
+        $n = [];
+        $value = explode(',', $row['service']);
+        foreach ($g as $k => $v) {
+            $n[$k]['name'] = $v['content'];
+            $n[$k]['value'] = $v['id'];
+            if (in_array($v['content'], $value)) {
+                $n[$k]['selected'] = true;
+            }
+        }
         empty($row) && $this->error('数据不存在');
         if ($this->request->isAjax()) {
             $post = $this->request->post();
@@ -177,7 +194,6 @@ class Filaa extends AdminController
                 //写入更新人
                 $admin = session('admin');
                 $post['up_id'] = $admin['id'];
-                $post['service'] = implode(",", ($post['service']));
                 //增值税报价金额
                 $post['vat'] = $post['unit_price'] * $post['quotation_number'] * $post['tax_rate'] / 100;
                 $post['quotation_price'] = $post['unit_price'] * $post['quotation_number'] + $post['vat'];
@@ -197,6 +213,7 @@ class Filaa extends AdminController
             $save ? $this->success('保存成功') : $this->error('保存失败');
         }
         $this->assign('row', $row);
+        $this->assign('n', $n);
         return $this->fetch();
     }
 
@@ -244,7 +261,7 @@ class Filaa extends AdminController
             //来稿需求文件编号
             $info['demand_id'] = $a['demand_id'];
             //报价单包含的文件编号
-            $info['quotation_file'] = json_encode($post['id']) ;
+            $info['quotation_file'] = json_encode($post['id']);
 //            dump($info);
             //生成报价单
             CustomerqQuotation::create($info);
@@ -266,23 +283,22 @@ class Filaa extends AdminController
     {
         $post = $this->request->post();
         try {
-        //查询其中一个文件
-        $a = Customeraa::where('id', $post['id']['0'])->find();
-        // 客户公司编码
-        $company_code = Customer::where('id', $a['customer_id'])->value('company_code');
-        $admin = session('admin');
+            //查询其中一个文件
+            $a = Customeraa::where('id', $post['id']['0'])->find();
+            // 客户公司编码
+            $company_code = Customer::where('id', $a['customer_id'])->value('company_code');
+            $admin = session('admin');
 
 
-            foreach ($post['id'] as $k=>$v)
-            {
+            foreach ($post['id'] as $k => $v) {
                 //增值税报价金额
-                $res= Customeraa::where('id', $v)->find();
-                $res->vat= $res['unit_price'] * $res['quotation_number'] * $res['tax_rate'] / 100;
-                $res->quotation_price  = $res['unit_price'] * $res['quotation_number'] + $res['vat'];
+                $res = Customeraa::where('id', $v)->find();
+                $res->vat = $res['unit_price'] * $res['quotation_number'] * $res['tax_rate'] / 100;
+                $res->quotation_price = $res['unit_price'] * $res['quotation_number'] + $res['vat'];
                 $res->customer_id = CustomerDemand::where('id', $res['demand_id'])->value('customer_id');
-                $res->file_status  = 1;
-                $res->customer_file_code  =filing_number($company_code).$k;
-                $res->up_id  =$admin['id'];
+                $res->file_status = 1;
+                $res->customer_file_code = filing_number($company_code) . $k;
+                $res->up_id = $admin['id'];
                 $res->save();
             }
 
@@ -291,6 +307,7 @@ class Filaa extends AdminController
         }
         $this->success('批量接受成功');
     }
+
     /**
      * @NodeAnotation(title="属性修改")
      */
@@ -298,9 +315,9 @@ class Filaa extends AdminController
     {
         $post = $this->request->post();
         $rule = [
-            'id|ID'    => 'require',
+            'id|ID' => 'require',
             'field|字段' => 'require',
-            'value|值'  => 'require',
+            'value|值' => 'require',
         ];
         $this->validate($post, $rule);
         $row = $this->model->find($post['id']);

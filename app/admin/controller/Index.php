@@ -57,6 +57,22 @@ class Index extends AdminController
         //税率
         $sl=DatabaseContent::where('list_id',9)->select();
         Cache::set('sl',$sl);
+        //困难度
+        $level=DatabaseContent::where('list_id',11)->select();
+        Cache::set('level',$level);
+        //文件分类
+        $cate=DatabaseContent::where('list_id',6)->select();
+        Cache::set('cate',$cate);
+        //翻译人员
+        $tr=SystemAdmin::wherein('auth_ids', [8])->select();
+        Cache::set('tr',$tr);
+        //预排.后排.校对
+        $yp=SystemAdmin::wherein('auth_ids', [16])->select();
+        $hp=SystemAdmin::wherein('auth_ids', [17])->select();
+        $xd=SystemAdmin::wherein('auth_ids', [18])->select();
+        Cache::set('yp',$yp);
+        Cache::set('hp',$hp);
+        Cache::set('xd',$xd);
         $this->assign('quicks', $quicks);
         return $this->fetch();
     }

@@ -1,6 +1,6 @@
 <div class="layuimini-container">
     <form id="app-form" class="layui-form layuimini-form">
-        
+
         <div class="layui-form-item">
             <label class="layui-form-label">合同id</label>
             <div class="layui-input-block">
@@ -8,29 +8,31 @@
                 <select name="contract_id" lay-verify="required" lay-search>
                     <option value="">请选择一个合同</option>
                     {foreach $a as $key=>$v }
-                    <option value="{$v.id}"  {if condition="$row.cid eq $v.id"} selected = "selected"{/if}>{$v.contract_code}</option>
+                    <option value="{$v.id}" {if condition="$row.cid eq $v.id" } selected="selected" {
+                    /if}>{$v.contract_code}</option>
                     {/foreach}
                 </select>
             </div>
         </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">项目经理</label>
-            <div class="layui-input-block">
-                <!--<input type="text" name="mid" class="layui-input" lay-verify="required" placeholder="请输入项目经理id" value="{$row.mid|default=''}">-->
-                <select name="mid" lay-verify="required" lay-search>
-                    <option value="">请选择项目经理</option>
-                    {foreach $b as $key=>$v }
-                    <option value="{$v.id}"  {if condition="$row.mid eq $v.id"} selected = "selected"{/if}>{$v.username}</option>
-                    {/foreach}
-                </select>
-            </div>
-        </div>
-\
+        <!--        <div class="layui-form-item">
+                    <label class="layui-form-label">项目经理</label>
+                    <div class="layui-input-block">
+                        &lt;!&ndash;<input type="text" name="mid" class="layui-input" lay-verify="required" placeholder="请输入项目经理id" value="{$row.mid|default=''}">&ndash;&gt;
+                        <select name="mid" lay-verify="required" lay-search>
+                            <option value="">请选择项目经理</option>
+                            {foreach $b as $key=>$v }
+                            <option value="{$v.id}"  {if condition="$row.mid eq $v.id"} selected = "selected"{/if}>{$v.username}</option>
+                            {/foreach}
+                        </select>
+                    </div>
+                </div>-->
+        \
         <div class="layui-form-item">
             <label class="layui-form-label">是否首次合作</label>
             <div class="layui-input-block">
                 {foreach $getCooperationFirstList as $k=>$v}
-                <input type="radio" name="cooperation_first" value="{$k}" title="{$v}" {in name="k" value="$row.cooperation_first"}checked=""{/in}>
+                <input type="radio" name="cooperation_first" value="{$k}" title="{$v}" {in name="k"
+                       value="$row.cooperation_first" }checked="" {/in}>
                 {/foreach}
             </div>
         </div>
@@ -38,7 +40,8 @@
         <div class="layui-form-item">
             <label class="layui-form-label">报价金额</label>
             <div class="layui-input-block">
-                <input type="text" name="quotation_amount" class="layui-input" lay-verify="required" placeholder="请输入报价金额" value="{$row.quotation_amount|default=''}">
+                <input type="text" name="quotation_amount" class="layui-input" lay-verify="required"
+                       placeholder="请输入报价金额" value="{$row.quotation_amount|default=''}">
             </div>
         </div>
         <div class="hr-line"></div>

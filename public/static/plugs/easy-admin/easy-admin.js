@@ -1,4 +1,4 @@
-define(["jquery", "tableSelect", "ckeditor", "soulTable"], function ($, tableSelect, undefined,soulTable) {
+define(["jquery", "tableSelect", "ckeditor", "soulTable",], function ($, tableSelect, undefined,soulTable) {
 
     var form = layui.form,
         layer = layui.layer,
@@ -8,7 +8,9 @@ define(["jquery", "tableSelect", "ckeditor", "soulTable"], function ($, tableSel
         element = layui.element,
         laytpl = layui.laytpl,
         tableSelect = layui.tableSelect;
+
     var soulTable = layui.soulTable;
+
     layer.config({
         skin: 'layui-layer-easy'
     });

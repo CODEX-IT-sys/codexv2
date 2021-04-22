@@ -15,7 +15,14 @@ define(["jquery", "easy-admin"], function ($, ea) {
                 toolbar: ['refresh'],
                 cols: [[
                     {field: 'id', width: 80, title: 'ID', search: false},
-                    {field: 'month', title: '日志月份', hide: true, search: 'time', timeType: 'month', searchValue: util.toDateString(new Date(), 'yyyy-MM')},
+                    {
+                        field: 'month',
+                        title: '日志月份',
+                        hide: true,
+                        search: 'time',
+                        timeType: 'month',
+                        searchValue: util.toDateString(new Date(), 'yyyy-MM')
+                    },
                     {field: 'admin.username', minWidth: 80, title: '后台用户', search: false},
                     {field: 'method', minWidth: 80, title: '请求方法'},
                     {field: 'url', minWidth: 80, title: '路由地址'},

@@ -37,6 +37,7 @@ class affine extends AdminController
         'is_auth',
         'title',
     ];
+
     public function __construct(App $app)
     {
         parent::__construct($app);
@@ -56,10 +57,11 @@ class affine extends AdminController
         $this->assign([
             'd' => $d, 'g' => $g, 'h' => $h, 'f' => $f, 's' => $s, 'st' => $admin,
         ]);
-        $this->model = new \app\admin\model\CustomerFilaa();
+        $this->model = new \app\admin\model\customer\Customeraa();
         $this->assign('filestatus', $this->model->getFileStatusList());
 
     }
+
     /**
      * @NodeAnotation(title="来稿需求文件列表")
      */
@@ -80,12 +82,6 @@ class affine extends AdminController
                 ->page($page, $limit)
                 ->order($this->sort)
                 ->select()->toArray();
-            foreach ($list as $k => $v) {
-                foreach ($v['service'] as $k1 => $v1) {
-                    $v['service'][$k1] = Db::name('database_content')->where('id', $v1)->value('content');
-                }
-                $list[$k]['fw'] = implode(",", $v['service']);
-            }
             $data = [
                 'code' => 0,
                 'msg' => '',
@@ -111,29 +107,22 @@ class affine extends AdminController
             $count = $this->model
                 ->when(true, function ($query, $a) {
                     // 满足条件后执行
-                    return $query->wherein('file_status', [1,0]);
+                    return $query->wherein('file_status', [1, 0]);
                 })
                 ->where($where)
                 ->withJoin(['type', 'rate', 'yz', 'dw', 'customerInformation'], 'LEFT')
                 ->count();
             $list = $this->model
                 ->where($where)
-
                 ->withJoin(['type', 'rate', 'yz', 'dw', 'customerInformation'], 'LEFT')
                 ->when(true, function ($query, $a) {
                     // 满足条件后执行
-                    return $query->wherein('file_status', [1,0]);
+                    return $query->wherein('file_status', [1, 0]);
                 })
                 ->page($page, $limit)
                 ->order($this->sort)
                 ->select()->toArray();
 
-            foreach ($list as $k => $v) {
-                foreach ($v['service'] as $k1 => $v1) {
-                    $v['service'][$k1] = Db::name('database_content')->where('id', $v1)->value('content');
-                }
-                $list[$k]['fw'] = implode(",", $v['service']);
-            }
             $data = [
                 'code' => 0,
                 'msg' => '',
@@ -168,12 +157,7 @@ class affine extends AdminController
                 ->page($page, $limit)
                 ->order($this->sort)
                 ->select()->toArray();
-            foreach ($list as $k => $v) {
-                foreach ($v['service'] as $k1 => $v1) {
-                    $v['service'][$k1] = Db::name('database_content')->where('id', $v1)->value('content');
-                }
-                $list[$k]['fw'] = implode(",", $v['service']);
-            }
+
             $data = [
                 'code' => 0,
                 'msg' => '',
@@ -207,12 +191,7 @@ class affine extends AdminController
                 ->page($page, $limit)
                 ->order($this->sort)
                 ->select()->toArray();
-            foreach ($list as $k => $v) {
-                foreach ($v['service'] as $k1 => $v1) {
-                    $v['service'][$k1] = Db::name('database_content')->where('id', $v1)->value('content');
-                }
-                $list[$k]['fw'] = implode(",", $v['service']);
-            }
+
             $data = [
                 'code' => 0,
                 'msg' => '',
@@ -230,7 +209,17 @@ class affine extends AdminController
     public function edit($id)
     {
         $row = $this->model->find($id);
-//        dump($row);
+        //服务
+        $g = Cache::get('fw');
+        $n = [];
+        $value = explode(',', $row['service']);
+        foreach ($g as $k => $v) {
+            $n[$k]['name'] = $v['content'];
+            $n[$k]['value'] = $v['id'];
+            if (in_array($v['content'], $value)) {
+                $n[$k]['selected'] = true;
+            }
+        }
         empty($row) && $this->error('数据不存在');
         if ($this->request->isAjax()) {
             $post = $this->request->post();
@@ -240,7 +229,6 @@ class affine extends AdminController
                 //写入更新人
                 $admin = session('admin');
                 $post['up_id'] = $admin['id'];
-                $post['service'] = implode(",", ($post['service']));
                 //增值税报价金额
                 $post['vat'] = $post['unit_price'] * $post['quotation_number'] * $post['tax_rate'] / 100;
                 $post['quotation_price'] = $post['unit_price'] * $post['quotation_number'] + $post['vat'];
@@ -263,6 +251,7 @@ class affine extends AdminController
             $save ? $this->success('保存成功') : $this->error('保存失败');
         }
         $this->assign('row', $row);
+        $this->assign('n', $n);
         return $this->fetch();
     }
 
@@ -280,11 +269,11 @@ class affine extends AdminController
             foreach ($post['id'] as $k => $v) {
                 //增值税报价金额
                 $res = Customeraa::where('id', $v)->find();
-                if($res['customer_file_code']==''){
+                if ($res['customer_file_code'] == '') {
 //                    客户公司编码
                     $company_code = Customer::where('id', $res['customer_id'])->value('company_code');
                     //生成文件编号
-                    $res->customer_file_code = filing_number($company_code).$k;
+                    $res->customer_file_code = filing_number($company_code) . $k;
                 }
                 $res->confirmor_id = $admin['id'];
                 $res->file_status = 3;

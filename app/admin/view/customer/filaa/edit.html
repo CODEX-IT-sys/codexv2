@@ -1,12 +1,12 @@
 <div class="layuimini-container">
     <form id="app-form" class="layui-form layuimini-form">
-        
-<!--        <div class="layui-form-item">
-            <label class="layui-form-label">来稿需求id</label>
-            <div class="layui-input-block">
-                <input type="text" name="demand_id" class="layui-input" lay-verify="required" placeholder="请输入来稿需求id" value="{$row.demand_id|default=''}">
-            </div>
-        </div>-->
+
+        <!--        <div class="layui-form-item">
+                    <label class="layui-form-label">来稿需求id</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="demand_id" class="layui-input" lay-verify="required" placeholder="请输入来稿需求id" value="{$row.demand_id|default=''}">
+                    </div>
+                </div>-->
 
 
         <div class="layui-form-item">
@@ -33,24 +33,27 @@
         <div class="layui-form-item">
             <label class="layui-form-label required">文件名称</label>
             <div class="layui-input-block layuimini-upload">
-                <input type="text" name="customer_file_name" class="layui-input" lay-verify="required" placeholder="请输入文件名称" value="{$row.customer_file_name|default=''}">
+                <input type="text" name="customer_file_name" class="layui-input" lay-verify="required"
+                       placeholder="请输入文件名称" value="{$row.customer_file_name|default=''}">
                 <!--<input name="file_name" class="layui-input layui-col-xs6" lay-verify="required"  placeholder="请上传文件名称" value="{$row.file_name|default=''}">-->
                 <!--<div class="layuimini-upload-btn">-->
-                    <!--<span><a class="layui-btn" data-upload="file_name" data-upload-number="one" data-upload-exts="*" data-upload-icon="file"><i class="fa fa-upload"></i> 上传</a></span>-->
-                    <!--<span><a class="layui-btn layui-btn-normal" id="select_file_name" data-upload-select="file_name" data-upload-number="one" data-upload-mimetype="*"><i class="fa fa-list"></i> 选择</a></span>-->
+                <!--<span><a class="layui-btn" data-upload="file_name" data-upload-number="one" data-upload-exts="*" data-upload-icon="file"><i class="fa fa-upload"></i> 上传</a></span>-->
+                <!--<span><a class="layui-btn layui-btn-normal" id="select_file_name" data-upload-select="file_name" data-upload-number="one" data-upload-mimetype="*"><i class="fa fa-list"></i> 选择</a></span>-->
                 <!--</div>-->
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">文件页数</label>
             <div class="layui-input-block">
-                <input type="text" name="page" class="layui-input" lay-verify="required" placeholder="请输入文件页数" value="{$row.page|default=''}">
+                <input type="text" name="page" class="layui-input" lay-verify="required" placeholder="请输入文件页数"
+                       value="{$row.page|default=''}">
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">源语数量</label>
             <div class="layui-input-block">
-                <input type="text" name="number_of_words" class="layui-input" lay-verify="required" placeholder="请输入源语数量" value="{$row.number_of_words|default=''}">
+                <input type="text" name="number_of_words" class="layui-input" lay-verify="required"
+                       placeholder="请输入源语数量" value="{$row.number_of_words|default=''}">
             </div>
         </div>
         <div class="layui-form-item">
@@ -59,7 +62,8 @@
                 <select name="customer_file_type" lay-verify="required">
                     <option value="">请选择文件类型</option>
                     {foreach $f as $k1=>$v }
-                    <option value="{$v.id}"  {if condition="$row.customer_file_type eq $v.id"} selected = "selected"{/if}>{$v.content}</option>
+                    <option value="{$v.id}" {if condition="$row.customer_file_type eq $v.id" } selected="selected" {
+                    /if}>{$v.content}</option>
                     {/foreach}
                 </select>
             </div>
@@ -67,9 +71,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label">服务</label>
             <div class="layui-input-block">
-                {foreach $g as $k=>$v }
-                <input type="checkbox" name="service[]" value="{$v.id}" title="{$v.content}"  {if condition="in_array($v['id'],$row.service)"} checked="checked"{/if} >
-                {/foreach}
+                <div id="service"></div>
             </div>
         </div>
 
@@ -79,7 +81,8 @@
                 <select name="language" lay-verify="required">
                     <option value="">请选择语种</option>
                     {foreach $h as $k1=>$v }
-                    <option value="{$v.id}" {if condition="$row.language eq $v.id"} selected = "selected"{/if}>{$v.content}</option>
+                    <option value="{$v.id}" {if condition="$row.language eq $v.id" } selected="selected" {
+                    /if}>{$v.content}</option>
                     {/foreach}
                 </select>
             </div>
@@ -87,7 +90,8 @@
         <div class="layui-form-item">
             <label class="layui-form-label">单价</label>
             <div class="layui-input-block">
-                <input type="text" name="unit_price" class="layui-input" lay-verify="required" placeholder="请输入单价" value="{$row.unit_price|default=''}">
+                <input type="text" name="unit_price" class="layui-input" lay-verify="required" placeholder="请输入单价"
+                       value="{$row.unit_price|default=''}">
             </div>
         </div>
         <div class="layui-form-item">
@@ -96,7 +100,8 @@
                 <select name="unit" lay-verify="required">
                     <option value="">请选择一个单位</option>
                     {foreach $d as $k1=>$v }
-                    <option value="{$v.id}" {if condition="$row.unit eq $v.id"} selected = "selected"{/if}>{$v.content}</option>
+                    <option value="{$v.id}" {if condition="$row.unit eq $v.id" } selected="selected" {
+                    /if}>{$v.content}</option>
                     {/foreach}
                 </select>
             </div>
@@ -104,7 +109,8 @@
         <div class="layui-form-item">
             <label class="layui-form-label">报价数量</label>
             <div class="layui-input-block">
-                <input type="text" name="quotation_number" class="layui-input" lay-verify="required" placeholder="请输入报价数量" value="{$row.quotation_number|default=''}">
+                <input type="text" name="quotation_number" class="layui-input" lay-verify="required"
+                       placeholder="请输入报价数量" value="{$row.quotation_number|default=''}">
             </div>
         </div>
         <div class="layui-form-item">
@@ -113,34 +119,50 @@
                 <select name="tax_rate" lay-verify="required">
                     <option value="">请选择税率</option>
                     {foreach $s as $k=>$v }
-                    <option value="{$v.id}" {if condition="$row.tax_rate eq $v.id"} selected = "selected"{/if}>{$v.content}</option>
+                    <option value="{$v.id}" {if condition="$row.tax_rate eq $v.id" } selected="selected" {
+                    /if}>{$v.content}</option>
                     {/foreach}
                 </select>
             </div>
         </div>
-<!--        <div class="layui-form-item">
-            <label class="layui-form-label">增值税</label>
-            <div class="layui-input-block">
-                <input type="text" name="vat" class="layui-input" lay-verify="required" placeholder="请输入增值税" value="{$row.vat|default=''}">
-            </div>
-        </div>-->
+        <!--        <div class="layui-form-item">
+                    <label class="layui-form-label">增值税</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="vat" class="layui-input" lay-verify="required" placeholder="请输入增值税" value="{$row.vat|default=''}">
+                    </div>
+                </div>-->
+        <!--<div class="layui-form-item">-->
+        <!--<label class="layui-form-label">报价金额</label>-->
+        <!--<div class="layui-input-block">-->
+        <!--<input type="text" name="quotation_price" class="layui-input" lay-verify="required" placeholder="请输入报价金额" value="{$row.quotation_price|default=''}" disabled>-->
+        <!--</div>-->
+        <!--</div>-->
         <div class="layui-form-item">
-            <label class="layui-form-label">报价金额</label>
+            <label class="layui-form-label">项目经理</label>
             <div class="layui-input-block">
-                <input type="text" name="quotation_price" class="layui-input" lay-verify="required" placeholder="请输入报价金额" value="{$row.quotation_price|default=''}" disabled>
+                <!--<input type="text" name="mid" class="layui-input" lay-verify="required" placeholder="请输入项目经理id" value="{$row.mid|default=''}">-->
+                <select name="mid" lay-verify="required" lay-search>
+                    <option value="">请选择项目经理</option>
+                    {foreach $b as $key=>$v }
+                    <option value="{$v.id}" {if condition="$row.mid eq $v.id" } selected="selected" {
+                    /if}>{$v.username}</option>
+                    {/foreach}
+                </select>
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">客户期望提交日期</label>
             <div class="layui-input-block">
-                <input type="text" name="customer_submit_date" data-date="" data-date-type="datetime" autocomplete="off" class="layui-input" lay-verify="required" placeholder="请输入客户期望提交日期" value="{$row.customer_submit_date|default=''}">
+                <input type="text" name="customer_submit_date" data-date="" data-date-type="datetime" autocomplete="off"
+                       class="layui-input" lay-verify="required" placeholder="请输入客户期望提交日期"
+                       value="{$row.customer_submit_date|default=''}">
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">客户要求</label>
             <div class="layui-input-block">
                 <!--<input type="text" name="customer_file_request" class="layui-input" lay-verify="required" placeholder="请输入客户要求" value="{$row.customer_file_request|default=''}">-->
-                <textarea name="customer_file_request"  placeholder="请输入客户要求" class="layui-textarea">{$row.customer_file_request|default=''}</textarea>
+                <textarea name="customer_file_request" placeholder="请输入客户要求" class="layui-textarea">{$row.customer_file_request|default=''}</textarea>
 
 
             </div>
@@ -149,16 +171,14 @@
             <label class="layui-form-label">客户参考文件</label>
             <div class="layui-input-block">
                 <!--<input type="text" name="customer_file_reference" class="layui-input" lay-verify="required" placeholder="请输入客户参考文件" value="{$row.customer_file_reference|default=''}">-->
-                <textarea name="customer_file_reference"  placeholder="请输入客户参考文件" class="layui-textarea"> {$row.customer_file_reference|default=''}</textarea>
-
-
+                <textarea name="customer_file_reference" placeholder="请输入客户参考文件" class="layui-textarea"> {$row.customer_file_reference|default=''}</textarea>
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">客户参考文件备注</label>
             <div class="layui-input-block">
                 <!--<input type="text" name="customer_file_remark" class="layui-input" lay-verify="required" placeholder="请输入客户参考文件备注" value="{$row.customer_file_remark|default=''}">-->
-                <textarea name="customer_file_remark"  placeholder="备注" class="layui-textarea">{$row.customer_file_remark|default=''}</textarea>
+                <textarea name="customer_file_remark" placeholder="备注" class="layui-textarea">{$row.customer_file_remark|default=''}</textarea>
 
 
             </div>
@@ -171,3 +191,21 @@
 
     </form>
 </div>
+
+<script>
+    //服务
+    var n = '<?php echo  json_encode($n);?>';
+    var n = JSON.parse(n);
+    var service = xmSelect.render({
+        el: '#service',
+        language: 'zn',
+        tips: '请选择服务',
+        name: 'service',
+        filterable: true,
+        toolbar: {
+            show: true,
+            list: ['ALL', 'CLEAR', 'REVERSE']
+        },
+        data: n
+    })
+</script>

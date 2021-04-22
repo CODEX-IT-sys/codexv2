@@ -1,0 +1,285 @@
+<div class="layuimini-container">
+    <form id="app-form" class="layui-form layuimini-form">
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">文件分类</label>
+            <div class="layui-input-block">
+                <div id="demo1"></div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">文件页数</label>
+            <div class="layui-input-block">
+                <input type="text" name="page" class="layui-input" lay-verify="required" placeholder="请输入文件页数"
+                       value="{$row.page|default=''}">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">源语数量</label>
+            <div class="layui-input-block">
+                <input type="text" name="number_of_words" class="layui-input" lay-verify="required"
+                       placeholder="请输入源语数量" value="{$row.number_of_words|default=''}">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">文件类型</label>
+            <div class="layui-input-block">
+                <select name="customer_file_type" lay-verify="required">
+                    <option value="">请选择文件类型</option>
+                    {foreach $n as $k1=>$v }
+                    <option value="{$v.id}" {if condition="$row.customer_file_type eq $v.id" } selected="selected" {
+                    /if}>{$v.content}</option>
+                    {/foreach}
+                </select>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">服务</label>
+            <div class="layui-input-block">
+                <div id="service"></div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">语种</label>
+            <div class="layui-input-block">
+                <select name="language" lay-verify="required">
+                    <option value="">请选择语种</option>
+                    {foreach $h as $k1=>$v }
+                    <option value="{$v.id}" {if condition="$row.language eq $v.id" } selected="selected" {
+                    /if}>{$v.content}</option>
+                    {/foreach}
+                </select>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">交付日期</label>
+            <div class="layui-input-block">
+                <input type="text" name="completion_date" data-date="" data-date-type="datetime" autocomplete="off"
+                       class="layui-input" placeholder="请输入交付日期" value="{$row.completion_date|default=''}">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">项目经理</label>
+            <div class="layui-input-block">
+                <!--<input type="text" name="mid" class="layui-input" lay-verify="required" placeholder="请输入项目经理id" value="{$row.mid|default=''}">-->
+                <select name="mid" lay-verify="required" lay-search>
+                    <option value="">请选择项目经理</option>
+                    {foreach $b as $key=>$v }
+                    <option value="{$v.id}" {if condition="$row.mid eq $v.id" } selected="selected" {
+                    /if}>{$v.username}</option>
+                    {/foreach}
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">项目助理</label>
+            <div class="layui-input-block">
+                <!--<input type="text" name="mid" class="layui-input" lay-verify="required" placeholder="请输入项目经理id" value="{$row.mid|default=''}">-->
+                <select name="assignor_id" lay-verify="required" lay-search>
+                    <option value="">请选择项目助理</option>
+                    {foreach $Assignor as $key=>$v }
+                    <option value="{$v.id}" {if condition="$row.assignor_id eq $v.id" } selected="selected" {
+                    /if}>{$v.username}</option>
+                    {/foreach}
+                </select>
+            </div>
+        </div>
+
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">排版难易程度</label>
+            <div class="layui-input-block">
+                <select name="typesetting_evel" lay-verify="required">
+                    <option value="">请选择排版难易程度</option>
+                    {foreach $level as $k1=>$v }
+                    <option value="{$v.id}" {if condition="$row.typesetting_evel eq $v.id" } selected="selected" {
+                    /if}>{$v.content}</option>
+                    {/foreach}
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">翻译难易程度</label>
+            <div class="layui-input-block">
+                <select name="translation_evel" lay-verify="required">
+                    <option value="">请选择翻译难易程度</option>
+                    {foreach $level as $k1=>$v }
+                    <option value="{$v.id}" {if condition="$row.translation_evel eq $v.id" } selected="selected" {
+                    /if}>{$v.content}</option>
+                    {/foreach}
+                </select>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">翻译人员</label>
+            <div class="layui-input-block">
+                <div id="translation_id"></div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">翻译开始时间</label>
+            <div class="layui-input-block">
+                <input type="text" name="tr_start_time" data-date="" data-date-type="datetime" class="layui-input"
+                       placeholder="请选择翻译开始时间" value="">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">翻译交付时间</label>
+            <div class="layui-input-block">
+                <input type="text" name="tr_end_time" data-date="" data-date-type="datetime" class="layui-input"
+                       placeholder="请选择翻译交付时间" value="">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">预排人员</label>
+            <div class="layui-input-block">
+                <div id="before_ty_id"></div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">预排交付时间</label>
+            <div class="layui-input-block">
+                <input type="text" name="before_ty_time" data-date="" data-date-type="datetime" class="layui-input"
+                       placeholder="请选择预排交付时间" value="">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">后排人员</label>
+            <div class="layui-input-block">
+                <div id="after_ty_id"></div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">后排交付时间</label>
+            <div class="layui-input-block">
+                <input type="text" name="after_ty_time" data-date="" data-date-type="datetime" class="layui-input"
+                       placeholder="请选择后排交付时间" value="">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">校对人员</label>
+            <div class="layui-input-block">
+                <div id="proofreader_id"></div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">校对开始时间</label>
+            <div class="layui-input-block">
+                <input type="text" name="pr_start_time" data-date="" data-date-type="datetime" class="layui-input"
+                       placeholder="请选择校对开始时间" value="">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">校对交付时间</label>
+            <div class="layui-input-block">
+                <input type="text" name="pr_end_time" data-date="" data-date-type="datetime" class="layui-input"
+                       placeholder="请选择校对交付时间" value="">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">质量要求</label>
+            <div class="layui-input-block">
+                <!--<input type="text" name="customer_file_remark" class="layui-input" lay-verify="required" placeholder="请输入客户参考文件备注" value="{$row.customer_file_remark|default=''}">-->
+                <textarea name="quality" placeholder="质量要求" class="layui-textarea">{$row.quality|default=''}</textarea>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">备注</label>
+            <div class="layui-input-block">
+                <!--<input type="text" name="customer_file_remark" class="layui-input" lay-verify="required" placeholder="请输入客户参考文件备注" value="{$row.customer_file_remark|default=''}">-->
+                <textarea name="customer_file_remark" placeholder="备注" class="layui-textarea">{$row.customer_file_remark|default=''}</textarea>
+            </div>
+        </div>
+        <div class="hr-line"></div>
+        <div class="layui-form-item text-center">
+            <button type="submit" class="layui-btn layui-btn-normal layui-btn-sm" lay-submit>确认</button>
+            <button type="reset" class="layui-btn layui-btn-primary layui-btn-sm">重置</button>
+        </div>
+
+    </form>
+</div>
+
+
+<script>
+    // 文件分类
+    var c = '<?php echo  json_encode($c);?>';
+    var c = JSON.parse(c);
+    var demo1 = xmSelect.render({
+        el: '#demo1',
+        language: 'zn',
+        tips: '请选择文件分类',
+        name: 'file_cate',
+        filterable: true,
+        toolbar: {
+            show: true,
+            list: ['ALL', 'CLEAR', 'REVERSE']
+        },
+        data: c
+    })
+    //翻译人员
+    var d = '<?php echo  json_encode($d);?>';
+    var d = JSON.parse(d);
+    var translation_id = xmSelect.render({
+        el: '#translation_id',
+        language: 'zn',
+        tips: '请选择文件分类',
+        name: 'translation_id',
+        filterable: true,
+        toolbar: {
+            show: true,
+            list: ['ALL', 'CLEAR', 'REVERSE']
+        },
+        data: d
+    })
+    //预排人员
+    var e = '<?php echo  json_encode($e);?>';
+    var e = JSON.parse(e);
+    var translation_id = xmSelect.render({
+        el: '#before_ty_id',
+        language: 'zn',
+        tips: '请选择预排人员',
+        name: 'before_ty_id',
+        filterable: true,
+        toolbar: {
+            show: true,
+            list: ['ALL', 'CLEAR', 'REVERSE']
+        },
+        data: e
+    })
+    //后排人员
+    var f = '<?php echo  json_encode($f);?>';
+    var f = JSON.parse(f);
+    var after_ty_id = xmSelect.render({
+        el: '#after_ty_id',
+        language: 'zn',
+        tips: '请选择后排人员',
+        name: 'after_ty_id',
+        filterable: true,
+        toolbar: {
+            show: true,
+            list: ['ALL', 'CLEAR', 'REVERSE']
+        },
+        data: f
+    })
+    //校对
+    var g = '<?php echo  json_encode($g);?>';
+    var g = JSON.parse(g);
+    var proofreader_id = xmSelect.render({
+        el: '#proofreader_id',
+        language: 'zn',
+        tips: '请选择校对人员',
+        name: 'proofreader_id',
+        filterable: true,
+        toolbar: {
+            show: true,
+            list: ['ALL', 'CLEAR', 'REVERSE']
+        },
+        data: g
+    })
+
+</script>

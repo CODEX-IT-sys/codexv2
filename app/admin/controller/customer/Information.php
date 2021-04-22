@@ -20,7 +20,7 @@ class Information extends AdminController
         parent::__construct($app);
 
         $this->model = new \app\admin\model\customer\Customer();
-        
+
     }
 
 
@@ -68,7 +68,7 @@ class Information extends AdminController
                 $post['writer_id'] = $admin['id'];
                 $save = $this->model->save($post);
             } catch (\Exception $e) {
-                $this->error('保存失败:'.$e->getMessage());
+                $this->error('保存失败:' . $e->getMessage());
             }
             $save ? $this->success('保存成功') : $this->error('保存失败');
         }

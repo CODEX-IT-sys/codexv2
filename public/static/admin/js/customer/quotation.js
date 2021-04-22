@@ -26,21 +26,22 @@ define(["jquery", "easy-admin",], function ($, ea) {
                     {field: 'tax', title: '税额'},
                     {field: 'quotation_amount', title: '报价金额'},
                     {field: 'create_time', title: '创建时间'},
-                    {width: 250, title: '操作', templet: ea.table.tool,
+                    {
+                        width: 250, title: '操作', templet: ea.table.tool,
                         operat: [
                             [{
                                 text: '打印预览',
                                 url: init.print_url,
                                 method: 'open',
-                                field:'id',
+                                field: 'id',
                                 class: 'layui-btn layui-btn-xs layui-btn-normal',
                                 extend: 'data-full="true"',
                             }],
-                            'delete','edit']
+                            'delete', 'edit']
                     },
 
                 ]],
-                done: function() {
+                done: function () {
                     // 在 done 中开启
                     soulTable.render(this)
                 }
@@ -52,7 +53,6 @@ define(["jquery", "easy-admin",], function ($, ea) {
             ea.listen();
 
 
-
         },
         add: function () {
             ea.listen();
@@ -61,7 +61,6 @@ define(["jquery", "easy-admin",], function ($, ea) {
             ea.listen();
         },
     };
-
 
 
     return Controller;

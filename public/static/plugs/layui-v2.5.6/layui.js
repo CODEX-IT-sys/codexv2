@@ -36,7 +36,7 @@
         code: "modules/code",
         jquery: "modules/jquery",
         mobile: "modules/mobile",
-        soulTable: "modules/soulTable.slim",
+        // soulTable: "modules/soulTable.slim",
         "layui.all": "../layui.all"
     };
     r.prototype.cache = n, r.prototype.define = function (e, t) {

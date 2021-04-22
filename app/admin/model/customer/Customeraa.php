@@ -4,7 +4,8 @@ namespace app\admin\model\customer;
 
 use app\common\model\TimeModel;
 use think\model\concern\SoftDelete;
-//文件模型
+use think\facade\Db;
+//文件模型,多对多太麻烦.直接存字符串
 class Customeraa extends TimeModel
 {
 
@@ -15,11 +16,40 @@ class Customeraa extends TimeModel
     protected $type = [
         'customer_submit_date' => 'timestamp',
         'completion_date' => 'timestamp',
+        'pr_start_time' => 'timestamp',
+        'pr_end_time' => 'timestamp',
+        'tr_start_time' => 'timestamp',
+        'tr_end_time' => 'timestamp',
+        'after_ty_time' => 'timestamp',
+        'before_ty_time' => 'timestamp',
     ];
 
     public function getServiceAttr($val)
     {
-        return explode(",", $val);
+        $val= explode(",", $val);
+        $arr=[];
+        foreach ($val as $k1 => $v1) {
+            $arr[] = Db::name('database_content')->where('id', $v1)->value('content');
+        }
+       return  implode(",", $arr);
+    }
+    public function getBeforeTyIdAttr($val)
+    {
+//        $val= explode(",", $val);
+//        $arr=[];
+//        foreach ($val as $k1 => $v1) {
+//            $arr[] = Db::name('database_content')->where('id', $v1)->value('content');
+//        }
+//        return  implode(",", $arr);
+    }
+    public function getAfterTyIdAttr($val)
+    {
+//        $val= explode(",", $val);
+//        $arr=[];
+//        foreach ($val as $k1 => $v1) {
+//            $arr[] = Db::name('database_content')->where('id', $v1)->value('content');
+//        }
+//        return  implode(",", $arr);
     }
     public function getFileStatusList()
     {
@@ -57,7 +87,6 @@ class Customeraa extends TimeModel
     {
         return $this->belongsTo('app\admin\model\setting\DatabaseContent', 'tax_rate', 'id');
     }
-
     //关联大内
     public function dw()
     {
@@ -68,7 +97,24 @@ class Customeraa extends TimeModel
     {
         return $this->belongsTo('app\admin\model\customer\Customer', 'customer_id', 'id');
     }
-
-
-
+    //项目经理
+    public function xm()
+    {
+        return $this->belongsTo('app\admin\model\SystemAdmin', 'mid', 'id');
+    }
+    //项目助理
+    public function assignor()
+    {
+        return $this->belongsTo('app\admin\model\SystemAdmin', 'assignor_id', 'id');
+    }
+    //排版难易程度
+    public function tyevel()
+    {
+        return $this->belongsTo('app\admin\model\setting\DatabaseContent', 'typesetting_evel', 'id');
+    }
+    //排版难易程度
+    public function trevel()
+    {
+        return $this->belongsTo('app\admin\model\setting\DatabaseContent', 'translation_evel', 'id');
+    }
 }
