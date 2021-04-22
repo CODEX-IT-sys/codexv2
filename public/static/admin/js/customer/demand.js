@@ -50,7 +50,7 @@ define(["jquery", "easy-admin", "treetable",], function ($, ea) {
                     {field: 'quotation_amount', title: '报价金额'},
                     {field: 'create_time', title: '创建时间'},
                     {
-                        width: 250, title: '操作', templet: ea.table.tool,
+                        width: 250, title: '操作', templet: ea.table.tool,fixed:"right",
                         operat: [
                             [{
                                 text: '文件信息',

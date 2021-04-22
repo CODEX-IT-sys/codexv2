@@ -12,15 +12,13 @@ define(["jquery", "easy-admin"], function ($, ea) {
         deliver_url: 'project.allitems/deliver',
         m_url: 'project.allitems/m',
         general_url: 'project.allitems/general',
+        batchedit_url: 'project.allitems/batchedit',
     };
-    console.log(ea.table);
-    console.log(layui.table);
     var soulTable = layui.soulTable;
 
     var Controller = {
-
         index: function () {
-            ea.table.render({
+          var allitemsa=  ea.table.render({
                 init: init,
                 skin: 'line  ' //行边框风格
                 , even: true, //开启隔行背景
@@ -44,6 +42,13 @@ define(["jquery", "easy-admin"], function ($, ea) {
                         class: 'layui-btn layui-btn-normal layui-btn-sm',
                         extend: 'data-full="true"',
                     }],
+                    [{
+                        text: '批量编辑',
+                        url: init.batchedit_url,
+                        method: 'open',
+                        checkbox:'true',
+                        class: 'layui-btn layui-btn-normal layui-btn-sm',
+                    }],
                 ],
                 text: {none: '无数据'},
                 cols: [[
@@ -54,7 +59,7 @@ define(["jquery", "easy-admin"], function ($, ea) {
                     {field: 'customerInformation.company_name', title: '公司名称', edit: true, sort: true},
                     {field: 'type.content', title: '类型', search: 'false',},
                     {field: 'page', title: '页数', edit: true, search: 'false'},
-                    {field: 'number_of_words', title: '源语数量', edit: true, search: 'false'},
+                    {field: 'number_of_words', title: '源语数量', edit: true, search: 'false', filter: true},
                     {field: 'service', title: '服务', search: 'false'},
                     {field: 'yz.content', title: '语种', search: 'false',},
                     {field: 'customer_submit_date', title: '客户期望提交日期', search: 'false'},
@@ -86,11 +91,12 @@ define(["jquery", "easy-admin"], function ($, ea) {
                     {field: 'customer_file_reference', title: '参考文件', 'hide': true, search: 'false'},
                     {field: 'm_approval', title: '项目经理批准', 'hide': true, search: 'false'},
                     {field: 'general_approval', title: '总经理批准', 'hide': true, search: 'false'},
+                    {field: 'confirmor_id.username', title: '录入人(项目)', 'hide': true, search: 'false'},
                     {field: 'customer_file_remark', title: '备注', 'hide': true, search: 'false'},
                     {
-                        width: 250, title: '操作', templet: ea.table.tool, operat: [
+                        width: 250, title: '操作', templet: ea.table.tool,fixed:"right", operat: [
                             [ {
-                                text: '交付',
+                                text: '交稿',
                                 url: init.deliver_url,
                                 method: 'request',
                                 auth: 'deliver',
@@ -107,11 +113,21 @@ define(["jquery", "easy-admin"], function ($, ea) {
                 ,autoColumnWidth: {
                 init: true
                 },
+
                 done: function () {
                     // 在 done 中开启
                     soulTable.render(this)
                 }
+
             });
+            $('#reload').on('click', function () {
+                // 表格重载
+                allitemsa.reload()
+            })
+            $('#clear').on('click', function () {
+                soulTable.clearCache(allitemsa.config.id)
+                layer.msg('已还原！', {icon: 1, time: 1000})
+            })
 
             ea.listen();
         },
@@ -129,9 +145,10 @@ define(["jquery", "easy-admin"], function ($, ea) {
                 deliver_url: 'project.allitems/deliver',
                 m_url: 'project.allitems/m',
                 general_url: 'project.allitems/general',
+                batchedit_url: 'project.allitems/batchedit',
             };
 
-            ea.table.render({
+          var  allitemsb=   ea.table.render({
                 init: init,
                 skin: 'line  ' //行边框风格
                 , even: true, //开启隔行背景
@@ -154,6 +171,13 @@ define(["jquery", "easy-admin"], function ($, ea) {
                         checkbox:'true',
                         class: 'layui-btn layui-btn-normal layui-btn-sm',
                         extend: 'data-full="true"',
+                    }],
+                    [{
+                        text: '批量编辑',
+                        url: init.batchedit_url,
+                        method: 'open',
+                        checkbox:'true',
+                        class: 'layui-btn layui-btn-normal layui-btn-sm',
                     }],
                 ],
 
@@ -179,7 +203,7 @@ define(["jquery", "easy-admin"], function ($, ea) {
                         selectList: {"1": "yes", "2": "no", "0": "N\/A"},
                         title: '是否首次合作'
                     },
-                    {field: 'tyevel.content', title: '排版难易度', search: 'false'},
+                    {field: 'tyevel.content', title: '排版难易度', search: 'false',},
                     {field: 'trevel.content', title: '翻译难易度', search: 'false'},
                     {field: 'file_cate', title: '文件分类', search: 'false'},
                     {field: 'translation_id', title: '翻译', search: 'false'},
@@ -200,7 +224,7 @@ define(["jquery", "easy-admin"], function ($, ea) {
                     {field: 'general_approval', title: '总经理批准', 'hide': true, search: 'false'},
                     {field: 'customer_file_remark', title: '备注', 'hide': true, search: 'false'},
                     {
-                        width: 250, title: '操作', templet: ea.table.tool, operat: [
+                        width: 250, title: '操作', templet: ea.table.tool,fixed:"right", operat: [
                             [ {
                                 text: '交付',
                                 url: init.deliver_url,
@@ -225,6 +249,14 @@ define(["jquery", "easy-admin"], function ($, ea) {
                 }
             });
 
+            $('#reload').on('click', function () {
+                // 表格重载
+                allitemsb.reload()
+            })
+            $('#clear').on('click', function () {
+                soulTable.clearCache(allitemsb.config.id)
+                layer.msg('已还原！', {icon: 1, time: 1000})
+            })
             ea.listen();
         },
         handover: function () {
@@ -240,8 +272,9 @@ define(["jquery", "easy-admin"], function ($, ea) {
                 deliver_url: 'project.allitems/deliver',
                 m_url: 'project.allitems/m',
                 general_url: 'project.allitems/general',
+                batchedit_url: 'project.allitems/batchedit',
             };
-            ea.table.render({
+          var  allitemsc =  ea.table.render({
                 init: init,
                 skin: 'line  ' //行边框风格
                 , even: true, //开启隔行背景
@@ -264,6 +297,13 @@ define(["jquery", "easy-admin"], function ($, ea) {
                         checkbox:'true',
                         class: 'layui-btn layui-btn-normal layui-btn-sm',
                         extend: 'data-full="true"',
+                    }],
+                    [{
+                        text: '批量编辑',
+                        url: init.batchedit_url,
+                        method: 'open',
+                        checkbox:'true',
+                        class: 'layui-btn layui-btn-normal layui-btn-sm',
                     }],
                 ],
                 text: {none: '无数据'},
@@ -309,7 +349,7 @@ define(["jquery", "easy-admin"], function ($, ea) {
                     {field: 'general_approval', title: '总经理批准', 'hide': true, search: 'false'},
                     {field: 'customer_file_remark', title: '备注', 'hide': true, search: 'false'},
                     {
-                        width: 250, title: '操作', templet: ea.table.tool, operat: [
+                        width: 250, title: '操作', templet: ea.table.tool,fixed:"right", operat: [
                             [ {
                                 text: '交付',
                                 url: init.deliver_url,
@@ -333,7 +373,14 @@ define(["jquery", "easy-admin"], function ($, ea) {
                     soulTable.render(this)
                 }
             });
-
+            $('#reload').on('click', function () {
+                // 表格重载
+                allitemsc.reload()
+            })
+            $('#clear').on('click', function () {
+                soulTable.clearCache(allitemsc.config.id)
+                layer.msg('已还原！', {icon: 1, time: 1000})
+            })
             ea.listen();
         },
 
@@ -350,4 +397,6 @@ define(["jquery", "easy-admin"], function ($, ea) {
         },
     };
     return Controller;
+
 });
+

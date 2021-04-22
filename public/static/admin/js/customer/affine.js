@@ -144,7 +144,7 @@ define(["jquery", "easy-admin"], function ($, ea) {
                     {field: 'customer_file_reference', title: '参考文件', 'hide': true, search: 'false'},
                     {field: 'customer_file_remark', title: '参考文件备注', 'hide': true, search: 'false'},
                     {field: 'create_time', title: '创建时间', sort: true, search: 'false'},
-                    {width: 250, title: '操作', templet: ea.table.tool},
+                    {width: 250, title: '操作', templet: ea.table.tool,fixed:"right",},
 
                 ]],
                 done: function () {
@@ -221,7 +221,7 @@ define(["jquery", "easy-admin"], function ($, ea) {
                     {field: 'customer_file_reference', title: '参考文件', 'hide': true, search: 'false'},
                     {field: 'customer_file_remark', title: '参考文件备注', 'hide': true, search: 'false'},
                     {field: 'create_time', title: '创建时间', sort: true, search: 'false'},
-                    {width: 250, title: '操作', templet: ea.table.tool},
+                    {width: 250, title: '操作', templet: ea.table.tool,fixed:"right",},
 
                 ]],
                 done: function () {
@@ -288,7 +288,7 @@ define(["jquery", "easy-admin"], function ($, ea) {
                     {field: 'customer_file_reference', title: '参考文件', 'hide': true, search: 'false'},
                     {field: 'customer_file_remark', title: '参考文件备注', 'hide': true, search: 'false'},
                     {field: 'create_time', title: '创建时间', sort: true, search: 'false'},
-                    {width: 250, title: '操作', templet: ea.table.tool},
+                    {width: 250, title: '操作', templet: ea.table.tool,fixed:"right",},
 
                 ]],
                 done: function () {

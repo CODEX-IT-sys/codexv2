@@ -1,4 +1,4 @@
-define(["jquery", "tableSelect", "ckeditor", "soulTable",], function ($, tableSelect, undefined,soulTable) {
+define(["jquery", "tableSelect", "ckeditor", "soulTable",], function ($, tableSelect, undefined,soulTable,) {
 
     var form = layui.form,
         layer = layui.layer,
@@ -1456,7 +1456,5 @@ define(["jquery", "tableSelect", "ckeditor", "soulTable",], function ($, tableSe
             },
         },
     };
-
-
     return admin;
 });

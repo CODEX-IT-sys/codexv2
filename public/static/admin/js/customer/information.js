@@ -40,7 +40,7 @@ define(["jquery", "easy-admin"], function ($, ea) {
                     {field: 'remarks', title: '备注', hide: true},
                     {field: 'create_time', title: '创建时间'},
                     {field: 'write.username', title: '录入人员'},
-                    {width: 250, title: '操作', templet: ea.table.tool},
+                    {width: 250, title: '操作', templet: ea.table.tool,fixed:"right",},
 
                 ]],
                 done: function () {

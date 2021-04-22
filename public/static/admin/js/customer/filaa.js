@@ -84,7 +84,7 @@ define(["jquery", "easy-admin"], function ($, ea) {
                     {field: 'customer_file_remark', title: '备注', 'hide': true, search: 'false'},
                     {field: 'customer_file_remark', title: '销售', 'hide': true, search: 'false'},
                     {field: 'create_time', title: '创建时间', sort: true},
-                    {width: 250, title: '操作', templet: ea.table.tool},
+                    {width: 250, title: '操作', templet: ea.table.tool,fixed:"right",},
 
                 ]],
                 done: function () {
