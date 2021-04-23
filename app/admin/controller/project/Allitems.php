@@ -18,7 +18,23 @@ class Allitems extends AdminController
 {
 
     use \app\admin\traits\Curd;
-
+    /**
+     * 允许修改的字段
+     * @var array
+     */
+    protected $allowModifyFields = [
+        'customer_file_name',
+        'page',
+        'number_of_words',
+        'unit_price',
+        'quotation_number',
+        'status',
+        'sort',
+        'remark',
+        'is_delete',
+        'is_auth',
+        'title',
+    ];
     public function __construct(App $app)
     {
         parent::__construct($app);
@@ -179,9 +195,10 @@ class Allitems extends AdminController
         $cate = Cache::get('cate');
         //翻译人员
         $tr = Cache::get('tr');
+        $xd = Cache::get('xd');
         $yp = Cache::get('yp');
         $hp = Cache::get('hp');
-        $xd = Cache::get('xd');
+
         $row = $this->model->find($id);
         $value = explode(',', $row['file_cate']);
         $trvalue = explode(',', $row['translation_id']);
@@ -249,6 +266,8 @@ class Allitems extends AdminController
             $rule = [];
             $this->validate($post, $rule);
             try {
+                $admin=$this->admininfo();
+                $post['confirmor_id']=$admin['id'];
                 $save = $row->save($post);
             } catch (\Exception $e) {
                 $this->error('保存失败', $e->getMessage());
@@ -309,6 +328,91 @@ class Allitems extends AdminController
             $this->error('批准失败', $e->getMessage());
         }
         $this->success('批准成功') ;
+    }
+
+    /**
+     * @NodeAnotation(title="批量编辑")
+     */
+    public function batchedit()
+    {
+
+        //文件分类
+        $cate = Cache::get('cate');
+        //翻译人员
+        $tr = Cache::get('tr');
+        $yp = Cache::get('yp');
+        $hp = Cache::get('hp');
+        $xd = Cache::get('xd');
+
+        $c = array();
+        foreach ($cate as $k => $v) {
+            $c[$k]['name'] = $v['content'];
+            $c[$k]['value'] = $v['id'];
+        }
+        //翻译
+        $d = array();
+        foreach ($tr as $k => $v1) {
+            $d[$k]['name'] = $v1['username'];
+            $d[$k]['value'] = $v1['id'];
+        }
+        //预排
+        $e = array();
+        foreach ($yp as $k => $v1) {
+            $e[$k]['name'] = $v1['username'];
+            $e[$k]['value'] = $v1['id'];
+
+        }
+        //后排
+        $f = array();
+        foreach ($hp as $k => $v1) {
+            $f[$k]['name'] = $v1['username'];
+            $f[$k]['value'] = $v1['id'];
+
+        }
+        //  校对
+        $g = array();
+        foreach ($xd as $k => $v1) {
+            $g[$k]['name'] = $v1['username'];
+            $g[$k]['value'] = $v1['id'];
+
+        }
+        //服务
+        $fw = Cache::get('fw');
+        $n = [];
+        foreach ($fw as $k => $v) {
+            $n[$k]['name'] = $v['content'];
+            $n[$k]['value'] = $v['id'];
+
+        }
+
+        $post = $this->request->param();
+        $this->assign([
+            'c' => $c, 'd' => $d, 'e' => $e, 'f' => $f, 'g' => $g,'fw'=>$n,'data'=>$post['id']
+        ]);
+        return $this->fetch();
+    }
+
+    /**
+     * @NodeAnotation(title="批量更新")
+     */
+    public function update()
+    {
+        $post1 = $this->request->post();
+        $val= explode(",", $post1['editdata']);
+        unset($post1['editdata']);
+        try {
+            $admin=$this->admininfo();
+            $post1['confirmor_id']=$admin['id'];
+                foreach ($val as $k=>$v)
+                {
+                    $row = $this->model->find($v);
+                    $save = $row->save($post1);
+                }
+        } catch (\Exception $e) {
+            $this->error('更新失败', $e->getMessage());
+        }
+
+        echo "<script>window.parent.location.reload()</script>";
     }
 
 

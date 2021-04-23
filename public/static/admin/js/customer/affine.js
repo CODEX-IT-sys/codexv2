@@ -18,7 +18,7 @@ define(["jquery", "easy-admin"], function ($, ea) {
         // 、、全部
         index: function () {
             ea.table.render({
-                init: init,
+                init: init, overflow: 'tips',
                 skin: 'line  ' //行边框风格
                 , even: true, //开启隔行背景
                 size: 'sm', //小尺寸的表格
@@ -75,7 +75,7 @@ define(["jquery", "easy-admin"], function ($, ea) {
                     // 在 done 中开启
                     soulTable.render(this)
                 }
-                ,autoColumnWidth: {
+                , autoColumnWidth: {
                     init: true
                 },
             });
@@ -94,7 +94,7 @@ define(["jquery", "easy-admin"], function ($, ea) {
                 approve_url: 'customer.affine/approve',
             };
             ea.table.render({
-                init: init,
+                init: init, overflow: 'tips',
                 skin: 'line  ' //行边框风格
                 , even: true, //开启隔行背景
                 size: 'sm', //小尺寸的表格
@@ -144,14 +144,14 @@ define(["jquery", "easy-admin"], function ($, ea) {
                     {field: 'customer_file_reference', title: '参考文件', 'hide': true, search: 'false'},
                     {field: 'customer_file_remark', title: '参考文件备注', 'hide': true, search: 'false'},
                     {field: 'create_time', title: '创建时间', sort: true, search: 'false'},
-                    {width: 250, title: '操作', templet: ea.table.tool,fixed:"right",},
+                    {width: 250, title: '操作', templet: ea.table.tool, fixed: "right",},
 
                 ]],
                 done: function () {
                     // 在 done 中开启
                     soulTable.render(this)
                 }
-                ,autoColumnWidth: {
+                , autoColumnWidth: {
                     init: true
                 },
             });
@@ -171,7 +171,7 @@ define(["jquery", "easy-admin"], function ($, ea) {
                 approve_url: 'customer.affine/approve',
             };
             ea.table.render({
-                init: init,
+                init: init, overflow: 'tips',
                 skin: 'line  ' //行边框风格
                 , even: true, //开启隔行背景
                 size: 'sm', //小尺寸的表格
@@ -221,14 +221,14 @@ define(["jquery", "easy-admin"], function ($, ea) {
                     {field: 'customer_file_reference', title: '参考文件', 'hide': true, search: 'false'},
                     {field: 'customer_file_remark', title: '参考文件备注', 'hide': true, search: 'false'},
                     {field: 'create_time', title: '创建时间', sort: true, search: 'false'},
-                    {width: 250, title: '操作', templet: ea.table.tool,fixed:"right",},
+                    {width: 250, title: '操作', templet: ea.table.tool, fixed: "right",},
 
                 ]],
                 done: function () {
                     // 在 done 中开启
                     soulTable.render(this)
                 }
-                ,autoColumnWidth: {
+                , autoColumnWidth: {
                     init: true
                 },
             });
@@ -247,7 +247,7 @@ define(["jquery", "easy-admin"], function ($, ea) {
                 approve_url: 'customer.affine/approve',
             };
             ea.table.render({
-                init: init,
+                init: init, overflow: 'tips',
                 skin: 'line  ' //行边框风格
                 , even: true, //开启隔行背景
                 size: 'sm', //小尺寸的表格
@@ -288,14 +288,14 @@ define(["jquery", "easy-admin"], function ($, ea) {
                     {field: 'customer_file_reference', title: '参考文件', 'hide': true, search: 'false'},
                     {field: 'customer_file_remark', title: '参考文件备注', 'hide': true, search: 'false'},
                     {field: 'create_time', title: '创建时间', sort: true, search: 'false'},
-                    {width: 250, title: '操作', templet: ea.table.tool,fixed:"right",},
+                    {width: 250, title: '操作', templet: ea.table.tool, fixed: "right",},
 
                 ]],
                 done: function () {
                     // 在 done 中开启
                     soulTable.render(this)
                 }
-                ,autoColumnWidth: {
+                , autoColumnWidth: {
                     init: true
                 },
             });

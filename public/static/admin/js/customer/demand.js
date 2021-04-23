@@ -22,7 +22,7 @@ define(["jquery", "easy-admin", "treetable",], function ($, ea) {
 
         index: function () {
             var aa = ea.table.render({
-                init: init,
+                init: init, overflow: 'tips',
                 skin: 'line  ' //行边框风格
                 , even: true, //开启隔行背景
                 toolbar: ['refresh', 'add', 'delete', [{
@@ -50,7 +50,7 @@ define(["jquery", "easy-admin", "treetable",], function ($, ea) {
                     {field: 'quotation_amount', title: '报价金额'},
                     {field: 'create_time', title: '创建时间'},
                     {
-                        width: 250, title: '操作', templet: ea.table.tool,fixed:"right",
+                        width: 250, title: '操作', templet: ea.table.tool, fixed: "right",
                         operat: [
                             [{
                                 text: '文件信息',

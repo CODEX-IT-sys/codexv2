@@ -15,7 +15,7 @@ define(["jquery", "easy-admin"], function ($, ea) {
 
         index: function () {
             ea.table.render({
-                init: init,
+                init: init, overflow: 'tips',
                 skin: 'line  ' //行边框风格
                 , even: true, //开启隔行背景
                 toolbar: ['refresh', 'add', 'delete'],
@@ -40,7 +40,7 @@ define(["jquery", "easy-admin"], function ($, ea) {
                     {field: 'remarks', title: '备注', hide: true},
                     {field: 'create_time', title: '创建时间'},
                     {field: 'write.username', title: '录入人员'},
-                    {width: 250, title: '操作', templet: ea.table.tool,fixed:"right",},
+                    {width: 250, title: '操作', templet: ea.table.tool, fixed: "right",},
 
                 ]],
                 done: function () {

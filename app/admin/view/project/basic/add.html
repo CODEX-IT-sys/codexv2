@@ -1,0 +1,92 @@
+<div class="layuimini-container">
+    <form id="app-form" class="layui-form layuimini-form">
+        
+        <div class="layui-form-item">
+            <label class="layui-form-label">项目名称</label>
+            <div class="layui-input-block">
+                <input type="text" name="project_name" class="layui-input" lay-verify="required" placeholder="请输入项目名称" value="">
+            </div>
+        </div>
+        <!--<div class="layui-form-item">-->
+            <!--<label class="layui-form-label">写入人</label>-->
+            <!--<div class="layui-input-block">-->
+                <!--<input type="text" name="write_id" class="layui-input" lay-verify="required" placeholder="请输入写入人" value="0">-->
+            <!--</div>-->
+        <!--</div>-->
+        <div class="layui-form-item">
+            <label class="layui-form-label">项目负责人</label>
+            <div class="layui-input-block">
+                <!--<input type="text" name="principal_id" class="layui-input" lay-verify="required" placeholder="请输入项目负责人" value="0">-->
+                <div id="principal_id"></div>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">项目客户要求</label>
+            <div class="layui-input-block">
+                <textarea name="project_requirements" placeholder="请输入项目客户要求" class="layui-textarea"></textarea>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">项目客户参考文件</label>
+            <div class="layui-input-block">
+                <textarea name="project_reference_file" placeholder="请输入项目客户参考文件" class="layui-textarea"></textarea>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">内部参考文件</label>
+            <div class="layui-input-block">
+                <textarea name="project_reference_file_internal" placeholder="请输入内部参考文件" class="layui-textarea"></textarea>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">参考记忆库</label>
+            <div class="layui-input-block">
+                <textarea name="project_memory_reference" placeholder="请输入参考记忆库" class="layui-textarea"></textarea>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">更新记忆库</label>
+            <div class="layui-input-block">
+                <textarea name="project_memory_update" placeholder="请输入更新记忆库" class="layui-textarea"></textarea>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">参考术语库</label>
+            <div class="layui-input-block">
+                <textarea name="terminology" placeholder="请输入参考术语库" class="layui-textarea"></textarea>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">备注</label>
+            <div class="layui-input-block">
+                <textarea name="project_remark" placeholder="请输入备注" class="layui-textarea"></textarea>
+            </div>
+        </div>
+        <div class="hr-line"></div>
+        <div class="layui-form-item text-center">
+            <button type="submit" class="layui-btn layui-btn-normal layui-btn-sm" lay-submit>确认</button>
+            <button type="reset" class="layui-btn layui-btn-primary layui-btn-sm">重置</button>
+        </div>
+
+    </form>
+</div>
+
+<script>
+    //服务
+    var fz = '<?php echo  json_encode($fz);?>';
+    var fz = JSON.parse(fz);
+    xmSelect.render({
+        el: '#principal_id',
+        language: 'zn',
+        tips: '请选择项目负责人',
+        name: 'principal_id',
+        filterable: true,
+        toolbar: {
+            show: true,
+            list: ['ALL', 'CLEAR', 'REVERSE']
+        },
+        data: fz
+    })
+</script>
