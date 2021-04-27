@@ -1,0 +1,18 @@
+<div class="layuimini-container">
+    <div class="layuimini-main">
+        <table id="currentTable" class="layui-table layui-hide"
+               data-auth-add="{:auth('project.schedule/add')}"
+               data-auth-edit="{:auth('project.schedule/edit')}"
+               data-auth-delete="{:auth('project.schedule/delete')}"
+               lay-filter="currentTable">
+        </table>
+    </div>
+</div>
+
+<script>
+    //来稿需求id
+    var description_id = "<?php echo $description_id?>";
+
+
+    // console.log(typeof (auth));
+</script>

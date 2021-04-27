@@ -1,0 +1,156 @@
+<div class="layuimini-container">
+    <form id="app-form" class="layui-form layuimini-form">
+
+        <input type="hidden" name="description_id" value="{$description_id}">
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">是否延迟提交</label>
+            <div class="layui-input-block">
+                {foreach $getLateSubmissionList as $k=>$v}
+                <input type="radio" name="late_submission" value="{$k}" title="{$v}" {in name="k" value="0" }checked=""
+                       {/in}>
+                {/foreach}
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">完成页码</label>
+            <div class="layui-input-block">
+                <input autocomplete="off" type="text" name="completion_page" class="layui-input" lay-verify="required"
+                       placeholder="请输入完成页码" value="0">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">自检</label>
+            <div class="layui-input-block">
+                {foreach $getSelfInspectionStatusList as $k=>$v}
+                <input type="radio" name="self_Inspection_status" value="{$k}" title="{$v}" {in name="k" value="0"
+                       }checked="" {/in}>
+                {/foreach}
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">开始时间</label>
+            <div class="layui-input-block">
+                <input type="text" autocomplete="off" data-date="" name="start_time" class="layui-input" lay-verify="required" placeholder="请输入开始时间"
+                       value="">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">结束时间</label>
+            <div class="layui-input-block">
+                <input type="text" autocomplete="off" data-date="" name="end_time" class="layui-input" lay-verify="required" placeholder="请输入结束时间"
+                       value="">
+            </div>
+        </div>
+        <!--<div class="layui-form-item">-->
+            <!--<label class="layui-form-label">实际用时</label>-->
+            <!--<div class="layui-input-block">-->
+                <!--<input type="text" autocomplete="off" name="actual_time" class="layui-input" readonly="readonly" lay-verify="required" placeholder="请输入实际用时"-->
+                       <!--value="0.00">-->
+            <!--</div>-->
+        <!--</div>-->
+        <div class="layui-form-item">
+            <label class="layui-form-label">完成度</label>
+            <div class="layui-input-block">
+                <input type="text" autocomplete="off" name="degree_completion" class="layui-input" lay-verify="required"
+                       placeholder="请输入完成度" value="">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">工作日期</label>
+            <div class="layui-input-block">
+                <input type="text" autocomplete="off" name="work_date"  data-date="" data-date-type="date" class="layui-input" lay-verify="required" placeholder="请输入工作日期"
+                       value="">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">工作内容</label>
+            <div class="layui-input-block">
+                <input type="text" autocomplete="off" name="work_content" class="layui-input" placeholder="请输入工作内容" value="">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">会否更新主库</label>
+            <div class="layui-input-block">
+                {foreach $getUpdateMainLibraryList as $k=>$v}
+                <input type="radio" name="update_main_library" value="{$k}" title="{$v}" {in name="k" value="0"
+                       }checked="" {/in}>
+                {/foreach}
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">术语提交</label>
+            <div class="layui-input-block">
+                {foreach $getTerminologySubmitList as $k=>$v}
+                <input type="radio" name="terminology_submit" value="{$k}" title="{$v}" {in name="k" value="0"
+                       }checked="" {/in}>
+                {/foreach}
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">是否转至定稿</label>
+            <div class="layui-input-block">
+                {foreach $getFinalizedSubmitList as $k=>$v}
+                <input type="radio" name="finalized_submit" value="{$k}" title="{$v}" {in name="k" value="0" }checked=""
+                       {/in}>
+                {/foreach}
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">原总字数</label>
+            <div class="layui-input-block">
+                <input type="text" name="original_word_count" class="layui-input" lay-verify="required"
+                       placeholder="请输入原总字数" value="0">
+            </div>
+        </div>
+        <!--<div class="layui-form-item">-->
+            <!--<label class="layui-form-label">中文字数统计</label>-->
+            <!--<div class="layui-input-block">-->
+                <!--<input type="text" name="chinese_word_count" class="layui-input" lay-verify="required"-->
+                       <!--placeholder="请输入中文字数统计" value="">-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div class="layui-form-item">-->
+            <!--<label class="layui-form-label">效率</label>-->
+            <!--<div class="layui-input-block">-->
+                <!--<input type="text" name="efficiency" class="layui-input" lay-verify="required" placeholder="工作效率"-->
+                       <!--value="0.00">-->
+            <!--</div>-->
+        <!--</div>-->
+        <div class="layui-form-item">
+            <label class="layui-form-label">备注</label>
+            <div class="layui-input-block">
+                <textarea name="scedule_remark" placeholder="请输入备注" class="layui-textarea"></textarea>
+            </div>
+        </div>
+        <div class="hr-line"></div>
+        <div class="layui-form-item text-center">
+            <button type="submit" class="layui-btn layui-btn-normal layui-btn-sm" lay-submit>确认</button>
+            <button type="reset" class="layui-btn layui-btn-primary layui-btn-sm">重置</button>
+        </div>
+    </form>
+</div>
+<script src="__STATIC__/js/jquery-3.3.1.min.js?v={$version}" charset="utf-8"></script>
+<script src="https://www.layuicdn.com/layer/layer.js" charset="utf-8"></script>
+<script>
+    $("input[name='end_time']").blur(function () {
+        // var starttime=$("input[name='start_time']").val();
+        // var endtime=$("input[name='end_time']").val();
+        // var starttime = new Date(starttime);
+        // var endtime = new Date(endtime);
+        // var starttime =  Date.parse(starttime)/1000;
+        // var endtime = Date.parse(endtime)/1000;
+        // console.log(endtime);
+        // console.log(starttime);
+        // var actual_time = (((endtime - starttime)/3600)).toFixed(2);
+        // console.log(actual_time);
+        // $("input[name='actual_time']").val(actual_time);
+    });
+
+
+</script>

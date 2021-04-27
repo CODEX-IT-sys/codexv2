@@ -10,7 +10,8 @@ use think\App;
 use think\facade\Db;
 use think\facade\Cache;
 use app\admin\model\SystemAdmin;
-
+use app\admin\model\project\Basic;
+use app\admin\model\project\Description;
 /**
  * @ControllerAnnotation(title="项目汇总")
  */
@@ -87,14 +88,14 @@ class Allitems extends AdminController
                 ->where($where)
                 ->where('file_status', 3)
                 ->withJoin(['type', 'rate', 'yz', 'dw', 'customerInformation', 'xm',
-                    'assignor', 'tyevel', 'trevel'
+                    'assignor', 'tyevel', 'trevel','assistant'
                 ], 'LEFT')
                 ->count();
             $list = $this->model
                 ->where($where)
                 ->where('file_status', 3)
                 ->withJoin(['type', 'rate', 'yz', 'dw', 'customerInformation', 'xm',
-                    'assignor', 'tyevel', 'trevel'
+                    'assignor', 'tyevel', 'trevel','assistant'
                 ], 'LEFT')
                 ->page($page, $limit)
                 ->order($this->sort)
@@ -125,14 +126,14 @@ class Allitems extends AdminController
                 ->where($where)
                 ->where('file_status', 4)
                 ->withJoin(['type', 'rate', 'yz', 'dw', 'customerInformation', 'xm',
-                    'assignor', 'tyevel', 'trevel'
+                    'assignor', 'tyevel', 'trevel','assistant'
                 ], 'LEFT')
                 ->count();
             $list = $this->model
                 ->where($where)
                 ->where('file_status', 4)
                 ->withJoin(['type', 'rate', 'yz', 'dw', 'customerInformation', 'xm',
-                    'assignor', 'tyevel', 'trevel'
+                    'assignor', 'tyevel', 'trevel','assistant'
                 ], 'LEFT')
                 ->page($page, $limit)
                 ->order($this->sort)
@@ -163,14 +164,14 @@ class Allitems extends AdminController
                 ->where($where)
                 ->where('file_status', 3)
                 ->withJoin(['type', 'rate', 'yz', 'dw', 'customerInformation', 'xm',
-                    'assignor', 'tyevel', 'trevel'
+                    'assignor', 'tyevel', 'trevel','assistant'
                 ], 'LEFT')
                 ->count();
             $list = $this->model
                 ->where($where)
                 ->where('file_status', 3)
                 ->withJoin(['type', 'rate', 'yz', 'dw', 'customerInformation', 'xm',
-                    'assignor', 'tyevel', 'trevel'
+                    'assignor', 'tyevel', 'trevel','assistant'
                 ], 'LEFT')
                 ->page($page, $limit)
                 ->order($this->sort)
@@ -260,6 +261,7 @@ class Allitems extends AdminController
                 $n[$k]['selected'] = true;
             }
         }
+
         empty($row) && $this->error('数据不存在');
         if ($this->request->isAjax()) {
             $post = $this->request->post();
@@ -267,7 +269,7 @@ class Allitems extends AdminController
             $this->validate($post, $rule);
             try {
                 $admin=$this->admininfo();
-                $post['confirmor_id']=$admin['id'];
+                $post['assignor_id']=$admin['id'];
                 $save = $row->save($post);
             } catch (\Exception $e) {
                 $this->error('保存失败', $e->getMessage());
@@ -402,12 +404,47 @@ class Allitems extends AdminController
         unset($post1['editdata']);
         try {
             $admin=$this->admininfo();
-            $post1['confirmor_id']=$admin['id'];
+            $post1['assignor_id']=$admin['id'];
                 foreach ($val as $k=>$v)
                 {
                     $row = $this->model->find($v);
                     $save = $row->save($post1);
                 }
+        } catch (\Exception $e) {
+            $this->error('更新失败', $e->getMessage());
+        }
+
+        echo "<script>window.parent.location.reload()</script>";
+    }
+
+    /**
+     * @NodeAnotation(title="拆分页面")
+     */
+    public function split($id)
+    {
+        $basic=Basic::field(['project_name','id'])->select();
+        $ba=$this->xmdata($basic,'sd','project_name');
+        $this->assign(['id'=>$id,'basic'=>$ba]);
+        return $this->fetch();
+    }
+
+    /**
+     * @NodeAnotation(title="拆分")
+     */
+    public function splitov()
+    {
+        $post1 = $this->request->post();
+        try {
+            for ($x=1; $x<=$post1['number']; $x++) {
+               $file= Customeraa::find($post1['editdata']);
+                $save  = new Description;
+                $save->save(["basic_id"=>$post1['project_name'],'related_products'=>$post1['related_products'],
+                    'file_specification'=>$post1['file_specification'],'file_id'=>$post1['editdata']
+                    ,'file_name_project'=>$file['customer_file_name'].'-'.$x
+                    ,'file_code_project'=>$file['customer_file_code'].'-'.$x,
+                    'assistant_id'=>$this->admininfo()['id']
+                ]);
+            }
         } catch (\Exception $e) {
             $this->error('更新失败', $e->getMessage());
         }

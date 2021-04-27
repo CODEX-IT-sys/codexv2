@@ -34,6 +34,9 @@
                 <li class="layui-nav-item" lay-unselect>
                     <a href="javascript:;" data-clear="清理" class="layuimini-clear"><i class="fa fa-trash-o"></i></a>
                 </li>
+                <li class="layui-nav-item" lay-unselect>
+                    <a href="javascript:;" title="我的消息" id="message">我的消息</a>
+                </li>
                 <li class="layui-nav-item mobile layui-hide-xs" lay-unselect>
                     <a href="javascript:;" data-check-screen="full"><i class="fa fa-arrows-alt"></i></a>
                 </li>
@@ -108,3 +111,16 @@
     </div>
 </div>
 </body>
+<script src="__STATIC__/js/jquery-1.8.3.min.js?v={$version}" charset="utf-8"></script>
+<script src="https://www.layuicdn.com/layer/layer.js"></script>
+<script>
+    $('#message').click(function () {
+        layer.open({
+            type: 1,
+            skin: 'layui-layer-rim', //加上边框
+            area: ['420px', '240px'], //宽高
+            content: 'html内容'
+        });
+    });
+
+</script>

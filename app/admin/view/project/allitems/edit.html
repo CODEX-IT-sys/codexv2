@@ -77,10 +77,10 @@
             <label class="layui-form-label">项目助理</label>
             <div class="layui-input-block">
                 <!--<input type="text" name="mid" class="layui-input" lay-verify="required" placeholder="请输入项目经理id" value="{$row.mid|default=''}">-->
-                <select name="assignor_id" lay-verify="required" lay-search>
+                <select name="assistant_id" lay-verify="required" lay-search>
                     <option value="">请选择项目助理</option>
                     {foreach $Assignor as $key=>$v }
-                    <option value="{$v.id}" {if condition="$row.assignor_id eq $v.id" } selected="selected" {
+                    <option value="{$v.id}" {if condition="$row.assistant_id eq $v.id" } selected="selected" {
                     /if}>{$v.username}</option>
                     {/foreach}
                 </select>
@@ -113,7 +113,7 @@
             </div>
         </div>
 
-        <div class="layui-form-item">
+<!--        <div class="layui-form-item">
             <label class="layui-form-label">翻译人员</label>
             <div class="layui-input-block">
                 <div id="translation_id"></div>
@@ -171,7 +171,7 @@
                 <input type="text" name="pr_start_time" data-date="" data-date-type="datetime" class="layui-input"
                        placeholder="请选择校对开始时间" value="{$row.pr_start_time|default=''}">
             </div>
-        </div>
+        </div>-->
 
         <div class="layui-form-item">
             <label class="layui-form-label">校对交付时间</label>
@@ -283,6 +283,7 @@
     })
     //服务
     var fw = '<?php echo  json_encode($fw);?>';
+    console.log(fw);
     var fw = JSON.parse(fw);
         xmSelect.render({
         el: '#service',

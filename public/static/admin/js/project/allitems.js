@@ -65,7 +65,7 @@ define(["jquery", "easy-admin"], function ($, ea) {
                     {field: 'customer_submit_date', title: '客户期望提交日期', search: 'false'},
                     {field: 'completion_date', title: '交付日期', search: 'false'},
                     {field: 'xm.username', title: '项目经理', search: 'false'},
-                    {field: 'assignor.username', title: '项目助理', search: 'false'},
+                    {field: 'assistant.username', title: '项目助理', search: 'false'},
                     {
                         field: 'cooperation_first',
                         search: 'select',
@@ -102,6 +102,7 @@ define(["jquery", "easy-admin"], function ($, ea) {
                                 auth: 'deliver',
                                 class: 'layui-btn layui-btn-xs layui-btn-normal',
                             }],
+
                             'edit']
                     },
 
@@ -146,6 +147,7 @@ define(["jquery", "easy-admin"], function ($, ea) {
                 m_url: 'project.allitems/m',
                 general_url: 'project.allitems/general',
                 batchedit_url: 'project.allitems/batchedit',
+                split_url: 'project.allitems/split',
             };
 
           var  allitemsb=   ea.table.render({
@@ -196,7 +198,7 @@ define(["jquery", "easy-admin"], function ($, ea) {
                     {field: 'customer_submit_date', title: '客户期望提交日期', search: 'false'},
                     {field: 'completion_date', title: '交付日期', search: 'false'},
                     {field: 'xm.username', title: '项目经理', search: 'false'},
-                    {field: 'assignor.username', title: '项目助理', search: 'false'},
+                    {field: 'assistant.username', title: '项目助理', search: 'false'},
                     {
                         field: 'cooperation_first',
                         search: 'select',
@@ -226,12 +228,19 @@ define(["jquery", "easy-admin"], function ($, ea) {
                     {
                         width: 250, title: '操作', templet: ea.table.tool,fixed:"right", operat: [
                             [ {
-                                text: '交付',
+                                text: '拆分',
+                                url: init.split_url,
+                                method: 'open',
+                                auth: 'spliturl',
+                                class: 'layui-btn layui-btn-xs layui-btn-normal',
+                            },{
+                                text: '交稿',
                                 url: init.deliver_url,
                                 method: 'request',
                                 auth: 'deliver',
                                 class: 'layui-btn layui-btn-xs layui-btn-normal',
-                            }],
+                            }
+                            ],
                             'edit']
                     },
 
@@ -321,7 +330,7 @@ define(["jquery", "easy-admin"], function ($, ea) {
                     {field: 'customer_submit_date', title: '客户期望提交日期', search: 'false'},
                     {field: 'completion_date', title: '交付日期', search: 'false'},
                     {field: 'xm.username', title: '项目经理', search: 'false'},
-                    {field: 'assignor.username', title: '项目助理', search: 'false'},
+                    {field: 'assistant.username', title: '项目助理', search: 'false'},
                     {
                         field: 'cooperation_first',
                         search: 'select',
@@ -350,13 +359,7 @@ define(["jquery", "easy-admin"], function ($, ea) {
                     {field: 'customer_file_remark', title: '备注', 'hide': true, search: 'false'},
                     {
                         width: 250, title: '操作', templet: ea.table.tool,fixed:"right", operat: [
-                            [ {
-                                text: '交付',
-                                url: init.deliver_url,
-                                method: 'request',
-                                auth: 'deliver',
-                                class: 'layui-btn layui-btn-xs layui-btn-normal',
-                            }],
+
                             'edit']
                     },
 

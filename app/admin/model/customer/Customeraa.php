@@ -134,10 +134,15 @@ class Customeraa extends TimeModel
     {
         return $this->belongsTo('app\admin\model\SystemAdmin', 'mid', 'id');
     }
-    //项目助理
+    //项目填表人
     public function assignor()
     {
         return $this->belongsTo('app\admin\model\SystemAdmin', 'assignor_id', 'id');
+    }
+    //项目填表人
+    public function assistant()
+    {
+        return $this->belongsTo('app\admin\model\SystemAdmin', 'assistant_id', 'id');
     }
     //排版难易程度
     public function tyevel()

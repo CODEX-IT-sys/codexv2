@@ -4,7 +4,7 @@ namespace app\admin\model\project;
 
 use app\common\model\TimeModel;
 use think\facade\Db;
-class basic extends TimeModel
+class Basic extends TimeModel
 {
 
     protected $name = "project_basic";

@@ -12,73 +12,73 @@
                 <div id="service"></div>
             </div>
         </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">翻译人员</label>
-            <div class="layui-input-block">
-                <div id="translation_id"></div>
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">翻译开始时间</label>
-            <div class="layui-input-block">
-                <input type="datetime-local" name="tr_start_time" data-date="" data-date-type="datetime" class="layui-input"
-                       placeholder="请选择翻译开始时间">
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">翻译交付时间</label>
-            <div class="layui-input-block">
-                <input type="datetime-local" name="tr_end_time" data-date="" data-date-type="datetime" class="layui-input"
-                       placeholder="请选择翻译交付时间" >
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">预排人员</label>
-            <div class="layui-input-block">
-                <div id="before_ty_id"></div>
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">预排交付时间</label>
-            <div class="layui-input-block">
-                <input type="datetime-local" name="before_ty_time" data-date="" data-date-type="datetime" class="layui-input"
-                       placeholder="请选择预排交付时间" value="{$row.before_ty_time|default=''}">
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">后排人员</label>
-            <div class="layui-input-block">
-                <div id="after_ty_id"></div>
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">后排交付时间</label>
-            <div class="layui-input-block">
-                <input type="datetime-local" name="after_ty_time" data-date="" data-date-type="datetime" class="layui-input"
-                       placeholder="请选择后排交付时间" value="{$row.after_ty_time|default=''}">
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">校对人员</label>
-            <div class="layui-input-block">
-                <div id="proofreader_id"></div>
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">校对开始时间</label>
-            <div class="layui-input-block">
-                <input type="datetime-local" name="pr_start_time" data-date="" data-date-type="datetime" class="layui-input"
-                       placeholder="请选择校对开始时间" value="{$row.pr_start_time|default=''}">
-            </div>
-        </div>
+        <!--<div class="layui-form-item">-->
+            <!--<label class="layui-form-label">翻译人员</label>-->
+            <!--<div class="layui-input-block">-->
+                <!--<div id="translation_id"></div>-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div class="layui-form-item">-->
+            <!--<label class="layui-form-label">翻译开始时间</label>-->
+            <!--<div class="layui-input-block">-->
+                <!--<input type="datetime-local" name="tr_start_time" data-date="" data-date-type="datetime" class="layui-input"-->
+                       <!--placeholder="请选择翻译开始时间">-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div class="layui-form-item">-->
+            <!--<label class="layui-form-label">翻译交付时间</label>-->
+            <!--<div class="layui-input-block">-->
+                <!--<input type="datetime-local" name="tr_end_time" data-date="" data-date-type="datetime" class="layui-input"-->
+                       <!--placeholder="请选择翻译交付时间" >-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div class="layui-form-item">-->
+            <!--<label class="layui-form-label">预排人员</label>-->
+            <!--<div class="layui-input-block">-->
+                <!--<div id="before_ty_id"></div>-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div class="layui-form-item">-->
+            <!--<label class="layui-form-label">预排交付时间</label>-->
+            <!--<div class="layui-input-block">-->
+                <!--<input type="datetime-local" name="before_ty_time" data-date="" data-date-type="datetime" class="layui-input"-->
+                       <!--placeholder="请选择预排交付时间" value="{$row.before_ty_time|default=''}">-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div class="layui-form-item">-->
+            <!--<label class="layui-form-label">后排人员</label>-->
+            <!--<div class="layui-input-block">-->
+                <!--<div id="after_ty_id"></div>-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div class="layui-form-item">-->
+            <!--<label class="layui-form-label">后排交付时间</label>-->
+            <!--<div class="layui-input-block">-->
+                <!--<input type="datetime-local" name="after_ty_time" data-date="" data-date-type="datetime" class="layui-input"-->
+                       <!--placeholder="请选择后排交付时间" value="{$row.after_ty_time|default=''}">-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div class="layui-form-item">-->
+            <!--<label class="layui-form-label">校对人员</label>-->
+            <!--<div class="layui-input-block">-->
+                <!--<div id="proofreader_id"></div>-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div class="layui-form-item">-->
+            <!--<label class="layui-form-label">校对开始时间</label>-->
+            <!--<div class="layui-input-block">-->
+                <!--<input type="datetime-local" name="pr_start_time" data-date="" data-date-type="datetime" class="layui-input"-->
+                       <!--placeholder="请选择校对开始时间" value="{$row.pr_start_time|default=''}">-->
+            <!--</div>-->
+        <!--</div>-->
 
-        <div class="layui-form-item">
-            <label class="layui-form-label">校对交付时间</label>
-            <div class="layui-input-block">
-                <input type="datetime-local" name="pr_end_time" data-date="" data-date-type="datetime" class="layui-input"
-                       placeholder="请选择校对交付时间" value="{$row.pr_end_time|default=''}">
-            </div>
-        </div>
+        <!--<div class="layui-form-item">-->
+            <!--<label class="layui-form-label">校对交付时间</label>-->
+            <!--<div class="layui-input-block">-->
+                <!--<input type="datetime-local" name="pr_end_time" data-date="" data-date-type="datetime" class="layui-input"-->
+                       <!--placeholder="请选择校对交付时间" value="{$row.pr_end_time|default=''}">-->
+            <!--</div>-->
+        <!--</div>-->
         <div class="layui-form-item">
             <label class="layui-form-label">质量要求</label>
             <div class="layui-input-block">
@@ -114,6 +114,8 @@
         language: 'zn',
         tips: '请选择文件分类',
         name: 'file_cate',
+        paging: true,
+        pageSize: 5,
         filterable: true,
         toolbar: {
             show: true,
@@ -129,6 +131,8 @@
         language: 'zn',
         tips: '请选择翻译人员',
         name: 'translation_id',
+        paging: true,
+        pageSize: 5,
         filterable: true,
         toolbar: {
             show: true,
@@ -144,6 +148,8 @@
         language: 'zn',
         tips: '请选择预排人员',
         name: 'before_ty_id',
+        paging: true,
+        pageSize: 5,
         filterable: true,
         toolbar: {
             show: true,
@@ -175,6 +181,8 @@
         tips: '请选择校对人员',
         name: 'proofreader_id',
         filterable: true,
+        paging: true,
+        pageSize: 5,
         toolbar: {
             show: true,
             list: ['ALL', 'CLEAR', 'REVERSE']
@@ -190,6 +198,8 @@
         tips: '请选择服务',
         name: 'service',
         filterable: true,
+        paging: true,
+        pageSize: 5,
         toolbar: {
             show: true,
             list: ['ALL', 'CLEAR', 'REVERSE']

@@ -1,0 +1,63 @@
+<div class="layuimini-container">
+    <form id="app-form" class="layui-form layuimini-form" action="{:url('splitov')}" method="post">
+        <div class="layui-form-item">
+            <label class="layui-form-label">拆分条数</label>
+            <div class="layui-input-block">
+                <input type="number" name="number" class="layui-input" lay-verify="required" placeholder="请输入要拆分的条数"
+                       value="0">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">项目名称</label>
+            <div class="layui-input-block">
+                <div id="project_name" class="xm-select-demo"></div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">涉及产品</label>
+            <div class="layui-input-block">
+                <textarea name="related_products" placeholder="请输入涉及产品" class="layui-textarea"></textarea>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">文件用途和规范</label>
+            <div class="layui-input-block">
+                <textarea name="file_specification" placeholder="请输入文件用途和规范" class="layui-textarea"></textarea>
+            </div>
+        </div>
+        <input type="hidden" name="editdata" value="{$id}">
+        <div class="hr-line"></div>
+        <div class="layui-form-item text-center">
+            <button type="submit" class="layui-btn layui-btn-normal layui-btn-sm" lay-filter id="sub">确认</button>
+            <button type="reset" class="layui-btn layui-btn-primary layui-btn-sm">重置</button>
+        </div>
+    </form>
+</div>
+<script src="__STATIC__/js/jquery-3.3.1.min.js?v={$version}" charset="utf-8"></script>
+<script>
+    //服务
+    var basic = '<?php echo  json_encode($basic);?>';
+
+    var basic = JSON.parse(basic);
+    xmSelect.render({
+        el: '#project_name',
+        language: 'zn',
+        tips: '请选择拆分项目名称',
+        radio: true,
+        clickClose: true,
+        name: 'project_name',
+        filterable: true,
+        paging: true,
+        pageSize: 5,
+        toolbar: {
+            show: true,
+            list: ['ALL', 'CLEAR', 'REVERSE']
+        },
+        data: basic
+    })
+    $('#sub').on('click', function () {
+        $("#app-form").submit();
+    });
+
+</script>

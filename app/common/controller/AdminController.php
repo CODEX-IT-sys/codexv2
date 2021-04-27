@@ -20,7 +20,7 @@ use EasyAdmin\tool\CommonTool;
 use think\App;
 use think\facade\Env;
 use think\Model;
-
+use think\facade\Db;
 /**
  * Class AdminController
  * @package app\common\controller
@@ -271,5 +271,17 @@ class AdminController extends BaseController
         return session('admin');
     }
 
+
+    public function xmdata($data,$n,$l)
+    {
+          $$n=[];
+        foreach ($data as $k=>$v)
+        {
+            $$n[$k]['name'] = $v[$l];
+            $$n[$k]['value'] = $v['id'];
+        }
+        return  $$n;
+
+    }
 
 }

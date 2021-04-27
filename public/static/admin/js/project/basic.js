@@ -19,7 +19,7 @@ define(["jquery", "easy-admin"], function ($, ea) {
                 overflow: 'tips',
                 skin: 'line  ' //行边框风格
                 , even: true, //开启隔行背景
-                toolbar: ['refresh',  'delete',],
+                toolbar: ['refresh',  'delete','add'],
                 cols: [[
                     {type: 'checkbox'},
                     {field: 'id', title: 'id'},
@@ -34,15 +34,14 @@ define(["jquery", "easy-admin"], function ($, ea) {
                     {field: 'project_remark', title: '备注'},
                     {field: 'create_time', title: '创建时间'},
                     {width: 250, title: '操作', templet: ea.table.tool},
-
                 ]],
                 filter: {
                     items: ['column', 'data', 'condition', 'editCondition', 'excel', 'clearCache'],
                     cache: true
-                }
-                ,autoColumnWidth: {
-                    init: true
                 },
+                // autoColumnWidth: {
+                //     init: true
+                // },
 
                 done: function () {
                     // 在 done 中开启
