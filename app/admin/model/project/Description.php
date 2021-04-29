@@ -25,9 +25,16 @@ class Description extends TimeModel
         'be_start_time' => 'timestamp',
         'final_delivery_time' => 'timestamp',
     ];
+    public function getDescriptionStatusList()
+    {
+
+        $status = ['0'=>'待预排','1'=>'待翻译','2'=>'待校对',3=>'待后排',4=>'已完成'];
+        return $status;
+    }
+
 
     //翻译人员proofreader_id
-    public function getTranslationIdAttr($val)
+    public function getDtranslationIdAttr($val)
     {
         $val= explode(",", $val);
         $arr=[];
@@ -37,7 +44,7 @@ class Description extends TimeModel
         return  implode(",", $arr);
     }
     //校对人员
-    public function getProofreaderIdAttr($val)
+    public function getDproofreaderIdAttr($val)
     {
         $val= explode(",", $val);
         $arr=[];
@@ -46,7 +53,7 @@ class Description extends TimeModel
         }
         return  implode(",", $arr);
     }
-    public function getBeforeTyIdAttr($val)
+    public function getDbeforeTyIdAttr($val)
     {
         $val= explode(",", $val);
         $arr=[];
@@ -55,7 +62,7 @@ class Description extends TimeModel
         }
         return  implode(",", $arr);
     }
-    public function getAfterTyIdAttr($val)
+    public function getDafterTyIdAttr($val)
     {
         $val= explode(",", $val);
         $arr=[];
@@ -82,22 +89,22 @@ class Description extends TimeModel
     //翻译
     public function tr()
     {
-        return $this->belongsTo('app\admin\model\SystemAdmin', 'translation_id', 'id');
+        return $this->belongsTo('app\admin\model\SystemAdmin', 'dtranslation_id', 'id');
     }
 
     //预排
     public function yp()
     {
-        return $this->belongsTo('app\admin\model\SystemAdmin', 'before_ty_id', 'id');
+        return $this->belongsTo('app\admin\model\SystemAdmin', 'dbefore_ty_id', 'id');
     }
     //校对
     public function xd()
     {
-        return $this->belongsTo('app\admin\model\SystemAdmin', 'proofreader_id', 'id');
+        return $this->belongsTo('app\admin\model\SystemAdmin', 'dproofreader_id', 'id');
     }
     //后排
     public function hp()
     {
-        return $this->belongsTo('app\admin\model\SystemAdmin', 'after_ty_id', 'id');
+        return $this->belongsTo('app\admin\model\SystemAdmin', 'dafter_ty_id', 'id');
     }
 }

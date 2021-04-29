@@ -1,12 +1,15 @@
 <div class="layuimini-container">
     <form id="app-form" class="layui-form layuimini-form">
 
-        <!--<div class="layui-form-item">-->
-            <!--<label class="layui-form-label">评论id</label>-->
-            <!--<div class="layui-input-block">-->
-                <!--<input type="text" name="comment_id" class="layui-input" lay-verify="required" placeholder="请输入评论id" value="{$row.comment_id|default=''}">-->
-            <!--</div>-->
-        <!--</div>-->
+        <div class="layui-form-item">
+            <label class="layui-form-label">文件状态</label>
+            <div class="layui-input-block">
+                {foreach $status as $k=>$v}
+                <input type="radio" name="description_status" value="{$k}" title="{$v}" {in name="k"
+                       value="$row.description_status" }checked="" {/in}>
+                {/foreach}
+            </div>
+        </div>
 
         <div class="layui-form-item">
         <label class="layui-form-label">翻译人员</label>
@@ -152,7 +155,7 @@
         el: '#translation_id',
         language: 'zn',
         tips: '请选择文件分类',
-        name: 'translation_id',
+        name: 'dtranslation_id',
         radio: true,
         clickClose: true,
         filterable: true,
@@ -169,7 +172,7 @@
         el: '#before_ty_id',
         language: 'zn',
         tips: '请选择预排人员',
-        name: 'before_ty_id',
+        name: 'dbefore_ty_id',
         radio: true,
         clickClose: true,
         filterable: true,
@@ -188,7 +191,7 @@
         tips: '请选择后排人员',
         radio: true,
         clickClose: true,
-        name: 'after_ty_id',
+        name: 'dafter_ty_id',
         filterable: true,
         toolbar: {
             show: true,
@@ -203,7 +206,7 @@
         el: '#proofreader_id',
         language: 'zn',
         tips: '请选择校对人员',
-        name: 'proofreader_id',
+        name: 'dproofreader_id',
         radio: true,
         clickClose: true,
         filterable: true,

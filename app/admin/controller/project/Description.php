@@ -26,6 +26,7 @@ class Description extends AdminController
         parent::__construct($app);
 
         $this->model = new \app\admin\model\project\Description();
+        $this->assign('status', $this->model->getDescriptionStatusList());
 
     }
 
@@ -41,10 +42,10 @@ class Description extends AdminController
         $yp = Cache::get('yp');
         $hp = Cache::get('hp');
         $row = $this->model->find($id);
-        $trvalue = explode(',', $row['translation_id']);
-        $ypvalue = explode(',', $row['before_ty_id']);
-        $hpvalue = explode(',', $row['after_ty_id']);
-        $xdvalue = explode(',', $row['proofreader_id']);
+        $trvalue = explode(',', $row['dtranslation_id']);
+        $ypvalue = explode(',', $row['dbefore_ty_id']);
+        $hpvalue = explode(',', $row['dafter_ty_id']);
+        $xdvalue = explode(',', $row['dproofreader_id']);
 
         //翻译
         $d = array();
@@ -95,7 +96,7 @@ class Description extends AdminController
                 $res = $this->model->where('id', $id)->find();
 
                 //同步更新项目汇总信息,查询相同文件
-                $neq = Db::name('project_description')->where('file_id', $res['file_id'])->field(['translation_id', 'proofreader_id', 'before_ty_id', 'after_ty_id'
+                $neq = Db::name('project_description')->where('file_id', $res['file_id'])->field(['dtranslation_id', 'dproofreader_id', 'dbefore_ty_id', 'dafter_ty_id'
                     , 'tr_start_time', 'tr_end_time'
                     , 'pr_start_time', 'pr_end_time'
                     , 'be_start_time', 'be_end_time'
@@ -123,10 +124,10 @@ class Description extends AdminController
                 $before = [];
                 $after = [];
                 foreach ($neq as $k => $v) {
-                    $translation[] = $v['translation_id'];
-                    $proofreader[] = $v['proofreader_id'];
-                    $before[] = $v['before_ty_id'];
-                    $after[] = $v['after_ty_id'];
+                    $translation[] = $v['dtranslation_id'];
+                    $proofreader[] = $v['dproofreader_id'];
+                    $before[] = $v['dbefore_ty_id'];
+                    $after[] = $v['dafter_ty_id'];
                 }
 
                 $uq = Customeraa::where('id', $res['file_id'])->update([
@@ -240,15 +241,18 @@ class Description extends AdminController
             list($page, $limit, $where) = $this->buildTableParames();
             $count = $this->model
                 ->where($where)
+                ->where('dbefore_ty_id',$this->admininfo()['id'])
                 ->where('description_status',0)
                 ->withJoin(['fileaa', 'basic', 'assignor', 'yp', 'hp', 'xd', 'tr'
                 ], 'LEFT')
                 ->count();
             $list = $this->model
                 ->where($where)
+                ->where('dbefore_ty_id',$this->admininfo()['id'])
                 ->where('description_status',0)
                 ->withJoin(['fileaa', 'basic', 'assignor', 'yp', 'hp', 'xd', 'tr'
                 ], 'LEFT')
+
                 ->page($page, $limit)
                 ->order($this->sort)
                 ->select();
@@ -291,12 +295,14 @@ class Description extends AdminController
             list($page, $limit, $where) = $this->buildTableParames();
             $count = $this->model
                 ->where($where)
+                ->where('dtranslation_id',$this->admininfo()['id'])
                 ->where('description_status',1)
                 ->withJoin(['fileaa', 'basic', 'assignor', 'yp', 'hp', 'xd', 'tr'
                 ], 'LEFT')
                 ->count();
             $list = $this->model
                 ->where($where)
+                ->where('dtranslation_id',$this->admininfo()['id'])
                 ->where('description_status',1)
                 ->withJoin(['fileaa', 'basic', 'assignor', 'yp', 'hp', 'xd', 'tr'
                 ], 'LEFT')
@@ -322,7 +328,7 @@ class Description extends AdminController
         empty($row) && $this->error('数据不存在');
         if ($this->request->isAjax()) {
             try {
-                $save = $row->save(['description_status'=>1]);
+                $save = $row->save(['description_status'=>2]);
             } catch (\Exception $e) {
                 $this->error('提交失败');
             }
@@ -330,7 +336,110 @@ class Description extends AdminController
         }
     }
 
-
+    /**
+     * @NodeAnotation(title="待校对")
+     */
+    public function xd()
+    {
+        if ($this->request->isAjax()) {
+            if (input('selectFields')) {
+                return $this->selectList();
+            }
+            list($page, $limit, $where) = $this->buildTableParames();
+            $count = $this->model
+                ->where($where)
+                ->where('dproofreader_id',$this->admininfo()['id'])
+                ->where('description_status',2)
+                ->withJoin(['fileaa', 'basic', 'assignor', 'yp', 'hp', 'xd', 'tr'
+                ], 'LEFT')
+                ->count();
+            $list = $this->model
+                ->where($where)
+                ->where('dproofreader_id',$this->admininfo()['id'])
+                ->where('description_status',2)
+                ->withJoin(['fileaa', 'basic', 'assignor', 'yp', 'hp', 'xd', 'tr'
+                ], 'LEFT')
+                ->page($page, $limit)
+                ->order($this->sort)
+                ->select();
+            $data = [
+                'code' => 0,
+                'msg' => '',
+                'count' => $count,
+                'data' => $list,
+            ];
+            return json($data);
+        }
+        return $this->fetch('index');
+    }
+    /**
+     * @NodeAnotation(title="待校对提交")
+     */
+    public function xdstock($id)
+    {
+        $row = $this->model->find($id);
+        empty($row) && $this->error('数据不存在');
+        if ($this->request->isAjax()) {
+            try {
+                $save = $row->save(['description_status'=>3]);
+            } catch (\Exception $e) {
+                $this->error('提交失败');
+            }
+            $save ? $this->success('提交成功') : $this->error('提交失败');
+        }
+    }
+    /**
+     * @NodeAnotation(title="待后排")
+     */
+    public function hp()
+    {
+        if ($this->request->isAjax()) {
+            if (input('selectFields')) {
+                return $this->selectList();
+            }
+            list($page, $limit, $where) = $this->buildTableParames();
+            $count = $this->model
+                ->where($where)
+                ->where('dafter_ty_id',$this->admininfo()['id'])
+                ->where('description_status',3)
+                ->withJoin(['fileaa', 'basic', 'assignor', 'yp', 'hp', 'xd', 'tr'
+                ], 'LEFT')
+                ->count();
+            $list = $this->model
+                ->where($where)
+                ->where('dafter_ty_id',$this->admininfo()['id'])
+                ->where('description_status',3)
+                ->withJoin(['fileaa', 'basic', 'assignor', 'yp', 'hp', 'xd', 'tr'
+                ], 'LEFT')
+                ->page($page, $limit)
+                ->order($this->sort)
+                ->select();
+            $data = [
+                'code' => 0,
+                'msg' => '',
+                'count' => $count,
+                'data' => $list,
+            ];
+            return json($data);
+        }
+        return $this->fetch('index');
+    }
+    /**
+     * @NodeAnotation(title="待后排提交")
+     */
+    public function hpstock($id)
+    {
+        $row = $this->model->find($id);
+        empty($row) && $this->error('数据不存在');
+        if ($this->request->isAjax()) {
+            try {
+                $save = $row->save(['description_status'=>4]);
+            } catch (\Exception $e) {
+                $this->error('提交失败');
+            }
+            $save ? $this->success('提交成功') : $this->error('提交失败');
+        }
+    }
     /**
      * @NodeAnotation(title="留言")
      */
