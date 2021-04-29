@@ -79,5 +79,25 @@ class Description extends TimeModel
     {
         return $this->belongsTo('app\admin\model\SystemAdmin', 'assistant_id', 'id');
     }
+    //翻译
+    public function tr()
+    {
+        return $this->belongsTo('app\admin\model\SystemAdmin', 'translation_id', 'id');
+    }
 
+    //预排
+    public function yp()
+    {
+        return $this->belongsTo('app\admin\model\SystemAdmin', 'before_ty_id', 'id');
+    }
+    //校对
+    public function xd()
+    {
+        return $this->belongsTo('app\admin\model\SystemAdmin', 'proofreader_id', 'id');
+    }
+    //后排
+    public function hp()
+    {
+        return $this->belongsTo('app\admin\model\SystemAdmin', 'after_ty_id', 'id');
+    }
 }

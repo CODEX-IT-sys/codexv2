@@ -21,7 +21,7 @@ use app\admin\model\SystemAdmin;
  */
 class Filaa extends AdminController
 {
-//    protected $relationSearch = true;
+    protected $relationSearch = true;
 //    protected $searchFields=
     use \app\admin\traits\Curd;
 

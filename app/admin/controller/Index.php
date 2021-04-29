@@ -73,6 +73,8 @@ class Index extends AdminController
         Cache::set('yp',$yp);
         Cache::set('hp',$hp);
         Cache::set('xd',$xd);
+
+
         $this->assign('quicks', $quicks);
         return $this->fetch();
     }

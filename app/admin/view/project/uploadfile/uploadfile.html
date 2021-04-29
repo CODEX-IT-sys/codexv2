@@ -1,0 +1,123 @@
+<div class="layuimini-container">
+    <form id="app-form" class="layui-form layuimini-form" method="post" action="/admin/project.Allitems/uploadfile">
+        <div class="layui-form-item">
+            <label class="layui-form-label">文件标签</label>
+            <div class="layui-input-block">
+                <div id="label"></div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label required">文件</label>
+            <div class="layui-input-block layuimini-upload">
+                <button type="button" class="layui-btn" id="test1">
+                    <i class="layui-icon">&#xe67c;</i>上传文件
+                </button>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">允许下载</label>
+            <div class="layui-input-block">
+                <input type="radio" name="download" value="0" title="Yes">
+                <input type="radio" name="download" value="1" title="No" checked>
+            </div>
+        </div>
+
+        <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label">备注</label>
+            <div class="layui-input-block">
+                <textarea name="remark" class="layui-textarea" placeholder="请输入备注"></textarea>
+            </div>
+        </div>
+        <input type="text" name="mime_type" value="">
+        <input type="text" name="path" value="">
+        <input type="text" name="fileName" value="">
+        <input type="text" name="label" id="unit">
+
+        <div class="hr-line"></div>
+        <div class="layui-form-item text-center">
+            <button type="button" class="layui-btn layui-btn-normal layui-btn-sm" lay-submit id="sub">确认</button>
+            <button type="reset" class="layui-btn layui-btn-primary layui-btn-sm">重置</button>
+        </div>
+
+    </form>
+</div>
+<link rel="stylesheet" type="text/css" href="https://www.layuicdn.com/layui/css/layui.css" />
+<script src="https://www.layuicdn.com/auto/layui.js"></script>
+<script src="__STATIC__/js/jquery-3.3.1.min.js?v={$version}" charset="utf-8"></script>
+<script>
+
+    //校对
+    var label = '<?php echo  json_encode($label);?>';
+    var label = JSON.parse(label);
+    var dataTypes = xmSelect.render({
+        el: '#label',
+        language: 'zn',
+        tips: '请选择文件标签',
+        name: 'label',
+        radio: true,
+        clickClose: true,
+        filterable: true,
+        toolbar: {
+            show: true,
+            list: ['ALL', 'CLEAR', 'REVERSE']
+        },
+        data: label
+        , on: function (data) {
+            //arr:  当前多选已选中的数据
+            var arr = data.arr;
+            var dwstr = [];
+            for (var i = 0; i < arr.length; i++) {
+                dwstr.push(arr[i].value)
+            }
+            console.log(dwstr);
+            $("input[name='label']").val(dwstr);
+
+            layui.use('upload', function () {
+                var upload = layui.upload;
+                var valueStr = $("input[name='label']").val();
+                //执行实例
+                var uploadInst = upload.render({
+                    elem: '#test1' //绑定元素
+                    , url: "/admin/project.uploadfile/file"  //上传接口
+                    , auto: false
+                    , bindAction: '#sub'
+                    , multiple: true
+                    , accept: 'file'
+                    , data: {
+                        label: valueStr,
+                    }
+                    , done: function (res) {
+                        if (res.code == 1) {
+                            $("input[name='mime_type']").val(res.mime_type);
+                            $("input[name='path']").val(res.path);
+                            $("input[name='fileName']").val(res.fileName);
+                            sub()
+                        } else {
+                            layer.msg(res.msg);
+                        }
+                    }
+                    , error: function () {
+                        //请求异常回调
+                    }
+                });
+            });
+
+        },
+    })
+
+
+    function sub() {
+        $.ajax({
+            //几个参数需要注意一下
+            type: "POST",//方法类型
+            dataType: "json",//预期服务器返回的数据类型
+            url: "{:url('uploadfile')}",//url
+            data: $('#app-form').serialize(),
+            success: function (result) {
+                layer.msg(result.msg);
+            }
+        });
+    }
+
+
+</script>

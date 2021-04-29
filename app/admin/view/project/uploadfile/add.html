@@ -1,51 +1,75 @@
 <div class="layuimini-container">
-    <form id="app-form" class="layui-form layuimini-form">
-        
+    <form id="app-form" class="layui-form layuimini-form" method="post" action="/admin/project.Allitems/uploadfile">
         <div class="layui-form-item">
-            <label class="layui-form-label required">项目id</label>
+            <label class="layui-form-label required">文件</label>
             <div class="layui-input-block layuimini-upload">
-                <input name="file_id" class="layui-input layui-col-xs6" lay-verify="required"  placeholder="请上传项目id" value="">
-                <div class="layuimini-upload-btn">
-                    <span><a class="layui-btn" data-upload="file_id" data-upload-number="one" data-upload-exts="*" data-upload-icon="file"><i class="fa fa-upload"></i> 上传</a></span>
-                    <span><a class="layui-btn layui-btn-normal" id="select_file_id" data-upload-select="file_id" data-upload-number="one" data-upload-mimetype="*"><i class="fa fa-list"></i> 选择</a></span>
-                </div>
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">文件名</label>
-            <div class="layui-input-block">
-                <input type="text" name="original_name" class="layui-input"  placeholder="请输入文件名" value="">
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">存储路劲</label>
-            <div class="layui-input-block">
-                <input type="text" name="url" class="layui-input"  placeholder="请输入存储路劲" value="">
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">文件类型</label>
-            <div class="layui-input-block">
-                <input type="text" name="mime_type" class="layui-input"  placeholder="请输入文件类型" value="">
+                <button type="button" class="layui-btn" id="test1">
+                    <i class="layui-icon">&#xe67c;</i>上传文件
+                </button>
             </div>
         </div>
         <div class="layui-form-item layui-form-text">
             <label class="layui-form-label">备注</label>
             <div class="layui-input-block">
-                <textarea name="remark" class="layui-textarea"  placeholder="请输入备注"></textarea>
+                <textarea name="remark" class="layui-textarea" placeholder="请输入备注"></textarea>
             </div>
         </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">上传时间</label>
-            <div class="layui-input-block">
-                <input type="text" name="upload_time" class="layui-input"  placeholder="请输入上传时间" value="">
-            </div>
-        </div>
+        <input type="hidden" name="id" value="{$id}">
+        <input type="hidden" name="mime_type" value="">
+        <input type="hidden" name="path" value="">
+        <input type="hidden" name="fileName" value="">
         <div class="hr-line"></div>
         <div class="layui-form-item text-center">
-            <button type="submit" class="layui-btn layui-btn-normal layui-btn-sm" lay-submit>确认</button>
+            <button type="button" class="layui-btn layui-btn-normal layui-btn-sm" lay-submit id="sub">确认</button>
             <button type="reset" class="layui-btn layui-btn-primary layui-btn-sm">重置</button>
         </div>
 
     </form>
 </div>
+<script src="__STATIC__/js/jquery-3.3.1.min.js?v={$version}" charset="utf-8"></script>
+<script>
+    layui.use('upload', function () {
+        var upload = layui.upload;
+        var daid = '{$id}';
+        console.log(daid);
+        //执行实例
+        var uploadInst = upload.render({
+            elem: '#test1' //绑定元素
+            , url: "/admin/project.Allitems/file"  //上传接口
+            , auto: false
+            , bindAction: '#sub'
+            , accept: 'file'
+            , data: {
+                id: daid,
+            }
+            , done: function (res) {
+                if (res.code == 1) {
+                    $("input[name='mime_type']").val(res.mime_type);
+                    $("input[name='path']").val(res.path);
+                    $("input[name='fileName']").val(res.fileName);
+                    sub()
+                } else {
+                    layer.msg(res.msg);
+                }
+            }
+            , error: function () {
+                //请求异常回调
+            }
+        });
+    });
+
+    function sub() {
+        $.ajax({
+            //几个参数需要注意一下
+            type: "POST",//方法类型
+            dataType: "json",//预期服务器返回的数据类型
+            url: "{:url('uploadfile')}",//url
+            data: $('#app-form').serialize(),
+            success: function (result) {
+                layer.msg(result.msg);
+            }
+        });
+    }
+
+
+</script>

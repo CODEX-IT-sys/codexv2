@@ -1,0 +1,31 @@
+<tbody>
+{volist name="dirs" id="v"}
+<tr>
+    <td class="fileicon">
+        <svg class="my-icon" aria-hidden="true">
+            <use xlink:href="{$v.icon}"></use>
+        </svg>
+        <a href="{$v.flag?'?currdir='.$v.currdir:'javascript:;'}">{$v.name|iconv='GB2312','UTF-8',###}</a>
+    </td>
+    <td>{$v.flag?"文件夹":size_format($v.size,1)}</td>
+    <?php $p=urlencode($v['currdir']);?>
+    <td>{$p|getpics=###,40}</td>
+    <td>{$v.ctime|date="Y-m-d",###}</td>
+    <td>{$v.mtime|date="Y-m-d",###}</td>
+    <td>
+            <span class="cz">
+   　　　　　　<a class="filelink" href="javascript:;" onclick="DeleteFile('{$v.currdir|urlencode=###}')">删除</a> |
+
+   　　　　　　{eq name="v.flag" value="0"}
+   　　　　　　<a class="filelink" href="{:url('file/edit')}?file={$v.currdir|urlencode=###}" >编辑</a> |
+   　　　　　　{/eq}
+   　　　　　　<a class="filelink" href="javascript:;" onclick="ReName('{$v.currdir|urlencode=###}','{$v.currdir|basenamecn=###}')">重命名</a>
+             {eq name="v.flag" value="0"}
+             |<a class="filelink" href="{:url('file/download')}?currdir={$v.currdir|urlencode=###}">下载</a>
+             {/eq}
+
+　　　　　　</span>
+    </td>
+</tr>
+{/volist}
+</tbody>

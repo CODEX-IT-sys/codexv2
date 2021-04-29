@@ -66,6 +66,7 @@ class Login extends AdminController
                 $this->error('账号已被禁用');
             }
             $admin->login_num += 1;
+            $admin->test=time();
             $admin->save();
             $admin = $admin->toArray();
             unset($admin['password']);

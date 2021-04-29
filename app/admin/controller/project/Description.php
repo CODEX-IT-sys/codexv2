@@ -12,6 +12,7 @@ use think\App;
 use think\facade\Cache;
 use think\facade\Db;
 use app\admin\model\project\Comment;
+
 /**
  * @ControllerAnnotation(title="项目描述")
  */
@@ -25,7 +26,7 @@ class Description extends AdminController
         parent::__construct($app);
 
         $this->model = new \app\admin\model\project\Description();
-        
+
     }
 
 
@@ -91,49 +92,48 @@ class Description extends AdminController
             try {
 
                 $save = $row->save($post);
-                $res=$this->model->where('id',$id)->find();
+                $res = $this->model->where('id', $id)->find();
 
                 //同步更新项目汇总信息,查询相同文件
-                $neq=  Db::name('project_description')->where('file_id',$res['file_id'])->field(['translation_id','proofreader_id','before_ty_id','after_ty_id'
-                ,'tr_start_time','tr_end_time'
-                ,'pr_start_time','pr_end_time'
-                ,'be_start_time','be_end_time'
-                ,'after_start_time','after_start_time'
+                $neq = Db::name('project_description')->where('file_id', $res['file_id'])->field(['translation_id', 'proofreader_id', 'before_ty_id', 'after_ty_id'
+                    , 'tr_start_time', 'tr_end_time'
+                    , 'pr_start_time', 'pr_end_time'
+                    , 'be_start_time', 'be_end_time'
+                    , 'after_start_time', 'after_start_time'
                 ])->select()->toArray();
 //                时间待同步
-/*                $tr_start_time=  Db::name('project_description')->where('file_id',$res['file_id'])->field(
-                    'min(tr_start_time) as tr_start_time,
-                            max(tr_end_time) as tr_end_time,
-                            min(pr_start_time) as pr_start_time,
-                            max(pr_end_time) as pr_end_time,
-                            min(be_start_time) as be_start_time,
-                            max(be_end_time) as be_end_time,
-                            min(after_start_time) as after_start_time,
-                            max(after_end_time) as after_end_time                 
-                     '
-//                    'max(tr_start_time) tr_start_time','tr_end_time'
-//                    ,'pr_start_time','pr_end_time'
-//                    ,'be_start_time','be_end_time'
-//                    ,'after_start_time','after_start_time'
-                )->group('tr_start_time,tr_end_time,pr_start_time,pr_end_time,be_start_time,be_end_time,after_start_time,after_end_time')->select();
-                dump($tr_start_time);die;*/
-                $translation=[];
-                $proofreader=[];
-                $before=[];
-                $after=[];
-                foreach ($neq as $k=>$v)
-                {
-                    $translation[]=$v['translation_id'];
-                    $proofreader[]=$v['proofreader_id'];
-                    $before[]=$v['before_ty_id'];
-                    $after[]=$v['after_ty_id'];
+                /*                $tr_start_time=  Db::name('project_description')->where('file_id',$res['file_id'])->field(
+                                    'min(tr_start_time) as tr_start_time,
+                                            max(tr_end_time) as tr_end_time,
+                                            min(pr_start_time) as pr_start_time,
+                                            max(pr_end_time) as pr_end_time,
+                                            min(be_start_time) as be_start_time,
+                                            max(be_end_time) as be_end_time,
+                                            min(after_start_time) as after_start_time,
+                                            max(after_end_time) as after_end_time
+                                     '
+                //                    'max(tr_start_time) tr_start_time','tr_end_time'
+                //                    ,'pr_start_time','pr_end_time'
+                //                    ,'be_start_time','be_end_time'
+                //                    ,'after_start_time','after_start_time'
+                                )->group('tr_start_time,tr_end_time,pr_start_time,pr_end_time,be_start_time,be_end_time,after_start_time,after_end_time')->select();
+                                dump($tr_start_time);die;*/
+                $translation = [];
+                $proofreader = [];
+                $before = [];
+                $after = [];
+                foreach ($neq as $k => $v) {
+                    $translation[] = $v['translation_id'];
+                    $proofreader[] = $v['proofreader_id'];
+                    $before[] = $v['before_ty_id'];
+                    $after[] = $v['after_ty_id'];
                 }
 
-              $uq=  Customeraa::where('id',$res['file_id'])->update([
-                    'translation_id'=>implode(',',array_unique(array_filter($translation))),
-                    'proofreader_id'=>implode(',',array_unique(array_filter($proofreader))),
-                    'before_ty_id'=>implode(',',array_unique(array_filter($before))),
-                    'after_ty_id'=>implode(',',array_unique(array_filter($after)))
+                $uq = Customeraa::where('id', $res['file_id'])->update([
+                    'translation_id' => implode(',', array_unique(array_filter($translation))),
+                    'proofreader_id' => implode(',', array_unique(array_filter($proofreader))),
+                    'before_ty_id' => implode(',', array_unique(array_filter($before))),
+                    'after_ty_id' => implode(',', array_unique(array_filter($after)))
                 ]);
 
                 // 提交事务
@@ -141,13 +141,13 @@ class Description extends AdminController
             } catch (\Exception $e) {
                 // 回滚事务
                 Db::rollback();
-                $this->error('保存失败',$e->getMessage());
+                $this->error('保存失败', $e->getMessage());
             }
             $save ? $this->success('保存成功') : $this->error('保存失败');
         }
         $this->assign('row', $row);
         $this->assign([
-      'd' => $d, 'e' => $e, 'f' => $f, 'g' => $g,
+            'd' => $d, 'e' => $e, 'f' => $f, 'g' => $g,
         ]);
         return $this->fetch();
     }
@@ -168,22 +168,22 @@ class Description extends AdminController
 //                    'translation_id','status','repetition_rate95','repetition_rate100','repetition_rateall','file_specification','project_page',
 //                    'deduction_number'晚点再加
 //                ])
-                ->withJoin(['fileaa','basic','assignor'
+                ->withJoin(['fileaa', 'basic', 'assignor', 'yp', 'hp', 'xd', 'tr'
                 ], 'LEFT')
                 ->count();
             $list = $this->model
                 ->where($where)
-                ->withJoin(['fileaa','basic','assignor'
+                ->withJoin(['fileaa', 'basic', 'assignor', 'yp', 'hp', 'xd', 'tr'
                 ], 'LEFT')
                 ->page($page, $limit)
                 ->order($this->sort)
                 ->select();
 
             $data = [
-                'code'  => 0,
-                'msg'   => '',
+                'code' => 0,
+                'msg' => '',
                 'count' => $count,
-                'data'  => $list,
+                'data' => $list,
             ];
             return json($data);
         }
@@ -206,21 +206,22 @@ class Description extends AdminController
 //                    'translation_id','status','repetition_rate95','repetition_rate100','repetition_rateall','file_specification','project_page',
 //                    'deduction_number'晚点再加
 //                ])
-                ->withJoin(['fileaa','basic','assignor'
+                ->withJoin(['fileaa', 'basic', 'assignor', 'yp', 'hp', 'xd', 'tr'
                 ], 'LEFT')
                 ->count();
             $list = $this->model
                 ->where($where)
-                ->withJoin(['fileaa','basic','assignor'
+                ->withJoin(['fileaa', 'basic', 'assignor', 'yp', 'hp', 'xd', 'tr'
                 ], 'LEFT')
                 ->page($page, $limit)
                 ->order($this->sort)
-                ->select();
+                ->select()->toArray();
+
             $data = [
-                'code'  => 0,
-                'msg'   => '',
+                'code' => 0,
+                'msg' => '',
                 'count' => $count,
-                'data'  => $list,
+                'data' => $list,
             ];
             return json($data);
         }
@@ -228,7 +229,7 @@ class Description extends AdminController
     }
 
     /**
-     * @NodeAnotation(title="预排")
+     * @NodeAnotation(title="待预排")
      */
     public function yp()
     {
@@ -239,26 +240,96 @@ class Description extends AdminController
             list($page, $limit, $where) = $this->buildTableParames();
             $count = $this->model
                 ->where($where)
-                ->withJoin(['fileaa','basic','assignor'
+                ->where('description_status',0)
+                ->withJoin(['fileaa', 'basic', 'assignor', 'yp', 'hp', 'xd', 'tr'
                 ], 'LEFT')
                 ->count();
             $list = $this->model
                 ->where($where)
-                ->withJoin(['fileaa','basic','assignor'
+                ->where('description_status',0)
+                ->withJoin(['fileaa', 'basic', 'assignor', 'yp', 'hp', 'xd', 'tr'
                 ], 'LEFT')
                 ->page($page, $limit)
                 ->order($this->sort)
                 ->select();
             $data = [
-                'code'  => 0,
-                'msg'   => '',
+                'code' => 0,
+                'msg' => '',
                 'count' => $count,
-                'data'  => $list,
+                'data' => $list,
             ];
             return json($data);
         }
         return $this->fetch('index');
     }
+    /**
+     * @NodeAnotation(title="预排提交")
+     */
+    public function ypstock($id)
+    {
+        $row = $this->model->find($id);
+        empty($row) && $this->error('数据不存在');
+        if ($this->request->isAjax()) {
+            try {
+                $save = $row->save(['description_status'=>1]);
+            } catch (\Exception $e) {
+                $this->error('提交失败');
+            }
+            $save ? $this->success('提交成功') : $this->error('提交失败');
+        }
+    }
+
+    /**
+     * @NodeAnotation(title="待翻译")
+     */
+    public function tr()
+    {
+        if ($this->request->isAjax()) {
+            if (input('selectFields')) {
+                return $this->selectList();
+            }
+            list($page, $limit, $where) = $this->buildTableParames();
+            $count = $this->model
+                ->where($where)
+                ->where('description_status',1)
+                ->withJoin(['fileaa', 'basic', 'assignor', 'yp', 'hp', 'xd', 'tr'
+                ], 'LEFT')
+                ->count();
+            $list = $this->model
+                ->where($where)
+                ->where('description_status',1)
+                ->withJoin(['fileaa', 'basic', 'assignor', 'yp', 'hp', 'xd', 'tr'
+                ], 'LEFT')
+                ->page($page, $limit)
+                ->order($this->sort)
+                ->select();
+            $data = [
+                'code' => 0,
+                'msg' => '',
+                'count' => $count,
+                'data' => $list,
+            ];
+            return json($data);
+        }
+        return $this->fetch('index');
+    }
+    /**
+     * @NodeAnotation(title="翻译提交")
+     */
+    public function trstock($id)
+    {
+        $row = $this->model->find($id);
+        empty($row) && $this->error('数据不存在');
+        if ($this->request->isAjax()) {
+            try {
+                $save = $row->save(['description_status'=>1]);
+            } catch (\Exception $e) {
+                $this->error('提交失败');
+            }
+            $save ? $this->success('提交成功') : $this->error('提交失败');
+        }
+    }
+
 
     /**
      * @NodeAnotation(title="留言")
@@ -266,20 +337,20 @@ class Description extends AdminController
 
     public function comment()
     {
-        $data=  $this->request->param();
+        $data = $this->request->param();
         //留言信息
-        $re= Comment::with(['user'])->where('description_id',$data['id'])->order('create_time','desc')->select()->toArray();
+        $re = Comment::with(['user'])->where('description_id', $data['id'])->order('create_time', 'desc')->select()->toArray();
         //文件信息
-        $ne= $this->model->field('file_name_project,file_code_project')->find($data['id']);
+        $ne = $this->model->field('file_name_project,file_code_project')->find($data['id']);
         //人员信息
-        $man=SystemAdmin::field('username,id')->select()->toArray();
-        $staff= array();
+        $man = SystemAdmin::field('username,id')->select()->toArray();
+        $staff = array();
         foreach ($man as $k => $v) {
             $staff[$k]['name'] = $v['username'];
             $staff[$k]['value'] = $v['id'];
         }
         //删除自己
-        unset($staff[ $this->admininfo()['id']]);
+        unset($staff[$this->admininfo()['id']]);
         if ($this->request->isAjax()) {
             $res = new \app\admin\model\project\Comment();
             $res->title = $data['title'];
@@ -287,26 +358,15 @@ class Description extends AdminController
             $res->user_id = $this->admininfo()['id'];
             $res->description_id = $data['id'];
             $res->mentioned_id = $data['staff'];
+
             $res->save();
         }
 
         $this->assign([
-            'id'=>$data['id'],'re'=>$re,'ne'=>$ne,'staff'=>array_values($staff)
+            'id' => $data['id'], 're' => $re, 'ne' => $ne, 'staff' => array_values($staff)
         ]);
         return $this->fetch('/project/comment/comment');
     }
 
-    public function comment1()
-    {
-
-        if ($this->request->isAjax()) {
-            $data=  $this->request->post();
-
-          return  json_encode('打算打');
-        }else{
-            return $this->fetch('/project/comment/comment');
-        }
-
-    }
 
 }

@@ -12,6 +12,7 @@ use think\facade\Cache;
 use app\admin\model\SystemAdmin;
 use app\admin\model\project\Basic;
 use app\admin\model\project\Description;
+use app\admin\model\project\Uploadfile;
 /**
  * @ControllerAnnotation(title="项目汇总")
  */
@@ -36,6 +37,7 @@ class Allitems extends AdminController
         'is_auth',
         'title',
     ];
+
     public function __construct(App $app)
     {
         parent::__construct($app);
@@ -43,9 +45,8 @@ class Allitems extends AdminController
         $d = Cache::get('dw');
         //服务
         $g = Cache::get('fw');
-        $n=[];
-        foreach ($g as $k=>$v)
-        {
+        $n = [];
+        foreach ($g as $k => $v) {
             $n[$k]['name'] = $v['username'];
             $n[$k]['value'] = $v['id'];
         }
@@ -88,14 +89,14 @@ class Allitems extends AdminController
                 ->where($where)
                 ->where('file_status', 3)
                 ->withJoin(['type', 'rate', 'yz', 'dw', 'customerInformation', 'xm',
-                    'assignor', 'tyevel', 'trevel','assistant'
+                    'assignor', 'tyevel', 'trevel', 'assistant'
                 ], 'LEFT')
                 ->count();
             $list = $this->model
                 ->where($where)
                 ->where('file_status', 3)
                 ->withJoin(['type', 'rate', 'yz', 'dw', 'customerInformation', 'xm',
-                    'assignor', 'tyevel', 'trevel','assistant'
+                    'assignor', 'tyevel', 'trevel', 'assistant'
                 ], 'LEFT')
                 ->page($page, $limit)
                 ->order($this->sort)
@@ -126,14 +127,14 @@ class Allitems extends AdminController
                 ->where($where)
                 ->where('file_status', 4)
                 ->withJoin(['type', 'rate', 'yz', 'dw', 'customerInformation', 'xm',
-                    'assignor', 'tyevel', 'trevel','assistant'
+                    'assignor', 'tyevel', 'trevel', 'assistant'
                 ], 'LEFT')
                 ->count();
             $list = $this->model
                 ->where($where)
                 ->where('file_status', 4)
                 ->withJoin(['type', 'rate', 'yz', 'dw', 'customerInformation', 'xm',
-                    'assignor', 'tyevel', 'trevel','assistant'
+                    'assignor', 'tyevel', 'trevel', 'assistant'
                 ], 'LEFT')
                 ->page($page, $limit)
                 ->order($this->sort)
@@ -164,18 +165,19 @@ class Allitems extends AdminController
                 ->where($where)
                 ->where('file_status', 3)
                 ->withJoin(['type', 'rate', 'yz', 'dw', 'customerInformation', 'xm',
-                    'assignor', 'tyevel', 'trevel','assistant'
+                    'assignor', 'tyevel', 'trevel', 'assistant'
                 ], 'LEFT')
                 ->count();
             $list = $this->model
                 ->where($where)
                 ->where('file_status', 3)
                 ->withJoin(['type', 'rate', 'yz', 'dw', 'customerInformation', 'xm',
-                    'assignor', 'tyevel', 'trevel','assistant'
+                    'assignor', 'tyevel', 'trevel', 'assistant'
                 ], 'LEFT')
                 ->page($page, $limit)
                 ->order($this->sort)
                 ->select()->toArray();
+
             $data = [
                 'code' => 0,
                 'msg' => '',
@@ -268,8 +270,8 @@ class Allitems extends AdminController
             $rule = [];
             $this->validate($post, $rule);
             try {
-                $admin=$this->admininfo();
-                $post['assignor_id']=$admin['id'];
+                $admin = $this->admininfo();
+                $post['assignor_id'] = $admin['id'];
                 $save = $row->save($post);
             } catch (\Exception $e) {
                 $this->error('保存失败', $e->getMessage());
@@ -278,10 +280,11 @@ class Allitems extends AdminController
         }
         $this->assign('row', $row);
         $this->assign([
-            'c' => $c, 'd' => $d, 'e' => $e, 'f' => $f, 'g' => $g,'fw'=>$n
+            'c' => $c, 'd' => $d, 'e' => $e, 'f' => $f, 'g' => $g, 'fw' => $n
         ]);
         return $this->fetch();
     }
+
     /**
      * @NodeAnotation(title="交稿")
      */
@@ -289,14 +292,14 @@ class Allitems extends AdminController
     {
 
         try {
-            $res=Customeraa::find($id);
-            $res->file_status=4;
+            $res = Customeraa::find($id);
+            $res->file_status = 4;
             $res->save();
         } catch (\Exception $e) {
             // 这是进行异常捕获
             $this->error('交稿失败', $e->getMessage());
         }
-        $this->success('交稿成功') ;
+        $this->success('交稿成功');
     }
 
     /**
@@ -306,14 +309,14 @@ class Allitems extends AdminController
     {
         $post = $this->request->post();
         try {
-            $admin=$this->admininfo();
+            $admin = $this->admininfo();
             //分配权限时注意一下,此处暂不写验证是否当前职位
-            Customeraa::wherein('id',$post['id'])->update(['general_approval'=>$admin['username']]);
+            Customeraa::wherein('id', $post['id'])->update(['general_approval' => $admin['username']]);
         } catch (\Exception $e) {
             // 这是进行异常捕获
             $this->error('批准失败', $e->getMessage());
         }
-        $this->success('批准成功') ;
+        $this->success('批准成功');
     }
 
     /**
@@ -323,13 +326,13 @@ class Allitems extends AdminController
     {
         $post = $this->request->post();
         try {
-            $admin=$this->admininfo();
-            Customeraa::wherein('id',$post['id'])->update(['m_approval'=>$admin['username']]);
+            $admin = $this->admininfo();
+            Customeraa::wherein('id', $post['id'])->update(['m_approval' => $admin['username']]);
         } catch (\Exception $e) {
             // 这是进行异常捕获
             $this->error('批准失败', $e->getMessage());
         }
-        $this->success('批准成功') ;
+        $this->success('批准成功');
     }
 
     /**
@@ -389,7 +392,7 @@ class Allitems extends AdminController
 
         $post = $this->request->param();
         $this->assign([
-            'c' => $c, 'd' => $d, 'e' => $e, 'f' => $f, 'g' => $g,'fw'=>$n,'data'=>$post['id']
+            'c' => $c, 'd' => $d, 'e' => $e, 'f' => $f, 'g' => $g, 'fw' => $n, 'data' => $post['id']
         ]);
         return $this->fetch();
     }
@@ -400,16 +403,15 @@ class Allitems extends AdminController
     public function update()
     {
         $post1 = $this->request->post();
-        $val= explode(",", $post1['editdata']);
+        $val = explode(",", $post1['editdata']);
         unset($post1['editdata']);
         try {
-            $admin=$this->admininfo();
-            $post1['assignor_id']=$admin['id'];
-                foreach ($val as $k=>$v)
-                {
-                    $row = $this->model->find($v);
-                    $save = $row->save($post1);
-                }
+            $admin = $this->admininfo();
+            $post1['assignor_id'] = $admin['id'];
+            foreach ($val as $k => $v) {
+                $row = $this->model->find($v);
+                $save = $row->save($post1);
+            }
         } catch (\Exception $e) {
             $this->error('更新失败', $e->getMessage());
         }
@@ -422,9 +424,9 @@ class Allitems extends AdminController
      */
     public function split($id)
     {
-        $basic=Basic::field(['project_name','id'])->select();
-        $ba=$this->xmdata($basic,'sd','project_name');
-        $this->assign(['id'=>$id,'basic'=>$ba]);
+        $basic = Basic::field(['project_name', 'id'])->select();
+        $ba = $this->xmdata($basic, 'sd', 'project_name');
+        $this->assign(['id' => $id, 'basic' => $ba]);
         return $this->fetch();
     }
 
@@ -435,14 +437,14 @@ class Allitems extends AdminController
     {
         $post1 = $this->request->post();
         try {
-            for ($x=1; $x<=$post1['number']; $x++) {
-               $file= Customeraa::find($post1['editdata']);
-                $save  = new Description;
-                $save->save(["basic_id"=>$post1['project_name'],'related_products'=>$post1['related_products'],
-                    'file_specification'=>$post1['file_specification'],'file_id'=>$post1['editdata']
-                    ,'file_name_project'=>$file['customer_file_name'].'-'.$x
-                    ,'file_code_project'=>$file['customer_file_code'].'-'.$x,
-                    'assistant_id'=>$this->admininfo()['id']
+            for ($x = 1; $x <= $post1['number']; $x++) {
+                $file = Customeraa::find($post1['editdata']);
+                $save = new Description;
+                $save->save(["basic_id" => $post1['project_name'], 'related_products' => $post1['related_products'],
+                    'file_specification' => $post1['file_specification'], 'file_id' => $post1['editdata']
+                    , 'file_name_project' => $file['customer_file_name'] . '-' . $x
+                    , 'file_code_project' => $file['customer_file_code'] . '-' . $x,
+                    'assistant_id' => $this->admininfo()['id']
                 ]);
             }
         } catch (\Exception $e) {
@@ -453,4 +455,8 @@ class Allitems extends AdminController
     }
 
 
-}
+
+
+
+
+    }
