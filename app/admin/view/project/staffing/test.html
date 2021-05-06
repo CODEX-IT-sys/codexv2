@@ -1,0 +1,105 @@
+<html>
+<head>
+    <meta charset='utf-8'/>
+    <link href="/static/fullcalendar3/fullcalendar/fullcalendar.css" rel="stylesheet">
+    <link href='/static/fullcalendar3/fullcalendar/fullcalendar.print.css' rel='stylesheet' media='print' />
+    <link href="/static/fullcalendar3/cupertino/jquery-ui.min.css" rel="stylesheet">
+    <!--<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>-->
+    <script src='/static/fullcalendar3/lib/jquery.min.js'></script>
+    <!--<script src="/static/fullcalendar3/fullcalendar/fullcalendar.js"></script>-->
+    <script src='/static/fullcalendar3/fullcalendar/fullcalendar.min.js'></script>
+    <script src='/static/fullcalendar3/lib/jquery-ui.custom.min.js'></script>
+    <!--<script src="https://cdn.bootcdn.net/ajax/libs/fullcalendar/3.6.2/locale/zh-cn.js"></script>-->
+    <!--<script src="/static/fullcalendar3/fullcalendar/fullcalendar.js"></script>-->
+    <!--<script src="https://cdn.bootcdn.net/ajax/libs/fullcalendar/2.1.0-beta3/fullcalendar.js"></script>-->
+
+</head>
+<body>
+<div id='calendar'></div>
+</body>
+</html>
+<script>
+
+
+    /**
+     *  默认显示的视图
+     *    month    一页显示一月, 日历样式
+     basicWeek   一页显示一周, 无特殊样式
+     basicDay    一页显示一天, 无特殊样式
+     agendaWeek  一页显示一周, 显示详细的24小时表格
+     agendaDay   一页显示一天, 显示详细的24小时表格
+     listYear    年列表（V3.*支持）
+     listMonth   月列表（V3.*支持）
+     listWeek    周列表（V3.*支持）
+     listDay        日列表（V3.*支持）
+     **/
+        //页面加载完初始化日历
+        //获取当前日期
+    var myDate = new Date();
+    var defaultDate = myDate.getFullYear() + '-' + (myDate.getMonth() + 1) + '-' + myDate.getDate()
+    var arr = {$a|raw};
+    console.log(arr);
+    $(document).ready(function () {
+        $('#calendar').fullCalendar({
+            header: {   //顶部显示信息
+                left: 'prev,next today',
+                center: 'title',
+                // right: 'month,agendaWeek,agendaDay,listMonth'
+            },
+            locale: 'zh-cn',
+            timeFormat: 'HH:mm', //日程事件的时间格式
+            //      timeFormat: 'HH:mm{ - H:mm}',{agenda: ‘h:mm{ - h:mm}}
+            buttonText: { //各按钮的显示文本信息
+                today: '今天',
+                month: '月',
+                agendaWeek: '周',
+                agendaDay: '日',
+                listMonth: '日程',
+            },
+            theme:true,//是否允许使用jquery的ui主题，
+            monthNames: ["1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "9月", "10月", "11月", "12月"], //月份全称
+            monthNamesShort: ["1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "9月", "10月", "11月", "12月"], //月份简写
+            dayNames: ["周日", "周一", "周二", "周三", "周四", "周五", "周六"], //周全称
+            dayNamesShort: ["周日", "周一", "周二", "周三", "周四", "周五", "周六"], //周简写
+            noEventsMessage: "当月无数据", //listview视图下，无数据提示
+            allDayText: "全天", //自定义全天视图的名称
+            allDaySlot: false, //是否在周日历上方显示全天
+            slotDuration: "00:30:00", //一格时间槽代表多长时间，默认00:30:00（30分钟）
+            slotLabelFormat: "H(:mm)a", //日期视图左边那一列显示的每一格日期时间格式
+            slotLabelInterval: "01:00:00", //日期视图左边那一列多长间隔显示一条日期文字(默认跟着slotDuration走的，可自定义)
+            snapDuration: "01:00:00", //其实就是动态创建一个日程时，默认创建多长的时间块
+            firstDay: 1, //一周中显示的第一天是哪天，周日是0，周一是1，类推
+            hiddenDays: [], //隐藏一周中的某一天或某几天，数组形式，如隐藏周二和周五：[2,5]，默认不隐藏，除非weekends设置为false。
+            weekends: true, //是否显示周六和周日，设为false则不显示周六和周日。默认值为true
+            weekMode: 'variable', //月视图里显示周的模式，因每月周数不同月视图高度不定。fixed：固定显示6周高，日历高度保持不变liquid：不固定周数，高度随周数变化variable：不固定周数，但高度固定
+            weekNumbers: false, //是否在日历中显示周次(一年中的第几周)，如果设置为true，则会在月视图的左侧、周视图和日视图的左上角显示周数。
+            weekNumberCalculation: 'iso', //周次的显示格式。
+            height: 800, //设置日历的高度，包括header日历头部，默认未设置，高度根据aspectRatio值自适应。
+            //      contentHeight: 600,//设置日历主体内容的高度，不包括header部分，默认未设置，高度根据aspectRatio值自适应。
+            handleWindowResize: true, //是否随浏览器窗口大小变化而自动变化。
+            defaultView: 'month', //初始化时默认视图，默认是月month，agendaWeek是周，agendaDay是当天
+            minTime: '8:00:00',
+            maxTime: '20:00:00',
+            //      slotEventOverlap: false,//事件是否可以重叠覆盖
+            nowIndicator: true, //周/日视图中显示今天当前时间点（以红线标记），默认false不显示
+            eventLimit: false, //数据条数太多时，限制显示条数（多余的以“+2more”格式显示），默认false不限制,支持输入数字设定固定的显示条数
+            eventLimitText: "更多", //当一块区域内容太多以"+2 more"格式显示时，这个more的名称自定义（应该与eventLimit: true一并用）
+            dayPopoverFormat: "YYYY年M月d日", //点开"+2 more"弹出的小窗口标题，与eventLimitClick可以结合用
+            render: function(view) { //method,绑定日历到id上。$('#id').fullCalendar('render');
+                console.log('render', view)
+            },
+            selectable: true,
+            selectHelper: true,
+
+            unselectAuto: true,
+            events:arr,
+            eventRender: function(event, element) {
+                element.find('.fc-title').append("<br/>" + event.description);
+            }
+
+
+        });
+
+    })
+
+</script>

@@ -1,0 +1,21 @@
+<div class="layuimini-container">
+    <div class="layuimini-main">
+        <table id="currentTable" class="layui-table layui-hide"
+               data-auth-add="{:auth('project.basicfile/add')}"
+               data-auth-edit="{:auth('project.basicfile/edit')}"
+               data-auth-delete="{:auth('project.basicfile/delete')}"
+               lay-filter="currentTable">
+        </table>
+    </div>
+</div>
+
+<script>
+    //文件基本信息id
+    var basic_id = "<?php echo $basic_id?>";
+</script>
+<script type="text/html" id="barDemo">
+
+
+    <div><a href="/admin/project.basicfile/down?id={{d.id}}" class="layui-table-link">下载</a></div>
+
+</script>

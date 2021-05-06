@@ -231,7 +231,7 @@ define(["jquery", "easy-admin"], function ($, ea) {
                                 text: '拆分',
                                 url: init.split_url,
                                 method: 'open',
-                                auth: 'spliturl',
+                                auth: 'split',
                                 class: 'layui-btn layui-btn-xs layui-btn-normal',
                             },{
                                 text: '交稿',

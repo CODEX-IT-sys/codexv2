@@ -9,6 +9,7 @@ define(["jquery", "easy-admin"], function ($, ea) {
         delete_url: 'project.basic/delete',
         export_url: 'project.basic/export',
         modify_url: 'project.basic/modify',
+        fileup_url: 'project.basicfile/index',
     };
     var soulTable = layui.soulTable;
     var Controller = {
@@ -33,7 +34,17 @@ define(["jquery", "easy-admin"], function ($, ea) {
                     {field: 'terminology', title: '参考术语库'},
                     {field: 'project_remark', title: '备注'},
                     {field: 'create_time', title: '创建时间'},
-                    {width: 250, title: '操作', templet: ea.table.tool},
+                    {width: 250, title: '操作', templet: ea.table.tool,
+                        operat: [
+                            [ {
+                                text: '项目文件',
+                                url: init.fileup_url,
+                                method: 'open',
+                                auth: 'fileup',
+                                class: 'layui-btn layui-btn-xs layui-btn-normal',
+                                extend: 'data-full="true"',
+                            }],
+                            'edit','delete']},
                 ]],
                 filter: {
                     items: ['column', 'data', 'condition', 'editCondition', 'excel', 'clearCache'],

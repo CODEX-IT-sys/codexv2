@@ -51,7 +51,7 @@ define(["jquery", "easy-admin"], function ($, ea) {
                     {field: 'efficiency', title: '效率'},
                     {field: 'scedule_remark', title: '备注'},
                     {field: 'create_time', title: '创建时间'},
-                    {width: 250, title: '操作', templet: ea.table.tool},
+                    {width: 250, title: '操作', fixed:"right",templet: ea.table.tool},
 
                 ]],
                 autoColumnWidth: {

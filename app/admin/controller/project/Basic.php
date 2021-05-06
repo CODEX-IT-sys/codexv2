@@ -7,6 +7,7 @@ use EasyAdmin\annotation\ControllerAnnotation;
 use EasyAdmin\annotation\NodeAnotation;
 use think\App;
 use think\facade\Cache;
+use app\admin\model\setting\DatabaseContent;
 /**
  * @ControllerAnnotation(title="项目基本信息")
  */
@@ -135,6 +136,8 @@ class Basic extends AdminController
         ]);
         return $this->fetch();
     }
+
+
 
 
 }

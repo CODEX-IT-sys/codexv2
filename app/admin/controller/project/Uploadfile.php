@@ -131,7 +131,6 @@ class Uploadfile extends AdminController
         }
 
         return json(['code' => 1, 'msg' => '上传成功', 'path' => $info, 'mime_type' => $mime_type, 'fileName' => $fileName2]);
-
     }
     /**
      * @NodeAnotation(title="文件管理")
