@@ -10,14 +10,24 @@
 
 
         <!--<div class="layui-form-item">-->
-        <!--<label class="layui-form-label">文件状态</label>-->
-        <!--<div class="layui-input-block">-->
-
-        <!--<input type="radio" name="file_status" value="1" title="拒绝">-->
-        <!--<input type="radio" name="file_status" value="2" title="接受" >-->
-        <!--<input type="radio" name="file_status" value="0" title="未确认" >-->
-
-        <!--</div>-->
+            <!--<label class="layui-form-label">文件状态</label>-->
+            <!--<div class="layui-input-block">-->
+                <!--<input type="radio" name="file_status" value="1" title="拒绝"-->
+                       <!--{if (1==$row.file_status)}-->
+                       <!--checked='checked'-->
+                       <!--{/if}-->
+                <!--&gt;-->
+                <!--<input type="radio" name="file_status" value="2" title="接受"-->
+                       <!--{if (2==$row.file_status)}-->
+                       <!--checked='checked'-->
+                       <!--{/if}-->
+                <!--&gt;-->
+                <!--<input type="radio" name="file_status" value="0" title="未确认"-->
+                       <!--{if (0==$row.file_status)}-->
+                       <!--checked='checked'-->
+                       <!--{/if}-->
+                <!--&gt;-->
+            <!--</div>-->
         <!--</div>-->
         <input type="hidden" name="demand_id" value="{$row.demand_id|default=''}">
         <div class="layui-form-item">
@@ -52,8 +62,7 @@
                 <select name="customer_file_type" lay-verify="required">
                     <option value="">请选择文件类型</option>
                     {foreach $f as $k1=>$v }
-                    <option value="{$v.id}" {if condition="$row.customer_file_type eq $v.id" } selected="selected" {
-                    /if}>{$v.content}</option>
+                    <option value="{$v.id}" {in name="$v.id" value="$row.customer_file_type"} selected=""{/in}>{$v.content}</option>
                     {/foreach}
                 </select>
             </div>
@@ -71,8 +80,7 @@
                 <select name="language" lay-verify="required">
                     <option value="">请选择语种</option>
                     {foreach $h as $k1=>$v }
-                    <option value="{$v.id}" {if condition="$row.language eq $v.id" } selected="selected" {
-                    /if}>{$v.content}</option>
+                    <option value="{$v.id}" {in name="$v.id" value="$row.language"} selected=""{/in}>{$v.content}</option>
                     {/foreach}
                 </select>
             </div>
@@ -90,8 +98,7 @@
                 <select name="unit" lay-verify="required">
                     <option value="">请选择一个单位</option>
                     {foreach $d as $k1=>$v }
-                    <option value="{$v.id}" {if condition="$row.unit eq $v.id" } selected="selected" {
-                    /if}>{$v.content}</option>
+                    <option value="{$v.id}"  {in name="$v.id" value="$row.unit"} selected=""{/in}>{$v.content}</option>
                     {/foreach}
                 </select>
             </div>
@@ -109,8 +116,7 @@
                 <select name="tax_rate" lay-verify="required">
                     <option value="">请选择税率</option>
                     {foreach $s as $k=>$v }
-                    <option value="{$v.id}" {if condition="$row.tax_rate eq $v.id" } selected="selected" {
-                    /if}>{$v.content}</option>
+                    <option value="{$v.id}" {in name="$v.id" value="$row.tax_rate"} selected=""{/in}>{$v.content}</option>
                     {/foreach}
                 </select>
             </div>
@@ -121,7 +127,25 @@
                         <input type="text" name="vat" class="layui-input" lay-verify="required" placeholder="请输入增值税" value="{$row.vat|default=''}">
                     </div>
                 </div>-->
-
+        <!--<div class="layui-form-item">-->
+        <!--<label class="layui-form-label">报价金额</label>-->
+        <!--<div class="layui-input-block">-->
+        <!--<input type="text" name="quotation_price" class="layui-input" lay-verify="required" placeholder="请输入报价金额" value="{$row.quotation_price|default=''}" disabled>-->
+        <!--</div>-->
+        <!--</div>-->
+        <div class="layui-form-item">
+            <label class="layui-form-label">项目经理</label>
+            <div class="layui-input-block">
+                <!--<input type="text" name="mid" class="layui-input" lay-verify="required" placeholder="请输入项目经理id" value="{$row.mid|default=''}">-->
+                <select name="mid" lay-verify="required" lay-search>
+                    <option value="">请选择项目经理</option>
+                    {foreach $b as $key=>$v }
+                    <option value="{$v.id}" {if condition="$row.mid eq $v.id" } selected="selected" {
+                    /if}>{$v.username}</option>
+                    {/foreach}
+                </select>
+            </div>
+        </div>
         <div class="layui-form-item">
             <label class="layui-form-label">客户期望提交日期</label>
             <div class="layui-input-block">
@@ -134,7 +158,8 @@
             <label class="layui-form-label">交付日期</label>
             <div class="layui-input-block">
                 <input type="text" name="completion_date" data-date="" data-date-type="datetime" autocomplete="off"
-                       class="layui-input" placeholder="请输入交付日期" value="{$row.completion_date|default=''}">
+                       class="layui-input" lay-verify="required" placeholder="交付日期"
+                       value="{$row.completion_date|default=''}">
             </div>
         </div>
         <div class="layui-form-item">
@@ -143,6 +168,7 @@
                 <!--<input type="text" name="customer_file_request" class="layui-input" lay-verify="required" placeholder="请输入客户要求" value="{$row.customer_file_request|default=''}">-->
                 <textarea name="customer_file_request" placeholder="请输入客户要求" class="layui-textarea">{$row.customer_file_request|default=''}</textarea>
 
+
             </div>
         </div>
         <div class="layui-form-item">
@@ -150,8 +176,6 @@
             <div class="layui-input-block">
                 <!--<input type="text" name="customer_file_reference" class="layui-input" lay-verify="required" placeholder="请输入客户参考文件" value="{$row.customer_file_reference|default=''}">-->
                 <textarea name="customer_file_reference" placeholder="请输入客户参考文件" class="layui-textarea"> {$row.customer_file_reference|default=''}</textarea>
-
-
             </div>
         </div>
         <div class="layui-form-item">

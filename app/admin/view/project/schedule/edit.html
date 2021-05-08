@@ -1,5 +1,7 @@
 <div class="layuimini-container">
     <form id="app-form" class="layui-form layuimini-form">
+
+        <input type="hidden" name="description_id" value="{$row.description_id}">
         <div class="layui-form-item">
             <label class="layui-form-label">是否延迟提交</label>
             <div class="layui-input-block">
@@ -112,7 +114,6 @@
                 <textarea name="scedule_remark" placeholder="请输入备注" class="layui-textarea">{$row.scedule_remark|default=''}</textarea>
             </div>
         </div>
-
 
 
 

@@ -67,8 +67,7 @@
                 <select name="mid" lay-verify="required" lay-search>
                     <option value="">请选择项目经理</option>
                     {foreach $b as $key=>$v }
-                    <option value="{$v.id}" {if condition="$row.mid eq $v.id" } selected="selected" {
-                    /if}>{$v.username}</option>
+                    <option value="{$v.id}"  {in name="$v.id" value="$row.mid"} selected=""{/in}>{$v.username}</option>
                     {/foreach}
                 </select>
             </div>
@@ -80,8 +79,7 @@
                 <select name="assistant_id" lay-verify="required" lay-search>
                     <option value="">请选择项目助理</option>
                     {foreach $Assignor as $key=>$v }
-                    <option value="{$v.id}" {if condition="$row.assistant_id eq $v.id" } selected="selected" {
-                    /if}>{$v.username}</option>
+                    <option value="{$v.id}"{in name="$v.id" value="$row.assistant_id"} selected=""{/in}>{$v.username}</option>
                     {/foreach}
                 </select>
             </div>
@@ -94,8 +92,7 @@
                 <select name="typesetting_evel" lay-verify="required">
                     <option value="">请选择排版难易程度</option>
                     {foreach $level as $k1=>$v }
-                    <option value="{$v.id}" {if condition="$row.typesetting_evel eq $v.id" } selected="selected" {
-                    /if}>{$v.content}</option>
+                    <option value="{$v.id}" {in name="$v.id" value="$row.typesetting_evel"} selected=""{/in}>{$v.content}</option>
                     {/foreach}
                 </select>
             </div>
@@ -106,8 +103,7 @@
                 <select name="translation_evel" lay-verify="required">
                     <option value="">请选择翻译难易程度</option>
                     {foreach $level as $k1=>$v }
-                    <option value="{$v.id}" {if condition="$row.translation_evel eq $v.id" } selected="selected" {
-                    /if}>{$v.content}</option>
+                    <option value="{$v.id}" {in name="$v.id" value="$row.translation_evel"} selected=""{/in}>{$v.content}</option>
                     {/foreach}
                 </select>
             </div>

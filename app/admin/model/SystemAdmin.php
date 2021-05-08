@@ -29,6 +29,23 @@ class SystemAdmin extends TimeModel
     }
 
 
+    public function trtree()
+    {
+        return $this->hasMany('app\admin\model\project\Description','dtranslation_id','id');
+    }
+    public function xdtree()
+    {
+        return $this->hasMany('app\admin\model\project\Description','dproofreader_id','id');
+    }
+    public function yptree()
+    {
+        return $this->hasMany('app\admin\model\project\Description','dbefore_ty_id','id');
+    }
+    public function hptree()
+    {
+        return $this->hasMany('app\admin\model\project\Description','dafter_ty_id','id');
+    }
+
 
 
 }

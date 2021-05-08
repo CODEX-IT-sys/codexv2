@@ -64,12 +64,12 @@ class Index extends AdminController
         $cate=DatabaseContent::where('list_id',6)->select();
         Cache::set('cate',$cate);
         //翻译人员
-        $tr=SystemAdmin::wherein('auth_ids', [8])->select();
-        Cache::set('tr',$tr);
+        $tr=SystemAdmin::where('auth_ids', 'find in set',8)->select();
         //预排.后排.校对
-        $yp=SystemAdmin::wherein('auth_ids', [16])->select();
-        $hp=SystemAdmin::wherein('auth_ids', [17])->select();
-        $xd=SystemAdmin::wherein('auth_ids', [18])->select();
+        $yp=SystemAdmin::where('auth_ids','find in set', 16)->select();
+        $hp=SystemAdmin::where('auth_ids','find in set', 17)->select();
+        $xd=SystemAdmin::where('auth_ids','find in set', 18)->select();
+        Cache::set('tr',$tr);
         Cache::set('yp',$yp);
         Cache::set('hp',$hp);
         Cache::set('xd',$xd);

@@ -9,7 +9,7 @@ define(["jquery", "easy-admin"], function ($, ea) {
         delete_url: 'project.description/delete',
         export_url: 'project.description/export',
         modify_url: 'project.description/modify',
-       comment_url: 'project.description/comment',
+        comment_url: 'project.description/comment',
     };
     var soulTable = layui.soulTable;
     var Controller = {
@@ -20,52 +20,92 @@ define(["jquery", "easy-admin"], function ($, ea) {
                 skin: 'line  ' //行边框风格
                 , even: true, //开启隔行背景
                 size: 'sm', //小尺寸的表格
-                toolbar: ['refresh',],
+                fixResize: false,
+                toolbar: ['refresh', 'delete'],
+                text: {none: '无数据'},
                 cols: [[
-                    {type: 'checkbox'},
-                    {field: 'id', title: 'id',search:false},
+                    {type: 'checkbox', fixed: 'left'},
+                    {field: 'id', title: 'id', search: false, fixed: 'left'},
                     {
                         field: 'description_status',
                         search: 'select',
-                        selectList: {"1": "待翻译", "2": "待校对", "0": "待预排", '3': "待后排",'4':"已完成"},
+                        selectList: {"1": "待翻译", "2": "待校对", "0": "待预排", '3': "待后排", '4': "已完成"},
                         title: '文件状态',
-                        sort: true
+                        sort: true,
+                        fixed: 'left'
                     },
-                    {field: 'file_name_project', title: '文件名称'},
-                    {field: 'file_code_project', title: '文件编号'},
+                    {field: 'file_name_project', title: '文件名称', fixed: 'left'},
+                    {field: 'file_code_project', title: '文件编号', fixed: 'left'},
                     {field: 'basic.project_name', title: '项目名称'},
-                    {field: 'tr.username', title: '翻译人员'},
-                    {field: 'tr_start_time', title: '翻译开始时间',search:false},
-                    {field: 'tr_end_time', title: '翻译结束时间',search:false},
-                    {field: 'xd.username', title: '校对人员',},
-                    {field: 'pr_start_time', title: '校对开始时间',search:false},
-                    {field: 'pr_end_time', title: '校对结束时间',search:false},
-                    {field: 'yp.username', title: '预排人员',},
-                    {field: 'be_start_time', title: '预排开始时间',search:false},
-                    {field: 'be_end_time', title: '预排结束时间',search:false},
-                    {field: 'hp.username', title: '后排人员',},
-                    {field: 'after_start_time', title: '后排开始时间',search:false},
-                    {field: 'after_end_time', title: '后排结束时间',search:false},
-                    {field: 'project_page', title: '页数',search:false},
-                    {field: 'project_words_actual', title: '源语数量',search:false},
-                    {field: 'repetition_rate95', title: '95%~99%总重复率',search:false},
-                    {field: 'repetition_rate100', title: '100%重复率',search:false},
-                    {field: 'deduction_number', title: '扣除字数',search:false},
-                    {field: 'repetition_rateall', title: '总重复率',search:false},
-                    {field: 'number_of_words_actual', title: '实际源语数量',search:false},
-                    {field: 'final_delivery_time', title: '最终交付时间',search:false},
+                    {
+                        title: '翻译人员', templet: function (d) {
+                            if (d.tr == null) {
+                                return ''
+                            } else {
+                                return d.tr.username
+                            }
+                        }
+                    },
+                    {field: 'tr_start_time', title: '翻译开始时间', search: false},
+                    {field: 'tr_end_time', title: '翻译结束时间', search: false},
+                    {
+                        title: '校对', templet: function (d) {
+                            if (d.xd == null) {
+                                return ''
+                            } else {
+                                return d.xd.username
+                            }
+                        }
+                    },
+                    {field: 'pr_start_time', title: '校对开始时间', search: false},
+                    {field: 'pr_end_time', title: '校对结束时间', search: false},
+                    {
+                        title: '预排人员', templet: function (d) {
+                            if (d.yp == null) {
+                                return ''
+                            } else {
+                                return d.yp.username
+                            }
+                        }
+                    },
+                    {field: 'be_start_time', title: '预排开始时间', search: false},
+                    {field: 'be_end_time', title: '预排结束时间', search: false},
+                    {
+                        title: '后排人员', templet: function (d) {
+                            if (d.hp == null) {
+                                return ''
+                            } else {
+                                return d.hp.username
+                            }
+                        }
+                    },
+                    {field: 'after_start_time', title: '后排开始时间', search: false},
+                    {field: 'after_end_time', title: '后排结束时间', search: false},
+                    {field: 'project_page', title: '页数', search: false},
+                    {field: 'project_words_actual', title: '源语数量', search: false},
+                    {field: 'repetition_rate95', title: '95%~99%总重复率', search: false},
+                    {field: 'repetition_rate100', title: '100%重复率', search: false},
+                    {field: 'deduction_number', title: '扣除字数', search: false},
+                    {field: 'repetition_rateall', title: '总重复率', search: false},
+                    {field: 'number_of_words_actual', title: '实际源语数量', search: false},
+                    {field: 'final_delivery_time', title: '最终交付时间', search: false},
                     {field: 'assignor.username', title: '项目助理'},
-                    {field: 'create_time', title: '创建时间',search:false},
-                    {width: 250, title: '操作', fixed: "right", templet: ea.table.tool, operat: [
+                    {field: 'file_specification', title: '文件用途和规范', search: false},
+                    {field: 'related_products', title: '涉及产品', search: false},
+
+                    {field: 'create_time', title: '创建时间', search: false},
+                    {
+                        width: 250, title: '操作', fixed: "right", templet: ea.table.tool, operat: [
                             [{
                                 text: '留言',
                                 url: init.comment_url,
                                 method: 'open',
                                 auth: 'comment',
-                                extend:'data-full="true"',
+                                extend: 'data-full="true"',
                                 class: 'layui-btn layui-btn-xs layui-btn-normal',
                             }],
-                            'edit', 'delete']},
+                            'edit', 'delete']
+                    },
 
                 ]],
                 filter: {
@@ -94,6 +134,9 @@ define(["jquery", "easy-admin"], function ($, ea) {
                 delete_url: 'project.description/delete',
                 export_url: 'project.description/export',
                 modify_url: 'project.description/modify',
+                assessyp_url: 'project.assess/assessyp',
+                assesshp_url: 'project.assess/assesshp',
+                assesstr_url: 'project.assess/assesstr',
             };
             ea.table.render({
                 init: init,
@@ -104,36 +147,95 @@ define(["jquery", "easy-admin"], function ($, ea) {
                 toolbar: ['refresh',],
                 cols: [[
                     {type: 'checkbox'},
-                    {field: 'id', title: 'id',search:false},
+                    {field: 'id', title: 'id', search: false},
                     {field: 'file_name_project', title: '文件名称'},
                     {field: 'file_code_project', title: '文件编号'},
                     {
                         field: 'description_status',
                         search: 'select',
-                        selectList: {"1": "待翻译", "2": "待校对", "0": "待预排", '3': "待后排",'4':"已完成"},
+                        selectList: {"1": "待翻译", "2": "待校对", "0": "待预排", '3': "待后排", '4': "已完成"},
                         title: '文件状态',
                         sort: true
                     },
                     {field: 'basic.project_name', title: '项目名称'},
-                    {field: 'tr.username', title: '翻译人员'},
-                    {field: 'tr_end_time', title: '翻译结束时间',search:false},
-                    {field: 'xd.username', title: '校对人员',},
-                    {field: 'pr_end_time', title: '校对结束时间',search:false},
-                    {field: 'yp.username', title: '预排人员',},
-                    {field: 'be_end_time', title: '预排结束时间',search:false},
-                    {field: 'hp.username', title: '后排人员',},
-                    {field: 'after_end_time', title: '后排结束时间',search:false},
-                    {field: 'project_page', title: '页数',search:false},
-                    {field: 'project_words_actual', title: '源语数量',search:false},
-                    {field: 'repetition_rate95', title: '95%~99%总重复率',search:false},
-                    {field: 'repetition_rate100', title: '100%重复率',search:false},
-                    {field: 'deduction_number', title: '扣除字数',search:false},
-                    {field: 'repetition_rateall', title: '总重复率',search:false},
-                    {field: 'number_of_words_actual', title: '实际源语数量',search:false},
+                    {
+                        title: '翻译人员', templet: function (d) {
+                            if (d.tr == null) {
+                                return ''
+                            } else {
+                                return d.tr.username
+                            }
+                        }
+                    },
+                    {field: 'tr_end_time', title: '翻译结束时间', search: false},
+                    {
+                        title: '校对', templet: function (d) {
+                            if (d.xd == null) {
+                                return ''
+                            } else {
+                                return d.xd.username
+                            }
+                        }
+                    },
+                    {field: 'pr_end_time', title: '校对结束时间', search: false},
+                    {
+                        title: '预排人员', templet: function (d) {
+                            if (d.yp == null) {
+                                return ''
+                            } else {
+                                return d.yp.username
+                            }
+                        }
+                    },
+                    {field: 'be_end_time', title: '预排结束时间', search: false},
+                    {
+                        title: '后排人员', templet: function (d) {
+                            if (d.hp == null) {
+                                return ''
+                            } else {
+                                return d.hp.username
+                            }
+                        }
+                    },
+                    {field: 'after_end_time', title: '后排结束时间', search: false},
+                    {field: 'project_page', title: '页数', search: false},
+                    {field: 'project_words_actual', title: '源语数量', search: false},
+                    {field: 'repetition_rate95', title: '95%~99%总重复率', search: false},
+                    {field: 'repetition_rate100', title: '100%重复率', search: false},
+                    {field: 'deduction_number', title: '扣除字数', search: false},
+                    {field: 'repetition_rateall', title: '总重复率', search: false},
+                    {field: 'number_of_words_actual', title: '实际源语数量', search: false},
                     // {field: 'final_delivery_time', title: '最终交付时间',search:false},
                     {field: 'assignor.username', title: '项目助理'},
-                    {field: 'create_time', title: '创建时间',search:false},
-                    {field: 'create_time', title: '创建时间'},
+                    {field: 'create_time', title: '创建时间', search: false},
+                    {
+                        width: 250, title: '操作', fixed: "right", templet: ea.table.tool, operat: [
+                            [{
+                                text: '预排评估',
+                                url: init.assessyp_url,
+                                method: 'open',
+                                auth: 'assessyp',
+                                extend: 'data-full="true"',
+                                class: 'layui-btn layui-btn-xs layui-btn-normal',
+                            },
+                                {
+                                    text: '翻译评估',
+                                    url: init.assesstr_url,
+                                    method: 'open',
+                                    auth: 'comment',
+                                    extend: 'data-full="true"',
+                                    class: 'layui-btn layui-btn-xs layui-btn-normal',
+                                },
+                                {
+                                    text: '后排评估',
+                                    url: init.assesshp_url,
+                                    method: 'open',
+                                    auth: 'comment',
+                                    extend: 'data-full="true"',
+                                    class: 'layui-btn layui-btn-xs layui-btn-normal',
+                                }],
+                        ]
+                    },
                 ]],
                 filter: {
                     items: ['column', 'data', 'condition', 'editCondition', 'excel', 'clearCache'],
@@ -173,23 +275,23 @@ define(["jquery", "easy-admin"], function ($, ea) {
                 toolbar: ['refresh',],
                 cols: [[
                     {type: 'checkbox'},
-                    {field: 'id', title: 'id',search:false},
+                    {field: 'id', title: 'id', search: false},
                     {field: 'file_name_project', title: '文件名称'},
                     {field: 'file_code_project', title: '文件编号'},
                     {field: 'basic.project_name', title: '项目名称'},
-                    {field: 'yp.username', title: '预排人员',search:false},
-                    {field: 'be_start_time', title: '预排开始时间',search:false},
-                    {field: 'be_end_time', title: '预排结束时间',search:false},
-                    {field: 'project_page', title: '页数',search:false},
-                    {field: 'project_words_actual', title: '源语数量',search:false},
-                    {field: 'repetition_rate95', title: '95%~99%总重复率',search:false},
-                    {field: 'repetition_rate100', title: '100%重复率',search:false},
-                    {field: 'deduction_number', title: '扣除字数',search:false},
-                    {field: 'repetition_rateall', title: '总重复率',search:false},
-                    {field: 'number_of_words_actual', title: '实际源语数量',search:false},
-                    {field: 'final_delivery_time', title: '最终交付时间',search:false},
+                    {field: 'yp.username', title: '预排人员', search: false},
+                    {field: 'be_start_time', title: '预排开始时间', search: false},
+                    {field: 'be_end_time', title: '预排结束时间', search: false},
+                    {field: 'project_page', title: '页数', search: false},
+                    {field: 'project_words_actual', title: '源语数量', search: false},
+                    {field: 'repetition_rate95', title: '95%~99%总重复率', search: false},
+                    {field: 'repetition_rate100', title: '100%重复率', search: false},
+                    {field: 'deduction_number', title: '扣除字数', search: false},
+                    {field: 'repetition_rateall', title: '总重复率', search: false},
+                    {field: 'number_of_words_actual', title: '实际源语数量', search: false},
+                    {field: 'final_delivery_time', title: '最终交付时间', search: false},
                     {field: 'assignor.username', title: '项目助理'},
-                    {field: 'create_time', title: '创建时间',search:false},
+                    {field: 'create_time', title: '创建时间', search: false},
                     {
                         width: 250, title: '操作', fixed: "right", templet: ea.table.tool, operat: [
                             [{
@@ -199,21 +301,22 @@ define(["jquery", "easy-admin"], function ($, ea) {
                                 auth: 'schedule',
                                 class: 'layui-btn layui-btn-xs layui-btn-success',
                                 extend: 'data-full="true"',
-                            },{
+                            }, {
                                 text: '留言',
                                 url: init.comment_url,
                                 method: 'open',
                                 auth: 'comment',
-                                extend:'data-full="true"',
+                                extend: 'data-full="true"',
                                 class: 'layui-btn layui-btn-xs layui-btn-normal',
-                            }, {
-                                text: '预排完成',
-                                url: init.ypstock_url,
-                                method: 'request',
-                                auth: 'ypstock',
-                                class: 'layui-btn layui-btn-xs layui-btn-normal',
-                            }],
-                            ]
+                            },
+                                {
+                                    text: '预排完成',
+                                    url: init.ypstock_url,
+                                    method: 'request',
+                                    auth: 'ypstock',
+                                    class: 'layui-btn layui-btn-xs layui-btn-normal',
+                                }],
+                        ]
                     },
 
                 ]],
@@ -253,26 +356,26 @@ define(["jquery", "easy-admin"], function ($, ea) {
                 skin: 'line  ' //行边框风格
                 , even: true, //开启隔行背景
                 size: 'sm', //小尺寸的表格
-                toolbar: ['refresh', ],
+                toolbar: ['refresh',],
                 cols: [[
                     {type: 'checkbox'},
-                    {field: 'id', title: 'id',search:false},
+                    {field: 'id', title: 'id', search: false},
                     {field: 'file_name_project', title: '文件名称'},
                     {field: 'file_code_project', title: '文件编号'},
                     {field: 'basic.project_name', title: '项目名称'},
                     {field: 'tr.username', title: '翻译人员'},
-                    {field: 'tr_start_time', title: '翻译开始时间',search:false},
-                    {field: 'tr_end_time', title: '翻译结束时间',search:false},
-                    {field: 'project_page', title: '页数',search:false},
-                    {field: 'project_words_actual', title: '源语数量',search:false},
-                    {field: 'repetition_rate95', title: '95%~99%总重复率',search:false},
-                    {field: 'repetition_rate100', title: '100%重复率',search:false},
-                    {field: 'deduction_number', title: '扣除字数',search:false},
-                    {field: 'repetition_rateall', title: '总重复率',search:false},
-                    {field: 'number_of_words_actual', title: '实际源语数量',search:false},
-                    {field: 'final_delivery_time', title: '最终交付时间',search:false},
+                    {field: 'tr_start_time', title: '翻译开始时间', search: false},
+                    {field: 'tr_end_time', title: '翻译结束时间', search: false},
+                    {field: 'project_page', title: '页数', search: false},
+                    {field: 'project_words_actual', title: '源语数量', search: false},
+                    {field: 'repetition_rate95', title: '95%~99%总重复率', search: false},
+                    {field: 'repetition_rate100', title: '100%重复率', search: false},
+                    {field: 'deduction_number', title: '扣除字数', search: false},
+                    {field: 'repetition_rateall', title: '总重复率', search: false},
+                    {field: 'number_of_words_actual', title: '实际源语数量', search: false},
+                    {field: 'final_delivery_time', title: '最终交付时间', search: false},
                     {field: 'assignor.username', title: '项目助理'},
-                    {field: 'create_time', title: '创建时间',search:false},
+                    {field: 'create_time', title: '创建时间', search: false},
                     {
                         width: 250, title: '操作', fixed: "right", templet: ea.table.tool, operat: [
                             [{
@@ -282,20 +385,21 @@ define(["jquery", "easy-admin"], function ($, ea) {
                                 auth: 'schedule',
                                 class: 'layui-btn layui-btn-xs layui-btn-success',
                                 extend: 'data-full="true"',
-                            },{
+                            }, {
                                 text: '留言',
                                 url: init.comment_url,
                                 method: 'open',
                                 auth: 'comment',
-                                extend:'data-full="true"',
+                                extend: 'data-full="true"',
                                 class: 'layui-btn layui-btn-xs layui-btn-normal',
-                            }, {
-                                text: '翻译完成',
-                                url: init.trstock_url,
-                                method: 'request',
-                                auth: 'trstock',
-                                class: 'layui-btn layui-btn-xs layui-btn-normal',
-                            }],
+                            },
+                                {
+                                    text: '翻译完成',
+                                    url: init.trstock_url,
+                                    method: 'request',
+                                    auth: 'trstock',
+                                    class: 'layui-btn layui-btn-xs layui-btn-normal',
+                                }],
                         ]
                     },
 
@@ -339,23 +443,23 @@ define(["jquery", "easy-admin"], function ($, ea) {
                 toolbar: ['refresh',],
                 cols: [[
                     {type: 'checkbox'},
-                    {field: 'id', title: 'id',search:false},
+                    {field: 'id', title: 'id', search: false},
                     {field: 'file_name_project', title: '文件名称'},
                     {field: 'file_code_project', title: '文件编号'},
                     {field: 'basic.project_name', title: '项目名称'},
                     {field: 'xd.username', title: '校对人员',},
-                    {field: 'pr_start_time', title: '校对开始时间',search:false},
-                    {field: 'pr_end_time', title: '校对结束时间',search:false},
-                    {field: 'project_page', title: '页数',search:false},
-                    {field: 'project_words_actual', title: '源语数量',search:false},
-                    {field: 'repetition_rate95', title: '95%~99%总重复率',search:false},
-                    {field: 'repetition_rate100', title: '100%重复率',search:false},
-                    {field: 'deduction_number', title: '扣除字数',search:false},
-                    {field: 'repetition_rateall', title: '总重复率',search:false},
-                    {field: 'number_of_words_actual', title: '实际源语数量',search:false},
-                    {field: 'final_delivery_time', title: '最终交付时间',search:false},
+                    {field: 'pr_start_time', title: '校对开始时间', search: false},
+                    {field: 'pr_end_time', title: '校对结束时间', search: false},
+                    {field: 'project_page', title: '页数', search: false},
+                    {field: 'project_words_actual', title: '源语数量', search: false},
+                    {field: 'repetition_rate95', title: '95%~99%总重复率', search: false},
+                    {field: 'repetition_rate100', title: '100%重复率', search: false},
+                    {field: 'deduction_number', title: '扣除字数', search: false},
+                    {field: 'repetition_rateall', title: '总重复率', search: false},
+                    {field: 'number_of_words_actual', title: '实际源语数量', search: false},
+                    {field: 'final_delivery_time', title: '最终交付时间', search: false},
                     {field: 'assignor.username', title: '项目助理'},
-                    {field: 'create_time', title: '创建时间',search:false},
+                    {field: 'create_time', title: '创建时间', search: false},
                     {
                         width: 250, title: '操作', fixed: "right", templet: ea.table.tool, operat: [
                             [{
@@ -365,12 +469,12 @@ define(["jquery", "easy-admin"], function ($, ea) {
                                 auth: 'schedule',
                                 class: 'layui-btn layui-btn-xs layui-btn-success',
                                 extend: 'data-full="true"',
-                            },{
+                            }, {
                                 text: '留言',
                                 url: init.comment_url,
                                 method: 'open',
                                 auth: 'comment',
-                                extend:'data-full="true"',
+                                extend: 'data-full="true"',
                                 class: 'layui-btn layui-btn-xs layui-btn-normal',
                             }, {
                                 text: '校对完成',
@@ -422,23 +526,23 @@ define(["jquery", "easy-admin"], function ($, ea) {
                 toolbar: ['refresh',],
                 cols: [[
                     {type: 'checkbox'},
-                    {field: 'id', title: 'id',search:false},
+                    {field: 'id', title: 'id', search: false},
                     {field: 'file_name_project', title: '文件名称'},
                     {field: 'file_code_project', title: '文件编号'},
                     {field: 'basic.project_name', title: '项目名称'},
                     {field: 'hp.username', title: '后排人员',},
-                    {field: 'after_start_time', title: '后排开始时间',search:false},
-                    {field: 'after_end_time', title: '后排结束时间',search:false},
-                    {field: 'project_page', title: '页数',search:false},
-                    {field: 'project_words_actual', title: '源语数量',search:false},
-                    {field: 'repetition_rate95', title: '95%~99%总重复率',search:false},
-                    {field: 'repetition_rate100', title: '100%重复率',search:false},
-                    {field: 'deduction_number', title: '扣除字数',search:false},
-                    {field: 'repetition_rateall', title: '总重复率',search:false},
-                    {field: 'number_of_words_actual', title: '实际源语数量',search:false},
-                    {field: 'final_delivery_time', title: '最终交付时间',search:false},
+                    {field: 'after_start_time', title: '后排开始时间', search: false},
+                    {field: 'after_end_time', title: '后排结束时间', search: false},
+                    {field: 'project_page', title: '页数', search: false},
+                    {field: 'project_words_actual', title: '源语数量', search: false},
+                    {field: 'repetition_rate95', title: '95%~99%总重复率', search: false},
+                    {field: 'repetition_rate100', title: '100%重复率', search: false},
+                    {field: 'deduction_number', title: '扣除字数', search: false},
+                    {field: 'repetition_rateall', title: '总重复率', search: false},
+                    {field: 'number_of_words_actual', title: '实际源语数量', search: false},
+                    {field: 'final_delivery_time', title: '最终交付时间', search: false},
                     {field: 'assignor.username', title: '项目助理'},
-                    {field: 'create_time', title: '创建时间',search:false},
+                    {field: 'create_time', title: '创建时间', search: false},
                     {
                         width: 250, title: '操作', fixed: "right", templet: ea.table.tool, operat: [
                             [{
@@ -448,12 +552,12 @@ define(["jquery", "easy-admin"], function ($, ea) {
                                 auth: 'schedule',
                                 class: 'layui-btn layui-btn-xs layui-btn-success',
                                 extend: 'data-full="true"',
-                            },{
+                            }, {
                                 text: '留言',
                                 url: init.comment_url,
                                 method: 'open',
                                 auth: 'comment',
-                                extend:'data-full="true"',
+                                extend: 'data-full="true"',
                                 class: 'layui-btn layui-btn-xs layui-btn-normal',
                             }, {
                                 text: '后排完成',

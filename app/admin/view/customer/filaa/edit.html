@@ -62,8 +62,7 @@
                 <select name="customer_file_type" lay-verify="required">
                     <option value="">请选择文件类型</option>
                     {foreach $f as $k1=>$v }
-                    <option value="{$v.id}" {if condition="$row.customer_file_type eq $v.id" } selected="selected" {
-                    /if}>{$v.content}</option>
+                    <option value="{$v.id}" {in name="$v.id" value="$row.customer_file_type"} selected=""{/in}>{$v.content}</option>
                     {/foreach}
                 </select>
             </div>
@@ -81,8 +80,7 @@
                 <select name="language" lay-verify="required">
                     <option value="">请选择语种</option>
                     {foreach $h as $k1=>$v }
-                    <option value="{$v.id}" {if condition="$row.language eq $v.id" } selected="selected" {
-                    /if}>{$v.content}</option>
+                    <option value="{$v.id}" {in name="$v.id" value="$row.language"} selected=""{/in}>{$v.content}</option>
                     {/foreach}
                 </select>
             </div>
@@ -100,8 +98,7 @@
                 <select name="unit" lay-verify="required">
                     <option value="">请选择一个单位</option>
                     {foreach $d as $k1=>$v }
-                    <option value="{$v.id}" {if condition="$row.unit eq $v.id" } selected="selected" {
-                    /if}>{$v.content}</option>
+                    <option value="{$v.id}"  {in name="$v.id" value="$row.unit"} selected=""{/in}>{$v.content}</option>
                     {/foreach}
                 </select>
             </div>
@@ -119,8 +116,7 @@
                 <select name="tax_rate" lay-verify="required">
                     <option value="">请选择税率</option>
                     {foreach $s as $k=>$v }
-                    <option value="{$v.id}" {if condition="$row.tax_rate eq $v.id" } selected="selected" {
-                    /if}>{$v.content}</option>
+                    <option value="{$v.id}" {in name="$v.id" value="$row.tax_rate"} selected=""{/in}>{$v.content}</option>
                     {/foreach}
                 </select>
             </div>

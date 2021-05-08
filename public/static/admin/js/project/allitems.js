@@ -13,6 +13,7 @@ define(["jquery", "easy-admin"], function ($, ea) {
         m_url: 'project.allitems/m',
         general_url: 'project.allitems/general',
         batchedit_url: 'project.allitems/batchedit',
+        multiplesplit_url: 'project.allitems/multiplesplit',
     };
     var soulTable = layui.soulTable;
 
@@ -47,6 +48,14 @@ define(["jquery", "easy-admin"], function ($, ea) {
                         url: init.batchedit_url,
                         method: 'open',
                         checkbox:'true',
+                        class: 'layui-btn layui-btn-normal layui-btn-sm',
+                    }],
+                    [{
+                        text: '多文件拆分',
+                        url: init.multiplesplit_url,
+                        method: 'open',
+                        checkbox:'true',
+                        auth: 'multiplesplit',
                         class: 'layui-btn layui-btn-normal layui-btn-sm',
                     }],
                 ],
@@ -179,6 +188,14 @@ define(["jquery", "easy-admin"], function ($, ea) {
                         url: init.batchedit_url,
                         method: 'open',
                         checkbox:'true',
+                        class: 'layui-btn layui-btn-normal layui-btn-sm',
+                    }],
+                    [{
+                        text: '多文件拆分',
+                        url: init.split_url,
+                        method: 'open',
+                        checkbox:'true',
+                        auth: 'split',
                         class: 'layui-btn layui-btn-normal layui-btn-sm',
                     }],
                 ],
@@ -314,6 +331,7 @@ define(["jquery", "easy-admin"], function ($, ea) {
                         checkbox:'true',
                         class: 'layui-btn layui-btn-normal layui-btn-sm',
                     }],
+
                 ],
                 text: {none: '无数据'},
                 cols: [[

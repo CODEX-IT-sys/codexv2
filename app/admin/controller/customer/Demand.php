@@ -11,7 +11,7 @@ use app\admin\traits\Curd;
 use app\admin\model\SystemAdmin;
 
 /**
- * @ControllerAnnotation(title="customer_demand")来稿需求
+ * @ControllerAnnotation(title="来稿需求")
  */
 class Demand extends AdminController
 {
@@ -82,6 +82,7 @@ class Demand extends AdminController
                 ->page($page, $limit)
                 ->order($this->sort)
                 ->select();
+//            dump($list->toArray());die;
             $data = [
                 'code' => 0,
                 'msg' => '',
@@ -90,6 +91,29 @@ class Demand extends AdminController
             ];
             return json($data);
         }
+        return $this->fetch();
+    }
+
+    /**
+     * @NodeAnotation(title="编辑")
+     */
+    public function edit($id)
+    {
+        $row = $this->model->find($id);
+
+        empty($row) && $this->error('数据不存在');
+        if ($this->request->isAjax()) {
+            $post = $this->request->post();
+            $rule = [];
+            $this->validate($post, $rule);
+            try {
+                $save = $row->save($post);
+            } catch (\Exception $e) {
+                $this->error('保存失败');
+            }
+            $save ? $this->success('保存成功') : $this->error('保存失败');
+        }
+        $this->assign('row', $row);
         return $this->fetch();
     }
 

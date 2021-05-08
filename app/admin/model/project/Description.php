@@ -33,7 +33,7 @@ class Description extends TimeModel
     }
 
 
-    //翻译人员proofreader_id
+/*    //翻译人员proofreader_id
     public function getDtranslationIdAttr($val)
     {
         $val= explode(",", $val);
@@ -70,7 +70,7 @@ class Description extends TimeModel
             $arr[] = Db::name('system_admin')->where('id', $v1)->value('username');
         }
         return  implode(",", $arr);
-    }
+    }*/
     //关联项目文件
     public function fileaa()
     {

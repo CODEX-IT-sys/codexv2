@@ -12,7 +12,7 @@ use think\App;
 use think\facade\Cache;
 use think\facade\Db;
 use app\admin\model\project\Comment;
-
+use app\admin\model\project\Message;
 /**
  * @ControllerAnnotation(title="项目描述")
  */
@@ -52,16 +52,18 @@ class Description extends AdminController
         foreach ($tr as $k => $v1) {
             $d[$k]['name'] = $v1['username'];
             $d[$k]['value'] = $v1['id'];
-            if (in_array($v1['username'], $trvalue)) {
+
+            if (in_array($v1['id'], $trvalue)) {
                 $d[$k]['selected'] = true;
             }
         }
+
         //预排
         $e = array();
         foreach ($yp as $k => $v1) {
             $e[$k]['name'] = $v1['username'];
             $e[$k]['value'] = $v1['id'];
-            if (in_array($v1['username'], $ypvalue)) {
+            if (in_array($v1['id'], $ypvalue)) {
                 $e[$k]['selected'] = true;
             }
         }
@@ -70,7 +72,7 @@ class Description extends AdminController
         foreach ($hp as $k => $v1) {
             $f[$k]['name'] = $v1['username'];
             $f[$k]['value'] = $v1['id'];
-            if (in_array($v1['username'], $hpvalue)) {
+            if (in_array($v1['id'], $hpvalue)) {
                 $f[$k]['selected'] = true;
             }
         }
@@ -79,7 +81,7 @@ class Description extends AdminController
         foreach ($xd as $k => $v1) {
             $g[$k]['name'] = $v1['username'];
             $g[$k]['value'] = $v1['id'];
-            if (in_array($v1['username'], $xdvalue)) {
+            if (in_array($v1['id'], $xdvalue)) {
                 $g[$k]['selected'] = true;
             }
         }
@@ -179,7 +181,7 @@ class Description extends AdminController
                 ->page($page, $limit)
                 ->order($this->sort)
                 ->select();
-
+//        dump($list->toArray());die;
             $data = [
                 'code' => 0,
                 'msg' => '',
@@ -241,14 +243,21 @@ class Description extends AdminController
             list($page, $limit, $where) = $this->buildTableParames();
             $count = $this->model
                 ->where($where)
-                ->where('dbefore_ty_id',$this->admininfo()['id'])
+                ->when($this->admininfo()['id']!=1, function ($query) {
+                    // 满足条件后执行
+                    return $query ->where('dbefore_ty_id',$this->admininfo()['id']);
+                })
+
                 ->where('description_status',0)
                 ->withJoin(['fileaa', 'basic', 'assignor', 'yp', 'hp', 'xd', 'tr'
                 ], 'LEFT')
                 ->count();
             $list = $this->model
                 ->where($where)
-                ->where('dbefore_ty_id',$this->admininfo()['id'])
+                ->when($this->admininfo()['id']!=1, function ($query) {
+                    // 满足条件后执行
+                    return $query ->where('dbefore_ty_id',$this->admininfo()['id']);
+                })
                 ->where('description_status',0)
                 ->withJoin(['fileaa', 'basic', 'assignor', 'yp', 'hp', 'xd', 'tr'
                 ], 'LEFT')
@@ -457,18 +466,44 @@ class Description extends AdminController
         foreach ($man as $k => $v) {
             $staff[$k]['name'] = $v['username'];
             $staff[$k]['value'] = $v['id'];
+            //删除自己
+            if($staff[$k]['value']==$this->admininfo()['id'])
+            {
+                unset($staff[$k]);
+            }
         }
-        //删除自己
-        unset($staff[$this->admininfo()['id']]);
-        if ($this->request->isAjax()) {
-            $res = new \app\admin\model\project\Comment();
-            $res->title = $data['title'];
-            $res->content = $data['content'];
-            $res->user_id = $this->admininfo()['id'];
-            $res->description_id = $data['id'];
-            $res->mentioned_id = $data['staff'];
+        // 启动事务
+        Db::startTrans();
+        try {
+            if ($this->request->isAjax()) {
+                $res = new \app\admin\model\project\Comment();
+                $res->title = $data['title'];
+                $res->content = $data['content'];
+                $res->user_id = $this->admininfo()['id'];
+                $res->description_id = $data['id'];
+                $res->mentioned_id = $data['staff'];
+                $res->save();
+                //存储到消息通知表
+                $addressee= explode(",", $data['staff']);
+                foreach ($addressee as $k=>$v)
+                {
+                    $message=new Message();
+                    $message->write_id= $this->admininfo()['id'];
+                    $message->addressee_id= $v;
+                    $message->link='/admin/index#/admin/project.description/comment.html?id='.$data['id'];
+                    $message->topic= $data['title'];
+                    $message->message_content=  $data['content'];
+                    $message->topic= $data['title'];
+                    $message->save();
+                }
 
-            $res->save();
+            }
+            // 提交事务
+            Db::commit();
+        } catch (\Exception $e) {
+            // 回滚事务
+            Db::rollback();
+            $this->error('失败',$e->getMessage());
         }
 
         $this->assign([
@@ -476,6 +511,7 @@ class Description extends AdminController
         ]);
         return $this->fetch('/project/comment/comment');
     }
+
 
 
 }

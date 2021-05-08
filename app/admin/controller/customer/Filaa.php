@@ -64,7 +64,7 @@ class Filaa extends AdminController
         $s = Cache::get('sl');
 
         //项目经理
-        $b = SystemAdmin::wherein('auth_ids', [12])->select();
+        $b=SystemAdmin::where('auth_ids','find in set', 12)->select();
 
         $admin = $this->admininfo();
         $this->assign([
@@ -138,7 +138,6 @@ class Filaa extends AdminController
             try {
                 $admin = session('admin');
                 $post['writer_id'] = $admin['id'];
-                $post['service'] = implode(",", ($post['service']));
                 //增值税报价金额
                 $post['vat'] = $post['unit_price'] * $post['quotation_number'] * $post['tax_rate'] / 100;
                 $post['quotation_price'] = $post['unit_price'] * $post['quotation_number'] + $post['vat'];
@@ -296,7 +295,7 @@ class Filaa extends AdminController
                 $res->vat = $res['unit_price'] * $res['quotation_number'] * $res['tax_rate'] / 100;
                 $res->quotation_price = $res['unit_price'] * $res['quotation_number'] + $res['vat'];
                 $res->customer_id = CustomerDemand::where('id', $res['demand_id'])->value('customer_id');
-                $res->file_status = 1;
+                $res->file_status = 2;
                 $res->customer_file_code = filing_number($company_code) . $k;
                 $res->up_id = $admin['id'];
                 $res->save();

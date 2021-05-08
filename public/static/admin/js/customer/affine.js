@@ -22,7 +22,7 @@ define(["jquery", "easy-admin"], function ($, ea) {
                 skin: 'line  ' //行边框风格
                 , even: true, //开启隔行背景
                 size: 'sm', //小尺寸的表格
-                limit: 5,
+                limit: 50,
                 totalRow: true,
                 toolbar: ['refresh',
                     [{
@@ -98,7 +98,7 @@ define(["jquery", "easy-admin"], function ($, ea) {
                 skin: 'line  ' //行边框风格
                 , even: true, //开启隔行背景
                 size: 'sm', //小尺寸的表格
-                limit: 5,
+                limit: 50,
                 totalRow: true,
                 toolbar: ['refresh',
                     [{
@@ -112,14 +112,15 @@ define(["jquery", "easy-admin"], function ($, ea) {
                     'delete',],
                 cols: [[
                     {field: 'customer_file_code', title: '文件编号', fixed: true, width: 200},
-                    {type: 'checkbox'},
-                    {field: 'id', title: 'id', search: 'false'},
+                    {type: 'checkbox', fixed: true,},
+                    {field: 'id', title: 'id', search: 'false', fixed: true,},
                     {
                         field: 'file_status',
                         search: 'select',
                         selectList: {"1": "拒绝", "2": "接受", "0": "未确定", '3': "已批准"},
                         title: '文件状态',
-                        sort: true
+                        sort: true,
+                        fixed: true,
                     },
                     // {field: 'demand.contract_code', title: '合同编号'},
                     {field: 'customer_file_name', title: '文件名称', edit: true, sort: true},
@@ -133,7 +134,7 @@ define(["jquery", "easy-admin"], function ($, ea) {
                     {field: 'dw.content', title: '单位', search: 'false'},
                     {field: 'quotation_number', title: '报价数量', search: 'false', edit: true},
                     {field: 'rate.content', title: '税率', search: 'false'},
-                    {field: 'vat', title: '增值税', search: 'false', totalRow: true, totalRowText: '合计',},
+                    {field: 'vat', title: '增值税', search: 'false', },
                     {field: 'quotation_price', title: '报价金额', search: 'false'},
                     {field: 'customer_submit_date', title: '客户期望提交日期', search: 'false'},
                     {field: 'completion_date', title: '交付日期', search: 'false'},
@@ -175,7 +176,7 @@ define(["jquery", "easy-admin"], function ($, ea) {
                 skin: 'line  ' //行边框风格
                 , even: true, //开启隔行背景
                 size: 'sm', //小尺寸的表格
-                limit: 5,
+                limit: 50,
                 totalRow: true,
                 toolbar: ['refresh',
                     [{
@@ -189,14 +190,15 @@ define(["jquery", "easy-admin"], function ($, ea) {
                     'delete',],
                 cols: [[
                     {field: 'customer_file_code', title: '文件编号', fixed: true, width: 200},
-                    {type: 'checkbox'},
-                    {field: 'id', title: 'id', search: 'false'},
+                    {type: 'checkbox', fixed: true,},
+                    {field: 'id', title: 'id', search: 'false', fixed: true,},
                     {
                         field: 'file_status',
                         search: 'select',
                         selectList: {"1": "拒绝", "2": "接受", "0": "未确定", '3': "已批准"},
                         title: '文件状态',
-                        sort: true
+                        sort: true,
+                        fixed: true,
                     },
                     // {field: 'demand.contract_code', title: '合同编号'},
                     {field: 'customer_file_name', title: '文件名称', edit: true, sort: true},
@@ -210,7 +212,7 @@ define(["jquery", "easy-admin"], function ($, ea) {
                     {field: 'dw.content', title: '单位', search: 'false'},
                     {field: 'quotation_number', title: '报价数量', search: 'false', edit: true},
                     {field: 'rate.content', title: '税率', search: 'false'},
-                    {field: 'vat', title: '增值税', search: 'false', totalRow: true, totalRowText: '合计',},
+                    {field: 'vat', title: '增值税', search: 'false',},
                     {field: 'quotation_price', title: '报价金额', search: 'false'},
                     {field: 'customer_submit_date', title: '客户期望提交日期', search: 'false'},
                     {field: 'completion_date', title: '交付日期', search: 'false'},
@@ -251,19 +253,20 @@ define(["jquery", "easy-admin"], function ($, ea) {
                 skin: 'line  ' //行边框风格
                 , even: true, //开启隔行背景
                 size: 'sm', //小尺寸的表格
-                limit: 5,
+                limit: 50,
                 totalRow: true,
                 toolbar: ['refresh'],
                 cols: [[
                     {field: 'customer_file_code', title: '文件编号', fixed: true, width: 200},
-                    {type: 'checkbox'},
-                    {field: 'id', title: 'id', search: 'false'},
+                    {type: 'checkbox', fixed: true,},
+                    {field: 'id', title: 'id', search: 'false', fixed: true,},
                     {
                         field: 'file_status',
                         search: 'select',
                         selectList: {"1": "拒绝", "2": "接受", "0": "未确定", '3': "已批准"},
                         title: '文件状态',
-                        sort: true
+                        sort: true,
+                        fixed: true,
                     },
                     // {field: 'demand.contract_code', title: '合同编号'},
                     {field: 'customer_file_name', title: '文件名称', edit: true, sort: true},
@@ -277,7 +280,7 @@ define(["jquery", "easy-admin"], function ($, ea) {
                     {field: 'dw.content', title: '单位', search: 'false'},
                     {field: 'quotation_number', title: '报价数量', search: 'false', edit: true},
                     {field: 'rate.content', title: '税率', search: 'false'},
-                    {field: 'vat', title: '增值税', search: 'false', totalRow: true, totalRowText: '合计',},
+                    {field: 'vat', title: '增值税', search: 'false'},
                     {field: 'quotation_price', title: '报价金额', search: 'false'},
                     {field: 'customer_submit_date', title: '客户期望提交日期', search: 'false'},
                     {field: 'completion_date', title: '交付日期', search: 'false'},

@@ -45,7 +45,7 @@ var soulTable = layui.soulTable;
                     {field: 'remark', title: '备注', templet: ea.table.text},
                     {field: 'upload_time', title: '上传时间',},
                     {field: 'create_time', title: '创建时间',search:false},
-                    {field: 'download', title: '下载',toolbar:"#barDemo" ,search:false},
+                    {field: 'download', title: '下载',toolbar:"#barDemo",search:false},
                     {width: 250, title: '操作', templet: ea.table.tool,
                         operat: [
                             'delete']},

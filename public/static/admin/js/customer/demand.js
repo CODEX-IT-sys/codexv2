@@ -36,10 +36,11 @@ define(["jquery", "easy-admin", "treetable",], function ($, ea) {
                 cols: [[
                     {type: 'checkbox'},
                     {field: 'id', title: 'id'},
+                    {field: 'submission_time', title: '来稿时间'},
                     {field: 'company.chinese_company_name', title: '主体公司'},
-                    // {field: 'cid', title: '合同编号'},
+                    {field: 'customerInformation.company_name', title: '客户公司'},
                     {field: 'contract.contract_code', title: '合同编号'},
-                    // {field: 'xm.username', title: '项目经理'},
+                    {field: 'xm.username', title: '项目经理'},
                     {field: 'write.username', title: '录入人'},
                     {
                         field: 'cooperation_first',

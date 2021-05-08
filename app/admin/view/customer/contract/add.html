@@ -29,7 +29,7 @@
             <label class="layui-form-label">销售</label>
             <div class="layui-input-block">
                 <!--<input type="text" name="sales_id" class="layui-input" lay-verify="required" placeholder="请输入销售id" value="">-->
-                <select name="sales_id" lay-verify="required" lay-search>
+                <select name="sales_id" lay-search>
                     <option value="">请选择一个销售</option>
                     {foreach $c as $k2=>$v }
                     <option value="{$v.id}">{$v.username}</option>
@@ -41,14 +41,14 @@
         <div class="layui-form-item">
             <label class="layui-form-label">合同签订人</label>
             <div class="layui-input-block">
-                <input type="text" name="contract_signer" class="layui-input" lay-verify="required"
+                <input type="text" name="contract_signer" class="layui-input"
                        placeholder="请输入合同签订人" value="">
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">服务</label>
             <div class="layui-input-block">
-                <select name="service" lay-verify="required" lay-search>
+                <select name="service" lay-search>
                     <option value="">请选择服务</option>
                     {foreach $g as $k1=>$v }
                     <option value="{$v.id}">{$v.content}</option>
@@ -60,7 +60,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label">语种</label>
             <div class="layui-input-block">
-                <select name="language" lay-verify="required" lay-search>
+                <select name="language" lay-search>
                     <option value="">请选择语种</option>
                     {foreach $h as $k1=>$v }
                     <option value="{$v.id}">{$v.content}</option>
@@ -73,7 +73,7 @@
             <label class="layui-form-label">币种</label>
             <div class="layui-input-block">
                 <!--<input type="text" name="currency" class="layui-input" lay-verify="required" placeholder="请输入币种" value="">-->
-                <select name="currency" lay-verify="required" lay-search>
+                <select name="currency" lay-search>
                     <option value="">请选择币种</option>
                     {foreach $e as $k1=>$v }
                     <option value="{$v.id}">{$v.content}</option>
@@ -84,7 +84,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label">单价</label>
             <div class="layui-input-block">
-                <input type="text" name="unit_price" class="layui-input" lay-verify="required" placeholder="请输入单价"
+                <input type="text" name="unit_price" class="layui-input" placeholder="请输入单价"
                        value="">
             </div>
         </div>
@@ -92,7 +92,7 @@
             <label class="layui-form-label">单位</label>
             <div class="layui-input-block">
                 <!--<input type="text" name="unit" class="layui-input" lay-verify="required" placeholder="请输入单位" value="">-->
-                <select name="unit" lay-verify="required" lay-search>
+                <select name="unit" lay-search>
                     <option value="">请选择一个单位</option>
                     {foreach $d as $k1=>$v }
                     <option value="{$v.id}">{$v.content}</option>
@@ -103,21 +103,21 @@
         <div class="layui-form-item">
             <label class="layui-form-label">预计销售额</label>
             <div class="layui-input-block">
-                <input type="text" name="estimated_sales" class="layui-input" lay-verify="required"
+                <input type="text" name="estimated_sales" class="layui-input"
                        placeholder="请输入预计销售额" value="">
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">税率</label>
             <div class="layui-input-block">
-                <input type="text" name="tax_rate" class="layui-input" lay-verify="required" placeholder="请输入税率"
+                <input type="text" name="tax_rate" class="layui-input" placeholder="请输入税率"
                        value="">
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">客户税号</label>
             <div class="layui-input-block">
-                <input type="text" name="customer_tax_number" class="layui-input" lay-verify="required"
+                <input type="text" name="customer_tax_number" class="layui-input"
                        placeholder="请输入客户税号" value="">
             </div>
         </div>
@@ -141,7 +141,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label">结算方式</label>
             <div class="layui-input-block">
-                <input type="text" name="account_period" class="layui-input" lay-verify="required" placeholder="请输入结算方式"
+                <input type="text" name="account_period" class="layui-input" placeholder="请输入结算方式"
                        value="">
             </div>
         </div>
@@ -158,28 +158,28 @@
         <div class="layui-form-item">
             <label class="layui-form-label">生效日期</label>
             <div class="layui-input-block">
-                <input type="date" name="effective_date" class="layui-input" lay-verify="required" placeholder="请输入生效日期"
+                <input type="date" name="effective_date" class="layui-input" placeholder="请输入生效日期"
                        value="">
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">失效日期</label>
             <div class="layui-input-block">
-                <input type="date" name="expiration_date" class="layui-input" lay-verify="required"
+                <input type="date" name="expiration_date" class="layui-input"
                        placeholder="请输入失效日期" value="">
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">合同收件人</label>
             <div class="layui-input-block">
-                <input type="text" name="recipient" class="layui-input" lay-verify="required" placeholder="请输入合同收件人"
+                <input type="text" name="recipient" class="layui-input" placeholder="请输入合同收件人"
                        value="">
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">合同收件地址</label>
             <div class="layui-input-block">
-                <input type="text" name="recipient_address" class="layui-input" lay-verify="required"
+                <input type="text" name="recipient_address" class="layui-input"
                        placeholder="请输入合同收件地址" value="">
             </div>
         </div>

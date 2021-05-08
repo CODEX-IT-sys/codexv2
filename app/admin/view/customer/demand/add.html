@@ -13,19 +13,18 @@
                 </select>
             </div>
         </div>
-        <!--        <div class="layui-form-item">
-                    <label class="layui-form-label">项目经理</label>
-                    <div class="layui-input-block">
-
-                        <select name="mid" lay-verify="required" lay-search>
-                            <option value="">请选择项目经理</option>
-                            {foreach $b as $key=>$v }
-                            <option value="{$v.id}">{$v.username}</option>
-                            {/foreach}
-                        </select>
-                        &lt;!&ndash;<input type="text" name="mid" class="layui-input" lay-verify="required" placeholder="请输入项目经理id" value="">&ndash;&gt;
-                    </div>
-                </div>-->
+        <div class="layui-form-item">
+            <label class="layui-form-label">项目经理</label>
+            <div class="layui-input-block">
+                <select name="mid" lay-verify="required" lay-search>
+                    <option value="">请选择项目经理</option>
+                    {foreach $b as $key=>$v }
+                    <option value="{$v.id}">{$v.username}</option>
+                    {/foreach}
+                </select>
+                <!--<input type="text" name="mid" class="layui-input" lay-verify="required" placeholder="请输入项目经理id" value="">-->
+            </div>
+        </div>
         <div class="layui-form-item">
             <label class="layui-form-label">是否首次合作</label>
             <div class="layui-input-block">
@@ -36,10 +35,10 @@
             </div>
         </div>
         <div class="layui-form-item">
-            <label class="layui-form-label">报价金额</label>
+            <label class="layui-form-label">来稿时间</label>
             <div class="layui-input-block">
-                <input type="text" name="quotation_amount" class="layui-input" lay-verify="required"
-                       placeholder="请输入报价金额" value="">
+                <input type="date" name="submission_time" class="layui-input" lay-verify="required"
+                       placeholder="来稿时间" value="">
             </div>
         </div>
         <div class="hr-line"></div>

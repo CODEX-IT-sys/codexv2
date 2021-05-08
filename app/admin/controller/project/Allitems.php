@@ -436,22 +436,38 @@ class Allitems extends AdminController
     public function splitov()
     {
         $post1 = $this->request->post();
+        $val= explode(",", $post1['editdata']);
         try {
-            for ($x = 1; $x <= $post1['number']; $x++) {
-                $file = Customeraa::find($post1['editdata']);
-                $save = new Description;
-                $save->save(["basic_id" => $post1['project_name'], 'related_products' => $post1['related_products'],
-                    'file_specification' => $post1['file_specification'], 'file_id' => $post1['editdata']
-                    , 'file_name_project' => $file['customer_file_name'] . '-' . $x
-                    , 'file_code_project' => $file['customer_file_code'] . '-' . $x,
-                    'assistant_id' => $this->admininfo()['id']
-                ]);
+            // 启动事务
+            Db::startTrans();
+            foreach ($val as $k=>$v){
+                for ($x = 1; $x <= $post1['number']; $x++) {
+                    $file = Customeraa::find($v);
+                    $save = new Description;
+                    $save->save(["basic_id" => $post1['project_name'], 'related_products' => $post1['related_products'],
+                        'file_specification' => $post1['file_specification'], 'file_id' => $v
+                        , 'file_name_project' => $file['customer_file_name'] . '-' . $x
+                        , 'file_code_project' => $file['customer_file_code'] . '-' . $x,
+                        'assistant_id' => $this->admininfo()['id']
+                    ]);
+                }
             }
+            // 提交事务
+            Db::commit();
         } catch (\Exception $e) {
+            // 回滚事务
+            Db::rollback();
             $this->error('更新失败', $e->getMessage());
         }
 
         echo "<script>window.parent.location.reload()</script>";
+    }
+    /**
+     * @NodeAnotation(title="多文件拆分")
+     */
+    public function multiplesplit()
+    {
+
     }
 
 

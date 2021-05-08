@@ -97,11 +97,8 @@ class Schedule extends AdminController
                 $post['actual_time'] = round((strtotime($post['end_time']) - strtotime($post['start_time'])) / 3600, 2);
                 // 计算中文字数=(原总字数*(100-总重复率/100)-扣除字数
                 //查询项目描述
-
                 $description = Description::find($post['description_id']);
-
                 $post['chinese_word_count'] = ($post['original_word_count'] * (100 - $description['repetition_rateall']) / 100) - $description['deduction_number'];
-
                 //计算效率=中文字数/实际用时
                 $post['efficiency'] = round($post['chinese_word_count'] / $post['actual_time'], 2);
 
@@ -117,6 +114,37 @@ class Schedule extends AdminController
         }
 
         $this->assign('description_id', $a);
+        return $this->fetch();
+    }
+    /**
+     * @NodeAnotation(title="编辑")
+     */
+    public function edit($id)
+    {
+        $row = $this->model->find($id);
+        empty($row) && $this->error('数据不存在');
+        if ($this->request->isAjax()) {
+            $post = $this->request->post();
+            $rule = [];
+            $this->validate($post, $rule);
+            try {
+                //计算实际用时
+                $post['actual_time'] = round((strtotime($post['end_time']) - strtotime($post['start_time'])) / 3600, 2);
+                // 计算中文字数=(原总字数*(100-总重复率/100)-扣除字数
+                //查询项目描述
+                $description = Description::find($post['description_id']);
+                $post['chinese_word_count'] = ($post['original_word_count'] * (100 - $description['repetition_rateall']) / 100) - $description['deduction_number'];
+                //计算效率=中文字数/实际用时
+                $post['efficiency'] = round($post['chinese_word_count'] / $post['actual_time'], 2);
+                $admin = session('admin');
+                $post['write_id'] = $admin['id'];
+                $save = $row->save($post);
+            } catch (\Exception $e) {
+                $this->error('保存失败',$e->getMessage());
+            }
+            $save ? $this->success('保存成功') : $this->error('保存失败');
+        }
+        $this->assign('row', $row);
         return $this->fetch();
     }
 

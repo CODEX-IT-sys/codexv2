@@ -86,7 +86,7 @@ class Customeraa extends TimeModel
     public function getFileStatusList()
     {
 
-        $status = ['1'=>'拒绝','2'=>'接受','0'=>'未确定',3=>'已批准',4=>'已交付'];
+        $status = ['1'=>'拒绝','2'=>'接受','0'=>'未确定',3=>'已批准',4=>'已交稿'];
         return $status;
     }
     //关联来稿需求

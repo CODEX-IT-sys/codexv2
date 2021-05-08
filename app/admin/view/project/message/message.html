@@ -1,0 +1,71 @@
+<link rel="stylesheet" type="text/css" href="https://www.layuicdn.com/layui/css/layui.css"/>
+<link rel="stylesheet" href="/static/comment/css/full.css">
+<link rel="stylesheet" href="/static/comment/css/global.css">
+<div class="fly-panel fly-panel-user" pad20>
+    <div class="layui-tab layui-tab-brief" lay-filter="user">
+        <ul class="layui-tab-title" id="LAY_mine">
+            <li data-type="mine-jie" lay-id="index" class="layui-this">未读消息</li>
+            <li data-type="collection" data-url="/collection/find/" lay-id="collection">已读消息</li>
+        </ul>
+        <div class="layui-tab-content" style="padding: 20px 0;">
+            <div class="layui-tab-item layui-show">
+                <ul class="mine-view jie-row">
+                    {foreach $message2 as $key=>$vo }
+                    <li>
+                        <a class="jie-title" href="{$vo.link}" target="	_blank" data-id="{$vo.id}" >{$vo.write.username}留言提到了你  <i>{$vo.topic}</i></a>
+                        <a class="mine-edit" href="" style="display: none" >标为已读 </a>
+                        <em>{$vo.create_time}</em>
+                    </li>
+                    {/foreach}
+                </ul>
+                <div id="LAY_page"></div>
+            </div>
+            <div class="layui-tab-item">
+                <ul class="mine-view jie-row">
+                    {foreach $message1 as $key=>$vo }
+                    <li>
+                        <a class="jie-title" href="{$vo.link}" target="_blank" data-id="{$vo.id}" >{$vo.write.username}留言提到了你  <i>{$vo.topic}</i></a>
+                        <a class="mine-edit" href="" style="display: none" >标为已读 </a>
+                        <em>{$vo.create_time}</em>
+                    </li>
+                    {/foreach}
+                </ul>
+                <div id="LAY_page1"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="__STATIC__/js/jquery-1.8.3.min.js?v={$version}" charset="utf-8"></script>
+<script src="https://www.layuicdn.com/layer/layer.js"></script>
+<script>
+
+    $('.jie-title').click(function () {
+       var id= $(this).attr('data-id');
+       var link= $(this).attr('href');
+        console.log(id);
+        console.log(link);
+        $.ajax({
+            //几个参数需要注意一下
+            type: "POST",//方法类型
+            dataType: "json",//预期服务器返回的数据类型
+            url: "/admin/project.message/read",//url
+            async: false,
+            data: {id:id},
+            success: function (result) {
+                if (result.code == 1) {
+                    window.location.reload();
+                    window.open(link);
+                }else{
+                    layer.msg('未知错误');
+                }
+            }
+        });
+        // // window.parent.location.reload();
+        // var index = parent.layer.getFrameIndex(window.name);
+        // parent.layer.close(index);
+
+
+
+    });
+
+</script>

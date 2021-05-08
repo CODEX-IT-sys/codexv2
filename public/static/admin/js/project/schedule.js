@@ -33,7 +33,7 @@ define(["jquery", "easy-admin"], function ($, ea) {
                 cols: [[
                     {type: 'checkbox'},
                     {field: 'id', title: 'id'},
-                    {field: 'write_id', title: '写入'},
+                    // {field: 'write_id', title: '写入'},
                     {field: 'late_submission', search: 'select', selectList: {"1":"yes","0":"no"}, title: '是否延迟提交'},
                     {field: 'completion_page', title: '完成页码'},
                     {field: 'self_Inspection_status', search: 'select', selectList: {"1":"yes","0":"no"}, title: '自检'},

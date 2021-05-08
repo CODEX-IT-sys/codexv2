@@ -12,6 +12,7 @@ use app\admin\model\customer\Customer;
 use app\admin\model\customer\CustomerDemand;
 use app\admin\model\customer\Customeraa;
 use think\facade\View;
+use app\admin\model\SystemAdmin;
 
 /**
  * @ControllerAnnotation(title="文件管理")
@@ -52,10 +53,10 @@ class affine extends AdminController
         //税率
         $s = Cache::get('sl');
 
-
+        $b=SystemAdmin::where('auth_ids','find in set', 12)->select();
         $admin = $this->admininfo();
         $this->assign([
-            'd' => $d, 'g' => $g, 'h' => $h, 'f' => $f, 's' => $s, 'st' => $admin,
+            'd' => $d, 'g' => $g, 'h' => $h, 'f' => $f, 's' => $s, 'st' => $admin, 'b' => $b
         ]);
         $this->model = new \app\admin\model\customer\Customeraa();
         $this->assign('filestatus', $this->model->getFileStatusList());
