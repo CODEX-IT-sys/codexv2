@@ -75,7 +75,6 @@ class Assess extends AdminController
 
         if ($this->request->isPost()) {
             $post = $this->request->post();
-            dump($post);
             $rule = [];
             $this->validate($post, $rule);
             try {
@@ -104,7 +103,6 @@ class Assess extends AdminController
 
         if ($this->request->isPost()) {
             $post = $this->request->post();
-            dump($post);
             $rule = [];
             $this->validate($post, $rule);
             try {
@@ -133,7 +131,6 @@ class Assess extends AdminController
 
         if ($this->request->isPost()) {
             $post = $this->request->post();
-            dump($post);
             $rule = [];
             $this->validate($post, $rule);
             try {
@@ -189,6 +186,10 @@ class Assess extends AdminController
             }
             list($page, $limit, $where) = $this->buildTableParames();
             $count = $this->model
+                ->when($this->admininfo()['id']!=1, function ($query) {
+                    // 满足条件后执行
+                    return $query->where('write_id','find in set',$this->admininfo()['id'])->whereor('write_id','in',$this->admininfo()['top_id']);
+                })
                 ->where($where)
                 ->where('type',1)
                 ->withJoin(['file','write','yp'
@@ -200,6 +201,10 @@ class Assess extends AdminController
                 ->count();
             $list = $this->model
                 ->where($where)
+                ->when($this->admininfo()['id']!=1, function ($query) {
+                    // 满足条件后执行
+                    return $query->where('write_id','find in set',$this->admininfo()['id'])->whereor('write_id','in',$this->admininfo()['top_id']);
+                })
                 ->where('type',1)
                 ->withJoin(['file','write','yp'
                 ])
@@ -243,6 +248,10 @@ class Assess extends AdminController
             list($page, $limit, $where) = $this->buildTableParames();
             $count = $this->model
                 ->where($where)
+                ->when($this->admininfo()['id']!=1, function ($query) {
+                    // 满足条件后执行
+                    return $query->where('write_id','find in set',$this->admininfo()['id'])->whereor('write_id','in',$this->admininfo()['top_id']);
+                })
                 ->where('type',2)
                 ->withJoin(['file','write','hp'
                 ], 'LEFT')
@@ -253,6 +262,10 @@ class Assess extends AdminController
                 ->count();
             $list = $this->model
                 ->where($where)
+                ->when($this->admininfo()['id']!=1, function ($query) {
+                    // 满足条件后执行
+                    return $query->where('write_id','find in set',$this->admininfo()['id'])->whereor('write_id','in',$this->admininfo()['top_id']);
+                })
                 ->where('type',2)
                 ->withJoin(['file','write','hp'
                 ], 'LEFT')
@@ -286,6 +299,10 @@ class Assess extends AdminController
             list($page, $limit, $where) = $this->buildTableParames();
             $count = $this->model
                 ->where($where)
+                ->when($this->admininfo()['id']!=1, function ($query) {
+                    // 满足条件后执行
+                    return $query->where('write_id','find in set',$this->admininfo()['id'])->whereor('write_id','in',$this->admininfo()['top_id']);
+                })
                 ->where('type',3)
                 ->withJoin(['file','write','tr'
                 ], 'LEFT')
@@ -296,6 +313,10 @@ class Assess extends AdminController
                 ->count();
             $list = $this->model
                 ->where($where)
+                ->when($this->admininfo()['id']!=1, function ($query) {
+                    // 满足条件后执行
+                    return $query->where('write_id','find in set',$this->admininfo()['id'])->whereor('write_id','in',$this->admininfo()['top_id']);
+                })
                 ->where('type',3)
                 ->withJoin(['file','write','tr'
                 ], 'LEFT')

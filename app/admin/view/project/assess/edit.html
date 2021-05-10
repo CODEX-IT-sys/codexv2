@@ -4,13 +4,13 @@
         <input type="hidden" name="description_id" class="layui-input" placeholder="请输入description_id"
                value="{$row.description_id|default=''}">
 
-
-        <div class="layui-form-item">
+        <input type="hidden" name="type" class="layui-input" placeholder="请输入评估类型" value="{$row.type|default=''}">
+<!--        <div class="layui-form-item">
             <label class="layui-form-label">评估类型</label>
             <div class="layui-input-block">
-                <input type="text" name="type" class="layui-input" placeholder="请输入评估类型" value="{$row.type|default=''}">
+
             </div>
-        </div>
+        </div>-->
         {switch $row.type }
         {case 1 }
         <div class="layui-form-item">

@@ -262,7 +262,7 @@ define(["jquery", "easy-admin"], function ($, ea) {
                 delete_url: 'project.description/delete',
                 export_url: 'project.description/export',
                 modify_url: 'project.description/modify',
-                schedule_url: 'project.schedule/index',
+                schedule_url: 'project.schedule/ypindex',
                 comment_url: 'project.description/comment',
                 ypstock_url: 'project.description/ypstock',
             }
@@ -296,7 +296,7 @@ define(["jquery", "easy-admin"], function ($, ea) {
                         width: 250, title: '操作', fixed: "right", templet: ea.table.tool, operat: [
                             [{
                                 text: '进度',
-                                url: init.schedule_url,
+                                url: init.schedule_url+'?type=1',
                                 method: 'open',
                                 auth: 'schedule',
                                 class: 'layui-btn layui-btn-xs layui-btn-success',
@@ -346,7 +346,7 @@ define(["jquery", "easy-admin"], function ($, ea) {
                 delete_url: 'project.description/delete',
                 export_url: 'project.description/export',
                 modify_url: 'project.description/modify',
-                schedule_url: 'project.schedule/index',
+                schedule_url: 'project.schedule/trindex',
                 comment_url: 'project.description/comment',
                 trstock_url: 'project.description/trstock',
             }
@@ -380,7 +380,7 @@ define(["jquery", "easy-admin"], function ($, ea) {
                         width: 250, title: '操作', fixed: "right", templet: ea.table.tool, operat: [
                             [{
                                 text: '进度',
-                                url: init.schedule_url,
+                                url: init.schedule_url+'?type=2',
                                 method: 'open',
                                 auth: 'schedule',
                                 class: 'layui-btn layui-btn-xs layui-btn-success',
@@ -464,7 +464,7 @@ define(["jquery", "easy-admin"], function ($, ea) {
                         width: 250, title: '操作', fixed: "right", templet: ea.table.tool, operat: [
                             [{
                                 text: '进度',
-                                url: init.schedule_url,
+                                url: init.schedule_url+'?type=3',
                                 method: 'open',
                                 auth: 'schedule',
                                 class: 'layui-btn layui-btn-xs layui-btn-success',
@@ -547,7 +547,7 @@ define(["jquery", "easy-admin"], function ($, ea) {
                         width: 250, title: '操作', fixed: "right", templet: ea.table.tool, operat: [
                             [{
                                 text: '进度',
-                                url: init.schedule_url,
+                                url: init.schedule_url+'?type=4',
                                 method: 'open',
                                 auth: 'schedule',
                                 class: 'layui-btn layui-btn-xs layui-btn-success',

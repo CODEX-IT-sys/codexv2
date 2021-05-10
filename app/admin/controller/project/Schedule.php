@@ -9,7 +9,7 @@ use think\App;
 use app\admin\model\project\Description;
 
 /**
- * @ControllerAnnotation(title="project_schedule")
+ * @ControllerAnnotation(title="进度")
  */
 class Schedule extends AdminController
 {
@@ -36,11 +36,12 @@ class Schedule extends AdminController
 
 
     /**
-     * @NodeAnotation(title="进度列表")
+     * @NodeAnotation(title="项目预排进度列表")
      */
-    public function index()
+    public function ypindex()
     {
         $a = $this->request->param('id');
+        $type = $this->request->param('type');
 
         if ($this->request->isAjax()) {
             if (input('selectFields')) {
@@ -49,20 +50,18 @@ class Schedule extends AdminController
             list($page, $limit, $where) = $this->buildTableParames();
             $count = $this->model
                 ->where($where)
-//                ->withJoin(['type', 'rate', 'yz', 'dw', 'customerInformation'
-//                    ,
-//                ], 'LEFT')
-                ->when($a, function ($query, $a) {
+                ->when($this->admininfo()['id'] != 1, function ($query, $a) {
                     // 满足条件后执行
-                    return $query->where('description_id', $a)->where('write_id',$this->admininfo()['id']);
+                    return $query->where('description_id', $a)->where('write_id', $this->admininfo()['id']);
 
                 })
                 ->count();
             $list = $this->model
                 ->where($where)
-                ->when($a, function ($query, $a) {
+                ->when($this->admininfo()['id'] != 1, function ($query, $a) {
                     // 满足条件后执行
-                    return $query->where('description_id', $a)->where('write_id',$this->admininfo()['id']);
+                    return $query->where('description_id', $a)->where('write_id', $this->admininfo()['id']);
+
                 })
                 ->page($page, $limit)
                 ->order($this->sort)
@@ -76,8 +75,11 @@ class Schedule extends AdminController
             ];
             return json($data);
         }
+
         $this->assign(['description_id' => $a]);
-        return $this->fetch();
+        $this->assign(['type' => $type]);
+        $this->assign(['admin' => $this->admininfo()]);
+        return $this->fetch('index');
     }
 
     /**
@@ -86,6 +88,7 @@ class Schedule extends AdminController
     public function add()
     {
         $a = $this->request->param('id');
+        $type = $this->request->param('type');
 
         if ($this->request->isAjax()) {
             $post = $this->request->post();
@@ -95,12 +98,17 @@ class Schedule extends AdminController
 
                 //计算实际用时
                 $post['actual_time'] = round((strtotime($post['end_time']) - strtotime($post['start_time'])) / 3600, 2);
-                // 计算中文字数=(原总字数*(100-总重复率/100)-扣除字数
-                //查询项目描述
-                $description = Description::find($post['description_id']);
-                $post['chinese_word_count'] = ($post['original_word_count'] * (100 - $description['repetition_rateall']) / 100) - $description['deduction_number'];
-                //计算效率=中文字数/实际用时
-                $post['efficiency'] = round($post['chinese_word_count'] / $post['actual_time'], 2);
+                if($post['type']==1||$post['type']==4){
+                    //排版效率
+                    $post['efficiency'] = round($post['completion_page'] / $post['actual_time'], 2);
+                }else{
+                    // 计算中文字数=(原总字数*(100-总重复率/100)-扣除字数
+                    //查询项目描述
+                    $description = Description::find($post['description_id']);
+                    $post['chinese_word_count'] = ($post['original_word_count'] * (100 - $description['repetition_rateall']) / 100) - $description['deduction_number'];
+                    //计算效率=中文字数/实际用时
+                    $post['efficiency'] = round($post['chinese_word_count'] / $post['actual_time'], 2);
+                }
 
                 $admin = session('admin');
 
@@ -114,13 +122,16 @@ class Schedule extends AdminController
         }
 
         $this->assign('description_id', $a);
+        $this->assign('type', $type);
         return $this->fetch();
     }
+
     /**
      * @NodeAnotation(title="编辑")
      */
     public function edit($id)
     {
+
         $row = $this->model->find($id);
         empty($row) && $this->error('数据不存在');
         if ($this->request->isAjax()) {
@@ -130,17 +141,23 @@ class Schedule extends AdminController
             try {
                 //计算实际用时
                 $post['actual_time'] = round((strtotime($post['end_time']) - strtotime($post['start_time'])) / 3600, 2);
-                // 计算中文字数=(原总字数*(100-总重复率/100)-扣除字数
-                //查询项目描述
-                $description = Description::find($post['description_id']);
-                $post['chinese_word_count'] = ($post['original_word_count'] * (100 - $description['repetition_rateall']) / 100) - $description['deduction_number'];
-                //计算效率=中文字数/实际用时
-                $post['efficiency'] = round($post['chinese_word_count'] / $post['actual_time'], 2);
+                if($post['type']==1||$post['type']==4){
+                    //排版效率
+                    $post['efficiency'] = round($post['completion_page'] / $post['actual_time'], 2);
+                }else{
+                    // 计算中文字数=(原总字数*(100-总重复率/100)-扣除字数
+                    //查询项目描述
+                    $description = Description::find($post['description_id']);
+                    $post['chinese_word_count'] = ($post['original_word_count'] * (100 - $description['repetition_rateall']) / 100) - $description['deduction_number'];
+                    //计算效率=中文字数/实际用时
+                    $post['efficiency'] = round($post['chinese_word_count'] / $post['actual_time'], 2);
+                }
+
                 $admin = session('admin');
                 $post['write_id'] = $admin['id'];
                 $save = $row->save($post);
             } catch (\Exception $e) {
-                $this->error('保存失败',$e->getMessage());
+                $this->error('保存失败', $e->getMessage());
             }
             $save ? $this->success('保存成功') : $this->error('保存失败');
         }

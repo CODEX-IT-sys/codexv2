@@ -7,7 +7,7 @@
         <div class="layui-form-item">
 
             {if isset($id)}
-            <input type="text" name="description_id" class="layui-input" placeholder="请输入description_id" value="{$id}">
+            <input type="hidden" name="description_id" class="layui-input" placeholder="请输入description_id" value="{$id}">
             {else /}
             <label class="layui-form-label">文件名称</label>
             <div class="layui-input-block">

@@ -13,7 +13,7 @@ define(["jquery", "easy-admin"], function ($, ea) {
     var soulTable = layui.soulTable;
     var Controller = {
 
-        index: function () {
+        ypindex: function () {
             ea.table.render({
                 init: init,
                 overflow: 'tips',
@@ -23,7 +23,7 @@ define(["jquery", "easy-admin"], function ($, ea) {
                 toolbar: ['refresh',
                     [{
                         text: '添加',
-                        url: init.add_url + '?id=' + description_id,
+                        url: init.add_url + '?id=' + description_id+'&type='+type,
                         method: 'open',
                         auth: 'add',
                         class: 'layui-btn layui-btn-normal layui-btn-sm',
@@ -43,11 +43,11 @@ define(["jquery", "easy-admin"], function ($, ea) {
                     {field: 'degree_completion', title: '完成度'},
                     {field: 'work_date', title: '工作日期'},
                     {field: 'work_content', title: '工作内容'},
-                    {field: 'update_main_library', search: 'select', selectList: {"1":"yes","2":"no","0":"N\/A"}, title: '会否更新主库'},
-                    {field: 'terminology_submit', search: 'select', selectList: {"1":"yes","2":"no","0":"N\/A"}, title: '术语提交'},
-                    {field: 'finalized_submit', search: 'select', selectList: {"1":"yes","2":"no","0":"N\/A"}, title: '是否转至定稿'},
-                    {field: 'original_word_count', title: '原总字数'},
-                    {field: 'chinese_word_count', title: '中文字数统计'},
+                    // {field: 'update_main_library', search: 'select', selectList: {"1":"yes","2":"no","0":"N\/A"}, title: '会否更新主库'},
+                    // {field: 'terminology_submit', search: 'select', selectList: {"1":"yes","2":"no","0":"N\/A"}, title: '术语提交'},
+                    // {field: 'finalized_submit', search: 'select', selectList: {"1":"yes","2":"no","0":"N\/A"}, title: '是否转至定稿'},
+                    // {field: 'original_word_count', title: '原总字数'},
+                    // {field: 'chinese_word_count', title: '中文字数统计'},
                     {field: 'efficiency', title: '效率'},
                     {field: 'scedule_remark', title: '备注'},
                     {field: 'create_time', title: '创建时间'},

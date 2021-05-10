@@ -2,31 +2,13 @@
     <form id="app-form" class="layui-form layuimini-form">
 
         <input type="hidden" name="description_id" value="{$description_id}">
-
-        <div class="layui-form-item">
-            <label class="layui-form-label">是否延迟提交</label>
-            <div class="layui-input-block">
-                {foreach $getLateSubmissionList as $k=>$v}
-                <input type="radio" name="late_submission" value="{$k}" title="{$v}" {in name="k" value="0" }checked=""
-                       {/in}>
-                {/foreach}
-            </div>
-        </div>
+        <input type="hidden" name="type" class="layui-input" placeholder="请输入进度类型" value="{$type}">
 
         <div class="layui-form-item">
             <label class="layui-form-label">完成页码</label>
             <div class="layui-input-block">
                 <input autocomplete="off" type="text" name="completion_page" class="layui-input" lay-verify="required"
                        placeholder="请输入完成页码" value="0">
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">自检</label>
-            <div class="layui-input-block">
-                {foreach $getSelfInspectionStatusList as $k=>$v}
-                <input type="radio" name="self_Inspection_status" value="{$k}" title="{$v}" {in name="k" value="0"
-                       }checked="" {/in}>
-                {/foreach}
             </div>
         </div>
 
@@ -72,6 +54,19 @@
             </div>
         </div>
         <div class="layui-form-item">
+            <label class="layui-form-label">自检</label>
+            <div class="layui-input-block">
+                {foreach $getSelfInspectionStatusList as $k=>$v}
+                <input type="radio" name="self_Inspection_status" value="{$k}" title="{$v}" {in name="k" value="0"
+                       }checked="" {/in}>
+                {/foreach}
+            </div>
+        </div>
+        {switch $type }
+        {case 2||3 }
+
+
+        <div class="layui-form-item">
             <label class="layui-form-label">会否更新主库</label>
             <div class="layui-input-block">
                 {foreach $getUpdateMainLibraryList as $k=>$v}
@@ -108,6 +103,7 @@
                        placeholder="请输入原总字数" value="0">
             </div>
         </div>
+
         <!--<div class="layui-form-item">-->
             <!--<label class="layui-form-label">中文字数统计</label>-->
             <!--<div class="layui-input-block">-->
@@ -123,11 +119,34 @@
             <!--</div>-->
         <!--</div>-->
         <div class="layui-form-item">
+            <label class="layui-form-label">未转至定稿原因</label>
+            <div class="layui-input-block">
+                <textarea name="reason" placeholder="未转至定稿原因" class="layui-textarea"></textarea>
+            </div>
+        </div>
+        {/case}
+        {case 1||4 }
+
+
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">是否延迟提交</label>
+            <div class="layui-input-block">
+                {foreach $getLateSubmissionList as $k=>$v}
+                <input type="radio" name="late_submission" value="{$k}" title="{$v}" {in name="k" value="0" }checked=""
+                       {/in}>
+                {/foreach}
+            </div>
+        </div>
+        {/case}
+        {/switch}
+        <div class="layui-form-item">
             <label class="layui-form-label">备注</label>
             <div class="layui-input-block">
                 <textarea name="scedule_remark" placeholder="请输入备注" class="layui-textarea"></textarea>
             </div>
         </div>
+
         <div class="hr-line"></div>
         <div class="layui-form-item text-center">
             <button type="submit" class="layui-btn layui-btn-normal layui-btn-sm" lay-submit>确认</button>
