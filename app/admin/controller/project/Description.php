@@ -304,14 +304,20 @@ class Description extends AdminController
             list($page, $limit, $where) = $this->buildTableParames();
             $count = $this->model
                 ->where($where)
-                ->where('dtranslation_id',$this->admininfo()['id'])
+                ->when($this->admininfo()['id']!=1, function ($query) {
+                    // 满足条件后执行
+                    return $query ->where('dtranslation_id',$this->admininfo()['id'])->whereor('dtranslation_id','in',$this->admininfo()['top_id']);
+                })
                 ->where('description_status',1)
                 ->withJoin(['fileaa', 'basic', 'assignor', 'yp', 'hp', 'xd', 'tr'
                 ], 'LEFT')
                 ->count();
             $list = $this->model
                 ->where($where)
-                ->where('dtranslation_id',$this->admininfo()['id'])
+                ->when($this->admininfo()['id']!=1, function ($query) {
+                    // 满足条件后执行
+                    return $query ->where('dtranslation_id',$this->admininfo()['id'])->whereor('dtranslation_id','in',$this->admininfo()['top_id']);
+                })
                 ->where('description_status',1)
                 ->withJoin(['fileaa', 'basic', 'assignor', 'yp', 'hp', 'xd', 'tr'
                 ], 'LEFT')
@@ -357,14 +363,20 @@ class Description extends AdminController
             list($page, $limit, $where) = $this->buildTableParames();
             $count = $this->model
                 ->where($where)
-                ->where('dproofreader_id',$this->admininfo()['id'])
+                ->when($this->admininfo()['id']!=1, function ($query) {
+                    // 满足条件后执行
+                    return $query ->where('dproofreader_id',$this->admininfo()['id'])->whereor('dproofreader_id','in',$this->admininfo()['top_id']);
+                })
                 ->where('description_status',2)
                 ->withJoin(['fileaa', 'basic', 'assignor', 'yp', 'hp', 'xd', 'tr'
                 ], 'LEFT')
                 ->count();
             $list = $this->model
                 ->where($where)
-                ->where('dproofreader_id',$this->admininfo()['id'])
+                ->when($this->admininfo()['id']!=1, function ($query) {
+                    // 满足条件后执行
+                    return $query ->where('dproofreader_id',$this->admininfo()['id'])->whereor('dproofreader_id','in',$this->admininfo()['top_id']);
+                })
                 ->where('description_status',2)
                 ->withJoin(['fileaa', 'basic', 'assignor', 'yp', 'hp', 'xd', 'tr'
                 ], 'LEFT')
@@ -409,20 +421,32 @@ class Description extends AdminController
             list($page, $limit, $where) = $this->buildTableParames();
             $count = $this->model
                 ->where($where)
-                ->where('dafter_ty_id',$this->admininfo()['id'])
+                ->when($this->admininfo()['id']!=1, function ($query) {
+                    // 满足条件后执行
+                    return $query ->where('dafter_ty_id',$this->admininfo()['id'])->whereor('dafter_ty_id','in',$this->admininfo()['top_id']);
+                })
                 ->where('description_status',3)
                 ->withJoin(['fileaa', 'basic', 'assignor', 'yp', 'hp', 'xd', 'tr'
                 ], 'LEFT')
                 ->count();
             $list = $this->model
+                ->when($this->admininfo()['id']!=1, function ($query) {
+                    // 满足条件后执行
+                    return $query ->where('dafter_ty_id',$this->admininfo()['id'])->whereor('dafter_ty_id','in',$this->admininfo()['top_id']);
+                })
+
                 ->where($where)
-                ->where('dafter_ty_id',$this->admininfo()['id'])
                 ->where('description_status',3)
+
                 ->withJoin(['fileaa', 'basic', 'assignor', 'yp', 'hp', 'xd', 'tr'
                 ], 'LEFT')
                 ->page($page, $limit)
                 ->order($this->sort)
                 ->select();
+
+//            dump($this->admininfo());
+//            dump($list);
+//            die;
             $data = [
                 'code' => 0,
                 'msg' => '',

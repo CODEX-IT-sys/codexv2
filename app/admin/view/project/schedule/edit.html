@@ -113,7 +113,7 @@
             <label class="layui-form-label">是否延迟提交</label>
             <div class="layui-input-block">
                 {foreach $getLateSubmissionList as $k=>$v}
-                <input type="radio" name="late_submission" value="{$k}" title="{$v}" {in name="k" value="0" }checked=""
+                <input type="radio" name="late_submission" value="{$k}" title="{$v}" {in name="k" value="$row.late_submission" }checked=""
                        {/in}>
                 {/foreach}
             </div>

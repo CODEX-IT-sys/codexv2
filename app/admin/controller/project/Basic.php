@@ -60,10 +60,10 @@ class Basic extends AdminController
                 ->count();
             $list = $this->model
                 ->where($where)
-                ->when($this->admininfo()['id']!=1, function ($query) {
-                    // 满足条件后执行
-                    return $query->where('write_id','find in set',$this->admininfo()['id'])->whereor('write_id','in',$this->admininfo()['top_id']);
-                })
+//                ->when($this->admininfo()['id']!=1, function ($query) {
+//                    // 满足条件后执行
+//                    return $query->where('write_id','find in set',$this->admininfo()['id'])->whereor('write_id','in',$this->admininfo()['top_id']);
+//                })
                 ->page($page, $limit)
                 ->order($this->sort)
                 ->select();

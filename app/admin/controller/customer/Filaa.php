@@ -95,7 +95,7 @@ class Filaa extends AdminController
                     ,
 
                 ], 'LEFT')
-                ->when($a, function ($query, $a) {
+                ->when($a, function ($query)use ($a)  {
                     // 满足条件后执行
                     return $query->where('demand_id', $a);
                 })
@@ -103,7 +103,7 @@ class Filaa extends AdminController
             $list = $this->model
                 ->where($where)
                 ->withJoin(['type', 'rate', 'yz', 'dw', 'customerInformation'], 'LEFT')
-                ->when($a, function ($query, $a) {
+                ->when($a, function ($query)use ($a)  {
                     // 满足条件后执行
                     return $query->where('demand_id', $a);
                 })
