@@ -33,7 +33,7 @@ class Admin extends AdminController
 
     protected $sort = [
         'sort' => 'desc',
-        'id'   => 'desc',
+        'id' => 'desc',
     ];
 
     public function __construct(App $app)
@@ -63,10 +63,10 @@ class Admin extends AdminController
                 ->order($this->sort)
                 ->select();
             $data = [
-                'code'  => 0,
-                'msg'   => '',
+                'code' => 0,
+                'msg' => '',
                 'count' => $count,
-                'data'  => $list,
+                'data' => $list,
             ];
             return json($data);
         }
@@ -78,6 +78,17 @@ class Admin extends AdminController
      */
     public function add()
     {
+        //人员信息
+        $man = SystemAdmin::field('username,id')->select()->toArray();
+        $staff = array();
+        foreach ($man as $k => $v) {
+            $staff[$k]['name'] = $v['username'];
+            $staff[$k]['value'] = $v['id'];
+            //删除自己
+            if ($staff[$k]['value'] == $this->admininfo()['id']) {
+                unset($staff[$k]);
+            }
+        }
         if ($this->request->isAjax()) {
             $post = $this->request->post();
             $authIds = $this->request->post('auth_ids', []);
@@ -91,6 +102,9 @@ class Admin extends AdminController
             }
             $save ? $this->success('保存成功') : $this->error('保存失败');
         }
+        $this->assign([
+            'staff' => array_values($staff)
+        ]);
         return $this->fetch();
     }
 
@@ -99,7 +113,23 @@ class Admin extends AdminController
      */
     public function edit($id)
     {
+
         $row = $this->model->find($id);
+        $value = explode(',', $row['top_id']);
+        //人员信息
+        $man = SystemAdmin::field('username,id')->select()->toArray();
+        $staff = array();
+        foreach ($man as $k => $v) {
+            $staff[$k]['name'] = $v['username'];
+            $staff[$k]['value'] = $v['id'];
+            if (in_array($v['id'], $value)) {
+                $staff[$k]['selected'] = true;
+            }
+            //删除自己
+            if ($staff[$k]['value'] == $this->admininfo()['id']) {
+                unset($staff[$k]);
+            }
+        }
         empty($row) && $this->error('数据不存在');
         if ($this->request->isAjax()) {
             $post = $this->request->post();
@@ -114,12 +144,15 @@ class Admin extends AdminController
                 $save = $row->save($post);
                 TriggerService::updateMenu($id);
             } catch (\Exception $e) {
-                $this->error('保存失败');
+                $this->error('保存失败'.$e->getMessage());
             }
             $save ? $this->success('保存成功') : $this->error('保存失败');
         }
         $row->auth_ids = explode(',', $row->auth_ids);
         $this->assign('row', $row);
+        $this->assign([
+            'staff' => array_values($staff)
+        ]);
         return $this->fetch();
     }
 
@@ -133,7 +166,7 @@ class Admin extends AdminController
         if ($this->request->isAjax()) {
             $post = $this->request->post();
             $rule = [
-                'password|登录密码'       => 'require',
+                'password|登录密码' => 'require',
                 'password_again|确认密码' => 'require',
             ];
             $this->validate($post, $rule);
@@ -162,8 +195,8 @@ class Admin extends AdminController
         $row = $this->model->whereIn('id', $id)->select();
         $row->isEmpty() && $this->error('数据不存在');
         $id == AdminConstant::SUPER_ADMIN_ID && $this->error('超级管理员不允许修改');
-        if (is_array($id)){
-            if (in_array(AdminConstant::SUPER_ADMIN_ID, $id)){
+        if (is_array($id)) {
+            if (in_array(AdminConstant::SUPER_ADMIN_ID, $id)) {
                 $this->error('超级管理员不允许修改');
             }
         }
@@ -182,9 +215,9 @@ class Admin extends AdminController
     {
         $post = $this->request->post();
         $rule = [
-            'id|ID'    => 'require',
+            'id|ID' => 'require',
             'field|字段' => 'require',
-            'value|值'  => 'require',
+            'value|值' => 'require',
         ];
         $this->validate($post, $rule);
         if (!in_array($post['field'], $this->allowModifyFields)) {

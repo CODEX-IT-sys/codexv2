@@ -245,7 +245,7 @@ class Description extends AdminController
                 ->where($where)
                 ->when($this->admininfo()['id']!=1, function ($query) {
                     // 满足条件后执行
-                    return $query ->where('dbefore_ty_id',$this->admininfo()['id']);
+                    return $query ->where('dbefore_ty_id',$this->admininfo()['id'])->whereor('dbefore_ty_id','in',$this->admininfo()['top_id']);
                 })
 
                 ->where('description_status',0)

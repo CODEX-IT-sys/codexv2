@@ -36,7 +36,12 @@
                 {/foreach}
             </div>
         </div>
-
+        <div class="layui-form-item">
+            <label class="layui-form-label">数据权限</label>
+            <div class="layui-input-block">
+                <div id="staff"></div>
+            </div>
+        </div>
         <div class="layui-form-item layui-form-text">
             <label class="layui-form-label">备注信息</label>
             <div class="layui-input-block">
@@ -52,3 +57,23 @@
 
     </form>
 </div>
+<script>
+    //人员
+    var staff = '<?php echo  json_encode($staff);?>';
+    var staff = JSON.parse(staff);
+    console.log(staff);
+    var staff = xmSelect.render({
+        el: '#staff',
+        language: 'zn',
+        tips: '请选择用户下级',
+        name: 'top_id',
+        filterable: true,
+        toolbar: {
+            show: true,
+            list: ['ALL', 'CLEAR', 'REVERSE']
+        },
+        data: staff
+    })
+
+
+</script>

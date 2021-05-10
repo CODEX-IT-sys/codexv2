@@ -60,16 +60,15 @@ class Allitems extends AdminController
         //文件分类
         $cate = Cache::get('cate');
         //项目经理
-        $b = SystemAdmin::wherein('auth_ids', [12])->select();
+        $b=SystemAdmin::where('auth_ids','find in set', 12)->select();
         //项目助理
-        $Assignor = SystemAdmin::wherein('auth_ids', [15])->select();
+        $Assignor=SystemAdmin::where('auth_ids','find in set', 15)->select();
         //难度
         $level = Cache::get('level');
         $admin = $this->admininfo();
         $this->assign([
             'd' => $d, 'i' => $n, 'h' => $h, 'n' => $f, 's' => $s, 'st' => $admin, 'b' => $b, 'level' => $level, 'Assignor' => $Assignor, 'cate' => $cate
         ]);
-
 
         $this->model = new \app\admin\model\customer\Customeraa();
 
@@ -126,6 +125,10 @@ class Allitems extends AdminController
             $count = $this->model
                 ->where($where)
                 ->where('file_status', 4)
+                ->when($this->admininfo()['id']!=1, function ($query) {
+                    // 满足条件后执行
+                    return $query->where('mid|assistant_id','find in set',$this->admininfo()['id'])->whereor('mid|assistant_id','in',$this->admininfo()['top_id']);
+                })
                 ->withJoin(['type', 'rate', 'yz', 'dw', 'customerInformation', 'xm',
                     'assignor', 'tyevel', 'trevel', 'assistant'
                 ], 'LEFT')
@@ -133,6 +136,10 @@ class Allitems extends AdminController
             $list = $this->model
                 ->where($where)
                 ->where('file_status', 4)
+                ->when($this->admininfo()['id']!=1, function ($query) {
+                    // 满足条件后执行
+                    return $query->where('mid|assistant_id','find in set',$this->admininfo()['id'])->whereor('mid|assistant_id','in',$this->admininfo()['top_id']);
+                })
                 ->withJoin(['type', 'rate', 'yz', 'dw', 'customerInformation', 'xm',
                     'assignor', 'tyevel', 'trevel', 'assistant'
                 ], 'LEFT')
@@ -164,6 +171,10 @@ class Allitems extends AdminController
             $count = $this->model
                 ->where($where)
                 ->where('file_status', 3)
+                ->when($this->admininfo()['id']!=1, function ($query) {
+                    // 满足条件后执行
+                    return $query->where('mid|assistant_id','find in set',$this->admininfo()['id'])->whereor('mid|assistant_id','in',$this->admininfo()['top_id']);
+                })
                 ->withJoin(['type', 'rate', 'yz', 'dw', 'customerInformation', 'xm',
                     'assignor', 'tyevel', 'trevel', 'assistant'
                 ], 'LEFT')
@@ -171,6 +182,10 @@ class Allitems extends AdminController
             $list = $this->model
                 ->where($where)
                 ->where('file_status', 3)
+                ->when($this->admininfo()['id']!=1, function ($query) {
+                    // 满足条件后执行
+                    return $query->where('mid|assistant_id','find in set',$this->admininfo()['id'])->whereor('mid|assistant_id','in',$this->admininfo()['top_id']);
+                })
                 ->withJoin(['type', 'rate', 'yz', 'dw', 'customerInformation', 'xm',
                     'assignor', 'tyevel', 'trevel', 'assistant'
                 ], 'LEFT')
@@ -462,16 +477,6 @@ class Allitems extends AdminController
 
         echo "<script>window.parent.location.reload()</script>";
     }
-    /**
-     * @NodeAnotation(title="多文件拆分")
-     */
-    public function multiplesplit()
-    {
-
-    }
-
-
-
 
 
 

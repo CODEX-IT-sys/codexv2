@@ -1,0 +1,16 @@
+<div class="layui-form">
+    <table class="layui-table" lay-filter="demo">
+        {foreach $trarray as $key=>$v}
+        <tr>
+            <td>{$v.title}</td>
+            {if !empty($v['children'])}
+            {foreach $v['children'] as $k1=>$v1}
+            <td>
+       {$v1.title}
+        </td>
+        {/foreach}
+        {/if}
+        </tr>
+        {/foreach}
+    </table>
+</div>
