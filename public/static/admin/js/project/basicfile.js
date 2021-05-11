@@ -49,6 +49,17 @@ define(["jquery", "easy-admin"], function ($, ea) {
                     },
 
                 ]],
+                filter: {
+                    items: ['column', 'data', 'condition', 'editCondition', 'excel', 'clearCache'],
+                    cache: true
+                },
+                // , autoColumnWidth: {
+                //     init: true
+                // },
+                done: function () {
+                    // 在 done 中开启
+                    soulTable.render(this)
+                }
             });
 
             ea.listen();

@@ -91,7 +91,9 @@ class Schedule extends AdminController
         $a = $this->request->param('id');
         $type = $this->request->param('type');
 
+
         if ($this->request->isAjax()) {
+//            dump($a);die;
             if (input('selectFields')) {
                 return $this->selectList();
             }

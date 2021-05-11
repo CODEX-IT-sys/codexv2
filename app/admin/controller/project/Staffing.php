@@ -275,4 +275,46 @@ class Staffing extends AdminController
 
         return $this->fetch();
     }
+
+    /**
+     * @NodeAnotation(title="我的日程,翻译校对,排版使用")
+     */
+
+    public function my()
+    {
+        $id=$this->admininfo()['id'];
+        $tr = \app\admin\model\project\Description::where('dtranslation_id', $id)->select()->toArray();
+        $xd = \app\admin\model\project\Description::where('dproofreader_id', $id)->select()->toArray();
+        $yp = \app\admin\model\project\Description::where('dbefore_ty_id', $id)->select()->toArray();
+        $hp = \app\admin\model\project\Description::where('dafter_ty_id', $id)->select()->toArray();
+        $man = array_merge($tr, $xd, $yp, $hp);
+        $a = [];
+        foreach ($man as $k => $v) {
+            if (!empty($tr)) {
+                $a[$k]['title'] = "文件编号:$v[file_code_project]\r" . "文件名称:$v[file_name_project]\r" . "开始时间:$v[tr_start_time]\r" . "结束时间:$v[tr_end_time]";
+                $a[$k]['start'] = $v['tr_start_time'];
+                $a[$k]['end'] = $v['tr_end_time'];
+            }
+            if (!empty($xd)) {
+                $a[$k]['title'] = "文件编号:$v[file_code_project]\r" . "文件名称:$v[file_name_project]\r" . "开始时间:$v[pr_start_time]\r" . "结束时间:$v[pr_end_time]";
+                $a[$k]['start'] = $v['pr_start_time'];
+                $a[$k]['end'] = $v['pr_end_time'];
+            }
+            if (!empty($yp)) {
+                $a[$k]['title'] = "文件编号:$v[file_code_project]\r" . "文件名称:$v[file_name_project]\r" . "开始时间:$v[be_start_time]\r" . "结束时间:$v[be_end_time]";
+                $a[$k]['start'] = $v['be_start_time'];
+                $a[$k]['end'] = $v['be_end_time'];
+            }
+            if (!empty($hp)) {
+                $a[$k]['title'] = "文件编号:$v[file_code_project]\r" . "文件名称:$v[file_name_project]\r" . "开始时间:$v[after_start_time]\r" . "结束时间:$v[after_end_time]";
+                $a[$k]['start'] = $v['after_start_time'];
+                $a[$k]['end'] = $v['after_end_time'];
+            }
+
+        }
+
+        $this->assign(['a' => json_encode($a)]);
+        return $this->fetch('test');
+    }
+
 }

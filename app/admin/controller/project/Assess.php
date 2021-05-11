@@ -160,9 +160,9 @@ class Assess extends AdminController
         $post = $this->request->post();
         try {
             $post['write_id'] = $this->admininfo()['id'];
-            $post['pj_dafter_ty_id'] = \app\admin\model\project\Description::where('id',$post['description_id'])->value('dtranslation_id');
+            $post['pj_dafter_ty_id'] = \app\admin\model\project\Description::where('id',$post['description_id'])->value('dafter_ty_id');
             $post['pj_dbefore_ty_id'] = \app\admin\model\project\Description::where('id',$post['description_id'])->value('dbefore_ty_id');
-            $post['pj_dtranslation_id'] = \app\admin\model\project\Description::where('id',$post['description_id'])->value('dafter_ty_id');
+            $post['pj_dtranslation_id'] = \app\admin\model\project\Description::where('id',$post['description_id'])->value('dtranslation_id');
             $save = $this->model->save($post);
         } catch (\Exception $e) {
             $this->error('保存失败:' . $e->getMessage());
@@ -179,7 +179,6 @@ class Assess extends AdminController
     public function ypindex()
     {
 
-//        dump($this->model->fileyp());die;
         if ($this->request->isAjax()) {
             if (input('selectFields')) {
                 return $this->selectList();
@@ -188,33 +187,27 @@ class Assess extends AdminController
             $count = $this->model
                 ->when($this->admininfo()['id']!=1, function ($query) {
                     // 满足条件后执行
-                    return $query->where('write_id','find in set',$this->admininfo()['id'])->whereor('write_id','in',$this->admininfo()['top_id']);
+                    return $query->where('write_id','=',$this->admininfo()['id'])->whereor('write_id','in',$this->admininfo()['top_id']);
                 })
                 ->where($where)
                 ->where('type',1)
                 ->withJoin(['file','write','yp'
                 ], 'LEFT')
-                ->when($this->admininfo()['id']!=1, function ($query) {
-                    // 满足条件后执行
-                    return $query ->where('dbefore_ty_id',$this->admininfo()['id']);
-                })
                 ->count();
             $list = $this->model
                 ->where($where)
                 ->when($this->admininfo()['id']!=1, function ($query) {
                     // 满足条件后执行
-                    return $query->where('write_id','find in set',$this->admininfo()['id'])->whereor('write_id','in',$this->admininfo()['top_id']);
+                    return $query->where('write_id','=',$this->admininfo()['id'])->whereor('write_id','in',$this->admininfo()['top_id']);
                 })
                 ->where('type',1)
                 ->withJoin(['file','write','yp'
                 ])
-                ->when($this->admininfo()['id']!=1, function ($query) {
-                    // 满足条件后执行
-                    return $query ->where('write_id',$this->admininfo()['id']);
-                })
                 ->page($page, $limit)
                 ->order($this->sort)
                 ->select()->toArray();
+
+//            dump($list);die;
 //            foreach ($list as $k=>$v)
 //            {
 //                    $list[$k]['yp']=SystemAdmin::where('id',$v['file']['dbefore_ty_id'])->value('username');

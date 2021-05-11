@@ -13,6 +13,7 @@ use think\facade\Cache;
 use think\facade\Db;
 use app\admin\model\project\Comment;
 use app\admin\model\project\Message;
+
 /**
  * @ControllerAnnotation(title="项目描述")
  */
@@ -209,11 +210,19 @@ class Description extends AdminController
 //                    'translation_id','status','repetition_rate95','repetition_rate100','repetition_rateall','file_specification','project_page',
 //                    'deduction_number'晚点再加
 //                ])
+                ->when($this->admininfo()['id'] != 1, function ($query) {
+                    // 满足条件后执行
+                    return $query->where('dtranslation_id|dproofreader_id|dbefore_ty_id|dafter_ty_id', 'find in set', $this->admininfo()['id'])->whereor('dtranslation_id|dproofreader_id|dbefore_ty_id|dafter_ty_id', 'in', $this->admininfo()['top_id']);
+                })
                 ->withJoin(['fileaa', 'basic', 'assignor', 'yp', 'hp', 'xd', 'tr'
                 ], 'LEFT')
                 ->count();
             $list = $this->model
                 ->where($where)
+                ->when($this->admininfo()['id'] != 1, function ($query) {
+                    // 满足条件后执行
+                    return $query->where('dtranslation_id|dproofreader_id|dbefore_ty_id|dafter_ty_id', 'find in set', $this->admininfo()['id'])->whereor('dtranslation_id|dproofreader_id|dbefore_ty_id|dafter_ty_id', 'in', $this->admininfo()['top_id']);
+                })
                 ->withJoin(['fileaa', 'basic', 'assignor', 'yp', 'hp', 'xd', 'tr'
                 ], 'LEFT')
                 ->page($page, $limit)
@@ -243,25 +252,23 @@ class Description extends AdminController
             list($page, $limit, $where) = $this->buildTableParames();
             $count = $this->model
                 ->where($where)
-                ->when($this->admininfo()['id']!=1, function ($query) {
+                ->when($this->admininfo()['id'] != 1, function ($query) {
                     // 满足条件后执行
-                    return $query ->where('dbefore_ty_id',$this->admininfo()['id'])->whereor('dbefore_ty_id','in',$this->admininfo()['top_id']);
+                    return $query->where('dbefore_ty_id', $this->admininfo()['id'])->whereor('dbefore_ty_id', 'in', $this->admininfo()['top_id']);
                 })
-
-                ->where('description_status',0)
+                ->where('description_status', 0)
                 ->withJoin(['fileaa', 'basic', 'assignor', 'yp', 'hp', 'xd', 'tr'
                 ], 'LEFT')
                 ->count();
             $list = $this->model
                 ->where($where)
-                ->when($this->admininfo()['id']!=1, function ($query) {
+                ->when($this->admininfo()['id'] != 1, function ($query) {
                     // 满足条件后执行
-                    return $query ->where('dbefore_ty_id',$this->admininfo()['id']);
+                    return $query->where('dbefore_ty_id', $this->admininfo()['id'])->whereor('dbefore_ty_id', 'in', $this->admininfo()['top_id']);
                 })
-                ->where('description_status',0)
+                ->where('description_status', 0)
                 ->withJoin(['fileaa', 'basic', 'assignor', 'yp', 'hp', 'xd', 'tr'
                 ], 'LEFT')
-
                 ->page($page, $limit)
                 ->order($this->sort)
                 ->select();
@@ -275,6 +282,7 @@ class Description extends AdminController
         }
         return $this->fetch('index');
     }
+
     /**
      * @NodeAnotation(title="预排提交")
      */
@@ -284,7 +292,7 @@ class Description extends AdminController
         empty($row) && $this->error('数据不存在');
         if ($this->request->isAjax()) {
             try {
-                $save = $row->save(['description_status'=>1]);
+                $save = $row->save(['description_status' => 1]);
             } catch (\Exception $e) {
                 $this->error('提交失败');
             }
@@ -304,21 +312,21 @@ class Description extends AdminController
             list($page, $limit, $where) = $this->buildTableParames();
             $count = $this->model
                 ->where($where)
-                ->when($this->admininfo()['id']!=1, function ($query) {
+                ->when($this->admininfo()['id'] != 1, function ($query) {
                     // 满足条件后执行
-                    return $query ->where('dtranslation_id',$this->admininfo()['id'])->whereor('dtranslation_id','in',$this->admininfo()['top_id']);
+                    return $query->where('dtranslation_id', $this->admininfo()['id'])->whereor('dtranslation_id', 'in', $this->admininfo()['top_id']);
                 })
-                ->where('description_status',1)
+                ->where('description_status', 1)
                 ->withJoin(['fileaa', 'basic', 'assignor', 'yp', 'hp', 'xd', 'tr'
                 ], 'LEFT')
                 ->count();
             $list = $this->model
                 ->where($where)
-                ->when($this->admininfo()['id']!=1, function ($query) {
+                ->when($this->admininfo()['id'] != 1, function ($query) {
                     // 满足条件后执行
-                    return $query ->where('dtranslation_id',$this->admininfo()['id'])->whereor('dtranslation_id','in',$this->admininfo()['top_id']);
+                    return $query->where('dtranslation_id', $this->admininfo()['id'])->whereor('dtranslation_id', 'in', $this->admininfo()['top_id']);
                 })
-                ->where('description_status',1)
+                ->where('description_status', 1)
                 ->withJoin(['fileaa', 'basic', 'assignor', 'yp', 'hp', 'xd', 'tr'
                 ], 'LEFT')
                 ->page($page, $limit)
@@ -334,6 +342,7 @@ class Description extends AdminController
         }
         return $this->fetch('index');
     }
+
     /**
      * @NodeAnotation(title="翻译提交")
      */
@@ -343,7 +352,7 @@ class Description extends AdminController
         empty($row) && $this->error('数据不存在');
         if ($this->request->isAjax()) {
             try {
-                $save = $row->save(['description_status'=>2]);
+                $save = $row->save(['description_status' => 2]);
             } catch (\Exception $e) {
                 $this->error('提交失败');
             }
@@ -363,21 +372,21 @@ class Description extends AdminController
             list($page, $limit, $where) = $this->buildTableParames();
             $count = $this->model
                 ->where($where)
-                ->when($this->admininfo()['id']!=1, function ($query) {
+                ->when($this->admininfo()['id'] != 1, function ($query) {
                     // 满足条件后执行
-                    return $query ->where('dproofreader_id',$this->admininfo()['id'])->whereor('dproofreader_id','in',$this->admininfo()['top_id']);
+                    return $query->where('dproofreader_id', $this->admininfo()['id'])->whereor('dproofreader_id', 'in', $this->admininfo()['top_id']);
                 })
-                ->where('description_status',2)
+                ->where('description_status', 2)
                 ->withJoin(['fileaa', 'basic', 'assignor', 'yp', 'hp', 'xd', 'tr'
                 ], 'LEFT')
                 ->count();
             $list = $this->model
                 ->where($where)
-                ->when($this->admininfo()['id']!=1, function ($query) {
+                ->when($this->admininfo()['id'] != 1, function ($query) {
                     // 满足条件后执行
-                    return $query ->where('dproofreader_id',$this->admininfo()['id'])->whereor('dproofreader_id','in',$this->admininfo()['top_id']);
+                    return $query->where('dproofreader_id', $this->admininfo()['id'])->whereor('dproofreader_id', 'in', $this->admininfo()['top_id']);
                 })
-                ->where('description_status',2)
+                ->where('description_status', 2)
                 ->withJoin(['fileaa', 'basic', 'assignor', 'yp', 'hp', 'xd', 'tr'
                 ], 'LEFT')
                 ->page($page, $limit)
@@ -393,6 +402,7 @@ class Description extends AdminController
         }
         return $this->fetch('index');
     }
+
     /**
      * @NodeAnotation(title="待校对提交")
      */
@@ -402,13 +412,14 @@ class Description extends AdminController
         empty($row) && $this->error('数据不存在');
         if ($this->request->isAjax()) {
             try {
-                $save = $row->save(['description_status'=>3]);
+                $save = $row->save(['description_status' => 3]);
             } catch (\Exception $e) {
                 $this->error('提交失败');
             }
             $save ? $this->success('提交成功') : $this->error('提交失败');
         }
     }
+
     /**
      * @NodeAnotation(title="待后排")
      */
@@ -421,23 +432,21 @@ class Description extends AdminController
             list($page, $limit, $where) = $this->buildTableParames();
             $count = $this->model
                 ->where($where)
-                ->when($this->admininfo()['id']!=1, function ($query) {
+                ->when($this->admininfo()['id'] != 1, function ($query) {
                     // 满足条件后执行
-                    return $query ->where('dafter_ty_id',$this->admininfo()['id'])->whereor('dafter_ty_id','in',$this->admininfo()['top_id']);
+                    return $query->where('dafter_ty_id', $this->admininfo()['id'])->whereor('dafter_ty_id', 'in', $this->admininfo()['top_id']);
                 })
-                ->where('description_status',3)
+                ->where('description_status', 3)
                 ->withJoin(['fileaa', 'basic', 'assignor', 'yp', 'hp', 'xd', 'tr'
                 ], 'LEFT')
                 ->count();
             $list = $this->model
-                ->when($this->admininfo()['id']!=1, function ($query) {
-                    // 满足条件后执行
-                    return $query ->where('dafter_ty_id',$this->admininfo()['id'])->whereor('dafter_ty_id','in',$this->admininfo()['top_id']);
+                ->when($this->admininfo()['id'] != 1, function ($query) {
+
+                    return $query->where('dafter_ty_id', $this->admininfo()['id'])->whereor('dafter_ty_id', 'in', $this->admininfo()['top_id']);
                 })
-
                 ->where($where)
-                ->where('description_status',3)
-
+                ->where('description_status', 3)
                 ->withJoin(['fileaa', 'basic', 'assignor', 'yp', 'hp', 'xd', 'tr'
                 ], 'LEFT')
                 ->page($page, $limit)
@@ -457,6 +466,7 @@ class Description extends AdminController
         }
         return $this->fetch('index');
     }
+
     /**
      * @NodeAnotation(title="待后排提交")
      */
@@ -466,13 +476,14 @@ class Description extends AdminController
         empty($row) && $this->error('数据不存在');
         if ($this->request->isAjax()) {
             try {
-                $save = $row->save(['description_status'=>4]);
+                $save = $row->save(['description_status' => 4]);
             } catch (\Exception $e) {
                 $this->error('提交失败');
             }
             $save ? $this->success('提交成功') : $this->error('提交失败');
         }
     }
+
     /**
      * @NodeAnotation(title="留言")
      */
@@ -491,8 +502,7 @@ class Description extends AdminController
             $staff[$k]['name'] = $v['username'];
             $staff[$k]['value'] = $v['id'];
             //删除自己
-            if($staff[$k]['value']==$this->admininfo()['id'])
-            {
+            if ($staff[$k]['value'] == $this->admininfo()['id']) {
                 unset($staff[$k]);
             }
         }
@@ -508,16 +518,15 @@ class Description extends AdminController
                 $res->mentioned_id = $data['staff'];
                 $res->save();
                 //存储到消息通知表
-                $addressee= explode(",", $data['staff']);
-                foreach ($addressee as $k=>$v)
-                {
-                    $message=new Message();
-                    $message->write_id= $this->admininfo()['id'];
-                    $message->addressee_id= $v;
-                    $message->link='/admin/index#/admin/project.description/comment.html?id='.$data['id'];
-                    $message->topic= $data['title'];
-                    $message->message_content=  $data['content'];
-                    $message->topic= $data['title'];
+                $addressee = explode(",", $data['staff']);
+                foreach ($addressee as $k => $v) {
+                    $message = new Message();
+                    $message->write_id = $this->admininfo()['id'];
+                    $message->addressee_id = $v;
+                    $message->link = '/admin/index#/admin/project.description/comment.html?id=' . $data['id'];
+                    $message->topic = $data['title'];
+                    $message->message_content = $data['content'];
+                    $message->topic = $data['title'];
                     $message->save();
                 }
 
@@ -527,7 +536,7 @@ class Description extends AdminController
         } catch (\Exception $e) {
             // 回滚事务
             Db::rollback();
-            $this->error('失败',$e->getMessage());
+            $this->error('失败', $e->getMessage());
         }
 
         $this->assign([
@@ -535,7 +544,6 @@ class Description extends AdminController
         ]);
         return $this->fetch('/project/comment/comment');
     }
-
 
 
 }

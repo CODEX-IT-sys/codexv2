@@ -17,7 +17,7 @@ use think\facade\Db;
 use app\admin\model\SystemAdmin;
 
 /**
- * @ControllerAnnotation(title="customer_filaa")文件
+ * @ControllerAnnotation(title="来稿文件")
  */
 class Filaa extends AdminController
 {

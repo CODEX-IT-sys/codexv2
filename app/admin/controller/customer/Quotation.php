@@ -11,7 +11,7 @@ use think\App;
 use think\facade\Db;
 
 /**
- * @ControllerAnnotation(title="customer_quotation")报价单
+ * @ControllerAnnotation(title="报价单")
  */
 class Quotation extends AdminController
 {
