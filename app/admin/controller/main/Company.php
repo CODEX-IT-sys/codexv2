@@ -8,7 +8,7 @@ use EasyAdmin\annotation\NodeAnotation;
 use think\App;
 
 /**
- * @ControllerAnnotation(title="main_company")
+ * @ControllerAnnotation(title="主体公司")
  */
 class Company extends AdminController
 {
