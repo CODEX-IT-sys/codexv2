@@ -83,6 +83,16 @@ class Customeraa extends TimeModel
         }
         return  implode(",", $arr);
     }
+    //委托时间获取器
+    public function getEntrustDateAttr($val)
+    {
+        return  date('Ymd',$val);
+    }
+    //生成项目需求
+    public function getCooperationFirstList()
+    {
+        return ['1' => 'yes', '2' => 'no', '0' => 'N/A',];
+    }
     public function getFileStatusList()
     {
 
@@ -128,6 +138,12 @@ class Customeraa extends TimeModel
     public function customerInformation()
     {
         return $this->belongsTo('app\admin\model\customer\Customer', 'customer_id', 'id');
+    }
+
+    //关联合同
+    public function contract()
+    {
+        return $this->belongsTo('app\admin\model\customer\CustomerContract', 'contract_id', 'id');
     }
     //项目经理
     public function xm()

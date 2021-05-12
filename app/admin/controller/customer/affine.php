@@ -59,6 +59,7 @@ class affine extends AdminController
             'd' => $d, 'g' => $g, 'h' => $h, 'f' => $f, 's' => $s, 'st' => $admin, 'b' => $b
         ]);
         $this->model = new \app\admin\model\customer\Customeraa();
+        $this->assign('getCooperationFirstList', $this->model->getCooperationFirstList());
         $this->assign('filestatus', $this->model->getFileStatusList());
 
     }
@@ -82,7 +83,8 @@ class affine extends AdminController
                 ->withJoin(['type', 'rate', 'yz', 'dw', 'customerInformation'], 'LEFT')
                 ->page($page, $limit)
                 ->order($this->sort)
-                ->select()->toArray();
+                ->select();
+
             $data = [
                 'code' => 0,
                 'msg' => '',
@@ -149,12 +151,12 @@ class affine extends AdminController
             $count = $this->model
                 ->where('file_status', 2)
                 ->where($where)
-                ->withJoin(['type', 'rate', 'yz', 'dw', 'customerInformation'], 'LEFT')
+                ->withJoin(['type', 'rate', 'yz', 'dw', 'customerInformation','demand','contract'], 'LEFT')
                 ->count();
             $list = $this->model
                 ->where($where)
                 ->where('file_status', 2)
-                ->withJoin(['type', 'rate', 'yz', 'dw', 'customerInformation'], 'LEFT')
+                ->withJoin(['type', 'rate', 'yz', 'dw', 'customerInformation','demand','contract'], 'LEFT')
                 ->page($page, $limit)
                 ->order($this->sort)
                 ->select()->toArray();

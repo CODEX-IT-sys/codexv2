@@ -14,7 +14,6 @@ class Information extends AdminController
 {
 
     use \app\admin\traits\Curd;
-
     public function __construct(App $app)
     {
         parent::__construct($app);
@@ -35,6 +34,7 @@ class Information extends AdminController
             }
             list($page, $limit, $where) = $this->buildTableParames();
             $count = $this->model
+                ->withJoin(['write'], 'LEFT')
                 ->where($where)
                 ->count();
             $list = $this->model

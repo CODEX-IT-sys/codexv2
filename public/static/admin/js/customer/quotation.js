@@ -33,6 +33,7 @@ define(["jquery", "easy-admin",], function ($, ea) {
                                 text: '打印预览',
                                 url: init.print_url,
                                 method: 'open',
+                                auth: 'print',
                                 field: 'id',
                                 class: 'layui-btn layui-btn-xs layui-btn-normal',
                                 extend: 'data-full="true"',

@@ -20,7 +20,6 @@ define(["jquery", "easy-admin"], function ($, ea) {
                 skin: 'line  ' //行边框风格
                 , even: true, //开启隔行背景
                 size: 'sm', //小尺寸的表格
-                limit: 50,
                 totalRow: true,
                 toolbar: ['refresh',
                     [{

@@ -59,10 +59,11 @@
         <div class="layui-form-item">
             <label class="layui-form-label">文件类型</label>
             <div class="layui-input-block">
-                <select name="customer_file_type" lay-verify="required">
+                <select name="customer_file_type">
                     <option value="">请选择文件类型</option>
                     {foreach $f as $k1=>$v }
-                    <option value="{$v.id}" {in name="$v.id" value="$row.customer_file_type"} selected=""{/in}>{$v.content}</option>
+                    <option value="{$v.id}" {in name="$v.id" value="$row.customer_file_type" } selected="" {
+                    /in}>{$v.content}</option>
                     {/foreach}
                 </select>
             </div>
@@ -77,10 +78,11 @@
         <div class="layui-form-item">
             <label class="layui-form-label">语种</label>
             <div class="layui-input-block">
-                <select name="language" lay-verify="required">
+                <select name="language">
                     <option value="">请选择语种</option>
                     {foreach $h as $k1=>$v }
-                    <option value="{$v.id}" {in name="$v.id" value="$row.language"} selected=""{/in}>{$v.content}</option>
+                    <option value="{$v.id}" {in name="$v.id" value="$row.language" } selected="" {
+                    /in}>{$v.content}</option>
                     {/foreach}
                 </select>
             </div>
@@ -95,10 +97,11 @@
         <div class="layui-form-item">
             <label class="layui-form-label">单位</label>
             <div class="layui-input-block">
-                <select name="unit" lay-verify="required">
+                <select name="unit">
                     <option value="">请选择一个单位</option>
                     {foreach $d as $k1=>$v }
-                    <option value="{$v.id}"  {in name="$v.id" value="$row.unit"} selected=""{/in}>{$v.content}</option>
+                    <option value="{$v.id}" {in name="$v.id" value="$row.unit" } selected="" {
+                    /in}>{$v.content}</option>
                     {/foreach}
                 </select>
             </div>
@@ -116,7 +119,8 @@
                 <select name="tax_rate" lay-verify="required">
                     <option value="">请选择税率</option>
                     {foreach $s as $k=>$v }
-                    <option value="{$v.id}" {in name="$v.id" value="$row.tax_rate"} selected=""{/in}>{$v.content}</option>
+                    <option value="{$v.id}" {in name="$v.id" value="$row.tax_rate" } selected="" {
+                    /in}>{$v.content}</option>
                     {/foreach}
                 </select>
             </div>
@@ -133,10 +137,10 @@
         <!--<input type="text" name="quotation_price" class="layui-input" lay-verify="required" placeholder="请输入报价金额" value="{$row.quotation_price|default=''}" disabled>-->
         <!--</div>-->
         <!--</div>-->
-        <div class="layui-form-item">
+<!--        <div class="layui-form-item">
             <label class="layui-form-label">项目经理</label>
             <div class="layui-input-block">
-                <!--<input type="text" name="mid" class="layui-input" lay-verify="required" placeholder="请输入项目经理id" value="{$row.mid|default=''}">-->
+                &lt;!&ndash;<input type="text" name="mid" class="layui-input" lay-verify="required" placeholder="请输入项目经理id" value="{$row.mid|default=''}">&ndash;&gt;
                 <select name="mid" lay-verify="required" lay-search>
                     <option value="">请选择项目经理</option>
                     {foreach $b as $key=>$v }
@@ -145,12 +149,12 @@
                     {/foreach}
                 </select>
             </div>
-        </div>
+        </div>-->
         <div class="layui-form-item">
             <label class="layui-form-label">客户期望提交日期</label>
             <div class="layui-input-block">
                 <input type="text" name="customer_submit_date" data-date="" data-date-type="datetime" autocomplete="off"
-                       class="layui-input" lay-verify="required" placeholder="请输入客户期望提交日期"
+                       class="layui-input" placeholder="请输入客户期望提交日期"
                        value="{$row.customer_submit_date|default=''}">
             </div>
         </div>

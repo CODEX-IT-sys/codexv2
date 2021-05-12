@@ -43,6 +43,19 @@
             </div>
         </div>
         <div class="layui-form-item">
+            <label class="layui-form-label">项目经理</label>
+            <div class="layui-input-block">
+                <!--<input type="text" name="mid" class="layui-input" lay-verify="required" placeholder="请输入项目经理id" value="{$row.mid|default=''}">-->
+                <select name="mid" lay-verify="required" lay-search>
+                    <option value="">请选择项目经理</option>
+                    {foreach $b as $key=>$v }
+                    <option value="{$v.id}" {if condition="$row.mid eq $v.id" } selected="selected" {
+                    /if}>{$v.username}</option>
+                    {/foreach}
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
             <label class="layui-form-label">文件页数</label>
             <div class="layui-input-block">
                 <input type="text" name="page" class="layui-input" lay-verify="required" placeholder="请输入文件页数"
@@ -73,6 +86,7 @@
                 <div id="service"></div>
             </div>
         </div>
+
 
         <div class="layui-form-item">
             <label class="layui-form-label">语种</label>
@@ -160,6 +174,24 @@
                 <input type="text" name="completion_date" data-date="" data-date-type="datetime" autocomplete="off"
                        class="layui-input" lay-verify="required" placeholder="交付日期"
                        value="{$row.completion_date|default=''}">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">是否首次合作</label>
+            <div class="layui-input-block">
+                {foreach $getCooperationFirstList as $k=>$v}
+                <input type="radio" name="cooperation_first" value="{$k}" title="{$v}" {in name="k"
+                       value="$row.cooperation_first" }checked="" {/in}>
+                {/foreach}
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">生成项目需求</label>
+            <div class="layui-input-block">
+                {foreach $getCooperationFirstList as $k=>$v}
+                <input type="radio" name="generate_demand" value="{$k}" title="{$v}" {in name="k"
+                       value="$row.generate_demand" }checked="" {/in}>
+                {/foreach}
             </div>
         </div>
         <div class="layui-form-item">

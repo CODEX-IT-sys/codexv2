@@ -106,8 +106,8 @@ class Description extends AdminController
                     , 'after_start_time', 'after_start_time'
                 ])->select()->toArray();
 //                时间待同步
-                /*                $tr_start_time=  Db::name('project_description')->where('file_id',$res['file_id'])->field(
-                                    'min(tr_start_time) as tr_start_time,
+                $time = Db::name('project_description')->where('file_id', $res['file_id'])->field(
+                    'min(tr_start_time) as tr_start_time,
                                             max(tr_end_time) as tr_end_time,
                                             min(pr_start_time) as pr_start_time,
                                             max(pr_end_time) as pr_end_time,
@@ -120,8 +120,26 @@ class Description extends AdminController
                 //                    ,'pr_start_time','pr_end_time'
                 //                    ,'be_start_time','be_end_time'
                 //                    ,'after_start_time','after_start_time'
-                                )->group('tr_start_time,tr_end_time,pr_start_time,pr_end_time,be_start_time,be_end_time,after_start_time,after_end_time')->select();
-                                dump($tr_start_time);die;*/
+                )->group('tr_start_time,tr_end_time,pr_start_time,pr_end_time,be_start_time,be_end_time,after_start_time,after_end_time')->select();
+                $tr_start_time = [];
+                $tr_end_time = [];
+                $pr_start_time = [];
+                $pr_end_time = [];
+                $be_start_time = [];
+                $be_end_time = [];
+                $after_start_time = [];
+                $after_end_time = [];
+                foreach ($time as $item => $value) {
+                    $tr_start_time[] = $value['tr_start_time'];
+                    $tr_end_time[] = $value['tr_end_time'];
+                    $pr_start_time[] = $value['pr_start_time'];
+                    $pr_end_time[] = $value['pr_end_time'];
+                    $be_start_time[] = $value['be_start_time'];
+                    $be_end_time[] = $value['be_end_time'];
+                    $after_start_time[] = $value['after_start_time'];
+                    $after_end_time[] = $value['after_end_time'];
+                }
+
                 $translation = [];
                 $proofreader = [];
                 $before = [];
@@ -133,13 +151,26 @@ class Description extends AdminController
                     $after[] = $v['dafter_ty_id'];
                 }
 
+
+//                dump(min($be_start_time));
+//                dump($be_start_time);
+//                die;
                 $uq = Customeraa::where('id', $res['file_id'])->update([
                     'translation_id' => implode(',', array_unique(array_filter($translation))),
                     'proofreader_id' => implode(',', array_unique(array_filter($proofreader))),
                     'before_ty_id' => implode(',', array_unique(array_filter($before))),
-                    'after_ty_id' => implode(',', array_unique(array_filter($after)))
+                    'after_ty_id' => implode(',', array_unique(array_filter($after))),
+                    'tr_start_time' =>min($tr_start_time),
+                    'tr_end_time' =>max($tr_end_time),
+                    'pr_start_time' => min($pr_start_time),
+                    'pr_end_time' =>max($pr_end_time),
+//                    'be_start_time' =>min($be_start_time),
+                    'before_ty_time' =>max($be_end_time),
+//                    'after_start_time' =>min($after_start_time),
+                    'after_ty_time' => max($after_end_time),
                 ]);
 
+//                die;
                 // 提交事务
                 Db::commit();
             } catch (\Exception $e) {

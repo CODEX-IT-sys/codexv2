@@ -6,7 +6,7 @@ use app\admin\model\MainCompany;
 use app\admin\model\setting\DatabaseContent;
 use app\admin\model\SystemAdmin;
 use app\common\model\TimeModel;
-
+use think\facade\Db;
 class CustomerContract extends TimeModel
 {
 
@@ -78,6 +78,26 @@ class CustomerContract extends TimeModel
     public function fw()
     {
         return $this->belongsTo('app\admin\model\setting\DatabaseContent', 'service', 'id');
+    }
+
+    public function getSalesIdAttr($val)
+    {
+        $val= explode(",", $val);
+        $arr=[];
+        foreach ($val as $k1 => $v1) {
+            $arr[] = Db::name('system_admin')->where('id', $v1)->value('username');
+        }
+        return  implode(",", $arr);
+    }
+
+    public function getCurrencyAttr($val)
+    {
+        $val= explode(",", $val);
+        $arr=[];
+        foreach ($val as $k1 => $v1) {
+            $arr[] = Db::name('database_content')->where('id', $v1)->value('content');
+        }
+        return  implode(",", $arr);
     }
     //
     //添加两个字段;

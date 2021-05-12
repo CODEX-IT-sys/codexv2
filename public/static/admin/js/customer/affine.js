@@ -22,7 +22,7 @@ define(["jquery", "easy-admin"], function ($, ea) {
                 skin: 'line  ' //行边框风格
                 , even: true, //开启隔行背景
                 size: 'sm', //小尺寸的表格
-                limit: 50,
+
                 totalRow: true,
                 toolbar: ['refresh',
                     [{
@@ -47,7 +47,7 @@ define(["jquery", "easy-admin"], function ($, ea) {
                     },
                     // {field: 'demand.contract_code', title: '合同编号'},
                     {field: 'customer_file_name', title: '文件名称', edit: true, sort: true},
-                    {field: 'customerInformation.company_name', title: '公司名称', edit: true, sort: true},
+                    {field: 'customerInformation.company_name', title: '公司名称', sort: true},
                     {field: 'type.content', title: '类型', search: 'false',},
                     {field: 'page', title: '页数', edit: true, search: 'false'},
                     {field: 'number_of_words', title: '源语数量', edit: true, search: 'false'},
@@ -124,12 +124,17 @@ define(["jquery", "easy-admin"], function ($, ea) {
                     },
                     // {field: 'demand.contract_code', title: '合同编号'},
                     {field: 'customer_file_name', title: '文件名称', edit: true, sort: true},
-                    {field: 'customerInformation.company_name', title: '公司名称', edit: true, sort: true},
-                    {field: 'type.content', title: '类型', search: 'false',},
+                    {field: 'customerInformation.company_name', title: '公司名称',  sort: true},
+                    {field: 'entrust_date', title: '委托日期',  sort: true},
+                    {field: 'contract.sales_id', title: '销售',  sort: true},
+                    {field: 'customerInformation.customer_contact', title: '客户联系人',  sort: true},
+                    {field: 'customerInformation.department', title: '所在部门',  sort: true},
+                    {field: 'type.content', title: '文件类型', search: 'false',},
                     {field: 'page', title: '页数', edit: true, search: 'false'},
                     {field: 'number_of_words', title: '源语数量', edit: true, search: 'false'},
                     {field: 'service', title: '服务', search: 'false'},
                     {field: 'yz.content', title: '语种', search: 'false',},
+                    {field: 'contract.currency', title: '币种', search: 'false',},
                     {field: 'unit_price', title: '单价', search: 'false', edit: true},
                     {field: 'dw.content', title: '单位', search: 'false'},
                     {field: 'quotation_number', title: '报价数量', search: 'false', edit: true},
@@ -138,6 +143,18 @@ define(["jquery", "easy-admin"], function ($, ea) {
                     {field: 'quotation_price', title: '报价金额', search: 'false'},
                     {field: 'customer_submit_date', title: '客户期望提交日期', search: 'false'},
                     {field: 'completion_date', title: '交付日期', search: 'false'},
+                    {
+                        field: 'generate_demand',
+                        search: 'select',
+                        selectList: {"1": "yes", "2": "no", "0": "N\/A"},
+                        title: '生成项目需求'
+                    },
+                    {
+                        field: 'cooperation_first',
+                        search: 'select',
+                        selectList: {"1": "yes", "2": "no", "0": "N\/A"},
+                        title: '是否首次合作'
+                    },
                     {field: 'customerInformation.department', title: '客户部门', search: 'false', hide: true},
                     {field: 'customerInformation.customer_contact', title: '客户联系人', search: 'false', hide: true},
                     {field: 'customerInformation.company_address', title: '客户地址', search: 'false', hide: true},

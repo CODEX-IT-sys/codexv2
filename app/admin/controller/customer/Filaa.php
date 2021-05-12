@@ -21,7 +21,7 @@ use app\admin\model\SystemAdmin;
  */
 class Filaa extends AdminController
 {
-    protected $relationSearch = true;
+//    protected $relationSearch = true;
 //    protected $searchFields=
     use \app\admin\traits\Curd;
 
@@ -64,7 +64,7 @@ class Filaa extends AdminController
         $s = Cache::get('sl');
 
         //项目经理
-        $b=SystemAdmin::where('auth_ids','find in set', 12)->select();
+        $b = SystemAdmin::where('auth_ids', 'find in set', 12)->select();
 
         $admin = $this->admininfo();
         $this->assign([
@@ -95,7 +95,7 @@ class Filaa extends AdminController
                     ,
 
                 ], 'LEFT')
-                ->when($a, function ($query)use ($a)  {
+                ->when($a, function ($query) use ($a) {
                     // 满足条件后执行
                     return $query->where('demand_id', $a);
                 })
@@ -103,13 +103,13 @@ class Filaa extends AdminController
             $list = $this->model
                 ->where($where)
                 ->withJoin(['type', 'rate', 'yz', 'dw', 'customerInformation'], 'LEFT')
-                ->when($a, function ($query)use ($a)  {
+                ->when($a, function ($query) use ($a) {
                     // 满足条件后执行
                     return $query->where('demand_id', $a);
                 })
                 ->page($page, $limit)
                 ->order($this->sort)
-                ->select()->toArray();
+                ->select();
 
             $data = [
                 'code' => 0,
@@ -133,29 +133,38 @@ class Filaa extends AdminController
 
         if ($this->request->isAjax()) {
             $post = $this->request->post();
+
             $rule = [];
             $this->validate($post, $rule);
             try {
                 $admin = session('admin');
                 $post['writer_id'] = $admin['id'];
+//                委托日期
+                $post['entrust_date'] = time();
                 //增值税报价金额
                 $post['vat'] = $post['unit_price'] * $post['quotation_number'] * $post['tax_rate'] / 100;
                 $post['quotation_price'] = $post['unit_price'] * $post['quotation_number'] + $post['vat'];
                 //客户id参数为来稿的id
                 $post['customer_id'] = CustomerDemand::where('id', $post['demand_id'])->value('customer_id');
+                //合同id
+                $post['contract_id'] = CustomerDemand::where('id', $post['demand_id'])->value('contract_id');
 //                是否首次合作
                 $post['cooperation_first'] = CustomerDemand::where('id', $post['demand_id'])->value('cooperation_first');
                 //文件状态为接受时生成文件编号
                 if (isset($post['file_status'])) {
-                    if ($post['file_status'] == 1) {
+                    if ($post['file_status'] == 2) {
 //                    客户公司编码
                         $company_code = Customer::where('id', $post['customer_id'])->value('company_code');
                         //生成文件编号
                         $post['customer_file_code'] = filing_number($company_code);
                     }
                 }
+                for ($x = 1; $x <= $post['number']; $x++) {
+                    $a++;
+                    $save = new $this->model;
+                    $save->save($post);
+                }
 
-                $save = $this->model->save($post);
             } catch (\Exception $e) {
                 $this->error('保存失败:' . $e->getMessage());
             }
@@ -173,6 +182,7 @@ class Filaa extends AdminController
     public function edit($id)
     {
         $row = $this->model->find($id);
+
         //服务
         $g = Cache::get('fw');
         $n = [];
@@ -199,7 +209,7 @@ class Filaa extends AdminController
                 //客户id
                 $post['customer_id'] = CustomerDemand::where('id', $post['demand_id'])->value('customer_id');
                 //文件状态为接受时生成文件编号
-                if ($post['file_status'] == 1) {
+                if ($post['file_status'] == 2) {
                     // 客户公司编码
                     $company_code = Customer::where('id', $post['customer_id'])->value('company_code');
                     //生成文件编号
