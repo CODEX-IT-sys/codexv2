@@ -165,7 +165,6 @@ define(["jquery", "easy-admin"], function ($, ea) {
                 skin: 'line  ' //行边框风格
                 , even: true, //开启隔行背景
                 size: 'sm', //小尺寸的表格
-                limit: 50,
                 toolbar: ['refresh',
                     [{
                         text: '项目经理批准',
@@ -218,15 +217,42 @@ define(["jquery", "easy-admin"], function ($, ea) {
                     {field: 'customer_submit_date', title: '客户期望提交日期', search: 'false'},
                     {field: 'completion_date', title: '交付日期', search: 'false'},
                     {field: 'xm.username', title: '项目经理', search: 'false'},
-                    {field: 'assistant.username', title: '项目助理', search: 'false'},
+                    {
+                        title: '项目助理', templet: function (d) {
+                            if (d.assistant == null) {
+                                return ''
+                            } else {
+                                return d.assistant.username
+                            }
+                        },
+                        search: 'false'
+                    },
                     {
                         field: 'cooperation_first',
                         search: 'select',
                         selectList: {"1": "yes", "2": "no", "0": "N\/A"},
                         title: '是否首次合作'
                     },
-                    {field: 'tyevel.content', title: '排版难易度', search: 'false',},
-                    {field: 'trevel.content', title: '翻译难易度', search: 'false'},
+                    {
+                        title: '排版难易度', templet: function (d) {
+                            if (d.tyevel == null) {
+                                return ''
+                            } else {
+                                return d.tyevel.content
+                            }
+                        },
+                        search: 'false'
+                    },
+                    {
+                        title: '翻译难易度', templet: function (d) {
+                            if (d.trevel == null) {
+                                return ''
+                            } else {
+                                return d.trevel.content
+                            }
+                        },
+                        search: 'false'
+                    },
                     {field: 'file_cate', title: '文件分类', search: 'false'},
                     {field: 'translation_id', title: '翻译', search: 'false'},
                     {field: 'tr_start_time', title: '翻译开始时间', search: 'false'},

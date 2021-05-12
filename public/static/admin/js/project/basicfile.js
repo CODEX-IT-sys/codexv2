@@ -20,6 +20,7 @@ define(["jquery", "easy-admin"], function ($, ea) {
                 overflow: 'tips',
                 skin: 'line  ' //行边框风格
                 , even: true, //开启隔行背景
+                where:{id:basic_id},
                 toolbar: ['refresh',
                     [{
                         text: '添加',

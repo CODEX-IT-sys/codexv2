@@ -6,6 +6,7 @@ use app\common\controller\AdminController;
 use EasyAdmin\annotation\ControllerAnnotation;
 use EasyAdmin\annotation\NodeAnotation;
 use think\App;
+use app\admin\model\SystemAdmin;
 use think\facade\Cache;
 use app\admin\model\setting\DatabaseContent;
 /**
@@ -19,23 +20,20 @@ class Basic extends AdminController
     public function __construct(App $app)
     {
         parent::__construct($app);
-        //翻译人员
-        $tr = Cache::get('tr');
-        $xd = Cache::get('xd');
-
-        $n = [];
-        foreach ($tr as $k => $v) {
-            $n[$k]['name'] = $v['username'];
-            $n[$k]['value'] = $v['id'];
-        }
-        $m = [];
-        foreach ($xd as $k => $v) {
-            $m[$k]['name'] = $v['username'];
-            $m[$k]['value'] = $v['id'];
+        //人员信息
+        $man = SystemAdmin::field('username,id')->select();
+        $fz = array();
+        foreach ($man as $k => $v) {
+            $fz[$k]['name'] = $v['username'];
+            $fz[$k]['value'] = $v['id'];
+            //删除自己
+            if ($fz[$k]['value'] == $this->admininfo()['id']) {
+                unset($fz[$k]);
+            }
         }
 //        负责人列表
-        $fz=array_merge($n,$m);
-        $this->assign(['fz'=>$fz]);
+
+        $this->assign(['fz'=>array_values($fz)]);
         $this->model = new \app\admin\model\project\basic();
         
     }
@@ -54,16 +52,16 @@ class Basic extends AdminController
             $count = $this->model
                 ->when($this->admininfo()['id']!=1, function ($query) {
                     // 满足条件后执行
-                    return $query->where('write_id','find in set',$this->admininfo()['id'])->whereor('write_id','in',$this->admininfo()['top_id']);
+                    return $query->where('write_id|principal_id','find in set',$this->admininfo()['id'])->whereor('write_id|principal_id','in',$this->admininfo()['top_id']);
                 })
                 ->where($where)
                 ->count();
             $list = $this->model
                 ->where($where)
-//                ->when($this->admininfo()['id']!=1, function ($query) {
-//                    // 满足条件后执行
-//                    return $query->where('write_id','find in set',$this->admininfo()['id'])->whereor('write_id','in',$this->admininfo()['top_id']);
-//                })
+                ->when($this->admininfo()['id']!=1, function ($query) {
+                    // 满足条件后执行
+                    return $query->where('write_id|principal_id','find in set',$this->admininfo()['id'])->whereor('write_id|principal_id','in',$this->admininfo()['top_id']);
+                })
                 ->page($page, $limit)
                 ->order($this->sort)
                 ->select();
@@ -106,24 +104,15 @@ class Basic extends AdminController
     public function edit($id)
     {
         $row = $this->model->find($id);
-        //翻译人员/校对
-        $tr = Cache::get('tr');
-        $xd = Cache::get('xd');
-        $fzvalue = explode(',', $row['principal_id']);
-        $n = [];
-        foreach ($tr as $k => $v) {
-            $n[$k]['name'] = $v['username'];
-            $n[$k]['value'] = $v['id'];
-        }
-        $m = [];
-        foreach ($xd as $k => $v) {
-            $m[$k]['name'] = $v['username'];
-            $m[$k]['value'] = $v['id'];
-        }
-        $fz=array_merge($n,$m);
-        foreach ($fz as $k => $v) {
-            if (in_array($v['name'], $fzvalue)) {
-                $fz[$k]['selected'] = true;
+        //人员信息
+        $man = SystemAdmin::field('username,id')->select();
+        $fz = array();
+        foreach ($man as $k => $v) {
+            $fz[$k]['name'] = $v['username'];
+            $fz[$k]['value'] = $v['id'];
+            //删除自己
+            if ($fz[$k]['value'] == $this->admininfo()['id']) {
+                unset($fz[$k]);
             }
         }
         empty($row) && $this->error('数据不存在');
@@ -140,7 +129,7 @@ class Basic extends AdminController
         }
         $this->assign('row', $row);
         $this->assign([
-           'fz'=>$fz
+           'fz'=>array_values($fz)
         ]);
         return $this->fetch();
     }

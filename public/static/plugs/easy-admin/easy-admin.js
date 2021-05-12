@@ -182,8 +182,8 @@ define(["jquery", "tableSelect", "ckeditor", "soulTable",], function ($, tableSe
                 options.page = admin.parame(options.page, true);
                 options.search = admin.parame(options.search, true);
                 options.skin = options.skin || 'line';
-                options.limit = options.limit || 15;
-                options.limits = options.limits || [10, 15, 20, 25, 50, 100];
+                options.limit = options.limit || 40;
+                options.limits = options.limits || [20, 40, 60, 80, 100, 99999];
                 options.cols = options.cols || [];
                 options.defaultToolbar = (options.defaultToolbar === undefined && !options.search) ? ['filter', 'print', 'exports'] : ['filter', 'print', 'exports', {
                     title: '搜索',

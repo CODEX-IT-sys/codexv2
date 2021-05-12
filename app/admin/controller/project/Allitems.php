@@ -184,8 +184,9 @@ class Allitems extends AdminController
                 ->where('file_status', 3)
                 ->when($this->admininfo()['id']!=1, function ($query) {
                     // 满足条件后执行
-                    return $query->where('mid|assistant_id','find in set',$this->admininfo()['id'])->whereor('mid|assistant_id','in',$this->admininfo()['top_id']);
+                    return $query->where('mid|assistant_id','find in set',$this->admininfo()['id'])->whereor('mid|assistant_id','in',$this->admininfo()['top_id'])     ->where('file_status', 3);
                 })
+
                 ->withJoin(['type', 'rate', 'yz', 'dw', 'customerInformation', 'xm',
                     'assignor', 'tyevel', 'trevel', 'assistant'
                 ], 'LEFT')
