@@ -183,12 +183,12 @@ class affine extends AdminController
             $count = $this->model
                 ->where('file_status', 3)
                 ->where($where)
-                ->withJoin(['type', 'rate', 'yz', 'dw', 'customerInformation','demand','contract','jsstatus'], 'LEFT')
+                ->withJoin(['type', 'rate', 'yz', 'dw', 'customerInformation','demand','contract','jsstatus','xm'], 'LEFT')
                 ->count();
             $list = $this->model
                 ->where($where)
                 ->where('file_status', 3)
-                ->withJoin(['type', 'rate', 'yz', 'dw', 'customerInformation','demand','contract','jsstatus'], 'LEFT')
+                ->withJoin(['type', 'rate', 'yz', 'dw', 'customerInformation','demand','contract','jsstatus','xm'], 'LEFT')
                 ->page($page, $limit)
                 ->order($this->sort)
                 ->select();

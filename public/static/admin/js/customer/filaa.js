@@ -91,6 +91,10 @@ define(["jquery", "easy-admin"], function ($, ea) {
                 done: function () {
                     // 在 done 中开启
                     soulTable.render(this)
+                },
+                filter: {
+                    items: ['column', 'data', 'condition', 'editCondition', 'excel', 'clearCache'],
+                    cache: true
                 }
                 , autoColumnWidth: {
                     init: true

@@ -205,7 +205,11 @@ class Filaa extends AdminController
                 $post['up_id'] = $admin['id'];
                 //委托日期转换时间戳
                 $post['entrust_date']=strtotime($post['entrust_date']);
-                $post['completion_date']=strtotime($post['completion_date']);
+
+                if(!isset( $post['completion_date'])){
+                    $post['completion_date']=strtotime($post['completion_date']);
+                }
+
                 //增值税报价金额
                 $post['vat'] = $post['unit_price'] * $post['quotation_number'] * $post['tax_rate'] / 100;
                 $post['quotation_price'] = $post['unit_price'] * $post['quotation_number'] + $post['vat'];

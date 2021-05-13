@@ -26,7 +26,7 @@ define(["jquery", "easy-admin"], function ($, ea) {
                     {field: 'qingkuan_code', title: '请款单编码'},
                     {field: 'customerInformation.company_name', title: '客户公司'},
                     {field: 'contract.contract_code', title: '合同编号'},
-                    {field: 'write.username', title: '报价单生成人'},
+                    {field: 'write.username', title: '请款单生成人'},
                     {field: 'tax', title: '税额'},
                     {field: 'quotation_amount', title: '请款金额'},
                     {field: 'create_time', title: '创建时间'},

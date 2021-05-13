@@ -89,14 +89,14 @@ class Allitems extends AdminController
                 ->where($where)
                 ->where('file_status', 3)
                 ->withJoin(['type', 'rate', 'yz', 'dw', 'customerInformation', 'xm',
-                    'assignor', 'tyevel', 'trevel', 'assistant'
+                    'tyevel', 'trevel', 'assistant'
                 ], 'LEFT')
                 ->count();
             $list = $this->model
                 ->where($where)
                 ->where('file_status', 3)
                 ->withJoin(['type', 'rate', 'yz', 'dw', 'customerInformation', 'xm',
-                    'assignor', 'tyevel', 'trevel', 'assistant'
+                   'tyevel', 'trevel', 'assistant'
                 ], 'LEFT')
                 ->page($page, $limit)
                 ->order($this->sort)
@@ -128,10 +128,10 @@ class Allitems extends AdminController
                 ->where('file_status', 4)
                 ->when($this->admininfo()['id']!=1, function ($query) {
                     // 满足条件后执行
-                    return $query->where('mid|assistant_id','find in set',$this->admininfo()['id'])->whereor('mid|assistant_id','in',$this->admininfo()['top_id']);
+                    return $query->where('mid|assistant_id','=',$this->admininfo()['id'])->whereor('mid|assistant_id','in',$this->admininfo()['top_id']);
                 })
                 ->withJoin(['type', 'rate', 'yz', 'dw', 'customerInformation', 'xm',
-                    'assignor', 'tyevel', 'trevel', 'assistant'
+                    'tyevel', 'trevel', 'assistant'
                 ], 'LEFT')
                 ->count();
             $list = $this->model
@@ -139,10 +139,10 @@ class Allitems extends AdminController
                 ->where('file_status', 4)
                 ->when($this->admininfo()['id']!=1, function ($query) {
                     // 满足条件后执行
-                    return $query->where('mid|assistant_id','find in set',$this->admininfo()['id'])->whereor('mid|assistant_id','in',$this->admininfo()['top_id']);
+                    return $query->where('mid|assistant_id','=',$this->admininfo()['id'])->where('mid|assistant_id','in',$this->admininfo()['top_id']);
                 })
                 ->withJoin(['type', 'rate', 'yz', 'dw', 'customerInformation', 'xm',
-                    'assignor', 'tyevel', 'trevel', 'assistant'
+                     'tyevel', 'trevel', 'assistant'
                 ], 'LEFT')
                 ->page($page, $limit)
                 ->order($this->sort)
@@ -174,10 +174,10 @@ class Allitems extends AdminController
                 ->where('file_status', 3)
                 ->when($this->admininfo()['id']!=1, function ($query) {
                     // 满足条件后执行
-                    return $query->where('mid|assistant_id','find in set',$this->admininfo()['id'])->whereor('mid|assistant_id','in',$this->admininfo()['top_id']);
+                    return $query->where('mid|assistant_id','=',$this->admininfo()['id']);
                 })
                 ->withJoin(['type', 'rate', 'yz', 'dw', 'customerInformation', 'xm',
-                    'assignor', 'tyevel', 'trevel', 'assistant'
+                     'tyevel', 'trevel', 'assistant'
                 ], 'LEFT')
                 ->count();
             $list = $this->model
@@ -185,11 +185,11 @@ class Allitems extends AdminController
                 ->where('file_status', 3)
                 ->when($this->admininfo()['id']!=1, function ($query) {
                     // 满足条件后执行
-                    return $query->where('mid|assistant_id','find in set',$this->admininfo()['id'])->whereor('mid|assistant_id','in',$this->admininfo()['top_id'])     ->where('file_status', 3);
+                    return $query->where('mid|assistant_id','=',$this->admininfo()['id']);
                 })
 
                 ->withJoin(['type', 'rate', 'yz', 'dw', 'customerInformation', 'xm',
-                    'assignor', 'tyevel', 'trevel', 'assistant'
+                 'tyevel', 'trevel', 'assistant'
                 ], 'LEFT')
                 ->page($page, $limit)
                 ->order($this->sort)
@@ -288,7 +288,7 @@ class Allitems extends AdminController
             $this->validate($post, $rule);
             try {
                 $admin = $this->admininfo();
-                $post['assignor_id'] = $admin['id'];
+                $post['assistant_id'] = $admin['id'];
                 $save = $row->save($post);
             } catch (\Exception $e) {
                 $this->error('保存失败', $e->getMessage());
@@ -424,7 +424,7 @@ class Allitems extends AdminController
         unset($post1['editdata']);
         try {
             $admin = $this->admininfo();
-            $post1['assignor_id'] = $admin['id'];
+            $post1['assistant_id'] = $admin['id'];
             foreach ($val as $k => $v) {
                 $row = $this->model->find($v);
                 $save = $row->save($post1);

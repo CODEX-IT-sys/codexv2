@@ -154,8 +154,7 @@
                 <select name="mid" lay-verify="required" lay-search>
                     <option value="">请选择项目经理</option>
                     {foreach $b as $key=>$v }
-                    <option value="{$v.id}" {if condition="$row.mid eq $v.id" } selected="selected" {
-                    /if}>{$v.username}</option>
+                    <option value="{$v.id}"  {$v.id==$row.mid?'selected':''}>{$v.username}</option>
                     {/foreach}
                 </select>
             </div>
