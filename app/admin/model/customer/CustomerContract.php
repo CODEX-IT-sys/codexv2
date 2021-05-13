@@ -37,6 +37,18 @@ class CustomerContract extends TimeModel
     {
         return ['1' => 'yes', '2' => 'no', '0' => 'N/A',];
     }
+    public function getInvoicingRulesAttr($val)
+    {
+            if($val==1){
+                return '专票';
+            }
+        if($val==2){
+            return '普票';
+        }
+        if($val==0){
+            return 'N/A';
+        }
+    }
 
     protected $type = [
         'effective_date' => 'timestamp',

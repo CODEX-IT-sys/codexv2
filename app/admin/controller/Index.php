@@ -60,6 +60,9 @@ class Index extends AdminController
         //困难度
         $level=DatabaseContent::where('list_id',11)->select();
         Cache::set('level',$level);
+        //结算状态
+        $jsstatus=DatabaseContent::where('list_id',14)->select();
+        Cache::set('jsstatus',$jsstatus);
         //文件分类
         $cate=DatabaseContent::where('list_id',6)->select();
         Cache::set('cate',$cate);
@@ -69,6 +72,7 @@ class Index extends AdminController
         $yp=SystemAdmin::where('auth_ids','find in set', 16)->select();
         $hp=SystemAdmin::where('auth_ids','find in set', 17)->select();
         $xd=SystemAdmin::where('auth_ids','find in set', 18)->select();
+
         Cache::set('tr',$tr);
         Cache::set('yp',$yp);
         Cache::set('hp',$hp);

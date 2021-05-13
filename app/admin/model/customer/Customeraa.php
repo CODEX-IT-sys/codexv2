@@ -22,6 +22,7 @@ class Customeraa extends TimeModel
         'tr_end_time' => 'timestamp',
         'after_ty_time' => 'timestamp',
         'before_ty_time' => 'timestamp',
+        'payment_time' => 'timestamp',
     ];
 
 
@@ -86,7 +87,7 @@ class Customeraa extends TimeModel
     //委托时间获取器
     public function getEntrustDateAttr($val)
     {
-        return  date('Ymd',$val);
+        return  date('Y-m-d',$val);
     }
     //生成项目需求
     public function getCooperationFirstList()
@@ -113,6 +114,11 @@ class Customeraa extends TimeModel
     public function bz()
     {
         return $this->belongsTo('app\admin\model\setting\DatabaseContent', 'currency', 'id');
+    }
+    //关联结算状态
+    public function jsstatus()
+    {
+        return $this->belongsTo('app\admin\model\setting\DatabaseContent', 'c_status', 'id');
     }
     //关联语种
     public function yz()

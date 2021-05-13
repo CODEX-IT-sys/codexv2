@@ -54,9 +54,11 @@ class affine extends AdminController
         $s = Cache::get('sl');
 
         $b=SystemAdmin::where('auth_ids','find in set', 12)->select();
+        //结算状态
+        $js=Cache::get('jsstatus');
         $admin = $this->admininfo();
         $this->assign([
-            'd' => $d, 'g' => $g, 'h' => $h, 'f' => $f, 's' => $s, 'st' => $admin, 'b' => $b
+            'd' => $d, 'g' => $g, 'h' => $h, 'f' => $f, 's' => $s, 'st' => $admin, 'b' => $b,'jsstatus'=>$js
         ]);
         $this->model = new \app\admin\model\customer\Customeraa();
         $this->assign('getCooperationFirstList', $this->model->getCooperationFirstList());
@@ -108,20 +110,14 @@ class affine extends AdminController
             }
             list($page, $limit, $where) = $this->buildTableParames();
             $count = $this->model
-                ->when(true, function ($query, $a) {
-                    // 满足条件后执行
-                    return $query->wherein('file_status', [1, 0]);
-                })
+                ->where('file_status', 'in',[1,0])
                 ->where($where)
-                ->withJoin(['type', 'rate', 'yz', 'dw', 'customerInformation'], 'LEFT')
+                ->withJoin(['type', 'rate', 'yz', 'dw', 'customerInformation','demand','contract','jsstatus'], 'LEFT')
                 ->count();
             $list = $this->model
                 ->where($where)
-                ->withJoin(['type', 'rate', 'yz', 'dw', 'customerInformation'], 'LEFT')
-                ->when(true, function ($query, $a) {
-                    // 满足条件后执行
-                    return $query->wherein('file_status', [1, 0]);
-                })
+                ->where('file_status', 'in',[1,0])
+                ->withJoin(['type', 'rate', 'yz', 'dw', 'customerInformation','demand','contract','jsstatus'], 'LEFT')
                 ->page($page, $limit)
                 ->order($this->sort)
                 ->select()->toArray();
@@ -151,12 +147,12 @@ class affine extends AdminController
             $count = $this->model
                 ->where('file_status', 2)
                 ->where($where)
-                ->withJoin(['type', 'rate', 'yz', 'dw', 'customerInformation','demand','contract'], 'LEFT')
+                ->withJoin(['type', 'rate', 'yz', 'dw', 'customerInformation','demand','contract','jsstatus'], 'LEFT')
                 ->count();
             $list = $this->model
                 ->where($where)
                 ->where('file_status', 2)
-                ->withJoin(['type', 'rate', 'yz', 'dw', 'customerInformation','demand','contract'], 'LEFT')
+                ->withJoin(['type', 'rate', 'yz', 'dw', 'customerInformation','demand','contract','jsstatus'], 'LEFT')
                 ->page($page, $limit)
                 ->order($this->sort)
                 ->select()->toArray();
@@ -185,15 +181,15 @@ class affine extends AdminController
             $count = $this->model
                 ->where('file_status', 3)
                 ->where($where)
-                ->withJoin(['type', 'rate', 'yz', 'dw', 'customerInformation'], 'LEFT')
+                ->withJoin(['type', 'rate', 'yz', 'dw', 'customerInformation','demand','contract','jsstatus'], 'LEFT')
                 ->count();
             $list = $this->model
                 ->where($where)
                 ->where('file_status', 3)
-                ->withJoin(['type', 'rate', 'yz', 'dw', 'customerInformation'], 'LEFT')
+                ->withJoin(['type', 'rate', 'yz', 'dw', 'customerInformation','demand','contract','jsstatus'], 'LEFT')
                 ->page($page, $limit)
                 ->order($this->sort)
-                ->select()->toArray();
+                ->select();
 
             $data = [
                 'code' => 0,
@@ -249,7 +245,7 @@ class affine extends AdminController
                 $save = $row->save($post);
 
             } catch (\Exception $e) {
-                $this->error('保存失败');
+                $this->error('保存失败',$e->getMessage());
             }
             $save ? $this->success('保存成功') : $this->error('保存失败');
         }

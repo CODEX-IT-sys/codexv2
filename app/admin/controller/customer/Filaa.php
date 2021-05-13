@@ -203,9 +203,13 @@ class Filaa extends AdminController
                 //写入更新人
                 $admin = session('admin');
                 $post['up_id'] = $admin['id'];
+                //委托日期转换时间戳
+                $post['entrust_date']=strtotime($post['entrust_date']);
                 //增值税报价金额
                 $post['vat'] = $post['unit_price'] * $post['quotation_number'] * $post['tax_rate'] / 100;
                 $post['quotation_price'] = $post['unit_price'] * $post['quotation_number'] + $post['vat'];
+                //合同id
+                $post['contract_id'] = CustomerDemand::where('id', $post['demand_id'])->value('contract_id');
                 //客户id
                 $post['customer_id'] = CustomerDemand::where('id', $post['demand_id'])->value('customer_id');
                 //文件状态为接受时生成文件编号
@@ -217,7 +221,7 @@ class Filaa extends AdminController
                 }
                 $save = $row->save($post);
             } catch (\Exception $e) {
-                $this->error('保存失败');
+                $this->error('保存失败',$e->getMessage());
             }
             $save ? $this->success('保存成功') : $this->error('保存失败');
         }

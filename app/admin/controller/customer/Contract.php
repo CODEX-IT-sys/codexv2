@@ -11,7 +11,7 @@ use EasyAdmin\annotation\NodeAnotation;
 use think\App;
 use think\facade\Cache;
 
-/**合同
+/**
  * @ControllerAnnotation(title="合同")
  */
 class Contract extends AdminController

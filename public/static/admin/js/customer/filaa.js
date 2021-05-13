@@ -62,6 +62,7 @@ define(["jquery", "easy-admin"], function ($, ea) {
                         fixed: true,
                     },
                     // {field: 'demand.contract_code', title: '合同编号'},
+                    {field: 'entrust_date', title: '委托日期', sort: true,search:false},
                     {field: 'customer_file_name', title: '文件名称', edit: true, sort: true},
                     {field: 'customerInformation.company_name', title: '公司名称', edit: true, sort: true},
                     {field: 'type.content', title: '类型', search: 'false',},

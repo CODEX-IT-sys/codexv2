@@ -50,7 +50,6 @@ class Allitems extends AdminController
             $n[$k]['name'] = $v['username'];
             $n[$k]['value'] = $v['id'];
         }
-
         //语种
         $h = Cache::get('yz');
         //文件类型
@@ -65,9 +64,11 @@ class Allitems extends AdminController
         $Assignor=SystemAdmin::where('auth_ids','find in set', 15)->select();
         //难度
         $level = Cache::get('level');
+        //结算状态
+        $js=Cache::get('jsstatus');
         $admin = $this->admininfo();
         $this->assign([
-            'd' => $d, 'i' => $n, 'h' => $h, 'n' => $f, 's' => $s, 'st' => $admin, 'b' => $b, 'level' => $level, 'Assignor' => $Assignor, 'cate' => $cate
+            'd' => $d, 'i' => $n, 'h' => $h, 'n' => $f, 's' => $s, 'st' => $admin, 'b' => $b, 'level' => $level, 'Assignor' => $Assignor, 'cate' => $cate,
         ]);
 
         $this->model = new \app\admin\model\customer\Customeraa();
