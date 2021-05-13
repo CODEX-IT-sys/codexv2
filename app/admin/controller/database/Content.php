@@ -9,7 +9,7 @@ use EasyAdmin\annotation\NodeAnotation;
 use think\App;
 
 /**
- * @ControllerAnnotation(title="database_content")
+ * @ControllerAnnotation(title="词库词条")
  */
 class Content extends AdminController
 {

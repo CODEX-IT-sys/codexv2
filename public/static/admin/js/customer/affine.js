@@ -9,6 +9,7 @@ define(["jquery", "easy-admin"], function ($, ea) {
         delete_url: 'customer.affine/delete',
         export_url: 'customer.filaa/export',
         approve_url: 'customer.affine/approve',
+        qingkuan_url: 'customer.affine/qingkuan',
     };
 
     var soulTable = layui.soulTable;
@@ -29,6 +30,14 @@ define(["jquery", "easy-admin"], function ($, ea) {
                         url: init.approve_url,
                         method: 'request',
                         auth: 'approve',
+                        checkbox: true,
+                        class: 'layui-btn layui-btn-normal layui-btn-sm',
+                    }],
+                    [{
+                        text: '生成请款单',
+                        url: init.qingkuan_url,
+                        method: 'request',
+                        auth: 'qingkuan',
                         checkbox: true,
                         class: 'layui-btn layui-btn-normal layui-btn-sm',
                     }],
@@ -142,6 +151,7 @@ define(["jquery", "easy-admin"], function ($, ea) {
                 delete_url: 'customer.affine/delete',
                 export_url: 'customer.filaa/export',
                 approve_url: 'customer.affine/approve',
+                qingkuan_url: 'customer.affine/qingkuan',
             };
             ea.table.render({
                 init: init, overflow: 'tips',
@@ -155,6 +165,14 @@ define(["jquery", "easy-admin"], function ($, ea) {
                         url: init.approve_url,
                         method: 'request',
                         auth: 'approve',
+                        checkbox: true,
+                        class: 'layui-btn layui-btn-normal layui-btn-sm',
+                    }],
+                    [{
+                        text: '生成请款单',
+                        url: init.qingkuan_url,
+                        method: 'request',
+                        auth: 'qingkuan',
                         checkbox: true,
                         class: 'layui-btn layui-btn-normal layui-btn-sm',
                     }],
@@ -269,6 +287,7 @@ define(["jquery", "easy-admin"], function ($, ea) {
                 delete_url: 'customer.affine/delete',
                 export_url: 'customer.filaa/export',
                 approve_url: 'customer.affine/approve',
+                qingkuan_url: 'customer.affine/qingkuan',
             };
             ea.table.render({
                 init: init, overflow: 'tips',
@@ -282,6 +301,14 @@ define(["jquery", "easy-admin"], function ($, ea) {
                         url: init.approve_url,
                         method: 'request',
                         auth: 'approve',
+                        checkbox: true,
+                        class: 'layui-btn layui-btn-normal layui-btn-sm',
+                    }],
+                    [{
+                        text: '生成请款单',
+                        url: init.qingkuan_url,
+                        method: 'request',
+                        auth: 'qingkuan',
                         checkbox: true,
                         class: 'layui-btn layui-btn-normal layui-btn-sm',
                     }],
@@ -401,7 +428,6 @@ define(["jquery", "easy-admin"], function ($, ea) {
                 skin: 'line  ' //行边框风格
                 , even: true, //开启隔行背景
                 size: 'sm', //小尺寸的表格
-                limit: 50,
                 totalRow: true,
                 toolbar: ['refresh'],
                 cols: [[

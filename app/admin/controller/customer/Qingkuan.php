@@ -2,18 +2,16 @@
 
 namespace app\admin\controller\customer;
 
-use app\admin\model\customer\Customeraa;
-use app\admin\model\customer\CustomerqQuotation;
+use app\admin\model\customer\Customerqingkuan;
 use app\common\controller\AdminController;
 use EasyAdmin\annotation\ControllerAnnotation;
 use EasyAdmin\annotation\NodeAnotation;
 use think\App;
-use think\facade\Db;
-
+use app\admin\model\customer\Customeraa;
 /**
- * @ControllerAnnotation(title="报价单")
+ * @ControllerAnnotation(title="customer_qingkuan")
  */
-class Quotation extends AdminController
+class Qingkuan extends AdminController
 {
 
     use \app\admin\traits\Curd;
@@ -22,8 +20,8 @@ class Quotation extends AdminController
     {
         parent::__construct($app);
 
-        $this->model = new \app\admin\model\customer\CustomerqQuotation();
-
+        $this->model = new \app\admin\model\customer\Customerqingkuan();
+        
     }
 
     /**
@@ -57,36 +55,6 @@ class Quotation extends AdminController
         return $this->fetch();
     }
 
-
-    /**
-     * @NodeAnotation(title="属性修改")
-     */
-    public function modify()
-    {
-        $post = $this->request->post();
-        $rule = [
-            'id|ID' => 'require',
-            'field|字段' => 'require',
-            'value|值' => 'require',
-        ];
-        $this->validate($post, $rule);
-        $row = $this->model->find($post['id']);
-        if (!$row) {
-            $this->error('数据不存在');
-        }
-        if (!in_array($post['field'], $this->allowModifyFields)) {
-            $this->error('该字段不允许修改：' . $post['field']);
-        }
-        try {
-            $row->save([
-                $post['field'] => $post['value'],
-            ]);
-        } catch (\Exception $e) {
-            $this->error($e->getMessage());
-        }
-        $this->success('保存成功');
-    }
-
     /**
      * @NodeAnotation(title="打印预览")
      */
@@ -94,9 +62,11 @@ class Quotation extends AdminController
     {
         $id = $this->request->param('id');
         //报价单信息
-        $a = CustomerqQuotation::with(['customerInformation', 'contract.bz', 'company'])->where('id', $id)->find()->toArray();
+        $a = Customerqingkuan::with(['customerInformation', 'contract.bz', 'company'])->where('id', $id)->find()->toArray();
 //        dump($a);
         $b = Customeraa::where('id', 'in', json_decode($a['quotation_file']))->with(['type', 'rate', 'yz', 'dw',])->select()->toArray();
+
+//        dump($b);die;
         $num1 = 0;
         $num2 = 0;
         foreach ($b as $k => $v) {
@@ -113,4 +83,6 @@ class Quotation extends AdminController
 
         return $this->fetch('print_view_cn');
     }
+
+    
 }

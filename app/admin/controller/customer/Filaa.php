@@ -205,6 +205,7 @@ class Filaa extends AdminController
                 $post['up_id'] = $admin['id'];
                 //委托日期转换时间戳
                 $post['entrust_date']=strtotime($post['entrust_date']);
+                $post['completion_date']=strtotime($post['completion_date']);
                 //增值税报价金额
                 $post['vat'] = $post['unit_price'] * $post['quotation_number'] * $post['tax_rate'] / 100;
                 $post['quotation_price'] = $post['unit_price'] * $post['quotation_number'] + $post['vat'];
@@ -259,6 +260,8 @@ class Filaa extends AdminController
             $info['customer_id'] = $c['customer_id'];
             //合同id
             $info['contract_id'] = $b['contract_id'];
+            //主体公司od
+            $info['company_id'] = $c['company_id'];
             //写入人id
             $admin = $this->admininfo();
             $info['write_id'] = $admin['id'];

@@ -2,6 +2,7 @@
 
 namespace app\admin\controller\customer;
 
+use app\admin\model\customer\Customerqingkuan;
 use app\common\controller\AdminController;
 use EasyAdmin\annotation\ControllerAnnotation;
 use EasyAdmin\annotation\NodeAnotation;
@@ -13,6 +14,7 @@ use app\admin\model\customer\CustomerDemand;
 use app\admin\model\customer\Customeraa;
 use think\facade\View;
 use app\admin\model\SystemAdmin;
+use app\admin\model\customer\CustomerContract;
 
 /**
  * @ControllerAnnotation(title="文件管理")
@@ -78,14 +80,14 @@ class affine extends AdminController
             list($page, $limit, $where) = $this->buildTableParames();
             $count = $this->model
                 ->where($where)
-                ->withJoin(['type', 'rate', 'yz', 'dw', 'customerInformation'], 'LEFT')
+                ->withJoin(['type', 'rate', 'yz', 'dw', 'customerInformation','demand','contract','jsstatus'], 'LEFT')
                 ->count();
             $list = $this->model
                 ->where($where)
-                ->withJoin(['type', 'rate', 'yz', 'dw', 'customerInformation'], 'LEFT')
+                ->withJoin(['type', 'rate', 'yz', 'dw', 'customerInformation','demand','contract','jsstatus'], 'LEFT')
                 ->page($page, $limit)
                 ->order($this->sort)
-                ->select();
+                ->select()->toArray();
 
             $data = [
                 'code' => 0,
@@ -287,6 +289,66 @@ class affine extends AdminController
             Db::rollback();
         }
         $this->success('批量批准成功');
+
+    }
+
+    /**
+     * @NodeAnotation(title="生成请款单")
+     */
+
+    public function qingkuan()
+    {
+        // 启动事务
+        Db::startTrans();
+        try {
+            $post = $this->request->post();
+            //查询其中一个文件
+            $a = Customeraa::where('id', $post['id']['0'])->find();
+            //来稿需求编号
+            $b = CustomerDemand::find($a['demand_id']);
+            //合同信息
+            $c = CustomerContract::find($b['contract_id']);
+            //该客户报价单的数量+1
+            $d = Customerqingkuan::where('customer_id', $c['customer_id'])->count();
+            //客户信息
+            $e = Customer::find($c['customer_id']);
+            //合同编码 $c['contract_code']
+            $info = [];
+            // 报价单编码
+            $info['qingkuan_code'] = 'I-' . $e['company_code'] . '-' . date('Ymd') . '-' . ($d + 1);
+            //客户id
+            $info['customer_id'] = $c['customer_id'];
+            //合同id
+            $info['contract_id'] = $b['contract_id'];
+            //主体公司od
+            $info['company_id'] = $c['company_id'];
+            //写入人id
+            $admin = $this->admininfo();
+            $info['write_id'] = $admin['id'];
+            //税额报价金额*数量*税额/100和报价金额:金额*数量+税额
+            $num = 0;
+            $info['quotation_amount'] = 0;
+            foreach ($post['id'] as $k => $v) {
+                $res = Customeraa::where('id', $v)->find();
+                $num += $res['unit_price'] * $res['completion_quantity'] * $res['tax_rate'] / 100;
+                $info['quotation_amount'] += ($res['unit_price'] * $res['completion_quantity']) + ($res['unit_price'] * $res['completion_quantity'] * $res['tax_rate'] / 100);
+            }
+            $info['tax'] = $num;
+            //来稿需求文件编号
+            $info['demand_id'] = $a['demand_id'];
+            //报价单包含的文件编号
+            $info['quotation_file'] = json_encode($post['id']);
+//            dump($info);
+            //生成报价单
+            Customerqingkuan::create($info);
+            // 提交事务
+            Db::commit();
+        } catch (\Exception $e) {
+            $this->error('执行错误',$e->getMessage());
+            // 回滚事务
+            Db::rollback();
+        }
+        $this->success('生成成功');
 
     }
 }

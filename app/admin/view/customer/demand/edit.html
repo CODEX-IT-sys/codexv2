@@ -14,19 +14,20 @@
                 </select>
             </div>
         </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label">项目经理</label>
-                    <div class="layui-input-block">
-                        <!--<input type="text" name="mid" class="layui-input" lay-verify="required" placeholder="请输入项目经理id" value="{$row.mid|default=''}">-->
-                        <select name="mid" lay-verify="required" lay-search>
-                            <option value="">请选择项目经理</option>
-                            {foreach $b as $key=>$v }
-                            <option value="{$v.id}"  {if condition="$row.mid eq $v.id"} selected = "selected"{/if}>{$v.username}</option>
-                            {/foreach}
-                        </select>
-                    </div>
-                </div>
-        \
+        <div class="layui-form-item">
+            <label class="layui-form-label">项目经理</label>
+            <div class="layui-input-block">
+                <!--<input type="text" name="mid" class="layui-input" lay-verify="required" placeholder="请输入项目经理id" value="{$row.mid|default=''}">-->
+                <select name="mid" lay-verify="required" lay-search>
+                    <option value="">请选择项目经理</option>
+                    {foreach $b as $key=>$v }
+                    <option value="{$v.id}" {if condition="$row.mid eq $v.id" } selected="selected" {
+                    /if}>{$v.username}</option>
+                    {/foreach}
+                </select>
+            </div>
+        </div>
+
         <div class="layui-form-item">
             <label class="layui-form-label">是否首次合作</label>
             <div class="layui-input-block">
@@ -38,11 +39,11 @@
         </div>
 
         <!--<div class="layui-form-item">-->
-            <!--<label class="layui-form-label">报价金额</label>-->
-            <!--<div class="layui-input-block">-->
-                <!--<input type="text" name="quotation_amount" class="layui-input" lay-verify="required"-->
-                       <!--placeholder="请输入报价金额" value="{$row.quotation_amount|default=''}">-->
-            <!--</div>-->
+        <!--<label class="layui-form-label">报价金额</label>-->
+        <!--<div class="layui-input-block">-->
+        <!--<input type="text" name="quotation_amount" class="layui-input" lay-verify="required"-->
+        <!--placeholder="请输入报价金额" value="{$row.quotation_amount|default=''}">-->
+        <!--</div>-->
         <!--</div>-->
         <div class="layui-form-item">
             <label class="layui-form-label">来稿时间</label>

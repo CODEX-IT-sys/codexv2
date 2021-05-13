@@ -1,18 +1,19 @@
-define(["jquery", "easy-admin",], function ($, ea) {
+define(["jquery", "easy-admin"], function ($, ea) {
 
     var init = {
         table_elem: '#currentTable',
         table_render_id: 'currentTableRenderId',
-        index_url: 'customer.quotation/index',
-        add_url: 'customer.quotation/add',
-        edit_url: 'customer.quotation/edit',
-        delete_url: 'customer.quotation/delete',
-        export_url: 'customer.quotation/export',
-        modify_url: 'customer.quotation/modify',
-        print_url: 'customer.quotation/print_view',
+        index_url: 'customer.qingkuan/index',
+        add_url: 'customer.qingkuan/add',
+        edit_url: 'customer.qingkuan/edit',
+        delete_url: 'customer.qingkuan/delete',
+        export_url: 'customer.qingkuan/export',
+        modify_url: 'customer.qingkuan/modify',
+        print_url: 'customer.qingkuan/print_view',
     };
     var soulTable = layui.soulTable;
     var Controller = {
+
         index: function () {
             ea.table.render({
                 init: init,
@@ -22,12 +23,12 @@ define(["jquery", "easy-admin",], function ($, ea) {
                 cols: [[
                     {type: 'checkbox'},
                     {field: 'id', title: 'id'},
-                    {field: 'quotation_code', title: '报价单编码'},
+                    {field: 'qingkuan_code', title: '请款单编码'},
                     {field: 'customerInformation.company_name', title: '客户公司'},
                     {field: 'contract.contract_code', title: '合同编号'},
                     {field: 'write.username', title: '报价单生成人'},
                     {field: 'tax', title: '税额'},
-                    {field: 'quotation_amount', title: '报价金额'},
+                    {field: 'quotation_amount', title: '请款金额'},
                     {field: 'create_time', title: '创建时间'},
                     {
                         width: 250, title: '操作', templet: ea.table.tool, fixed: "right",
@@ -44,19 +45,15 @@ define(["jquery", "easy-admin",], function ($, ea) {
                             'delete',]
                     },
 
+
                 ]],
                 done: function () {
                     // 在 done 中开启
                     soulTable.render(this)
                 }
             });
-            /**
-             * 查看公告信息
-             **/
 
             ea.listen();
-
-
         },
         add: function () {
             ea.listen();
@@ -65,7 +62,5 @@ define(["jquery", "easy-admin",], function ($, ea) {
             ea.listen();
         },
     };
-
-
     return Controller;
 });

@@ -87,7 +87,18 @@ class Customeraa extends TimeModel
     //委托时间获取器
     public function getEntrustDateAttr($val)
     {
-        return  date('Y-m-d',$val);
+        if($val){
+            return  date('Y-m-d',$val);
+        }
+    }
+
+    //交付日期获取器
+    public function getCompletionDateAttr($val)
+    {
+        if($val){
+            return  date('Y-m-d',$val);
+        }
+
     }
     //生成项目需求
     public function getCooperationFirstList()

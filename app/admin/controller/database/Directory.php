@@ -8,7 +8,7 @@ use EasyAdmin\annotation\NodeAnotation;
 use think\App;
 
 /**
- * @ControllerAnnotation(title="database_directory")
+ * @ControllerAnnotation(title="词库目录")
  */
 class Directory extends AdminController
 {

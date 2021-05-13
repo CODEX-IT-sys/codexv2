@@ -120,6 +120,14 @@
             </div>
         </div>
         <div class="layui-form-item">
+            <label class="layui-form-label">交付日期</label>
+            <div class="layui-input-block">
+                <input type="date" name="completion_date"
+                       class="layui-input" placeholder="请输入交付日期"
+                       value="{$row.completion_date|default=''}">
+            </div>
+        </div>
+        <div class="layui-form-item">
             <label class="layui-form-label">客户要求</label>
             <div class="layui-input-block">
                 <!--<input type="text" name="customer_file_request" class="layui-input" lay-verify="required" placeholder="请输入客户要求" value="">-->
