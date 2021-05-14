@@ -13,7 +13,7 @@
 
 namespace app\common\controller;
 
-
+use app\admin\extend\msg\PushEvent;
 use app\admin\model\customer\Customer;
 use app\BaseController;
 use EasyAdmin\tool\CommonTool;
@@ -282,6 +282,14 @@ class AdminController extends BaseController
         }
         return  $$n;
 
+    }
+    //消息通知            $this->notification('你好');调用通知
+    public function notification($string,$uid='')
+    {
+        //        $uid= input('uid') ? : $string;//接收客户端发过来的uid进行业务操作
+//        $string = '!!!';//推送的消息，实际开发中换成根据uid查的业务值
+        $push = new PushEvent();
+        $push->setUser($uid)->setContent($string)->push();
     }
 
 

@@ -52,7 +52,7 @@ class Basic extends AdminController
             $count = $this->model
                 ->when($this->admininfo()['id']!=1, function ($query) {
                     // 满足条件后执行
-                    return $query->where('write_id|principal_id','find in set',$this->admininfo()['id'])->whereor('write_id|principal_id','in',$this->admininfo()['top_id']);
+                    return $query->where('write_id|principal_id','find in set',$this->admininfo()['id']);
                 })
                 ->where($where)
                 ->count();
@@ -60,7 +60,7 @@ class Basic extends AdminController
                 ->where($where)
                 ->when($this->admininfo()['id']!=1, function ($query) {
                     // 满足条件后执行
-                    return $query->where('write_id|principal_id','find in set',$this->admininfo()['id'])->whereor('write_id|principal_id','in',$this->admininfo()['top_id']);
+                    return $query->where('write_id|principal_id','find in set',$this->admininfo()['id']);
                 })
                 ->page($page, $limit)
                 ->order($this->sort)
@@ -106,10 +106,16 @@ class Basic extends AdminController
         $row = $this->model->find($id);
         //人员信息
         $man = SystemAdmin::field('username,id')->select();
+        $value = explode(',', $row['principal_id']);
+
+//        dump($value);die;
         $fz = array();
         foreach ($man as $k => $v) {
             $fz[$k]['name'] = $v['username'];
             $fz[$k]['value'] = $v['id'];
+            if (in_array($v['username'], $value)) {
+                $fz[$k]['selected'] = true;
+            }
             //删除自己
             if ($fz[$k]['value'] == $this->admininfo()['id']) {
                 unset($fz[$k]);

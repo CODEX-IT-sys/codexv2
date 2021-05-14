@@ -13,6 +13,7 @@ use app\admin\model\SystemAdmin;
 use app\admin\model\project\Basic;
 use app\admin\model\project\Description;
 use app\admin\model\project\Uploadfile;
+use app\admin\extend\msg\PushEvent;
 /**
  * @ControllerAnnotation(title="项目汇总")
  */
@@ -80,6 +81,8 @@ class Allitems extends AdminController
      */
     public function index()
     {
+
+
         if ($this->request->isAjax()) {
             if (input('selectFields')) {
                 return $this->selectList();
@@ -128,7 +131,7 @@ class Allitems extends AdminController
                 ->where('file_status', 4)
                 ->when($this->admininfo()['id']!=1, function ($query) {
                     // 满足条件后执行
-                    return $query->where('mid|assistant_id','=',$this->admininfo()['id'])->whereor('mid|assistant_id','in',$this->admininfo()['top_id']);
+                    return $query->where('mid|assistant_id','=',$this->admininfo()['id'])->whereor('mid|assistant_id','in',$this->admininfo()['top_id']);;
                 })
                 ->withJoin(['type', 'rate', 'yz', 'dw', 'customerInformation', 'xm',
                     'tyevel', 'trevel', 'assistant'
@@ -139,7 +142,7 @@ class Allitems extends AdminController
                 ->where('file_status', 4)
                 ->when($this->admininfo()['id']!=1, function ($query) {
                     // 满足条件后执行
-                    return $query->where('mid|assistant_id','=',$this->admininfo()['id'])->where('mid|assistant_id','in',$this->admininfo()['top_id']);
+                    return $query->where('mid|assistant_id','=',$this->admininfo()['id'])->whereor('mid|assistant_id','in',$this->admininfo()['top_id']);;
                 })
                 ->withJoin(['type', 'rate', 'yz', 'dw', 'customerInformation', 'xm',
                      'tyevel', 'trevel', 'assistant'
@@ -174,7 +177,7 @@ class Allitems extends AdminController
                 ->where('file_status', 3)
                 ->when($this->admininfo()['id']!=1, function ($query) {
                     // 满足条件后执行
-                    return $query->where('mid|assistant_id','=',$this->admininfo()['id']);
+                    return $query->where('mid|assistant_id','=',$this->admininfo()['id'])->whereor('mid|assistant_id','in',$this->admininfo()['top_id']);;
                 })
                 ->withJoin(['type', 'rate', 'yz', 'dw', 'customerInformation', 'xm',
                      'tyevel', 'trevel', 'assistant'
@@ -185,7 +188,7 @@ class Allitems extends AdminController
                 ->where('file_status', 3)
                 ->when($this->admininfo()['id']!=1, function ($query) {
                     // 满足条件后执行
-                    return $query->where('mid|assistant_id','=',$this->admininfo()['id']);
+                    return $query->where('mid|assistant_id','=',$this->admininfo()['id'])->whereor('mid|assistant_id','in',$this->admininfo()['top_id']);
                 })
 
                 ->withJoin(['type', 'rate', 'yz', 'dw', 'customerInformation', 'xm',
@@ -288,7 +291,7 @@ class Allitems extends AdminController
             $this->validate($post, $rule);
             try {
                 $admin = $this->admininfo();
-                $post['assistant_id'] = $admin['id'];
+//                $post['assistant_id'] = $admin['id'];
                 $save = $row->save($post);
             } catch (\Exception $e) {
                 $this->error('保存失败', $e->getMessage());
@@ -441,7 +444,7 @@ class Allitems extends AdminController
      */
     public function split($id)
     {
-        $basic = Basic::field(['project_name', 'id'])->select();
+        $basic = Basic::field(['project_name', 'id'])->where('write_id|principal_id','find in set',$this->admininfo()['id'])->select();
         $ba = $this->xmdata($basic, 'sd', 'project_name');
         $this->assign(['id' => $id, 'basic' => $ba]);
         return $this->fetch();

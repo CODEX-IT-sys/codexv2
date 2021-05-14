@@ -78,8 +78,8 @@
                 <!--<input type="text" name="mid" class="layui-input" lay-verify="required" placeholder="请输入项目经理id" value="{$row.mid|default=''}">-->
                 <select name="assistant_id" lay-verify="required" lay-search>
                     <option value="">请选择项目助理</option>
-                    {foreach $Assignor as $key=>$v }
-                    <option value="{$v.id}"{in name="$v.id" value="$row.assistant_id"} selected=""{/in}>{$v.username}</option>
+                    {foreach $Assignor as $key=>$v}
+                    <option value="{$v.id}"  {in name="$v.id" value="$row.assistant_id" } selected="" {/in}>{$v.username}</option>
                     {/foreach}
                 </select>
             </div>

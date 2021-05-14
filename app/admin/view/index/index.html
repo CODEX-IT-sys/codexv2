@@ -125,34 +125,74 @@
         });
     });
 
-    var t2 = window.setInterval(function() {
-        $.ajax({
-            //几个参数需要注意一下
-            type: "POST",//方法类型
-            dataType: "json",//预期服务器返回的数据类型
-            url: "/admin/project.message/remind",//url
-            async: false,
-            success: function (result) {
-                if (result.code ==1) {
-                    layer.open({
-                        type: 2,
-                        title: false,
-                        closeBtn: 0, //不显示关闭按钮
-                        shade: [0],
-                        offset: 'rb', //右下角弹出
-                        time: 2000, //2秒后自动关闭
-                        anim: 2,
-                        content: ['/admin/project.message/new', 'no'], //iframe的url，no代表不显示滚动条
-                    });
-                }else{
-                    return false;
-                }
-            }
+    // var t2 = window.setInterval(function() {
+    //     $.ajax({
+    //         //几个参数需要注意一下
+    //         type: "POST",//方法类型
+    //         dataType: "json",//预期服务器返回的数据类型
+    //         url: "/admin/project.message/remind",//url
+    //         async: false,
+    //         success: function (result) {
+    //             if (result.code ==1) {
+    //                 layer.open({
+    //                     type: 2,
+    //                     title: false,
+    //                     closeBtn: 0, //不显示关闭按钮
+    //                     shade: [0],
+    //                     offset: 'rb', //右下角弹出
+    //                     time: 2000, //2秒后自动关闭
+    //                     anim: 2,
+    //                     content: ['/admin/project.message/new', 'no'], //iframe的url，no代表不显示滚动条
+    //                 });
+    //             }else{
+    //                 return false;
+    //             }
+    //         }
+    //     });
+    //     console.log('每隔5秒钟执行一次')
+    //
+    // },10000)
+
+
+</script>
+
+
+<script src="http://cdn.bootcss.com/jquery/3.1.0/jquery.min.js"></script>
+<script>
+    jQuery(function ($) {
+        // 连接服务端
+        var socket = io('http://192.168.2.95:2120'); //这里当然填写真实的地址了
+        // uid可以是自己网站的用户id，以便针对uid推送以及统计在线人数
+
+    var uid = "<?php echo session('admin.id')?>";
+        console.log(uid);
+        // socket连接后以uid登录
+        socket.on('connect', function () {
+            socket.emit('login', uid);
         });
-        console.log('每隔5秒钟执行一次')
-
-    },10000)
-
+        // 后端推送来消息时
+        socket.on('new_msg', function (msg) {
+            console.log("收到消息：" + msg);
+            layer.alert(msg, {
+                time: 30*1000
+                ,success: function(layero, index){
+                    var timeNum = this.time/1000, setText = function(start){
+                        layer.title((start ? timeNum : --timeNum) + ' 秒后关闭', index);
+                    };
+                    setText(!0);
+                    this.timer = setInterval(setText, 1000);
+                    if(timeNum <= 0) clearInterval(this.timer);
+                }
+                ,end: function(){
+                    clearInterval(this.timer);
+                }
+            });
+        });
+        // 后端推送来在线数据时
+        socket.on('update_online_count', function (online_stat) {
+            console.log(online_stat);
+        });
+    })
 
 </script>
 

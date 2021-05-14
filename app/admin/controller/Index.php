@@ -20,7 +20,7 @@ class Index extends AdminController
      */
     public function index()
     {
-        echo lang('hello');
+//        echo lang('hello');
         return $this->fetch('', [
             'admin' => session('admin'),
         ]);

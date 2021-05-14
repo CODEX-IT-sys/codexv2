@@ -94,7 +94,7 @@ class Description extends AdminController
             // 启动事务
             Db::startTrans();
             try {
-
+//            dump($post);die;
                 $save = $row->save($post);
                 $res = $this->model->where('id', $id)->find();
 
