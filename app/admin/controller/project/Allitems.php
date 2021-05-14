@@ -81,7 +81,7 @@ class Allitems extends AdminController
      */
     public function index()
     {
-
+        $this->notification('你哈');die;
 
         if ($this->request->isAjax()) {
             if (input('selectFields')) {

@@ -158,7 +158,7 @@
 
 
 <script src="http://cdn.bootcss.com/jquery/3.1.0/jquery.min.js"></script>
-<!--<script>
+<script>
     jQuery(function ($) {
         // 连接服务端
         var socket = io('http://192.168.2.95:2120'); //这里当然填写真实的地址了
@@ -177,7 +177,7 @@
                 time: 30*1000
                 ,success: function(layero, index){
                     var timeNum = this.time/1000, setText = function(start){
-                        layer.title((start ? timeNum : &#45;&#45;timeNum) + ' 秒后关闭', index);
+                        layer.title((start ? timeNum : --timeNum) + ' 秒后关闭', index);
                     };
                     setText(!0);
                     this.timer = setInterval(setText, 1000);
@@ -193,8 +193,8 @@
             console.log(online_stat);
         });
     })
-</script>-->
-<script src="http://laychat.test/static/layui/lay/modules/layim.js"></script>
+</script>
+<script src="/static/js/layim.js"></script>
 <!--<script src="/static/plugs/layui/layui.js"></script>-->
 
 <script type="text/javascript">
@@ -225,18 +225,18 @@
                 url: "{:url('upload/uploadimg')}"
             }
             ,brief: false //是否简约模式（默认false，如果只用到在线客服，且不想显示主面板，可以设置 true）
-            ,title: '我的LayIM' //主面板最小化后显示的名称
+            ,title: 'CodexIM' //主面板最小化后显示的名称
             ,maxLength: 3000 //最长发送的字符长度，默认3000
             ,isfriend: true //是否开启好友（默认true，即开启）
             ,isgroup: true //是否开启群组（默认true，即开启）
             ,right: '0px' //默认0px，用于设定主面板右偏移量。该参数可避免遮盖你页面右下角已经的bar。
-            ,chatLog: "{:url('Chatlog/index')}" //聊天记录地址（如果未填则不显示）
+            ,chatLog: "{:url('mall.cate/chatlog')}" //聊天记录地址（如果未填则不显示）
             ,find: "{:url('findgroup/index')}" //查找好友/群的地址（如果未填则不显示）
             ,copyright: false //是否授权，如果通过官网捐赠获得LayIM，此处可填true
         });
 
         //建立WebSocket通讯
-        var socket = new WebSocket('ws://127.0.0.1:7272');
+        var socket = new WebSocket('ws://192.168.2.95:7272');
 
         //连接成功时触发
         socket.onopen = function(){

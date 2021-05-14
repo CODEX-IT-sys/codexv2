@@ -41,31 +41,29 @@ class Cate extends AdminController
         $other = Db::name('system_admin')->select();
 
         //查询当前用户的所处的群组
-/*        $groupArr = [];
-        $groups = db('groupdetail')->field('groupid')->where('userid', cookie('uid'))->group('groupid')->select();
-        if( !empty( $groups ) ){
-            foreach( $groups as $key=>$vo ){
-                $ret = db('chatgroup')->where('id', $vo['groupid'])->find();
-                if( !empty( $ret ) ){
-                    $groupArr[] = $ret;
-                }
-            }
-        }
-        unset( $ret, $groups );*/
+        $groupArr = [];
+//        $groups =  Db::name('system_admin')->field('groupid')->where('userid',  $data['id'])->group('groupid')->select();
+//        if( !empty( $groups ) ){
+//            foreach( $groups as $key=>$vo ){
+//                $ret = db('chatgroup')->where('id', $vo['groupid'])->find();
+//                if( !empty( $ret ) ){
+//                    $groupArr[] = $ret;
+//                }
+//            }
+//        }
+//        unset( $ret, $groups );
 
         $online = 0;
         $group = [];  //记录分组信息
-        $userGroup = ['一组','二组','三组'];
-
+        $userGroup = ['未分组','市场','项目'];
         $list = [];  //群组成员信息
         $i = 0;
         $j = 0;
-
         foreach( $userGroup as $key=>$vo ){
             $group[$i] = [
                 'groupname' => $vo,
                 'id' => $key,
-                'online' => 0,
+                'online' => 1,
                 'list' => []
             ];
             $i++;
@@ -81,7 +79,7 @@ class Cate extends AdminController
                     $list[$j]['username'] = $v['username'];
                     $list[$j]['id'] = $v['id'];
                     $list[$j]['avatar'] = $v['head_img'];
-                    $list[$j]['sign'] ='123456';
+                    $list[$j]['sign'] ='这里展示备注我是:'. $v['username'];
 
 //                    dump($list);die;
 //                    if ('online' == $v['status']) {
@@ -109,7 +107,7 @@ class Cate extends AdminController
                     'username' => $mine['username'],
                     'id' => $mine['id'],
                     'status' => 'online',
-                    'sign' => 123456,
+//                    'sign' => 123456,
                     'avatar' => $mine['head_img']
                 ],
                 'friend' => $group,
@@ -120,4 +118,57 @@ class Cate extends AdminController
         return json( $return );
 
     }
+
+    /**
+     * @NodeAnotation(title="聊天记录")
+     */
+    public function chatlog()
+    {
+        $id = input('id');
+        $type = input('type');
+
+        $this->assign([
+            'id' => $id,
+            'type' => $type,
+            'admin' => session('admin'),
+        ]);
+
+        return $this->fetch();
+    }
+
+    /**
+     * @NodeAnotation(title="聊天记录详情")
+     */
+    public function chatdetail()
+    {
+        $id = input('id');
+        $type = input('type');
+
+        $uid = input('uid');
+
+//        die;
+        if( 'friend' == $type ){
+            $result = Db::name('chatlog')->where("((fromid={$uid} and toid={$id}) or (fromid={$id} and toid={$uid})) and type='friend'")
+                ->order('timeline desc')
+                ->select();
+
+            if( empty($result) ){
+                return json( ['code' => -1, 'data' => '', 'msg' => '没有记录'] );
+            }
+
+            return json( ['code' => 1, 'data' => $result, 'msg' => 'success'] );
+        }else if('group' == $type){
+
+            $result = Db::name('chatlog')->where("toid={$id} and type='group'")
+                ->order('timeline desc')
+                ->select();
+
+            if( empty($result) ){
+                return json( ['code' => -1, 'data' => '', 'msg' => '没有记录'] );
+            }
+
+            return json( ['code' => 1, 'data' => $result, 'msg' => 'success'] );
+        }
+    }
+
 }
