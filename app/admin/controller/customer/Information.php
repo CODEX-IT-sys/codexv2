@@ -2,13 +2,14 @@
 
 namespace app\admin\controller\customer;
 
+use app\admin\model\customer\CustomerContract;
 use app\common\controller\AdminController;
 use EasyAdmin\annotation\ControllerAnnotation;
 use EasyAdmin\annotation\NodeAnotation;
 use think\App;
 
 /**
- * @ControllerAnnotation(title="客户")
+ * @ControllerAnnotation(title="客户联系人")
  */
 class Information extends AdminController
 {
@@ -17,7 +18,10 @@ class Information extends AdminController
     public function __construct(App $app)
     {
         parent::__construct($app);
-
+//        客户
+        $b = CustomerContract::select();
+//        dump($b->toArray());
+        $this->assign('b', $b);
         $this->model = new \app\admin\model\customer\Customer();
 
     }
@@ -34,15 +38,17 @@ class Information extends AdminController
             }
             list($page, $limit, $where) = $this->buildTableParames();
             $count = $this->model
-                ->withJoin(['write'], 'LEFT')
+                ->withJoin(['write','contract'], 'LEFT')
                 ->where($where)
                 ->count();
             $list = $this->model
-                ->withJoin(['write'], 'LEFT')
+                ->withJoin(['write','contract'], 'LEFT')
                 ->where($where)
                 ->page($page, $limit)
                 ->order($this->sort)
                 ->select();
+
+//            dump($list->toArray());die;
             $data = [
                 'code' => 0,
                 'msg' => '',

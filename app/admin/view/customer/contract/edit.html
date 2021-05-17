@@ -14,17 +14,19 @@
                 </select>
             </div>
         </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">客户公司</label>
-            <div class="layui-input-block">
 
-                <select name="customer_id"  lay-search>
-                    <option value="">请选择一个客户公司</option>
-                    {foreach $b as $key=>$v }
-                    <option value="{$v.id}" {if condition="$row.customer_id eq $v.id" } selected="selected" {
-                    /if}>{$v.company_name}</option>
-                    {/foreach}
-                </select>
+        <div class="layui-form-item">
+            <label class="layui-form-label">公司全称</label>
+            <div class="layui-input-block">
+                <input type="text" name="company_name" class="layui-input" lay-verify="required" placeholder="请输入公司全称"
+                       value="{$row.company_name|default=''}">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">公司编码</label>
+            <div class="layui-input-block">
+                <input type="text" name="company_code" class="layui-input"  placeholder="请输入公司编码"
+                       value="{$row.company_code|default=''}">
             </div>
         </div>
         <div class="layui-form-item">
@@ -34,7 +36,7 @@
                 <select name="sales_id"  lay-search>
                     <option value="">请选择一个销售</option>
                     {foreach $c as $k2=>$v }
-                    <option value="{$v.id}" {in name="$v.id" value="$row.sales_id"} selected=""{/in}>{$v.username}</option>
+                    <option value="{$v.id}" {in name="$v.username" value="$row.sales_id"} selected=""{/in}>{$v.username}</option>
                     {/foreach}
                 </select>
             </div>
@@ -77,7 +79,7 @@
                 <select name="currency"  lay-search>
                     <option value="">请选择币种</option>
                     {foreach $e as $k1=>$v }
-                    <option value="{$v.id}" {in name="$v.id" value="$row.currency"} selected=""{/in}>{$v.content}</option>
+                    <option value="{$v.id}" {in name="$v.content" value="$row.currency"} selected{/in}>{$v.content}</option>
                     {/foreach}
                 </select>
             </div>

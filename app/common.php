@@ -126,10 +126,10 @@ if (!function_exists('auth')) {
 /*
  * 文件编码 F- + 日期 + 公司编号 + 序号（建议规则没有F） 生成
  * */
-function filing_number($company_code)
+function filing_number($company_code,$a)
 {
     // 获取当前时间
-    $now = date("Ymd");
+    $now = date("Ymd",$a);
 
     // 补位生成 序列单号
     $xh=time();

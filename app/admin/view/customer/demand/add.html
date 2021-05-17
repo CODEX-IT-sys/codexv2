@@ -14,6 +14,17 @@
             </div>
         </div>
         <div class="layui-form-item">
+            <label class="layui-form-label">客户联系人</label>
+            <div class="layui-input-block">
+                <select name="customer_id" lay-verify="required" lay-search>
+                    <option value="">请选择一个客户</option>
+                    {foreach $c as $k1=>$v }
+                    <option value="{$v.id}">{$v.customer_contact}</option>
+                    {/foreach}
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
             <label class="layui-form-label">项目经理</label>
             <div class="layui-input-block">
                 <select name="mid" lay-verify="required" lay-search>

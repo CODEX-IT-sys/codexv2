@@ -20,6 +20,11 @@ class Customer extends TimeModel
     {
         return $this->belongsTo(SystemAdmin::class, 'writer_id', 'id');
     }
+
+    public function contract()
+    {
+        return $this->belongsTo(CustomerContract::class, 'contract_id', 'id');
+    }
     
 
 }

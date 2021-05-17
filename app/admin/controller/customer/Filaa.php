@@ -91,7 +91,7 @@ class Filaa extends AdminController
             list($page, $limit, $where) = $this->buildTableParames();
             $count = $this->model
                 ->where($where)
-                ->withJoin(['type', 'rate', 'yz', 'dw', 'customerInformation'
+                ->withJoin(['type', 'rate', 'yz', 'dw', 'contract'
                     ,
 
                 ], 'LEFT')
@@ -102,7 +102,7 @@ class Filaa extends AdminController
                 ->count();
             $list = $this->model
                 ->where($where)
-                ->withJoin(['type', 'rate', 'yz', 'dw', 'customerInformation'], 'LEFT')
+                ->withJoin(['type', 'rate', 'yz', 'dw', 'contract'], 'LEFT')
                 ->when($a, function ($query) use ($a) {
                     // 满足条件后执行
                     return $query->where('demand_id', $a);
@@ -139,8 +139,6 @@ class Filaa extends AdminController
             try {
                 $admin = session('admin');
                 $post['writer_id'] = $admin['id'];
-//                委托日期
-                $post['entrust_date'] = time();
                 //增值税报价金额
                 $post['vat'] = $post['unit_price'] * $post['quotation_number'] * $post['tax_rate'] / 100;
                 $post['quotation_price'] = $post['unit_price'] * $post['quotation_number'] + $post['vat'];
@@ -154,7 +152,8 @@ class Filaa extends AdminController
                 if (isset($post['file_status'])) {
                     if ($post['file_status'] == 2) {
 //                    客户公司编码
-                        $company_code = Customer::where('id', $post['customer_id'])->value('company_code');
+                        $company_code = Customer::where('id', $post['customer_id'])->field('company_code,entrust_date')->select();
+
                         //生成文件编号
                         $post['customer_file_code'] = filing_number($company_code);
                     }
@@ -205,7 +204,6 @@ class Filaa extends AdminController
                 $post['up_id'] = $admin['id'];
                 //委托日期转换时间戳
                 $post['entrust_date']=strtotime($post['entrust_date']);
-
                 if(!isset( $post['completion_date'])){
                     $post['completion_date']=strtotime($post['completion_date']);
                 }
@@ -220,9 +218,12 @@ class Filaa extends AdminController
                 //文件状态为接受时生成文件编号
                 if ($post['file_status'] == 2) {
                     // 客户公司编码
-                    $company_code = Customer::where('id', $post['customer_id'])->value('company_code');
+                    $company_code = CustomerContract::where('id', $post['contract_id'])->value('company_code');
                     //生成文件编号
-                    $post['customer_file_code'] = filing_number($company_code);
+                    if(($row['customer_file_code']=='')) {
+                        $post['customer_file_code'] = filing_number($company_code, $post['entrust_date']);
+                    }
+
                 }
                 $save = $row->save($post);
             } catch (\Exception $e) {
@@ -302,24 +303,31 @@ class Filaa extends AdminController
     public function approve()
     {
         $post = $this->request->post();
-        try {
+
             //查询其中一个文件
             $a = Customeraa::where('id', $post['id']['0'])->find();
             // 客户公司编码
-            $company_code = Customer::where('id', $a['customer_id'])->value('company_code');
-            $admin = session('admin');
+            $company_code = CustomerContract::where('id', $a['contract_id'])->value('company_code');
 
+            $admin = session('admin');
+        try {
 
             foreach ($post['id'] as $k => $v) {
                 //增值税报价金额
                 $res = Customeraa::where('id', $v)->find();
-                $res->vat = $res['unit_price'] * $res['quotation_number'] * $res['tax_rate'] / 100;
-                $res->quotation_price = $res['unit_price'] * $res['quotation_number'] + $res['vat'];
-                $res->customer_id = CustomerDemand::where('id', $res['demand_id'])->value('customer_id');
+
+//                $res->vat = $res['unit_price'] * $res['quotation_number'] * $res['tax_rate'] / 100;
+//                $res->quotation_price = $res['unit_price'] * $res['quotation_number'] + $res['vat'];
+//                $res->customer_id = CustomerDemand::where('id', $res['demand_id'])->value('customer_id');
                 $res->file_status = 2;
-                $res->customer_file_code = filing_number($company_code) . $k;
+                if(empty($res['customer_file_code'])){
+                    $res->customer_file_code = filing_number($company_code,strtotime($res['entrust_date'])) . $k;
+                }
                 $res->up_id = $admin['id'];
+
                 $res->save();
+
+
             }
 
         } catch (\Exception $e) {

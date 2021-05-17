@@ -132,8 +132,8 @@ class CustomerContract extends TimeModel
 
     public static function onBeforeWrite($model)
     {
-        $a = Customer::where('id', $model->customer_id)->value('company_code');
-        $model->contract_code = 'C-' . $a . date("Ymd");
+//        $a = Customer::where('id', $model->customer_id)->value('company_code');
+        $model->contract_code = 'C-' . $model->company_code . date("Ymd");
 //        dump($model);die;
     }
 

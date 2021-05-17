@@ -1,6 +1,16 @@
 <div class="layuimini-container">
     <form id="app-form" class="layui-form layuimini-form">
-
+        <div class="layui-form-item">
+            <label class="layui-form-label">请选择合同编号</label>
+            <div class="layui-input-block">
+                <select name="contract_id" lay-verify="required" lay-search>
+                    <option value="">请选择合同编号</option>
+                    {foreach $b as $k1=>$v }
+                    <option value="{$v.id}">{$v.contract_code}</option>
+                    {/foreach}
+                </select>
+            </div>
+        </div>
         <div class="layui-form-item">
             <label class="layui-form-label">客户联系人</label>
             <div class="layui-input-block">
@@ -12,13 +22,6 @@
             <label class="layui-form-label">所在部门</label>
             <div class="layui-input-block">
                 <input type="text" name="department" class="layui-input" placeholder="请输入所在部门"
-                       value="">
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">公司全称</label>
-            <div class="layui-input-block">
-                <input type="text" name="company_name" class="layui-input" lay-verify="required" placeholder="请输入公司全称"
                        value="">
             </div>
         </div>
@@ -64,13 +67,13 @@
                        value="">
             </div>
         </div>
-        <div class="layui-form-item">
+<!--        <div class="layui-form-item">
             <label class="layui-form-label">公司编码</label>
             <div class="layui-input-block">
                 <input type="text" name="company_code" class="layui-input" lay-verify="required" placeholder="请输入公司编码"
                        value="">
             </div>
-        </div>
+        </div>-->
         <!--<div class="layui-form-item">-->
         <!--<label class="layui-form-label">合同编码</label>-->
         <!--<div class="layui-input-block">-->

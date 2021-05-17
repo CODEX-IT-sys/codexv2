@@ -191,21 +191,22 @@ class Staffing extends AdminController
                 if (!empty($v['xdtree'])) {
                     foreach ($v['xdtree'] as $k2 => $v2) {
                         $v['trtree'][$k2]['title'] = "校对_" . "项目名称:" . $v1['basic']['project_name'] . "\r" . "开始时间:$v2[pr_start_time]\r" . "结束时间:$v2[pr_end_time]";
-                        $trarray[$k]['children'][$k1 + 1 + $k2]['title'] = $v['trtree'][$k2]['title'];
+                        $trarray[$k]['children'][$k2]['title'] = $v['trtree'][$k2]['title'];
 
                     }
                 }
                 if (!empty($v['yptree'])) {
+
                     foreach ($v['yptree'] as $k3 => $v3) {
                         $v['trtree'][$k3]['title'] = "预排_" . "项目名称:" . $v1['basic']['project_name'] . "\r" . "开始时间:$v3[be_start_time]\r" . "结束时间:$v3[be_end_time]";
-                        $trarray[$k]['children'][$k1 + 1 + $k2 + 1 + $k3]['title'] = $v['trtree'][$k3]['title'];
+                        $trarray[$k]['children'][$k3]['title'] = $v['trtree'][$k3]['title'];
 
                     }
                 }
                 if (!empty($v['hptree'])) {
                     foreach ($v['hptree'] as $k4 => $v4) {
                         $v['trtree'][$k4]['title'] = "后排_" . "项目名称:" . $v1['basic']['project_name'] . "\r" . "开始时间:$v4[after_start_time]\r" . "结束时间:$v4[after_end_time]";
-                        $trarray[$k]['children'][$k1 + 1 + $k2 + 1 + $k3 + 1 + $k4]['title'] = $v['trtree'][$k4]['title'];
+                        $trarray[$k]['children'][$k4]['title'] = $v['trtree'][$k4]['title'];
                     }
                 }
 
@@ -242,35 +243,38 @@ class Staffing extends AdminController
 
                 }
             }
+
             if (!empty($v['xdtree'])) {
                 foreach ($v['xdtree'] as $k2 => $v2) {
                     $v['trtree'][$k2]['title'] = "校对_" . "项目名称:" . $v1['basic']['project_name'] . "\r" . "开始时间:$v2[pr_start_time]\r" . "结束时间:$v2[pr_end_time]";
-                    $trarray[$k]['children'][$k1 + 1 + $k2]['title'] = $v['trtree'][$k2]['title'];
+                    $trarray[$k]['children'][$k2]['title'] = $v['trtree'][$k2]['title'];
 
                 }
             }
+
             if (!empty($v['yptree'])) {
                 foreach ($v['yptree'] as $k3 => $v3) {
                     $v['trtree'][$k3]['title'] = "预排_" . "项目名称:" . $v1['basic']['project_name'] . "\r" . "开始时间:$v3[be_start_time]\r" . "结束时间:$v3[be_end_time]";
-                    $trarray[$k]['children'][$k1 + 1 + $k2 + 1 + $k3]['title'] = $v['trtree'][$k3]['title'];
+                    $trarray[$k]['children'][$k3]['title'] = $v['trtree'][$k3]['title'];
 
                 }
             }
             if (!empty($v['hptree'])) {
                 foreach ($v['hptree'] as $k4 => $v4) {
                     $v['trtree'][$k4]['title'] = "后排_" . "项目名称:" . $v1['basic']['project_name'] . "\r" . "开始时间:$v4[after_start_time]\r" . "结束时间:$v4[after_end_time]";
-                    $trarray[$k]['children'][$k1 + 1 + $k2 + 1 + $k3 + 1 + $k4]['title'] = $v['trtree'][$k4]['title'];
+                    $trarray[$k]['children'][$k4]['title'] = $v['trtree'][$k4]['title'];
                 }
             }
 
         }
+
         foreach ($trarray as $k5 => $v5) {
             if (isset($v5['children'])) {
                 $trarray[$k5]['children'] = array_values($v5['children']);
             }
         }
 
-//        dump($trarray);
+
         $this->assign(['trarray' => $trarray]);
 
         return $this->fetch();

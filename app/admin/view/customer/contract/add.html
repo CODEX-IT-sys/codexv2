@@ -14,15 +14,19 @@
                 </select>
             </div>
         </div>
+
         <div class="layui-form-item">
-            <label class="layui-form-label">客户公司</label>
+            <label class="layui-form-label">公司全称</label>
             <div class="layui-input-block">
-                <select name="customer_id" lay-verify="required" lay-search>
-                    <option value="">请选择一个客户</option>
-                    {foreach $b as $k1=>$v }
-                    <option value="{$v.id}">{$v.company_name}</option>
-                    {/foreach}
-                </select>
+                <input type="text" name="company_name" class="layui-input" lay-verify="required" placeholder="请输入公司全称"
+                       value="">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">公司编码</label>
+            <div class="layui-input-block">
+                <input type="text" name="company_code" class="layui-input" lay-verify="required" placeholder="请输入公司编码"
+                       value="">
             </div>
         </div>
         <div class="layui-form-item">

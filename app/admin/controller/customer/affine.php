@@ -79,10 +79,12 @@ class affine extends AdminController
             }
             list($page, $limit, $where) = $this->buildTableParames();
             $count = $this->model
+                ->where('file_status', 'in',[2,3])
                 ->where($where)
                 ->withJoin(['type', 'rate', 'yz', 'dw', 'customerInformation','demand','contract','jsstatus'], 'LEFT')
                 ->count();
             $list = $this->model
+                ->where('file_status', 'in',[2,3])
                 ->where($where)
                 ->withJoin(['type', 'rate', 'yz', 'dw', 'customerInformation','demand','contract','jsstatus'], 'LEFT')
                 ->page($page, $limit)
@@ -149,16 +151,16 @@ class affine extends AdminController
             $count = $this->model
                 ->where('file_status', 2)
                 ->where($where)
-                ->withJoin(['type', 'rate', 'yz', 'dw', 'customerInformation','demand','contract','jsstatus'], 'LEFT')
+                ->withJoin(['type', 'rate', 'yz', 'dw','demand','customerInformation','contract','jsstatus'], 'LEFT')
                 ->count();
             $list = $this->model
                 ->where($where)
                 ->where('file_status', 2)
-                ->withJoin(['type', 'rate', 'yz', 'dw', 'customerInformation','demand','contract','jsstatus'], 'LEFT')
+                ->withJoin(['type', 'rate', 'yz', 'dw','demand','customerInformation','contract','jsstatus'], 'LEFT')
                 ->page($page, $limit)
                 ->order($this->sort)
                 ->select()->toArray();
-
+//            dump($list)
             $data = [
                 'code' => 0,
                 'msg' => '',

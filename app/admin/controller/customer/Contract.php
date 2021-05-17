@@ -18,18 +18,18 @@ class Contract extends AdminController
 {
 
     use \app\admin\traits\Curd;
-    protected $relationSerach = true;
+
 
     public function __construct(App $app)
     {
         parent::__construct($app);
 
         $this->model = new \app\admin\model\customer\CustomerContract();
+
         //主体公司
         $a = MainCompany::field('id,chinese_company_name')->select();
 
-//        客户
-        $b = Customer::field('id,company_name')->select();
+
         //销售人员
         $c = SystemAdmin::wherein('auth_ids', [9])->select();
         $d = Cache::get('dw');
@@ -38,9 +38,10 @@ class Contract extends AdminController
         $e = Cache::get('bz');
 
 //        dump($g);die;
-        $this->assign(['a' => $a, 'b' => $b, 'c' => $c, 'd' => $d, 'e' => $e
-            , 'g' => $g, 'h' => '$h', 'g' => $g, 'h' => $h
+        $this->assign(['a' => $a, 'c' => $c, 'd' => $d, 'e' => $e
+            , 'g' => $g, 'h' => $h,
         ]);
+//        die;
         $this->assign('getInvoicingRulesList', $this->model->getInvoicingRulesList());
         $this->assign('getConfidentialityAgreementList', $this->model->getConfidentialityAgreementList());
 
@@ -52,7 +53,7 @@ class Contract extends AdminController
      */
     public function index()
     {
-        $this->relationSearch = false;
+
 
         if ($this->request->isAjax()) {
             if (input('selectFields')) {
@@ -60,11 +61,11 @@ class Contract extends AdminController
             }
             list($page, $limit, $where) = $this->writeauth();
             $count = $this->model
-                ->withJoin(['customerInformation', 'sale', 'company', 'write', 'dw', 'bz', 'fw', 'yz'], 'LEFT')
+                ->withJoin([ 'sale', 'company', 'write', 'dw', 'bz', 'fw', 'yz'], 'LEFT')
                 ->where($where)
                 ->count();
             $list = $this->model
-                ->withJoin(['customerInformation', 'sale', 'company', 'write', 'dw', 'bz', 'fw', 'yz'], 'LEFT')
+                ->withJoin([ 'sale', 'company', 'write', 'dw', 'bz', 'fw', 'yz'], 'LEFT')
                 ->where($where)
 //                ->wherein('writer_id',$admin['id'])
                 ->page($page, $limit)

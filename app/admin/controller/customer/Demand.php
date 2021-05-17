@@ -2,6 +2,7 @@
 
 namespace app\admin\controller\customer;
 
+use app\admin\model\customer\Customer;
 use app\admin\model\customer\CustomerContract;
 use app\common\controller\AdminController;
 use EasyAdmin\annotation\ControllerAnnotation;
@@ -29,7 +30,9 @@ class Demand extends AdminController
         $a = CustomerContract::field('id,contract_code')->select();
         //项目经理
         $b = SystemAdmin::wherein('auth_ids', [12])->select();
-        $this->assign(['a' => $a, 'b' => $b]);
+        //联系人
+        $c= Customer::field('id,customer_contact')->select();
+        $this->assign(['a' => $a, 'b' => $b,'c'=>$c]);
         $this->assign('getCooperationFirstList', $this->model->getCooperationFirstList());
 
     }
@@ -44,11 +47,10 @@ class Demand extends AdminController
             $rule = [];
             $this->validate($post, $rule);
             try {
-                $contract = CustomerContract::field('id,company_id,customer_id')->find($post['contract_id']);
+                $contract = CustomerContract::field('id,company_id')->find($post['contract_id']);
                 $admin = session('admin');
                 $post['writer_id'] = $admin['id'];
                 $post['company_id'] = $contract['company_id'];
-                $post['customer_id'] = $contract['customer_id'];
 //                dump($post);die;
                 $save = $this->model->save($post);
             } catch (\Exception $e) {
@@ -72,13 +74,13 @@ class Demand extends AdminController
             list($page, $limit, $where) = $this->buildTableParames();
 
             $count = $this->model
-                ->withJoin(['write', 'contract', 'xm', 'customerInformation', 'company'], 'LEFT')
+                ->withJoin(['write', 'contract', 'xm', 'company','customerInformation'], 'LEFT')
                 ->where($where)
                 ->count();
             $list = $this->model
                 ->where($where)
 //                ->with(['write','contract.customerInformation','contract.company','xm'])
-                ->withJoin(['write', 'contract', 'xm', 'customerInformation', 'company'], 'LEFT')
+                ->withJoin(['write', 'contract', 'xm', 'company','customerInformation'], 'LEFT')
                 ->page($page, $limit)
                 ->order($this->sort)
                 ->select();
