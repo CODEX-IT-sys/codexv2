@@ -29,6 +29,7 @@ define(["jquery", "easy-admin"], function ($, ea) {
                     {field: 'customer_contact', title: '客户联系人', sort: true},
                     {field: 'department', title: '所在部门', hide: true},
                     {field: 'contract.company_name', title: '公司全称', sort: true},
+                    {field: 'contract.abbreviation_name', title: '公司简称', sort: true},
                     {field: 'contract.company_code', title: '公司编码', sort: true},
                     {field: 'company_address', title: '公司地址'},
                     {field: 'country', title: '国家', hide: true},

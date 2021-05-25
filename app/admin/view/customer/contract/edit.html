@@ -23,6 +23,20 @@
             </div>
         </div>
         <div class="layui-form-item">
+            <label class="layui-form-label">公司简称</label>
+            <div class="layui-input-block">
+                <input type="text" name="abbreviation_name" class="layui-input" lay-verify="required" placeholder="请输入公司简称"
+                       value="{$row.abbreviation_name|default=''}">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">公司地址</label>
+            <div class="layui-input-block">
+                <input type="text" name="company_address" class="layui-input"  placeholder="请输入公司地址"
+                       value="{$row.company_address|default=''}">
+            </div>
+        </div>
+        <div class="layui-form-item">
             <label class="layui-form-label">公司编码</label>
             <div class="layui-input-block">
                 <input type="text" name="company_code" class="layui-input"  placeholder="请输入公司编码"
@@ -174,20 +188,20 @@
                       placeholder="请输入失效日期" value="{$row.expiration_date|default=''}">
             </div>
         </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">合同收件人</label>
-            <div class="layui-input-block">
-                <input type="text" name="recipient" class="layui-input" placeholder="请输入合同收件人"
-                       value="{$row.recipient|default=''}">
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">合同收件地址</label>
-            <div class="layui-input-block">
-                <input type="text" name="recipient_address" class="layui-input"
-                       placeholder="请输入合同收件地址" value="{$row.recipient_address|default=''}">
-            </div>
-        </div>
+        <!--<div class="layui-form-item">-->
+            <!--<label class="layui-form-label">合同收件人</label>-->
+            <!--<div class="layui-input-block">-->
+                <!--<input type="text" name="recipient" class="layui-input" placeholder="请输入合同收件人"-->
+                       <!--value="{$row.recipient|default=''}">-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div class="layui-form-item">-->
+            <!--<label class="layui-form-label">合同收件地址</label>-->
+            <!--<div class="layui-input-block">-->
+                <!--<input type="text" name="recipient_address" class="layui-input"-->
+                       <!--placeholder="请输入合同收件地址" value="{$row.recipient_address|default=''}">-->
+            <!--</div>-->
+        <!--</div>-->
         <div class="layui-form-item">
             <label class="layui-form-label">备注</label>
             <div class="layui-input-block">

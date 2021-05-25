@@ -23,7 +23,7 @@ define(["jquery", "easy-admin",], function ($, ea) {
                     {type: 'checkbox'},
                     {field: 'id', title: 'id'},
                     {field: 'quotation_code', title: '报价单编码'},
-                    {field: 'customerInformation.company_name', title: '客户公司'},
+                    {field: 'contract.company_name', title: '客户公司'},
                     {field: 'contract.contract_code', title: '合同编号'},
                     {field: 'write.username', title: '报价单生成人'},
                     {field: 'tax', title: '税额'},

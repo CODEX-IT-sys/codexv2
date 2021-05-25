@@ -125,7 +125,7 @@ class Staffing extends AdminController
             }
             if (!empty($v['xdtree'])) {
                 foreach ($v['xdtree'] as $k2 => $v2) {
-                    $v['trtree'][$k2]['title'] = $v['username'] . "校对_文件编号:$v2[file_code_project]\r" . "项目名称:" . $v1['basic']['project_name'] . "\r" . "开始时间:$v2[pr_start_time]\r" . "结束时间:$v2[pr_end_time]";
+                    $v['trtree'][$k2]['title'] = $v['username'] . "校对_文件编号:$v2[file_code_project]\r" . "项目名称:" . $v2['basic']['project_name'] . "\r" . "开始时间:$v2[pr_start_time]\r" . "结束时间:$v2[pr_end_time]";
                     $trarray[$num]['title'] = $v['trtree'][$k2]['title'];;
                     $trarray[$num]['start'] = $v2['pr_start_time'];
                     $trarray[$num]['end'] = $v2['pr_end_time'];
@@ -134,7 +134,7 @@ class Staffing extends AdminController
             }
             if (!empty($v['yptree'])) {
                 foreach ($v['yptree'] as $k3 => $v3) {
-                    $v['trtree'][$k3]['title'] = $v['username'] . "预排_文件编号:$v3[file_code_project]\r" . "项目名称:" . $v1['basic']['project_name'] . "\r" . "开始时间:$v3[be_start_time]\r" . "结束时间:$v3[be_end_time]";
+                    $v['trtree'][$k3]['title'] = $v['username'] . "预排_文件编号:$v3[file_code_project]\r" . "项目名称:" . $v3['basic']['project_name'] . "\r" . "开始时间:$v3[be_start_time]\r" . "结束时间:$v3[be_end_time]";
                     $trarray[$num]['title'] = $v['trtree'][$k3]['title'];
                     $trarray[$num]['start'] = $v3['be_start_time'];
                     $trarray[$num]['end'] = $v3['be_end_time'];
@@ -143,7 +143,7 @@ class Staffing extends AdminController
             }
             if (!empty($v['hptree'])) {
                 foreach ($v['hptree'] as $k4 => $v4) {
-                    $v['trtree'][$k4]['title'] = $v['username'] . "后排_文件编号:文件编号:$v4[file_code_project]\r" . "项目名称:" . $v1['basic']['project_name'] . "\r" . "开始时间:$v4[after_start_time]\r" . "结束时间:$v4[after_end_time]";
+                    $v['trtree'][$k4]['title'] = $v['username'] . "后排_文件编号:文件编号:$v4[file_code_project]\r" . "项目名称:" . $v4['basic']['project_name'] . "\r" . "开始时间:$v4[after_start_time]\r" . "结束时间:$v4[after_end_time]";
                     $trarray[$num]['title'] = $v['trtree'][$k4]['title'];
                     $trarray[$num]['start'] = $v4['after_start_time'];
                     $trarray[$num]['end'] = $v4['after_end_time'];
@@ -190,7 +190,7 @@ class Staffing extends AdminController
                 }
                 if (!empty($v['xdtree'])) {
                     foreach ($v['xdtree'] as $k2 => $v2) {
-                        $v['trtree'][$k2]['title'] = "校对_" . "项目名称:" . $v1['basic']['project_name'] . "\r" . "开始时间:$v2[pr_start_time]\r" . "结束时间:$v2[pr_end_time]";
+                        $v['trtree'][$k2]['title'] = "校对_" . "项目名称:" . $v2['basic']['project_name'] . "\r" . "开始时间:$v2[pr_start_time]\r" . "结束时间:$v2[pr_end_time]";
                         $trarray[$k]['children'][$k2]['title'] = $v['trtree'][$k2]['title'];
 
                     }
@@ -198,14 +198,14 @@ class Staffing extends AdminController
                 if (!empty($v['yptree'])) {
 
                     foreach ($v['yptree'] as $k3 => $v3) {
-                        $v['trtree'][$k3]['title'] = "预排_" . "项目名称:" . $v1['basic']['project_name'] . "\r" . "开始时间:$v3[be_start_time]\r" . "结束时间:$v3[be_end_time]";
+                        $v['trtree'][$k3]['title'] = "预排_" . "项目名称:" . $v3['basic']['project_name'] . "\r" . "开始时间:$v3[be_start_time]\r" . "结束时间:$v3[be_end_time]";
                         $trarray[$k]['children'][$k3]['title'] = $v['trtree'][$k3]['title'];
 
                     }
                 }
                 if (!empty($v['hptree'])) {
                     foreach ($v['hptree'] as $k4 => $v4) {
-                        $v['trtree'][$k4]['title'] = "后排_" . "项目名称:" . $v1['basic']['project_name'] . "\r" . "开始时间:$v4[after_start_time]\r" . "结束时间:$v4[after_end_time]";
+                        $v['trtree'][$k4]['title'] = "后排_" . "项目名称:" . $v4['basic']['project_name'] . "\r" . "开始时间:$v4[after_start_time]\r" . "结束时间:$v4[after_end_time]";
                         $trarray[$k]['children'][$k4]['title'] = $v['trtree'][$k4]['title'];
                     }
                 }
@@ -246,7 +246,7 @@ class Staffing extends AdminController
 
             if (!empty($v['xdtree'])) {
                 foreach ($v['xdtree'] as $k2 => $v2) {
-                    $v['trtree'][$k2]['title'] = "校对_" . "项目名称:" . $v1['basic']['project_name'] . "\r" . "开始时间:$v2[pr_start_time]\r" . "结束时间:$v2[pr_end_time]";
+                    $v['trtree'][$k2]['title'] = "校对_" . "项目名称:" . $v2['basic']['project_name'] . "\r" . "开始时间:$v2[pr_start_time]\r" . "结束时间:$v2[pr_end_time]";
                     $trarray[$k]['children'][$k2]['title'] = $v['trtree'][$k2]['title'];
 
                 }
@@ -254,14 +254,14 @@ class Staffing extends AdminController
 
             if (!empty($v['yptree'])) {
                 foreach ($v['yptree'] as $k3 => $v3) {
-                    $v['trtree'][$k3]['title'] = "预排_" . "项目名称:" . $v1['basic']['project_name'] . "\r" . "开始时间:$v3[be_start_time]\r" . "结束时间:$v3[be_end_time]";
+                    $v['trtree'][$k3]['title'] = "预排_" . "项目名称:" . $v3['basic']['project_name'] . "\r" . "开始时间:$v3[be_start_time]\r" . "结束时间:$v3[be_end_time]";
                     $trarray[$k]['children'][$k3]['title'] = $v['trtree'][$k3]['title'];
 
                 }
             }
             if (!empty($v['hptree'])) {
                 foreach ($v['hptree'] as $k4 => $v4) {
-                    $v['trtree'][$k4]['title'] = "后排_" . "项目名称:" . $v1['basic']['project_name'] . "\r" . "开始时间:$v4[after_start_time]\r" . "结束时间:$v4[after_end_time]";
+                    $v['trtree'][$k4]['title'] = "后排_" . "项目名称:" . $v3['basic']['project_name'] . "\r" . "开始时间:$v4[after_start_time]\r" . "结束时间:$v4[after_end_time]";
                     $trarray[$k]['children'][$k4]['title'] = $v['trtree'][$k4]['title'];
                 }
             }
@@ -319,6 +319,13 @@ class Staffing extends AdminController
 
         $this->assign(['a' => json_encode($a)]);
         return $this->fetch('test');
+    }
+
+
+    public function test()
+    {
+        $data= request()->input('content');
+        dump($data);die;
     }
 
 }

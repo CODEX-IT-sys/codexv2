@@ -55,19 +55,27 @@ class Contract extends AdminController
     {
 
 
+//        dump($this->admininfo());
         if ($this->request->isAjax()) {
             if (input('selectFields')) {
                 return $this->selectList();
             }
-            list($page, $limit, $where) = $this->writeauth();
+            list($page, $limit, $where) = $this->buildTableParames();
             $count = $this->model
                 ->withJoin([ 'sale', 'company', 'write', 'dw', 'bz', 'fw', 'yz'], 'LEFT')
+                ->when($this->admininfo()['id'] != 1, function ($query) {
+                    // 满足条件后执行
+                    return $query->where('writer_id', $this->admininfo()['id'])->whereor('writer_id', 'in', $this->admininfo()['top_id']);
+                })
                 ->where($where)
                 ->count();
             $list = $this->model
                 ->withJoin([ 'sale', 'company', 'write', 'dw', 'bz', 'fw', 'yz'], 'LEFT')
                 ->where($where)
-//                ->wherein('writer_id',$admin['id'])
+                ->when($this->admininfo()['id'] != 1, function ($query) {
+                    // 满足条件后执行
+                    return $query->where('writer_id', $this->admininfo()['id'])->whereor('writer_id', 'in', $this->admininfo()['top_id']);
+                })
                 ->page($page, $limit)
                 ->order($this->sort)
                 ->select();
