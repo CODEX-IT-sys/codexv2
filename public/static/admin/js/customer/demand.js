@@ -36,7 +36,7 @@ define(["jquery", "easy-admin", "treetable",], function ($, ea) {
                 cols: [[
                     {type: 'checkbox'},
                     {field: 'id', title: 'id'},
-                    {field: 'submission_time', title: '来稿时间'},
+                    {field: 'submission_time', title: '来稿时间',search: 'range'},
                     {field: 'company.chinese_company_name', title: '主体公司'},
                     {field: 'contract.company_name', title: '客户公司'},
                     {field: 'customerInformation.customer_contact', title: '联系人'},
@@ -49,7 +49,7 @@ define(["jquery", "easy-admin", "treetable",], function ($, ea) {
                         selectList: {"1": "yes", "2": "no", "0": "N\/A"},
                         title: '是否首次合作'
                     },
-                    {field: 'quotation_amount', title: '报价金额'},
+                    // {field: 'quotation_amount', title: '报价金额'},
                     {field: 'create_time', title: '创建时间'},
                     {
                         width: 250, title: '操作', templet: ea.table.tool, fixed: "right",

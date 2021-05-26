@@ -32,7 +32,7 @@ class CustomerDemand extends TimeModel
     //录入人关联
     public function write()
     {
-        return $this->belongsTo('app\admin\model\SystemAdmin', 'writer_id', 'id');
+        return $this->belongsTo('app\admin\model\SystemAdmin', 'demand_writer_id', 'id');
     }
 
     //项目经理

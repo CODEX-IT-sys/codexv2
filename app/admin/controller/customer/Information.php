@@ -39,9 +39,17 @@ class Information extends AdminController
             list($page, $limit, $where) = $this->buildTableParames();
             $count = $this->model
                 ->withJoin(['write','contract'], 'LEFT')
+                ->when($this->admininfo()['id'] != 1, function ($query) {
+                    // 满足条件后执行
+                    return $query->where('information_writer_id', 'in', $this->admininfo()['top_id']);
+                })
                 ->where($where)
                 ->count();
             $list = $this->model
+                ->when($this->admininfo()['id'] != 1, function ($query) {
+                    // 满足条件后执行
+                    return $query->where('information_writer_id', 'in', $this->admininfo()['top_id']);
+                })
                 ->withJoin(['write','contract'], 'LEFT')
                 ->where($where)
                 ->page($page, $limit)

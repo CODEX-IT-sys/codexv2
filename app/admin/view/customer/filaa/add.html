@@ -55,7 +55,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label">单价</label>
             <div class="layui-input-block">
-                <input type="number" name="unit_price" autocomplete="off" class="layui-input" lay-verify="required" placeholder="请输入单价"
+                <input type="number" name="unit_price" autocomplete="off" class="layui-input" placeholder="请输入单价"
                        value="">
             </div>
         </div>
@@ -73,14 +73,14 @@
         <div class="layui-form-item">
             <label class="layui-form-label">报价数量</label>
             <div class="layui-input-block">
-                <input type="number" name="quotation_number" autocomplete="off" class="layui-input" lay-verify="required"
+                <input type="number" name="quotation_number" autocomplete="off" class="layui-input"
                        placeholder="请输入报价数量" value="">
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">税率</label>
             <div class="layui-input-block">
-                <select name="tax_rate" lay-verify="required">
+                <select name="tax_rate" >
                     <option value="">请选择税率</option>
                     {foreach $s as $k=>$v }
                     <option value="{$v.id}">{$v.content}</option>

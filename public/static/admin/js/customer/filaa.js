@@ -56,7 +56,7 @@ define(["jquery", "easy-admin"], function ($, ea) {
                     {
                         field: 'file_status',
                         search: 'select',
-                        selectList: {"1": "拒绝", "2": "接受", "0": "未确定", '3': "已批准"},
+                        selectList: {"1": "拒绝", "2": "接受", "0": "未确定", '3': "接受",'4':"接受"},
                         title: '文件状态',
                         sort: true,
                         fixed: true,

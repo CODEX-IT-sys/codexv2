@@ -140,8 +140,11 @@ class Filaa extends AdminController
                 $admin = session('admin');
                 $post['writer_id'] = $admin['id'];
                 //增值税报价金额
-                $post['vat'] = $post['unit_price'] * $post['quotation_number'] * $post['tax_rate'] / 100;
-                $post['quotation_price'] = $post['unit_price'] * $post['quotation_number'] + $post['vat'];
+                if(isset($post['unit_price'])&&$post['quotation_number']&&$post['tax_rate']){
+                    $post['vat'] = $post['unit_price'] * $post['quotation_number'] * $post['tax_rate'] / 100;
+                    $post['quotation_price'] = $post['unit_price'] * $post['quotation_number'] + $post['vat'];
+                }
+
                 //客户id参数为来稿的id
                 $post['customer_id'] = CustomerDemand::where('id', $post['demand_id'])->value('customer_id');
                 //合同id

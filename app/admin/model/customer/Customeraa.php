@@ -111,6 +111,11 @@ class Customeraa extends TimeModel
         $status = ['1'=>'拒绝','2'=>'接受','0'=>'未确定',3=>'已批准',4=>'已交稿'];
         return $status;
     }
+    //关联录入人
+    public function write()
+    {
+        return $this->belongsTo('app\admin\model\SystemAdmin', 'file_writer_id', 'id');
+    }
     //关联来稿需求
     public function demand()
     {

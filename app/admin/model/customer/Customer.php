@@ -18,13 +18,14 @@ class Customer extends TimeModel
     //关联录入人
     public function write()
     {
-        return $this->belongsTo(SystemAdmin::class, 'writer_id', 'id');
+        return $this->belongsTo(SystemAdmin::class, 'information_writer_id', 'id');
     }
 
     public function contract()
     {
         return $this->belongsTo(CustomerContract::class, 'contract_id', 'id');
     }
+
     
 
 }

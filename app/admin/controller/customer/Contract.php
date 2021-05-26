@@ -65,7 +65,7 @@ class Contract extends AdminController
                 ->withJoin([ 'sale', 'company', 'write', 'dw', 'bz', 'fw', 'yz'], 'LEFT')
                 ->when($this->admininfo()['id'] != 1, function ($query) {
                     // 满足条件后执行
-                    return $query->where('writer_id', $this->admininfo()['id'])->whereor('writer_id', 'in', $this->admininfo()['top_id']);
+                    return $query->where('writer_id', 'in', $this->admininfo()['top_id']);
                 })
                 ->where($where)
                 ->count();
@@ -74,7 +74,7 @@ class Contract extends AdminController
                 ->where($where)
                 ->when($this->admininfo()['id'] != 1, function ($query) {
                     // 满足条件后执行
-                    return $query->where('writer_id', $this->admininfo()['id'])->whereor('writer_id', 'in', $this->admininfo()['top_id']);
+                    return $query->where('writer_id', 'in', $this->admininfo()['top_id']);
                 })
                 ->page($page, $limit)
                 ->order($this->sort)

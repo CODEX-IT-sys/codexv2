@@ -88,7 +88,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label">单价</label>
             <div class="layui-input-block">
-                <input type="text" name="unit_price" class="layui-input" lay-verify="required" placeholder="请输入单价"
+                <input type="text" name="unit_price" class="layui-input"  placeholder="请输入单价"
                        value="{$row.unit_price|default=''}">
             </div>
         </div>
@@ -107,14 +107,14 @@
         <div class="layui-form-item">
             <label class="layui-form-label">报价数量</label>
             <div class="layui-input-block">
-                <input type="text" name="quotation_number" class="layui-input" lay-verify="required"
+                <input type="text" name="quotation_number" class="layui-input"
                        placeholder="请输入报价数量" value="{$row.quotation_number|default=''}">
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">税率</label>
             <div class="layui-input-block">
-                <select name="tax_rate" lay-verify="required">
+                <select name="tax_rate">
                     <option value="">请选择税率</option>
                     {foreach $s as $k=>$v }
                     <option value="{$v.id}" {in name="$v.id" value="$row.tax_rate" } selected="" {
@@ -151,7 +151,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label">委托日期</label>
             <div class="layui-input-block">
-                <input type="date" name="entrust_date" autocomplete="off"
+                <input type="date" name="entrust_date" autocomplete="off" id="date_info"
                        class="layui-input" placeholder="请输入委托日期"
                        value="{$row.entrust_date|default=''}">
             </div>
@@ -221,5 +221,16 @@
             list: ['ALL', 'CLEAR', 'REVERSE']
         },
         data: n
+    })
+</script>
+
+
+<script>
+    $(document).ready(function () {
+        var time = new Date();
+        var day = ("0" + time.getDate()).slice(-2);
+        var month = ("0" + (time.getMonth() + 1)).slice(-2);
+        var today = time.getFullYear() + "/" + (month) + "/" + (day);
+        $('#date_info').val(today);
     })
 </script>

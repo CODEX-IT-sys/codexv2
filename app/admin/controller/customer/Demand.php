@@ -75,12 +75,20 @@ class Demand extends AdminController
 
             $count = $this->model
                 ->withJoin(['write', 'contract', 'xm', 'company','customerInformation'], 'LEFT')
+                ->when($this->admininfo()['id'] != 1, function ($query) {
+                    // 满足条件后执行
+                    return $query->where('demand_writer_id', 'in', $this->admininfo()['top_id']);
+                })
                 ->where($where)
                 ->count();
             $list = $this->model
                 ->where($where)
 //                ->with(['write','contract.customerInformation','contract.company','xm'])
                 ->withJoin(['write', 'contract', 'xm', 'company','customerInformation'], 'LEFT')
+                ->when($this->admininfo()['id'] != 1, function ($query) {
+                    // 满足条件后执行
+                    return $query->where('demand_writer_id', 'in', $this->admininfo()['top_id']);
+                })
                 ->page($page, $limit)
                 ->order($this->sort)
                 ->select();
