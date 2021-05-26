@@ -65,7 +65,7 @@ class Filaa extends AdminController
 
         //项目经理
         $b = SystemAdmin::where('auth_ids', 'find in set', 12)->select();
-
+//        dump($s->toarray());
         $admin = $this->admininfo();
         $this->assign([
             'd' => $d, 'g' => $n, 'h' => $h, 'f' => $f, 's' => $s, 'st' => $admin, 'b' => $b
@@ -93,7 +93,6 @@ class Filaa extends AdminController
                 ->where($where)
                 ->withJoin(['type', 'rate', 'yz', 'dw', 'contract'
                     ,
-
                 ], 'LEFT')
                 ->when($a, function ($query) use ($a) {
                     // 满足条件后执行
@@ -138,19 +137,37 @@ class Filaa extends AdminController
             $this->validate($post, $rule);
             try {
                 $admin = session('admin');
-                $post['writer_id'] = $admin['id'];
+                $post['file_writer_id'] = $admin['id'];
                 //增值税报价金额
                 if(isset($post['unit_price'])&&$post['quotation_number']&&$post['tax_rate']){
-                    $post['vat'] = $post['unit_price'] * $post['quotation_number'] * $post['tax_rate'] / 100;
-                    $post['quotation_price'] = $post['unit_price'] * $post['quotation_number'] + $post['vat'];
-                }
+//                    单价不含税
+                // 未税金额=单价x数量
+                ////增值税额=未税金额x税率（6%）
+                ////报价金额=未税金额+增值税额
+                    if($post['tax_radio']==0)
+                    {
+                        $post['no_vat']=$post['unit_price'] * $post['quotation_number'];
+                        $post['vat'] = $post['unit_price'] * $post['quotation_number'] * $post['tax_rate'] / 100;
+                        $post['quotation_price'] = $post['unit_price'] * $post['quotation_number'] + $post['vat'];
+                    }else{
+//单价含税
+//未税金额=（单价x数量）/（1+税率）
+//增值税额=报价金额-未税金额
+//报价金额=单价x数量
+                        $post['no_vat']=$post['unit_price'] * $post['quotation_number']/($post['tax_rate'] / 100);
+                        $post['vat'] = $post['unit_price'] * $post['quotation_number'] -  $post['no_vat'];
+                        $post['quotation_price'] = $post['unit_price'] * $post['quotation_number'];
+                    }
 
+                }
                 //客户id参数为来稿的id
                 $post['customer_id'] = CustomerDemand::where('id', $post['demand_id'])->value('customer_id');
                 //合同id
                 $post['contract_id'] = CustomerDemand::where('id', $post['demand_id'])->value('contract_id');
 //                是否首次合作
                 $post['cooperation_first'] = CustomerDemand::where('id', $post['demand_id'])->value('cooperation_first');
+                $post['mid'] = CustomerDemand::where('id', $post['demand_id'])->value('mid');
+                //项目经理同步
                 //文件状态为接受时生成文件编号
                 if (isset($post['file_status'])) {
                     if ($post['file_status'] == 2) {
@@ -199,6 +216,7 @@ class Filaa extends AdminController
         empty($row) && $this->error('数据不存在');
         if ($this->request->isAjax()) {
             $post = $this->request->post();
+//            dump($post);die;
             $rule = [];
             $this->validate($post, $rule);
             try {
@@ -210,24 +228,31 @@ class Filaa extends AdminController
                 if(!isset( $post['completion_date'])){
                     $post['completion_date']=strtotime($post['completion_date']);
                 }
+                if(isset($post['unit_price'])&&$post['quotation_number']&&$post['tax_rate']){
+//                    单价不含税
+                    // 未税金额=单价x数量
+                    ////增值税额=未税金额x税率（6%）
+                    ////报价金额=未税金额+增值税额
+                    if($post['tax_radio']==0)
+                    {
+                        $post['no_vat']=$post['unit_price'] * $post['quotation_number'];
+                        $post['vat'] = $post['unit_price'] * $post['quotation_number'] * $post['tax_rate'] / 100;
+                        $post['quotation_price'] = $post['unit_price'] * $post['quotation_number'] + $post['vat'];
+                    }else{
+//单价含税
+//未税金额=（单价x数量）/（1+税率）
+//增值税额=报价金额-未税金额
+//报价金额=单价x数量
+                        $post['no_vat']=$post['unit_price'] * $post['quotation_number']/(1+$post['tax_rate'] / 100);
+                        $post['vat'] = $post['unit_price'] * $post['quotation_number'] -  $post['no_vat'];
+                        $post['quotation_price'] = $post['unit_price'] * $post['quotation_number'];
+                    }
 
-                //增值税报价金额
-                $post['vat'] = $post['unit_price'] * $post['quotation_number'] * $post['tax_rate'] / 100;
-                $post['quotation_price'] = $post['unit_price'] * $post['quotation_number'] + $post['vat'];
+                }
                 //合同id
                 $post['contract_id'] = CustomerDemand::where('id', $post['demand_id'])->value('contract_id');
                 //客户id
                 $post['customer_id'] = CustomerDemand::where('id', $post['demand_id'])->value('customer_id');
-                //文件状态为接受时生成文件编号
-                if ($post['file_status'] == 2) {
-                    // 客户公司编码
-                    $company_code = CustomerContract::where('id', $post['contract_id'])->value('company_code');
-                    //生成文件编号
-                    if(($row['customer_file_code']=='')) {
-                        $post['customer_file_code'] = filing_number($company_code, $post['entrust_date']);
-                    }
-
-                }
                 $save = $row->save($post);
             } catch (\Exception $e) {
                 $this->error('保存失败',$e->getMessage());
@@ -252,22 +277,23 @@ class Filaa extends AdminController
 
             //查询其中一个文件
             $a = Customeraa::where('id', $post['id']['0'])->find();
+//            dump($a);die;
             //来稿需求编号
             $b = CustomerDemand::find($a['demand_id']);
             //合同信息
-            $c = CustomerContract::find($b['contract_id']);
+            $c = CustomerContract::find($a['contract_id']);
             //该客户报价单的数量+1
-            $d = CustomerqQuotation::where('customer_id', $c['customer_id'])->count();
+            $d = CustomerqQuotation::where('contract_id', $a['contract_id'])->count();
             //客户信息
-            $e = Customer::find($c['customer_id']);
+            $e = Customer::find($a['customer_id']);
             //合同编码 $c['contract_code']
             $info = [];
             // 报价单编码
-            $info['quotation_code'] = 'Q-' . $e['company_code'] . '-' . date('Ymd') . '-' . ($d + 1);
+            $info['quotation_code'] = 'Q-' . $c['company_code'] . '-' . date('Ymd') . '-' . ($d + 1);
             //客户id
-            $info['customer_id'] = $c['customer_id'];
+            $info['customer_id'] = $a['customer_id'];
             //合同id
-            $info['contract_id'] = $b['contract_id'];
+            $info['contract_id'] = $a['contract_id'];
             //主体公司od
             $info['company_id'] = $c['company_id'];
             //写入人id
@@ -275,24 +301,49 @@ class Filaa extends AdminController
             $info['write_id'] = $admin['id'];
             //税额报价金额*数量*税额/100和报价金额:金额*数量+税额
             $num = 0;
+            $num1 = 0;
             $info['quotation_amount'] = 0;
             foreach ($post['id'] as $k => $v) {
                 $res = Customeraa::where('id', $v)->find();
-                $num += $res['unit_price'] * $res['quotation_number'] * $res['tax_rate'] / 100;
-                $info['quotation_amount'] += ($res['unit_price'] * $res['quotation_number']) + ($res['unit_price'] * $res['quotation_number'] * $res['tax_rate'] / 100);
+//                $num += $res['unit_price'] * $res['quotation_number'] * $res['tax_rate'] / 100;
+//                $info['quotation_amount'] += ($res['unit_price'] * $res['quotation_number']) + ($res['unit_price'] * $res['quotation_number'] * $res['tax_rate'] / 100);
+                if(isset($res['unit_price'])&&$res['quotation_number']&&$res['tax_rate']){
+//                    单价不含税
+// 未税金额=单价x数量
+////增值税额=未税金额x税率（6%）
+////报价金额=未税金额+增值税额
+                    if($res['tax_radio']==0)
+                    {
+                        $num1 +=$res['unit_price'] * $res['quotation_number'];
+                        $num += $res['unit_price'] * $res['quotation_number'] * $res['tax_rate'] / 100;
+                        $info['quotation_amount'] += $res['unit_price'] * $res['quotation_number'] + $res['vat'];
+                    }else{
+//单价含税
+//未税金额=（单价x数量）/（1+税率）
+//增值税额=报价金额-未税金额
+//报价金额=单价x数量
+                        $num1 +=$res['unit_price'] * $res['quotation_number']/(1+$res['tax_rate'] / 100);
+                        $num += $res['unit_price'] * $res['quotation_number'] -  $res['no_vat'];
+                        $info['quotation_amount'] += $res['unit_price'] * $res['quotation_number'];
+                    }
+
+                }
+
             }
+            $info['tax_status'] = $a['tax_radio'];
             $info['tax'] = $num;
+            $info['no_tax'] = $num1;
             //来稿需求文件编号
             $info['demand_id'] = $a['demand_id'];
             //报价单包含的文件编号
             $info['quotation_file'] = json_encode($post['id']);
-//            dump($info);
+//            dump($info);die;
             //生成报价单
             CustomerqQuotation::create($info);
             // 提交事务
             Db::commit();
         } catch (\Exception $e) {
-            $this->error('执行错误');
+            $this->error('执行错误',$e->getMessage());
             // 回滚事务
             Db::rollback();
         }
@@ -311,7 +362,6 @@ class Filaa extends AdminController
             $a = Customeraa::where('id', $post['id']['0'])->find();
             // 客户公司编码
             $company_code = CustomerContract::where('id', $a['contract_id'])->value('company_code');
-
             $admin = session('admin');
         try {
 
@@ -323,8 +373,9 @@ class Filaa extends AdminController
 //                $res->quotation_price = $res['unit_price'] * $res['quotation_number'] + $res['vat'];
 //                $res->customer_id = CustomerDemand::where('id', $res['demand_id'])->value('customer_id');
                 $res->file_status = 2;
+                //如果文件编号已存在就不生成
                 if(empty($res['customer_file_code'])){
-                    $res->customer_file_code = filing_number($company_code,strtotime($res['entrust_date'])) . $k;
+                    $res->customer_file_code = filing_number($company_code,strtotime($res['entrust_date']));
                 }
                 $res->up_id = $admin['id'];
 
@@ -334,7 +385,7 @@ class Filaa extends AdminController
             }
 
         } catch (\Exception $e) {
-            $this->error('执行错误');
+            $this->error('执行错误',$e->getMessage());
         }
         $this->success('批量接受成功');
     }

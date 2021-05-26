@@ -32,7 +32,7 @@ class affine extends AdminController
         'page',
         'number_of_words',
         'unit_price',
-        'quotation_number',
+        'completion_quantity',
         'status',
         'sort',
         'remark',
@@ -82,11 +82,19 @@ class affine extends AdminController
                 ->where('file_status', 'in',[2,3])
                 ->where($where)
                 ->withJoin(['type', 'rate', 'yz', 'dw', 'customerInformation','demand','contract','jsstatus'], 'LEFT')
+                ->when($this->admininfo()['id'] != 1, function ($query) {
+                    // 满足条件后执行
+                    return $query->where('file_writer_id', 'in', $this->admininfo()['top_id']);
+                })
                 ->count();
             $list = $this->model
                 ->where('file_status', 'in',[2,3])
                 ->where($where)
                 ->withJoin(['type', 'rate', 'yz', 'dw', 'customerInformation','demand','contract','jsstatus'], 'LEFT')
+                ->when($this->admininfo()['id'] != 1, function ($query) {
+                    // 满足条件后执行
+                    return $query->where('file_writer_id', 'in', $this->admininfo()['top_id']);
+                })
                 ->page($page, $limit)
                 ->order($this->sort)
                 ->select()->toArray();
@@ -117,11 +125,19 @@ class affine extends AdminController
                 ->where('file_status', 'in',[1,0])
                 ->where($where)
                 ->withJoin(['type', 'rate', 'yz', 'dw', 'customerInformation','demand','contract','jsstatus'], 'LEFT')
+                ->when($this->admininfo()['id'] != 1, function ($query) {
+                    // 满足条件后执行
+                    return $query->where('file_writer_id', 'in', $this->admininfo()['top_id']);
+                })
                 ->count();
             $list = $this->model
                 ->where($where)
                 ->where('file_status', 'in',[1,0])
                 ->withJoin(['type', 'rate', 'yz', 'dw', 'customerInformation','demand','contract','jsstatus'], 'LEFT')
+                ->when($this->admininfo()['id'] != 1, function ($query) {
+                    // 满足条件后执行
+                    return $query->where('file_writer_id', 'in', $this->admininfo()['top_id']);
+                })
                 ->page($page, $limit)
                 ->order($this->sort)
                 ->select()->toArray();
@@ -152,11 +168,19 @@ class affine extends AdminController
                 ->where('file_status', 2)
                 ->where($where)
                 ->withJoin(['type', 'rate', 'yz', 'dw','demand','customerInformation','contract','jsstatus'], 'LEFT')
+                ->when($this->admininfo()['id'] != 1, function ($query) {
+                    // 满足条件后执行
+                    return $query->where('file_writer_id', 'in', $this->admininfo()['top_id']);
+                })
                 ->count();
             $list = $this->model
                 ->where($where)
                 ->where('file_status', 2)
                 ->withJoin(['type', 'rate', 'yz', 'dw','demand','customerInformation','contract','jsstatus'], 'LEFT')
+                ->when($this->admininfo()['id'] != 1, function ($query) {
+                    // 满足条件后执行
+                    return $query->where('file_writer_id', 'in', $this->admininfo()['top_id']);
+                })
                 ->page($page, $limit)
                 ->order($this->sort)
                 ->select()->toArray();
@@ -186,11 +210,19 @@ class affine extends AdminController
                 ->where('file_status', 3)
                 ->where($where)
                 ->withJoin(['type', 'rate', 'yz', 'dw', 'customerInformation','demand','contract','jsstatus','xm'], 'LEFT')
+                ->when($this->admininfo()['id'] != 1, function ($query) {
+                    // 满足条件后执行
+                    return $query->where('file_writer_id', 'in', $this->admininfo()['top_id']);
+                })
                 ->count();
             $list = $this->model
                 ->where($where)
                 ->where('file_status', 3)
                 ->withJoin(['type', 'rate', 'yz', 'dw', 'customerInformation','demand','contract','jsstatus','xm'], 'LEFT')
+                ->when($this->admininfo()['id'] != 1, function ($query) {
+                    // 满足条件后执行
+                    return $query->where('file_writer_id', 'in', $this->admininfo()['top_id']);
+                })
                 ->page($page, $limit)
                 ->order($this->sort)
                 ->select();
@@ -232,18 +264,34 @@ class affine extends AdminController
                 //写入更新人
                 $admin = session('admin');
                 $post['up_id'] = $admin['id'];
-                //增值税报价金额
-                $post['vat'] = $post['unit_price'] * $post['quotation_number'] * $post['tax_rate'] / 100;
-                $post['quotation_price'] = $post['unit_price'] * $post['quotation_number'] + $post['vat'];
+                if(isset($post['unit_price'])&&$post['completion_quantity']&&$post['tax_rate']){
+//                    单价不含税
+                    // 未税金额=单价x数量
+                    ////增值税额=未税金额x税率（6%）
+                    ////报价金额=未税金额+增值税额
+                    if($post['tax_radio']==0)
+                    {
+                        $post['no_vat1']=$post['unit_price'] * $post['completion_quantity'];
+                        $post['vat1'] = $post['unit_price'] * $post['completion_quantity'] * $post['tax_rate'] / 100;
+                        $post['quotation_price1'] = $post['unit_price'] * $post['completion_quantity'] + $post['vat'];
+                    }else{
+//单价含税
+//未税金额=（单价x数量）/（1+税率）
+//增值税额=报价金额-未税金额
+//报价金额=单价x数量
+                        $post['no_vat1']=$post['unit_price'] * $post['completion_quantity']/(1+$post['tax_rate'] / 100);
+                        $post['vat1'] = $post['unit_price'] * $post['completion_quantity'] -  $post['no_vat'];
+                        $post['quotation_price1'] = $post['unit_price'] * $post['completion_quantity'];
+                    }
+
+                }
                 //客户id
                 $post['customer_id'] = CustomerDemand::where('id', $post['demand_id'])->value('customer_id');
                 //文件状态为接受时生成文件编号
-                if (isset($post['file_status'])) {
-                    if ($post['file_status'] == 1) {
-//                    客户公司编码
-                        $company_code = Customer::where('id', $post['customer_id'])->value('company_code');
+                if (isset($post['c_status'])) {
+                    if ($post['c_status'] == 28||$post['c_status'] == 29||$post['c_status'] == 30) {
                         //生成文件编号
-                        $post['customer_file_code'] = filing_number($company_code);
+                        $post['fapiao_amount'] = $post['quotation_price'];
                     }
                 }
                 $save = $row->save($post);

@@ -89,7 +89,7 @@ class CustomerContract extends TimeModel
     //关联服务
     public function fw()
     {
-        return $this->belongsTo('app\admin\model\setting\DatabaseContent', 'service', 'id');
+        return $this->belongsTo('app\admin\model\setting\DatabaseContent', 'contract_service', 'id');
     }
 
     public function getSalesIdAttr($val)

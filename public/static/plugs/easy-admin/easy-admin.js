@@ -829,8 +829,10 @@ define(["jquery", "tableSelect", "ckeditor", "soulTable",], function ($, tableSe
                 content: url,
                 maxmin: true,
                 moveOut: true,
+                zIndex: layer.zIndex, //重点1
                 success: function (layero, index) {
                     var body = layer.getChildFrame('body', index);
+                    layer.setTop(layero); //重点2
                     if (body.length > 0) {
                         $.each(body, function (i, v) {
 
@@ -1440,6 +1442,8 @@ define(["jquery", "tableSelect", "ckeditor", "soulTable",], function ($, tableSe
                         var options = {
                             elem: this,
                             type: type,
+                            position: 'fixed',
+                            trigger:'click'//增加这个，解决闪屏
                         };
                         if (format !== undefined && format !== '' && format !== null) {
                             options['format'] = format;

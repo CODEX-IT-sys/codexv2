@@ -53,11 +53,11 @@
                         </li>
                         <li>
                             <b>Attention: </b>
-                            <span>{$a.contract.company_name}</span>
+                            <span>{$a.customerInformation.customer_contact}</span>
                         </li>
                         <li>
                             <b>Address: </b>
-                            <span>{$a.customerInformation.company_address}</span>
+                            <span>{$a.contract.company_address}</span>
                         </li>
                         <li>
                             <b>Email: </b>
@@ -87,7 +87,7 @@
                     <ul>
                         <li>
                             <b>Currency: </b>
-                            <span>{$a.contract.bz.content}</span>
+                            <span>{$a.contract.currency}</span>
                         </li>
                     </ul>
                 </div>
@@ -103,8 +103,10 @@
                             <th width="90">单位</th>
                             <th>报价<br/>数量</th>
                             <th width="60">单价</th>
+                            {if $a.tax_status==0}
                             <th>未税<br/>金额</th>
                             <th>增值<br/>税额</th>
+                            {/if}
                             <th>报价<br/>金额</th>
                         </tr>
 
@@ -119,8 +121,10 @@
                             <td>{$v.dw.content}</td>
                             <td>{$v.quotation_number}</td>
                             <td>{$v.unit_price}</td>
+                            {if $a.tax_status==0}
                             <td>{$v.quotation_price-$v.vat}</td>
                             <td>{$v.vat}</td>
+                            {/if}
                             <td>{$v.quotation_price}</td>
                         </tr>
                         {/foreach}
@@ -129,6 +133,7 @@
                 </div>
                 <div class="artAttach">
                     <dl>
+                        {if $a.tax_status==0}
                         <dd>
                             <b>Total Amount without VAT:</b>
                             <span>{$a['num3']}</span>
@@ -137,6 +142,7 @@
                             <b>Total VAT Amount:</b>
                             <span>{$a['num2']}</span>
                         </dd>
+                        {/if}
                         <dt>
                             <b>Total Quote Amount:</b>
                             <span> {$a['num1']}</span>

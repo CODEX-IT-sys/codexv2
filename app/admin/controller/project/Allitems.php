@@ -134,7 +134,7 @@ class Allitems extends AdminController
                     return $query->where('mid|assistant_id','=',$this->admininfo()['id'])->whereor('mid|assistant_id','in',$this->admininfo()['top_id']);;
                 })
                 ->withJoin(['type', 'rate', 'yz', 'dw', 'contract', 'xm',
-                    'tyevel', 'trevel', 'assistant'
+                    'tyevel', 'trevel', 'assistant','customerInformation'
                 ], 'LEFT')
                 ->count();
             $list = $this->model
@@ -145,7 +145,7 @@ class Allitems extends AdminController
                     return $query->where('mid|assistant_id','=',$this->admininfo()['id'])->whereor('mid|assistant_id','in',$this->admininfo()['top_id']);;
                 })
                 ->withJoin(['type', 'rate', 'yz', 'dw', 'contract', 'xm',
-                     'tyevel', 'trevel', 'assistant'
+                     'tyevel', 'trevel', 'assistant','customerInformation'
                 ], 'LEFT')
                 ->page($page, $limit)
                 ->order($this->sort)
@@ -180,7 +180,7 @@ class Allitems extends AdminController
                     return $query->where('mid|assistant_id','=',$this->admininfo()['id'])->whereor('mid|assistant_id','in',$this->admininfo()['top_id']);;
                 })
                 ->withJoin(['type', 'rate', 'yz', 'dw', 'contract', 'xm',
-                     'tyevel', 'trevel', 'assistant'
+                     'tyevel', 'trevel', 'assistant','customerInformation'
                 ], 'LEFT')
                 ->count();
             $list = $this->model
@@ -192,7 +192,7 @@ class Allitems extends AdminController
                 })
 
                 ->withJoin(['type', 'rate', 'yz', 'dw', 'contract', 'xm',
-                 'tyevel', 'trevel', 'assistant'
+                 'tyevel', 'trevel', 'assistant','customerInformation'
                 ], 'LEFT')
                 ->page($page, $limit)
                 ->order($this->sort)

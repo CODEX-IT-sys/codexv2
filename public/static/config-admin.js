@@ -23,7 +23,7 @@ require.config({
         "vue": ["plugs/vue-2.6.10/vue.min"],
         "ckeditor": ["plugs/ckeditor4/ckeditor"],
         "soulTable": ["plugs/layui-soul-table/ext/soulTable.slim"],
-        "xmSelect": ["plugs/xm-select/dist/xm-select"],
+        // "xmSelect": ["plugs/xm-select/dist/xm-select"],
         // "tableFilter": ["plugs/layui-soul-table/ext/tableFilter"],
         // "excel": ["plugs/layui-soul-table/ext/excel"],
     },

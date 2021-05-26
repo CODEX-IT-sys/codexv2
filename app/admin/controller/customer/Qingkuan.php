@@ -70,7 +70,6 @@ class Qingkuan extends AdminController
         $num1 = 0;
         $num2 = 0;
         foreach ($b as $k => $v) {
-
             $num1 += $v['quotation_price'];//报价金额
             $num2 += $v['vat'];//报价金额
         }

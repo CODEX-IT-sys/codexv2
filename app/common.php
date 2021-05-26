@@ -130,8 +130,10 @@ function filing_number($company_code,$a)
 {
     // 获取当前时间
     $now = date("Ymd",$a);
-    $no=\app\admin\model\customer\Customeraa::whereTime('create_time', $a)->count();
-    // 补位生成 序列单号
+
+    $no=\app\admin\model\customer\Customeraa::where('create_time', $now)->where('customer_file_code','<>','')->count();
+
+//    // 补位生成 序列单号
     $xh = str_pad(($no+1),2,0,STR_PAD_LEFT );
 
     // 拼接生成编码

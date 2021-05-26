@@ -96,13 +96,13 @@ define(["jquery", "easy-admin"], function ($, ea) {
                     {field: 'after_ty_id', title: '后排版', search: 'false'},
                     {field: 'after_ty_time', title: '后排版交付时间', search: 'false'},
                     {field: 'quality', title: '质量要求', search: 'false'},
-                    {field: 'contract.customer_contact', title: '客户联系人', search: 'false', hide: true},
-                    {field: 'customer_file_request', title: '客户要求', 'hide': true, search: 'false'},
-                    {field: 'customer_file_reference', title: '参考文件', 'hide': true, search: 'false'},
-                    {field: 'm_approval', title: '项目经理批准', 'hide': true, search: 'false'},
-                    {field: 'general_approval', title: '总经理批准', 'hide': true, search: 'false'},
-                    {field: 'confirmor_id.username', title: '录入人(项目)', 'hide': true, search: 'false'},
-                    {field: 'customer_file_remark', title: '备注', 'hide': true, search: 'false'},
+                    {field: 'customerInformation.customer_contact', title: '客户联系人', search: 'false', },
+                    {field: 'customer_file_request', title: '客户要求', search: 'false'},
+                    {field: 'customer_file_reference', title: '参考文件', search: 'false'},
+                    {field: 'm_approval', title: '项目经理批准', search: 'false'},
+                    {field: 'general_approval', title: '总经理批准', search: 'false'},
+                    {field: 'confirmor_id.username', title: '录入人(项目)', search: 'false'},
+                    {field: 'project_file_remark', title: '备注', search: 'false'},
                     {
                         width: 250, title: '操作', templet: ea.table.tool, fixed: "right", operat: [
                             [{
@@ -265,12 +265,12 @@ define(["jquery", "easy-admin"], function ($, ea) {
                     {field: 'after_ty_id', title: '后排版', search: 'false'},
                     {field: 'after_ty_time', title: '后排版交付时间', search: 'false'},
                     {field: 'quality', title: '质量要求', search: 'false'},
-                    {field: 'contract.customer_contact', title: '客户联系人', search: 'false', hide: true},
-                    {field: 'customer_file_request', title: '客户要求', 'hide': true, search: 'false'},
-                    {field: 'customer_file_reference', title: '参考文件', 'hide': true, search: 'false'},
-                    {field: 'm_approval', title: '项目经理批准', 'hide': true, search: 'false'},
-                    {field: 'general_approval', title: '总经理批准', 'hide': true, search: 'false'},
-                    {field: 'customer_file_remark', title: '备注', 'hide': true, search: 'false'},
+                    {field: 'customerInformation.customer_contact', title: '客户联系人', search: 'false',},
+                    {field: 'customer_file_request', title: '客户要求', search: 'false'},
+                    {field: 'customer_file_reference', title: '参考文件', search: 'false'},
+                    {field: 'm_approval', title: '项目经理批准', search: 'false'},
+                    {field: 'general_approval', title: '总经理批准', search: 'false'},
+                    {field: 'project_file_remark', title: '备注', search: 'false'},
                     {
                         width: 250, title: '操作', templet: ea.table.tool, fixed: "right", operat: [
                             [{
@@ -382,12 +382,12 @@ define(["jquery", "easy-admin"], function ($, ea) {
                     {field: 'after_ty_id', title: '后排版', search: 'false'},
                     {field: 'after_ty_time', title: '后排版交付时间', search: 'false'},
                     {field: 'quality', title: '质量要求', search: 'false'},
-                    {field: 'contract.customer_contact', title: '客户联系人', search: 'false', hide: true},
-                    {field: 'customer_file_request', title: '客户要求', 'hide': true, search: 'false'},
-                    {field: 'customer_file_reference', title: '参考文件', 'hide': true, search: 'false'},
-                    {field: 'm_approval', title: '项目经理批准', 'hide': true, search: 'false'},
-                    {field: 'general_approval', title: '总经理批准', 'hide': true, search: 'false'},
-                    {field: 'customer_file_remark', title: '备注', 'hide': true, search: 'false'},
+                    {field: 'customerInformation.customer_contact', title: '客户联系人', search: 'false', },
+                    {field: 'customer_file_request', title: '客户要求', search: 'false'},
+                    {field: 'customer_file_reference', title: '参考文件', search: 'false'},
+                    {field: 'm_approval', title: '项目经理批准', search: 'false'},
+                    {field: 'general_approval', title: '总经理批准', search: 'false'},
+                    {field: 'project_file_remark', title: '备注', search: 'false'},
                     {
                         width: 250, title: '操作', templet: ea.table.tool, fixed: "right", operat: [
 

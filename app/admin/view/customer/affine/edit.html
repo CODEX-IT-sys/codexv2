@@ -65,7 +65,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label">源语数量</label>
             <div class="layui-input-block">
-                <input type="text" name="number_of_words" class="layui-input" lay-verify="required"
+                <input type="text" name="number_of_words" class="layui-input"
                        placeholder="请输入源语数量" value="{$row.number_of_words|default=''}">
             </div>
         </div>
@@ -91,7 +91,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label">语种</label>
             <div class="layui-input-block">
-                <select name="language" lay-verify="required">
+                <select name="language" >
                     <option value="">请选择语种</option>
                     {foreach $h as $k1=>$v }
                     <option value="{$v.id}" {in name="$v.id" value="$row.language"} selected=""{/in}>{$v.content}</option>
@@ -102,7 +102,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label">单价</label>
             <div class="layui-input-block">
-                <input type="text" name="unit_price" class="layui-input" lay-verify="required" placeholder="请输入单价"
+                <input type="text" name="unit_price" class="layui-input"  placeholder="请输入单价"
                        value="{$row.unit_price|default=''}">
             </div>
         </div>
@@ -120,7 +120,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label">报价数量</label>
             <div class="layui-input-block">
-                <input type="text" name="quotation_number" class="layui-input" lay-verify="required"
+                <input type="text" name="quotation_number" class="layui-input"
                        placeholder="请输入报价数量" value="{$row.quotation_number|default=''}">
             </div>
         </div>
@@ -135,6 +135,8 @@
                 </select>
             </div>
         </div>
+
+
         <!--        <div class="layui-form-item">
                     <label class="layui-form-label">增值税</label>
                     <div class="layui-input-block">
@@ -147,18 +149,18 @@
         <!--<input type="text" name="quotation_price" class="layui-input" lay-verify="required" placeholder="请输入报价金额" value="{$row.quotation_price|default=''}" disabled>-->
         <!--</div>-->
         <!--</div>-->
-        <div class="layui-form-item">
-            <label class="layui-form-label">项目经理</label>
-            <div class="layui-input-block">
-                <!--<input type="text" name="mid" class="layui-input" lay-verify="required" placeholder="请输入项目经理id" value="{$row.mid|default=''}">-->
-                <select name="mid" lay-verify="required" lay-search>
-                    <option value="">请选择项目经理</option>
-                    {foreach $b as $key=>$v }
-                    <option value="{$v.id}"  {$v.id==$row.mid?'selected':''}>{$v.username}</option>
-                    {/foreach}
-                </select>
-            </div>
-        </div>
+        <!--<div class="layui-form-item">-->
+            <!--<label class="layui-form-label">项目经理</label>-->
+            <!--<div class="layui-input-block">-->
+                <!--&lt;!&ndash;<input type="text" name="mid" class="layui-input" lay-verify="required" placeholder="请输入项目经理id" value="{$row.mid|default=''}">&ndash;&gt;-->
+                <!--<select name="mid" lay-verify="required" lay-search>-->
+                    <!--<option value="">请选择项目经理</option>-->
+                    <!--{foreach $b as $key=>$v }-->
+                    <!--<option value="{$v.id}"  {$v.id==$row.mid?'selected':''}>{$v.username}</option>-->
+                    <!--{/foreach}-->
+                <!--</select>-->
+            <!--</div>-->
+        <!--</div>-->
         <div class="layui-form-item">
             <label class="layui-form-label">客户期望提交日期</label>
             <div class="layui-input-block">
@@ -170,7 +172,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label">交付日期</label>
             <div class="layui-input-block">
-                <input type="date" name="completion_date"  autocomplete="off"
+                <input type="text" name="completion_date"  autocomplete="off" data-date="" data-date-type="date" autocomplete="off"
                        class="layui-input"  placeholder="交付日期"
                        value="{$row.completion_date|default=''}">
             </div>
@@ -213,12 +215,60 @@
             </div>
         </div>
         <div class="layui-form-item">
-            <label class="layui-form-label">未税金额</label>
+            <label class="layui-form-label">报价未税金额</label>
             <div class="layui-input-block">
                 <input type="number" name="no_vat" class="layui-input"
                        placeholder="请输入未税金额" value="{$row.no_vat|default=''}">
             </div>
         </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">报价增值税额</label>
+            <div class="layui-input-block">
+                <input type="number" name="vat" class="layui-input"
+                       placeholder="请输入未税金额" value="{$row.vat|default=''}">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">报价金额</label>
+            <div class="layui-input-block">
+                <input type="number" name="quotation_price" class="layui-input"
+                       placeholder="请输入报价金额" value="{$row.quotation_price|default=''}">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">请款未税金额</label>
+            <div class="layui-input-block">
+                <input type="number" name="no_vat1" class="layui-input"
+                       placeholder="请输入请款未税金额" value="{$row.no_vat1|default=''}">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">请款增值税额</label>
+            <div class="layui-input-block">
+                <input type="number" name="vat1" class="layui-input"
+                       placeholder="请输入未税金额" value="{$row.vat1|default=''}">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">请款金额</label>
+            <div class="layui-input-block">
+                <input type="number" name="quotation_price1" class="layui-input"
+                       placeholder="请输入请款金额" value="{$row.quotation_price1|default=''}">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">是否含税</label>
+            <div class="layui-input-block">
+
+                <input type="radio" name="tax_radio" value="0" title="不含税" {if (0==$row.tax_radio)}
+                       checked='checked'
+                       {/if}>
+                <input type="radio" name="tax_radio" value="1" title="含税" {if (1==$row.tax_radio)}
+                       checked='checked'
+                       {/if}>
+            </div>
+        </div>
+
         <div class="layui-form-item">
             <label class="layui-form-label">折扣</label>
             <div class="layui-input-block">
@@ -233,20 +283,20 @@
                        placeholder="请输入po号" value="{$row.po_number|default=''}">
             </div>
         </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">po金额</label>
-            <div class="layui-input-block">
-                <input type="number" name="po_amount" class="layui-input"
-                       placeholder="请输入po金额" value="{$row.po_amount|default=''}">
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">po剩余金额</label>
-            <div class="layui-input-block">
-                <input type="number" name="po_balance" class="layui-input"
-                       placeholder="请输入po剩余金额" value="{$row.po_balance|default=''}">
-            </div>
-        </div>
+        <!--<div class="layui-form-item">-->
+            <!--<label class="layui-form-label">po金额</label>-->
+            <!--<div class="layui-input-block">-->
+                <!--<input type="number" name="po_amount" class="layui-input"-->
+                       <!--placeholder="请输入po金额" value="{$row.po_amount|default=''}">-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div class="layui-form-item">-->
+            <!--<label class="layui-form-label">po剩余金额</label>-->
+            <!--<div class="layui-input-block">-->
+                <!--<input type="number" name="po_balance" class="layui-input"-->
+                       <!--placeholder="请输入po剩余金额" value="{$row.po_balance|default=''}">-->
+            <!--</div>-->
+        <!--</div>-->
         <div class="layui-form-item">
             <label class="layui-form-label">折扣</label>
             <div class="layui-input-block">
@@ -265,7 +315,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label">开票日期</label>
             <div class="layui-input-block">
-                <input type="date" name="fapiao_date" class="layui-input"
+                <input type="text" name="fapiao_date" class="layui-input" data-date="" data-date-type="date" autocomplete="off"
                        placeholder="请输入开票日期" value="{$row.fapiao_date|default=''}">
             </div>
         </div>
@@ -288,7 +338,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label">预付款日期</label>
             <div class="layui-input-block">
-                <input type="date" name="pre_payment_date" class="layui-input"
+                <input type="text" name="pre_payment_date" class="layui-input" data-date="" data-date-type="date" autocomplete="off"
                        placeholder="请输入预付款日期" value="{$row.pre_payment_date|default=''}">
             </div>
         </div>
@@ -309,7 +359,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label">余款支付日期</label>
             <div class="layui-input-block">
-                <input type="date" name="date_of_balance" class="layui-input"
+                <input type="text" name="date_of_balance" class="layui-input" data-date="" data-date-type="date" autocomplete="off"
                        placeholder="余款支付日期" value="{$row.date_of_balance|default=''}">
             </div>
         </div>
@@ -344,10 +394,10 @@
             </div>
         </div>
         <div class="layui-form-item">
-            <label class="layui-form-label">客户参考文件备注</label>
+            <label class="layui-form-label">备注</label>
             <div class="layui-input-block">
                 <!--<input type="text" name="customer_file_remark" class="layui-input" lay-verify="required" placeholder="请输入客户参考文件备注" value="{$row.customer_file_remark|default=''}">-->
-                <textarea name="customer_file_remark" placeholder="备注" class="layui-textarea">{$row.customer_file_remark|default=''}</textarea>
+                <textarea name="customer_file_remark" placeholder="备注" class="layui-textarea">{$row.project_file_remark|default=''}</textarea>
 
 
             </div>
@@ -377,4 +427,7 @@
         },
         data: n
     })
+
+
+
 </script>

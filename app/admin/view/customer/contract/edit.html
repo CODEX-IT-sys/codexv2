@@ -65,10 +65,10 @@
         <div class="layui-form-item">
             <label class="layui-form-label">服务</label>
             <div class="layui-input-block">
-                <select name="service" lay-search>
-                    <option value="">请选择服务</option>
+                <select name="contract_service" lay-search>
+                    <option value="">请选择服务{$row.contract_service}</option>
                     {foreach $g as $k=>$v }
-                    <option value="{$v.id}"{in name="$v.id" value="$row.service"} selected=""{/in}>{$v.content}</option>
+                    <option value="{$v.id}"{$v.id==$row.contract_service?'selected':''}>{$v.content}</option>
                     {/foreach}
                 </select>
             </div>
