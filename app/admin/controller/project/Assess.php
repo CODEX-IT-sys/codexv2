@@ -187,7 +187,7 @@ class Assess extends AdminController
             $count = $this->model
                 ->when($this->admininfo()['id']!=1, function ($query) {
                     // 满足条件后执行
-                    return $query->where('write_id','=',$this->admininfo()['id'])->whereor('write_id','in',$this->admininfo()['top_id']);
+                    return $query->where('write_id','in',$this->admininfo()['top_id']);
                 })
                 ->where($where)
                 ->where('type',1)
@@ -198,7 +198,7 @@ class Assess extends AdminController
                 ->where($where)
                 ->when($this->admininfo()['id']!=1, function ($query) {
                     // 满足条件后执行
-                    return $query->where('write_id','=',$this->admininfo()['id'])->whereor('write_id','in',$this->admininfo()['top_id']);
+                    return $query->where('write_id','in',$this->admininfo()['top_id']);
                 })
                 ->where('type',1)
                 ->withJoin(['file','write','yp'
@@ -243,28 +243,20 @@ class Assess extends AdminController
                 ->where($where)
                 ->when($this->admininfo()['id']!=1, function ($query) {
                     // 满足条件后执行
-                    return $query->where('write_id','find in set',$this->admininfo()['id'])->whereor('write_id','in',$this->admininfo()['top_id']);
+                    return $query->where('write_id','in',$this->admininfo()['top_id']);
                 })
                 ->where('type',2)
                 ->withJoin(['file','write','hp'
                 ], 'LEFT')
-                ->when($this->admininfo()['id']!=1, function ($query) {
-                    // 满足条件后执行
-                    return $query ->where('dbefore_ty_id',$this->admininfo()['id']);
-                })
                 ->count();
             $list = $this->model
                 ->where($where)
-                ->when($this->admininfo()['id']!=1, function ($query) {
-                    // 满足条件后执行
-                    return $query->where('write_id','find in set',$this->admininfo()['id'])->whereor('write_id','in',$this->admininfo()['top_id']);
-                })
                 ->where('type',2)
                 ->withJoin(['file','write','hp'
                 ], 'LEFT')
                 ->when($this->admininfo()['id']!=1, function ($query) {
                     // 满足条件后执行
-                    return $query ->where('write_id',$this->admininfo()['id']);
+                    return $query->where('write_id','in',$this->admininfo()['top_id']);
                 })
                 ->page($page, $limit)
                 ->order($this->sort)
@@ -294,29 +286,21 @@ class Assess extends AdminController
                 ->where($where)
                 ->when($this->admininfo()['id']!=1, function ($query) {
                     // 满足条件后执行
-                    return $query->where('write_id','find in set',$this->admininfo()['id'])->whereor('write_id','in',$this->admininfo()['top_id']);
+                    return $query->where('write_id','in',$this->admininfo()['top_id']);
                 })
                 ->where('type',3)
                 ->withJoin(['file','write','tr'
                 ], 'LEFT')
-                ->when($this->admininfo()['id']!=1, function ($query) {
-                    // 满足条件后执行
-                    return $query ->where('dbefore_ty_id',$this->admininfo()['id']);
-                })
                 ->count();
             $list = $this->model
                 ->where($where)
                 ->when($this->admininfo()['id']!=1, function ($query) {
                     // 满足条件后执行
-                    return $query->where('write_id','find in set',$this->admininfo()['id'])->whereor('write_id','in',$this->admininfo()['top_id']);
+                    return $query->where('write_id','in',$this->admininfo()['top_id']);
                 })
                 ->where('type',3)
                 ->withJoin(['file','write','tr'
                 ], 'LEFT')
-                ->when($this->admininfo()['id']!=1, function ($query) {
-                    // 满足条件后执行
-                    return $query ->where('write_id',$this->admininfo()['id']);
-                })
                 ->page($page, $limit)
                 ->order($this->sort)
                 ->select()->toArray();

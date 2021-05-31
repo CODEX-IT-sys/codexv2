@@ -131,7 +131,7 @@ class Allitems extends AdminController
                 ->where('file_status', 4)
                 ->when($this->admininfo()['id']!=1, function ($query) {
                     // 满足条件后执行
-                    return $query->where('mid|assistant_id','=',$this->admininfo()['id'])->whereor('mid|assistant_id','in',$this->admininfo()['top_id']);;
+                    return $query->where('mid|assistant_id','in',$this->admininfo()['top_id']);
                 })
                 ->withJoin(['type', 'rate', 'yz', 'dw', 'contract', 'xm',
                     'tyevel', 'trevel', 'assistant','customerInformation'
@@ -142,7 +142,7 @@ class Allitems extends AdminController
                 ->where('file_status', 4)
                 ->when($this->admininfo()['id']!=1, function ($query) {
                     // 满足条件后执行
-                    return $query->where('mid|assistant_id','=',$this->admininfo()['id'])->whereor('mid|assistant_id','in',$this->admininfo()['top_id']);;
+                    return $query->where('mid|assistant_id','in',$this->admininfo()['top_id']);
                 })
                 ->withJoin(['type', 'rate', 'yz', 'dw', 'contract', 'xm',
                      'tyevel', 'trevel', 'assistant','customerInformation'
@@ -177,7 +177,7 @@ class Allitems extends AdminController
                 ->where('file_status', 3)
                 ->when($this->admininfo()['id']!=1, function ($query) {
                     // 满足条件后执行
-                    return $query->where('mid|assistant_id','=',$this->admininfo()['id'])->whereor('mid|assistant_id','in',$this->admininfo()['top_id']);;
+                    return $query->where('mid|assistant_id','in',$this->admininfo()['top_id']);
                 })
                 ->withJoin(['type', 'rate', 'yz', 'dw', 'contract', 'xm',
                      'tyevel', 'trevel', 'assistant','customerInformation'
@@ -188,7 +188,7 @@ class Allitems extends AdminController
                 ->where('file_status', 3)
                 ->when($this->admininfo()['id']!=1, function ($query) {
                     // 满足条件后执行
-                    return $query->where('mid|assistant_id','=',$this->admininfo()['id'])->whereor('mid|assistant_id','in',$this->admininfo()['top_id']);
+                    return $query->where('mid|assistant_id','in',$this->admininfo()['top_id']);
                 })
 
                 ->withJoin(['type', 'rate', 'yz', 'dw', 'contract', 'xm',

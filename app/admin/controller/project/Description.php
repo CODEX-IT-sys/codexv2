@@ -243,7 +243,7 @@ class Description extends AdminController
 //                ])
                 ->when($this->admininfo()['id'] != 1, function ($query) {
                     // 满足条件后执行
-                    return $query->where('dtranslation_id|dproofreader_id|dbefore_ty_id|dafter_ty_id', 'find in set', $this->admininfo()['id'])->whereor('dtranslation_id|dproofreader_id|dbefore_ty_id|dafter_ty_id', 'in', $this->admininfo()['top_id']);
+                    return $query->where('dtranslation_id|dproofreader_id|dbefore_ty_id|dafter_ty_id', 'in', $this->admininfo()['top_id']);
                 })
                 ->withJoin(['fileaa', 'basic', 'assignor', 'yp', 'hp', 'xd', 'tr'
                 ], 'LEFT')
@@ -252,7 +252,7 @@ class Description extends AdminController
                 ->where($where)
                 ->when($this->admininfo()['id'] != 1, function ($query) {
                     // 满足条件后执行
-                    return $query->where('dtranslation_id|dproofreader_id|dbefore_ty_id|dafter_ty_id', 'find in set', $this->admininfo()['id'])->whereor('dtranslation_id|dproofreader_id|dbefore_ty_id|dafter_ty_id', 'in', $this->admininfo()['top_id']);
+                    return $query->where('dtranslation_id|dproofreader_id|dbefore_ty_id|dafter_ty_id', 'in', $this->admininfo()['top_id']);
                 })
                 ->withJoin(['fileaa', 'basic', 'assignor', 'yp', 'hp', 'xd', 'tr'
                 ], 'LEFT')
@@ -285,7 +285,7 @@ class Description extends AdminController
                 ->where($where)
                 ->when($this->admininfo()['id'] != 1, function ($query) {
                     // 满足条件后执行
-                    return $query->where('dbefore_ty_id', $this->admininfo()['id'])->whereor('dbefore_ty_id', 'in', $this->admininfo()['top_id']);
+                    return $query->where('dbefore_ty_id', 'in', $this->admininfo()['top_id']);
                 })
                 ->where('description_status', 0)
                 ->withJoin(['fileaa', 'basic', 'assignor', 'yp', 'hp', 'xd', 'tr'
@@ -295,7 +295,7 @@ class Description extends AdminController
                 ->where($where)
                 ->when($this->admininfo()['id'] != 1, function ($query) {
                     // 满足条件后执行
-                    return $query->where('dbefore_ty_id', $this->admininfo()['id'])->whereor('dbefore_ty_id', 'in', $this->admininfo()['top_id']);
+                    return $query->where('dbefore_ty_id', 'in', $this->admininfo()['top_id']);
                 })
                 ->where('description_status', 0)
                 ->withJoin(['fileaa', 'basic', 'assignor', 'yp', 'hp', 'xd', 'tr'
@@ -345,7 +345,7 @@ class Description extends AdminController
                 ->where($where)
                 ->when($this->admininfo()['id'] != 1, function ($query) {
                     // 满足条件后执行
-                    return $query->where('dtranslation_id', $this->admininfo()['id'])->whereor('dtranslation_id', 'in', $this->admininfo()['top_id']);
+                    return $query->where('dtranslation_id', 'in', $this->admininfo()['top_id']);
                 })
                 ->where('description_status', 1)
                 ->withJoin(['fileaa', 'basic', 'assignor', 'yp', 'hp', 'xd', 'tr'
@@ -355,7 +355,7 @@ class Description extends AdminController
                 ->where($where)
                 ->when($this->admininfo()['id'] != 1, function ($query) {
                     // 满足条件后执行
-                    return $query->where('dtranslation_id', $this->admininfo()['id'])->whereor('dtranslation_id', 'in', $this->admininfo()['top_id']);
+                    return $query->where('dtranslation_id', 'in', $this->admininfo()['top_id']);
                 })
                 ->where('description_status', 1)
                 ->withJoin(['fileaa', 'basic', 'assignor', 'yp', 'hp', 'xd', 'tr'
@@ -405,7 +405,7 @@ class Description extends AdminController
                 ->where($where)
                 ->when($this->admininfo()['id'] != 1, function ($query) {
                     // 满足条件后执行
-                    return $query->where('dproofreader_id', $this->admininfo()['id'])->whereor('dproofreader_id', 'in', $this->admininfo()['top_id']);
+                    return $query->where('dproofreader_id', 'in', $this->admininfo()['top_id']);
                 })
                 ->where('description_status', 2)
                 ->withJoin(['fileaa', 'basic', 'assignor', 'yp', 'hp', 'xd', 'tr'
@@ -415,7 +415,7 @@ class Description extends AdminController
                 ->where($where)
                 ->when($this->admininfo()['id'] != 1, function ($query) {
                     // 满足条件后执行
-                    return $query->where('dproofreader_id', $this->admininfo()['id'])->whereor('dproofreader_id', 'in', $this->admininfo()['top_id']);
+                    return $query->where('dproofreader_id', 'in', $this->admininfo()['top_id']);
                 })
                 ->where('description_status', 2)
                 ->withJoin(['fileaa', 'basic', 'assignor', 'yp', 'hp', 'xd', 'tr'
@@ -465,7 +465,7 @@ class Description extends AdminController
                 ->where($where)
                 ->when($this->admininfo()['id'] != 1, function ($query) {
                     // 满足条件后执行
-                    return $query->where('dafter_ty_id', $this->admininfo()['id'])->whereor('dafter_ty_id', 'in', $this->admininfo()['top_id']);
+                    return $query->where('dafter_ty_id', 'in', $this->admininfo()['top_id']);
                 })
                 ->where('description_status', 3)
                 ->withJoin(['fileaa', 'basic', 'assignor', 'yp', 'hp', 'xd', 'tr'
@@ -474,7 +474,7 @@ class Description extends AdminController
             $list = $this->model
                 ->when($this->admininfo()['id'] != 1, function ($query) {
 
-                    return $query->where('dafter_ty_id', $this->admininfo()['id'])->whereor('dafter_ty_id', 'in', $this->admininfo()['top_id']);
+                    return $query->where('dafter_ty_id', 'in', $this->admininfo()['top_id']);
                 })
                 ->where($where)
                 ->where('description_status', 3)
