@@ -91,6 +91,10 @@ class Customeraa extends TimeModel
             return  date('Y-m-d',$val);
         }
     }
+//    public function getTaxRateAttr($val)
+//    {
+//       return   Db::name('database_content')->where('id', $val)->value('content');
+//    }
 
     //交付日期获取器
     public function getCompletionDateAttr($val)

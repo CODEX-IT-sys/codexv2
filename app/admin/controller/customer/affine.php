@@ -264,6 +264,7 @@ class affine extends AdminController
                 //写入更新人
                 $admin = session('admin');
                 $post['up_id'] = $admin['id'];
+                $post['tax_rate']= Db::name('database_content')->where('id', $post['tax_rate'])->value('content');
                 if(isset($post['unit_price'])&&$post['completion_quantity']&&$post['tax_rate']){
 //                    单价不含税
                     // 未税金额=单价x数量
@@ -359,7 +360,7 @@ class affine extends AdminController
             //合同编码 $c['contract_code']
             $info = [];
             // 报价单编码
-            $info['qingkuan_code'] = 'I-' . $c['company_code'] . '-' . date('Ymd') . '-' . ($d + 1);
+            $info['qingkuan_code'] = 'I-' . $c['company_code'] . '-' . date('Ymd') . ($d + 1);
             //客户id
             $info['customer_id'] = $a['customer_id'];
             //合同id

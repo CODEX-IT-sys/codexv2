@@ -1,0 +1,130 @@
+<div class="layuimini-container">
+    <form id="app-form" class="layui-form layuimini-form">
+
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">文件编号</label>
+            <div class="layui-input-block">
+                <div id="file_id" class="xm-select-demo"></div>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">翻译直属管理</label>
+            <div class="layui-input-block">
+                <input type="text" name="tr_upper_management" class="layui-input"  placeholder="请输入翻译直属管理" value="">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">校对直属管理</label>
+            <div class="layui-input-block">
+                <input type="text" name="xd_upper_management" class="layui-input"  placeholder="请输入校对直属管理" value="">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">预排直属管理</label>
+            <div class="layui-input-block">
+                <input type="text" name="yp_upper_management" class="layui-input"  placeholder="请输入预排直属管理" value="">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">后排直属管理</label>
+            <div class="layui-input-block">
+                <input type="text" name="hp_upper_management" class="layui-input"  placeholder="请输入后排直属管理" value="">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">客户反馈</label>
+            <div class="layui-input-block">
+                <select name="feedback" >
+                    <option value=''></option>
+                    {foreach $getFeedbackList as $k=>$v}
+                    <option value='{$k}' >{$v}</option>
+                    {/foreach}
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">反馈时间</label>
+            <div class="layui-input-block">
+                <input type="text" name="feedback_time" data-date="" autocomplete="off" name="tr_start_time" class="layui-input"  placeholder="请输入反馈时间" value="">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">不良比率</label>
+            <div class="layui-input-block">
+                <input type="number" name="adverse_ratio" class="layui-input"  placeholder="请输入不良比率" value="">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">反馈内容</label>
+            <div class="layui-input-block">
+                <textarea name="feedback_content" placeholder="请输入反馈内容" class="layui-textarea">{$row.feedback_content|default=''}</textarea>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">事项及不良现象描述</label>
+            <div class="layui-input-block">
+                <textarea name="feedback_description" placeholder="请输入事项及不良现象描述" class="layui-textarea">{$row.feedback_description|default=''}</textarea>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">原因分析</label>
+            <div class="layui-input-block">
+                <textarea name="reason" placeholder="请输入原因分析" class="layui-textarea">{$row.reason|default=''}</textarea>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">纠正措施</label>
+            <div class="layui-input-block">
+                <textarea name="feedback_correction" placeholder="请输入纠正措施" class="layui-textarea">{$row.feedback_correction|default=''}</textarea>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">客户评价</label>
+            <div class="layui-input-block">
+                <textarea name="feedback_evaluate" placeholder="请输入客户评价" class="layui-textarea">{$row.feedback_evaluate|default=''}</textarea>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">后续更进</label>
+            <div class="layui-input-block">
+                <textarea name="feedback_advance" placeholder="请输入后续更进" class="layui-textarea">{$row.feedback_advance|default=''}</textarea>
+            </div>
+        </div>
+        <div class="hr-line"></div>
+        <div class="layui-form-item text-center">
+            <button type="submit" class="layui-btn layui-btn-normal layui-btn-sm" lay-submit>确认</button>
+            <button type="reset" class="layui-btn layui-btn-primary layui-btn-sm">重置</button>
+        </div>
+
+    </form>
+</div>
+<script src="__STATIC__/js/jquery-3.3.1.min.js?v={$version}" charset="utf-8"></script>
+<script>
+    //服务
+    var file = '<?php echo  json_encode($file_id);?>';
+
+    var file = JSON.parse(file);
+    xmSelect.render({
+        el: '#file_id',
+        language: 'zn',
+        tips: '文件编号',
+        radio: true,
+        clickClose: true,
+        name: 'file_id',
+        filterable: true,
+        paging: true,
+        pageSize: 5,
+        toolbar: {
+            show: true,
+            list: ['ALL', 'CLEAR', 'REVERSE']
+        },
+        data: file
+    })
+    $('#sub').on('click', function () {
+        $("#app-form").submit();
+    });
+
+</script>

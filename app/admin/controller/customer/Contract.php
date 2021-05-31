@@ -36,10 +36,12 @@ class Contract extends AdminController
         $g = Cache::get('fw');
         $h = Cache::get('yz');
         $e = Cache::get('bz');
+        //税率
+        $s = Cache::get('sl');
 
 //        dump($g);die;
         $this->assign(['a' => $a, 'c' => $c, 'd' => $d, 'e' => $e
-            , 'g' => $g, 'h' => $h,
+            , 'g' => $g, 'h' => $h,'s'=>$s
         ]);
 //        die;
         $this->assign('getInvoicingRulesList', $this->model->getInvoicingRulesList());

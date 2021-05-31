@@ -1,0 +1,62 @@
+<div class="layuimini-container">
+    <form id="app-form" class="layui-form layuimini-form">
+
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">文件概览</label>
+            <div class="layui-input-block">
+                <textarea name="document_overview" placeholder="请输入文件概览" class="layui-textarea">{$row.document_overview|default=''}</textarea>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">校对反馈</label>
+            <div class="layui-input-block">
+                <textarea name="xd_feedback" placeholder="请输入校对反馈" class="layui-textarea">{$row.xd_feedback|default=''}</textarea>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">表达积累</label>
+            <div class="layui-input-block">
+
+                <textarea name="expression_accumulation" placeholder="请输入表达积累" class="layui-textarea">{$row.expression_accumulation|default=''}</textarea>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">项目总结</label>
+            <div class="layui-input-block">
+                <textarea name="project_summary" placeholder="请输入项目总结" class="layui-textarea">{$row.project_summary|default=''}</textarea>
+            </div>
+        </div>
+        <div class="hr-line"></div>
+        <div class="layui-form-item text-center">
+            <button type="submit" class="layui-btn layui-btn-normal layui-btn-sm" lay-submit>确认</button>
+            <button type="reset" class="layui-btn layui-btn-primary layui-btn-sm">重置</button>
+        </div>
+
+    </form>
+</div>
+
+<script src="__STATIC__/js/jquery-3.3.1.min.js?v={$version}" charset="utf-8"></script>
+<script>
+    //服务
+    var basic = '<?php echo  json_encode($basic);?>';
+
+    var basic = JSON.parse(basic);
+    xmSelect.render({
+        el: '#basic_id',
+        language: 'zn',
+        tips: '项目名称',
+        radio: true,
+        clickClose: true,
+        name: 'basic_id',
+        filterable: true,
+        paging: true,
+        pageSize: 5,
+        toolbar: {
+            show: true,
+            list: ['ALL', 'CLEAR', 'REVERSE']
+        },
+        data: basic
+    })
+
+</script>

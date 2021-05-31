@@ -1,0 +1,30 @@
+<div class="layuimini-container">
+    <div class="layuimini-main">
+
+        <table id="currentTable" class="layui-table layui-hide"
+               data-auth-add="{:auth('customer.filaa/add')}"
+               data-auth-edit="{:auth('customer.filaa/edit')}"
+               data-auth-delete="{:auth('customer.filaa/delete')}"
+               data-auth-approve="{:auth('customer.filaa/approve')}"
+               data-auth-quotation="{:auth('customer.filaa/quotation')}"
+               lay-filter="currentTable">
+        </table>
+    </div>
+</div>
+
+<script type="text/html" id="toolbarDemo">
+    <div class="layui-btn-container">
+        <button class="layui-btn layui-btn-sm" lay-event="add">添加</button>
+        <button class="layui-btn layui-btn-sm" lay-event="delete">删除</button>
+        <button class="layui-btn layui-btn-sm" lay-event="update">编辑</button>
+    </div>
+</script>
+
+<script>
+    //来稿需求id
+    var demand_id = "<?php echo $demand_id?>";
+
+
+    // console.log(typeof (auth));
+</script>
+<!--static/admin里面js文件和view文件是怎么对应的,-->

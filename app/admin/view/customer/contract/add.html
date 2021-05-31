@@ -121,8 +121,12 @@
         <div class="layui-form-item">
             <label class="layui-form-label">税率</label>
             <div class="layui-input-block">
-                <input type="text" name="tax_rate" class="layui-input" placeholder="请输入税率"
-                       value="">
+                <select name="tax_rate">
+                    <option value="">请选择税率</option>
+                    {foreach $s as $k=>$v }
+                    <option value="{$v.content}">{$v.content}</option>
+                    {/foreach}
+                </select>
             </div>
         </div>
         <div class="layui-form-item">

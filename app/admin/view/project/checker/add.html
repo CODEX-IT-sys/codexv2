@@ -1,0 +1,185 @@
+<div class="layuimini-container">
+    <form id="app-form" class="layui-form layuimini-form">
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">文件编号</label>
+            <div class="layui-input-block">
+                <div id="file_id" class="xm-select-demo"></div>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">检查人</label>
+            <div class="layui-input-block">
+                <input type="text" name="checker_id" class="layui-input"  placeholder="请输入检查人" value="">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">翻译</label>
+            <div class="layui-input-block">
+                <select name="tr_checker" >
+                    <option value=''></option>
+                    {foreach $getTrCheckerList as $k=>$v}
+                    <option value='{$k}' >{$v}</option>
+                    {/foreach}
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">术语</label>
+            <div class="layui-input-block">
+                <select name="terminology" >
+                    <option value=''></option>
+                    {foreach $getTerminologyList as $k=>$v}
+                    <option value='{$k}' >{$v}</option>
+                    {/foreach}
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">语言品质</label>
+            <div class="layui-input-block">
+                <select name="language_quality" >
+                    <option value=''></option>
+                    {foreach $getLanguageQualityList as $k=>$v}
+                    <option value='{$k}' >{$v}</option>
+                    {/foreach}
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">专有名词</label>
+            <div class="layui-input-block">
+                <select name="proper_nouns" >
+                    <option value=''></option>
+                    {foreach $getProperNounsList as $k=>$v}
+                    <option value='{$k}' >{$v}</option>
+                    {/foreach}
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">测量单位</label>
+            <div class="layui-input-block">
+                <select name="units_measurement" >
+                    <option value=''></option>
+                    {foreach $getUnitsMeasurementList as $k=>$v}
+                    <option value='{$k}' >{$v}</option>
+                    {/foreach}
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">符号</label>
+            <div class="layui-input-block">
+                <select name="symbol" >
+                    <option value=''></option>
+                    {foreach $getSymbolList as $k=>$v}
+                    <option value='{$k}' >{$v}</option>
+                    {/foreach}
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">图表</label>
+            <div class="layui-input-block">
+                <select name="chart" >
+                    <option value=''></option>
+                    {foreach $getChartList as $k=>$v}
+                    <option value='{$k}' >{$v}</option>
+                    {/foreach}
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">缩写</label>
+            <div class="layui-input-block">
+                <select name="abbreviation" >
+                    <option value=''></option>
+                    {foreach $getAbbreviationList as $k=>$v}
+                    <option value='{$k}' >{$v}</option>
+                    {/foreach}
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">布局格式</label>
+            <div class="layui-input-block">
+                <select name="layout_format" >
+                    <option value=''></option>
+                    {foreach $getLayoutFormatList as $k=>$v}
+                    <option value='{$k}' >{$v}</option>
+                    {/foreach}
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">其他</label>
+            <div class="layui-input-block">
+                <select name="other" >
+                    <option value=''></option>
+                    {foreach $getOtherList as $k=>$v}
+                    <option value='{$k}' >{$v}</option>
+                    {/foreach}
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">现有问题</label>
+            <div class="layui-input-block">
+                <select name="existing_problem" >
+                    <option value=''></option>
+                    {foreach $getExistingProblemList as $k=>$v}
+                    <option value='{$k}' >{$v}</option>
+                    {/foreach}
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">纠正情况</label>
+            <div class="layui-input-block">
+                <select name="correct_situation" >
+                    <option value=''></option>
+                    {foreach $getCorrectSituationList as $k=>$v}
+                    <option value='{$k}' >{$v}</option>
+                    {/foreach}
+                </select>
+            </div>
+        </div>
+        <div class="hr-line"></div>
+        <div class="layui-form-item text-center">
+            <button type="submit" class="layui-btn layui-btn-normal layui-btn-sm" lay-submit>确认</button>
+            <button type="reset" class="layui-btn layui-btn-primary layui-btn-sm">重置</button>
+        </div>
+
+    </form>
+</div>
+
+
+<script src="__STATIC__/js/jquery-3.3.1.min.js?v={$version}" charset="utf-8"></script>
+<script>
+    //服务
+    var file = '<?php echo  json_encode($file_id);?>';
+
+    var file = JSON.parse(file);
+    xmSelect.render({
+        el: '#file_id',
+        language: 'zn',
+        tips: '文件编号',
+        radio: true,
+        clickClose: true,
+        name: 'file_id',
+        filterable: true,
+        paging: true,
+        pageSize: 5,
+        toolbar: {
+            show: true,
+            list: ['ALL', 'CLEAR', 'REVERSE']
+        },
+        data: file
+    })
+    $('#sub').on('click', function () {
+        $("#app-form").submit();
+    });
+
+</script>

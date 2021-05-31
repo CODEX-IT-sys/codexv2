@@ -3,17 +3,37 @@
 
         <input type="hidden" name="demand_id" value="{$a}">
         <div class="layui-form-item">
+            <label class="layui-form-label">文件状态</label>
+            <div class="layui-input-block">
+                <input type="radio" name="file_status" value="1" title="拒绝">
+
+                <input type="radio" name="file_status" value="2" title="接受">
+
+                <input type="radio" name="file_status" value="0" title="未确认">
+
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">委托日期</label>
+            <div class="layui-input-block">
+                <input type="text" name="entrust_date" data-date="" data-date-type="date" autocomplete="off"
+                       class="layui-input" placeholder="请输入委托日期"
+                       value="{$row.entrust_date|default=''}">
+            </div>
+        </div>
+        <div class="layui-form-item">
             <label class="layui-form-label required">文件名称</label>
             <div class="layui-input-block layuimini-upload">
                 <!--<input name="file_name" class="layui-input layui-col-xs6" lay-verify="required"  placeholder="请上传文件名称" value="">-->
-                <input type="text" name="customer_file_name"  class="layui-input" lay-verify="required"
+                <input type="text" name="customer_file_name" class="layui-input" lay-verify="required"
                        placeholder="请输入文件名称" value="">
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">文件页数</label>
             <div class="layui-input-block">
-                <input type="text" name="page" autocomplete="off" class="layui-input" lay-verify="required" placeholder="请输入文件页数" value="">
+                <input type="text" name="page" autocomplete="off" class="layui-input" lay-verify="required"
+                       placeholder="请输入文件页数" value="">
             </div>
         </div>
         <div class="layui-form-item">
@@ -26,7 +46,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label">文件类型</label>
             <div class="layui-input-block">
-                <select name="customer_file_type" >
+                <select name="customer_file_type">
                     <option value="">请选择文件类型</option>
                     {foreach $f as $k1=>$v }
                     <option value="{$v.id}">{$v.content}</option>
@@ -44,7 +64,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label">语种</label>
             <div class="layui-input-block">
-                <select name="language" >
+                <select name="language">
                     <option value="">请选择语种</option>
                     {foreach $h as $k1=>$v }
                     <option value="{$v.id}">{$v.content}</option>
@@ -62,7 +82,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label">单位</label>
             <div class="layui-input-block">
-                <select name="unit" >
+                <select name="unit">
                     <option value="">请选择一个单位</option>
                     {foreach $d as $k1=>$v }
                     <option value="{$v.id}">{$v.content}</option>
@@ -80,7 +100,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label">税率</label>
             <div class="layui-input-block">
-                <select name="tax_rate" >
+                <select name="tax_rate">
                     <option value="">请选择税率</option>
                     {foreach $s as $k=>$v }
                     <option value="{$v.id}">{$v.content}</option>
@@ -110,18 +130,18 @@
                         <input type="text" name="quotation_price" class="layui-input" lay-verify="required" placeholder="请输入报价金额" value="">
                     </div>
                 </div>-->
-<!--        <div class="layui-form-item">
-            <label class="layui-form-label">项目经理</label>
-            <div class="layui-input-block">
-                <select name="mid" lay-verify="required" lay-search>
-                    <option value="">请选择项目经理</option>
-                    {foreach $b as $key=>$v }
-                    <option value="{$v.id}">{$v.username}</option>
-                    {/foreach}
-                </select>
-                &lt;!&ndash;<input type="text" name="mid" class="layui-input" lay-verify="required" placeholder="请输入项目经理id" value="">&ndash;&gt;
-            </div>
-        </div>-->
+        <!--        <div class="layui-form-item">
+                    <label class="layui-form-label">项目经理</label>
+                    <div class="layui-input-block">
+                        <select name="mid" lay-verify="required" lay-search>
+                            <option value="">请选择项目经理</option>
+                            {foreach $b as $key=>$v }
+                            <option value="{$v.id}">{$v.username}</option>
+                            {/foreach}
+                        </select>
+                        &lt;!&ndash;<input type="text" name="mid" class="layui-input" lay-verify="required" placeholder="请输入项目经理id" value="">&ndash;&gt;
+                    </div>
+                </div>-->
         <div class="layui-form-item">
             <label class="layui-form-label">客户期望提交日期</label>
             <div class="layui-input-block">
@@ -129,6 +149,7 @@
                        class="layui-input" placeholder="请输入客户期望提交日期" value="">
             </div>
         </div>
+
         <div class="layui-form-item">
             <label class="layui-form-label">交付日期</label>
             <div class="layui-input-block">
@@ -152,7 +173,7 @@
             </div>
         </div>
         <div class="layui-form-item">
-            <label class="layui-form-label">客户参考文件备注</label>
+            <label class="layui-form-label">备注</label>
             <div class="layui-input-block">
                 <!--<input type="text" name="customer_file_remark" class="layui-input" lay-verify="required" placeholder="请输入客户参考文件备注" value="">-->
                 <textarea name="customer_file_remark" placeholder="备注" class="layui-textarea"></textarea>

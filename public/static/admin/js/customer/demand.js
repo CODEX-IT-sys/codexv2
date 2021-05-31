@@ -75,6 +75,7 @@ define(["jquery", "easy-admin", "treetable",], function ($, ea) {
                     // 在 done 中开启
                     soulTable.render(this)
                 }
+
             });
             $('#reload').on('click', function () {
                 // 表格重载

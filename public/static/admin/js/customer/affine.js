@@ -75,8 +75,7 @@ define(["jquery", "easy-admin"], function ($, ea) {
                     {field: 'customer_submit_date', title: '客户期望提交日期',search: 'range'},
                     {field: 'completion_date', title: '交付日期',search: 'range'},
                     {field: 'completion_quantity', title: '交付数量', search: 'false'},
-                    {field: 'no_vat', title: '报价未税金额', search: 'false'},
-                    {field: 'vat', title: '报价增值税金额', search: 'false'},
+
                     {field: 'quotation_price', title: '报价金额', search: 'false'},
                     {field: 'vat1', title: '请款增值税', search: 'false',templet: ea.table.price},
                     {field: 'no_vat1', title: '请款未税金额', search: 'false',templet: ea.table.price},
@@ -218,8 +217,7 @@ define(["jquery", "easy-admin"], function ($, ea) {
                     {field: 'customer_submit_date', title: '客户期望提交日期',search: 'range'},
                     {field: 'completion_date', title: '交付日期',search: 'range'},
                     {field: 'completion_quantity', title: '交付数量', search: 'false'},
-                    {field: 'no_vat', title: '报价未税金额', search: 'false'},
-                    {field: 'vat', title: '报价增值税金额', search: 'false'},
+
                     {field: 'quotation_price', title: '报价金额', search: 'false'},
                     {field: 'vat1', title: '请款增值税', search: 'false',templet: ea.table.price},
                     {field: 'no_vat1', title: '请款未税金额', search: 'false',templet: ea.table.price},
@@ -355,8 +353,7 @@ define(["jquery", "easy-admin"], function ($, ea) {
                     {field: 'customer_submit_date', title: '客户期望提交日期',search: 'range'},
                     {field: 'completion_date', title: '交付日期',search: 'range'},
                     {field: 'completion_quantity', title: '交付数量', search: 'false'},
-                    {field: 'no_vat', title: '报价未税金额', search: 'false'},
-                    {field: 'vat', title: '报价增值税金额', search: 'false'},
+
                     {field: 'quotation_price', title: '报价金额', search: 'false'},
                     {field: 'vat1', title: '请款增值税', search: 'false',templet: ea.table.price},
                     {field: 'no_vat1', title: '请款未税金额', search: 'false',templet: ea.table.price},
@@ -480,8 +477,7 @@ define(["jquery", "easy-admin"], function ($, ea) {
                     {field: 'customer_submit_date', title: '客户期望提交日期',search: 'range'},
                     {field: 'completion_date', title: '交付日期',search: 'range'},
                     {field: 'completion_quantity', title: '交付数量', search: 'false'},
-                    {field: 'no_vat', title: '报价未税金额', search: 'false'},
-                    {field: 'vat', title: '报价增值税金额', search: 'false'},
+
                     {field: 'quotation_price', title: '报价金额', search: 'false'},
                     {field: 'vat1', title: '请款增值税', search: 'false',templet: ea.table.price},
                     {field: 'no_vat1', title: '请款未税金额', search: 'false',templet: ea.table.price},
