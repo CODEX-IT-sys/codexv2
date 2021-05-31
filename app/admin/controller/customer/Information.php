@@ -79,7 +79,7 @@ class Information extends AdminController
             $this->validate($post, $rule);
             try {
                 $admin = session('admin');
-                $post['writer_id'] = $admin['id'];
+                $post['information_writer_id'] = $admin['id'];
                 $save = $this->model->save($post);
             } catch (\Exception $e) {
                 $this->error('保存失败:' . $e->getMessage());

@@ -49,15 +49,15 @@
                     <ul>
                         <li>
                             <b>To: </b>
-                            <span>{$a.customerInformation.company_name}</span>
+                            <span>{$a.contract.company_name}</span>
                         </li>
                         <li>
                             <b>Attention: </b>
-                            <span>{$a.customerInformation.company_name}</span>
+                            <span>{$a.customerInformation.customer_contact}</span>
                         </li>
                         <li>
                             <b>Address: </b>
-                            <span>{$a.customerInformation.company_address}</span>
+                            <span>{$a.contract.company_address}</span>
                         </li>
                         <li>
                             <b>Email: </b>
@@ -87,7 +87,7 @@
                     <ul>
                         <li>
                             <b>Currency: </b>
-                            <span>{$a.contract.bz.content}</span>
+                            <span>{$a.contract.currency}</span>
                         </li>
                     </ul>
                 </div>
@@ -97,16 +97,16 @@
                             <th>编号</th>
                             <th width="60">页数</th>
                             <th width="60">文件<br/>类型</th>
-                            <th>委托日期</th>
-                            <th>交付日期</th>
                             <th>文件名称</th>
                             <th width="60">服务</th>
                             <th width="60">语种</th>
                             <th width="90">单位</th>
-                            <th>交付<br/>数量</th>
+                            <th>报价<br/>数量</th>
                             <th width="60">单价</th>
+                            {if $a.tax_status==0}
                             <th>未税<br/>金额</th>
                             <th>增值<br/>税额</th>
+                            {/if}
                             <th>请款<br/>金额</th>
                         </tr>
 
@@ -115,17 +115,17 @@
                             <td>{$key+1}</td>
                             <td>{$v.page}</td>
                             <td>{$v.type.content}</td>
-                            <td>{$v.entrust_date}</td>
-                            <td>{$v.completion_date}</td>
                             <td>{$v.customer_file_name}</td>
                             <td>{$v.service}</td>
                             <td>{$v.yz.content}</td>
                             <td>{$v.dw.content}</td>
-                            <td>{$v.completion_quantity}</td>
+                            <td>{$v.quotation_number}</td>
                             <td>{$v.unit_price}</td>
-                            <td>{$v.quotation_price-$v.vat}</td>
-                            <td>{$v.vat}</td>
-                            <td>{$v.quotation_price}</td>
+                            {if $a.tax_status==0}
+                            <td>{$v.no_vat1}</td>
+                            <td>{$v.vat1}</td>
+                            {/if}
+                            <td>{$v.quotation_price1}</td>
                         </tr>
                         {/foreach}
 
@@ -133,6 +133,7 @@
                 </div>
                 <div class="artAttach">
                     <dl>
+                        {if $a.tax_status==0}
                         <dd>
                             <b>Total Amount without VAT:</b>
                             <span>{$a['num3']}</span>
@@ -141,6 +142,7 @@
                             <b>Total VAT Amount:</b>
                             <span>{$a['num2']}</span>
                         </dd>
+                        {/if}
                         <dt>
                             <b>Total Quote Amount:</b>
                             <span> {$a['num1']}</span>

@@ -55,11 +55,6 @@ class CustomerContract extends TimeModel
         'expiration_date' => 'timestamp',
     ];
 
-    //关联销售
-    public function sale()
-    {
-        return $this->belongsTo('app\admin\model\SystemAdmin', 'sales_id', 'id');
-    }
 
     //关联公司
     public function company()

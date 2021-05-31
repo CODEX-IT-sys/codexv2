@@ -233,7 +233,16 @@
         },
         data: n
     })
-
+    var completion_date= $("input[name='entrust_date']").val();
+    console.log(completion_date);
+    if(completion_date=='')
+    {
+        var time = new Date();
+        var getMonth=time.getMonth()+1;
+        var date1=time.getFullYear()+'-'+getMonth+'-'+time.getDate();
+        console.log(date1);
+        completion_date= $("input[name='entrust_date']").val(date1);
+    }
 
 </script>
 

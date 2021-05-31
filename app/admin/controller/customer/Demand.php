@@ -49,7 +49,7 @@ class Demand extends AdminController
             try {
                 $contract = CustomerContract::field('id,company_id')->find($post['contract_id']);
                 $admin = session('admin');
-                $post['writer_id'] = $admin['id'];
+                $post['demand_writer_id'] = $admin['id'];
                 $post['company_id'] = $contract['company_id'];
 //                dump($post);die;
                 $save = $this->model->save($post);

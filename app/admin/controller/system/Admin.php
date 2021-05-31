@@ -125,10 +125,6 @@ class Admin extends AdminController
             if (in_array($v['id'], $value)) {
                 $staff[$k]['selected'] = true;
             }
-            //删除自己
-            if ($staff[$k]['value'] == $this->admininfo()['id']) {
-                unset($staff[$k]);
-            }
         }
         empty($row) && $this->error('数据不存在');
         if ($this->request->isAjax()) {

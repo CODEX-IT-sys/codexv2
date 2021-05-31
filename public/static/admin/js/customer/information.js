@@ -27,6 +27,8 @@ define(["jquery", "easy-admin"], function ($, ea) {
                     {type: 'checkbox',},
                     {field: 'id', title: 'id'},
                     {field: 'customer_contact', title: '客户联系人', sort: true},
+                    {field: 'contract.contract_code', title: '合同编码', sort: true},
+                    {field: 'contract.sales', title: '销售', sort: true},
                     {field: 'department', title: '所在部门',},
                     {field: 'contract.company_name', title: '公司全称', sort: true},
                     {field: 'contract.abbreviation_name', title: '公司简称', sort: true},

@@ -273,14 +273,14 @@ class affine extends AdminController
                     {
                         $post['no_vat1']=$post['unit_price'] * $post['completion_quantity'];
                         $post['vat1'] = $post['unit_price'] * $post['completion_quantity'] * $post['tax_rate'] / 100;
-                        $post['quotation_price1'] = $post['unit_price'] * $post['completion_quantity'] + $post['vat'];
+                        $post['quotation_price1'] = $post['unit_price'] * $post['completion_quantity'] + $post['vat1'];
                     }else{
 //单价含税
 //未税金额=（单价x数量）/（1+税率）
 //增值税额=报价金额-未税金额
 //报价金额=单价x数量
                         $post['no_vat1']=$post['unit_price'] * $post['completion_quantity']/(1+$post['tax_rate'] / 100);
-                        $post['vat1'] = $post['unit_price'] * $post['completion_quantity'] -  $post['no_vat'];
+                        $post['vat1'] = $post['unit_price'] * $post['completion_quantity'] -  $post['no_vat1'];
                         $post['quotation_price1'] = $post['unit_price'] * $post['completion_quantity'];
                     }
 
@@ -320,12 +320,6 @@ class affine extends AdminController
             foreach ($post['id'] as $k => $v) {
                 //增值税报价金额
                 $res = Customeraa::where('id', $v)->find();
-                if ($res['customer_file_code'] == '') {
-//                    客户公司编码
-                    $company_code = Customer::where('id', $res['customer_id'])->value('company_code');
-                    //生成文件编号
-                    $res->customer_file_code = filing_number($company_code) . $k;
-                }
                 $res->confirmor_id = $admin['id'];
                 $res->file_status = 3;
                 $res->save();
@@ -355,21 +349,21 @@ class affine extends AdminController
             //查询其中一个文件
             $a = Customeraa::where('id', $post['id']['0'])->find();
             //来稿需求编号
-            $b = CustomerDemand::find($a['demand_id']);
+//            $b = CustomerDemand::find($a['demand_id']);
             //合同信息
-            $c = CustomerContract::find($b['contract_id']);
+            $c = CustomerContract::find($a['contract_id']);
             //该客户报价单的数量+1
-            $d = Customerqingkuan::where('customer_id', $c['customer_id'])->count();
+            $d = Customerqingkuan::where('contract_id', $a['contract_id'])->count();
             //客户信息
-            $e = Customer::find($c['customer_id']);
+            $e = Customer::find($a['customer_id']);
             //合同编码 $c['contract_code']
             $info = [];
             // 报价单编码
-            $info['qingkuan_code'] = 'I-' . $e['company_code'] . '-' . date('Ymd') . '-' . ($d + 1);
+            $info['qingkuan_code'] = 'I-' . $c['company_code'] . '-' . date('Ymd') . '-' . ($d + 1);
             //客户id
-            $info['customer_id'] = $c['customer_id'];
+            $info['customer_id'] = $a['customer_id'];
             //合同id
-            $info['contract_id'] = $b['contract_id'];
+            $info['contract_id'] = $a['contract_id'];
             //主体公司od
             $info['company_id'] = $c['company_id'];
             //写入人id
@@ -377,15 +371,40 @@ class affine extends AdminController
             $info['write_id'] = $admin['id'];
             //税额报价金额*数量*税额/100和报价金额:金额*数量+税额
             $num = 0;
+            $num1 = 0;
             $info['quotation_amount'] = 0;
             foreach ($post['id'] as $k => $v) {
                 $res = Customeraa::where('id', $v)->find();
-                $num += $res['unit_price'] * $res['completion_quantity'] * $res['tax_rate'] / 100;
-                $info['quotation_amount'] += ($res['unit_price'] * $res['completion_quantity']) + ($res['unit_price'] * $res['completion_quantity'] * $res['tax_rate'] / 100);
+//                $num += $res['unit_price'] * $res['completion_quantity'] * $res['tax_rate'] / 100;
+//                $info['quotation_amount'] += ($res['unit_price'] * $res['completion_quantity']) + ($res['unit_price'] * $res['completion_quantity'] * $res['tax_rate'] / 100);
+                if(isset($res['unit_price'])&&$res['completion_quantity']&&$res['tax_rate']){
+//                    单价不含税
+// 未税金额=单价x数量
+////增值税额=未税金额x税率（6%）
+////报价金额=未税金额+增值税额
+                    if($res['tax_radio']==0)
+                    {
+                        $num1 +=$res['unit_price'] * $res['completion_quantity'];
+                        $num += $res['unit_price'] * $res['completion_quantity'] * $res['tax_rate'] / 100;
+                        $info['quotation_amount'] += $res['unit_price'] * $res['completion_quantity'] + $res['vat'];
+                    }else{
+//单价含税
+//未税金额=（单价x数量）/（1+税率）
+//增值税额=报价金额-未税金额
+//报价金额=单价x数量
+                        $num1 +=$res['unit_price'] * $res['completion_quantity']/(1+$res['tax_rate'] / 100);
+                        $num += $res['unit_price'] * $res['completion_quantity'] -  $res['no_vat'];
+                        $info['quotation_amount'] += $res['unit_price'] * $res['completion_quantity'];
+                    }
+
+                }
+
             }
+            $info['tax_status'] = $a['tax_radio'];
             $info['tax'] = $num;
+            $info['no_tax'] = $num1;
             //来稿需求文件编号
-            $info['demand_id'] = $a['demand_id'];
+//            $info['demand_id'] = $a['demand_id'];
             //报价单包含的文件编号
             $info['quotation_file'] = json_encode($post['id']);
 //            dump($info);

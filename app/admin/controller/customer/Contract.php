@@ -62,7 +62,7 @@ class Contract extends AdminController
             }
             list($page, $limit, $where) = $this->buildTableParames();
             $count = $this->model
-                ->withJoin([ 'sale', 'company', 'write', 'dw', 'bz', 'fw', 'yz'], 'LEFT')
+                ->withJoin([  'company', 'write', 'dw', 'bz', 'fw', 'yz'], 'LEFT')
                 ->when($this->admininfo()['id'] != 1, function ($query) {
                     // 满足条件后执行
                     return $query->where('writer_id', 'in', $this->admininfo()['top_id']);
@@ -70,7 +70,7 @@ class Contract extends AdminController
                 ->where($where)
                 ->count();
             $list = $this->model
-                ->withJoin([ 'sale', 'company', 'write', 'dw', 'bz', 'fw', 'yz'], 'LEFT')
+                ->withJoin([  'company', 'write', 'dw', 'bz', 'fw', 'yz'], 'LEFT')
                 ->where($where)
                 ->when($this->admininfo()['id'] != 1, function ($query) {
                     // 满足条件后执行

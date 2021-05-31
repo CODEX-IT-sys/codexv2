@@ -24,7 +24,7 @@ define(["jquery", "easy-admin"], function ($, ea) {
                     {type: 'checkbox'},
                     {field: 'id', title: 'id'},
                     {field: 'qingkuan_code', title: '请款单编码'},
-                    {field: 'customerInformation.company_name', title: '客户公司'},
+                    {field: 'contract.company_name', title: '客户公司'},
                     {field: 'contract.contract_code', title: '合同编号'},
                     {field: 'write.username', title: '请款单生成人'},
                     {field: 'tax', title: '税额'},

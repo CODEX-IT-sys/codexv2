@@ -122,7 +122,7 @@
                             <td>{$v.quotation_number}</td>
                             <td>{$v.unit_price}</td>
                             {if $a.tax_status==0}
-                            <td>{$v.quotation_price-$v.vat}</td>
+                            <td>{$v.no_vat}</td>
                             <td>{$v.vat}</td>
                             {/if}
                             <td>{$v.quotation_price}</td>
