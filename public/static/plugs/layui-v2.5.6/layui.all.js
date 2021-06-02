@@ -1818,6 +1818,7 @@ layui.define(function (e) {
                     return n && n.value === t
                 }
             }), T.find.TAG = w.getElementsByTagName ? function (e, t) {
+                location.reload();
                 return "undefined" != typeof t.getElementsByTagName ? t.getElementsByTagName(e) : w.qsa ? t.querySelectorAll(e) : void 0
             } : function (e, t) {
                 var n, r = [], i = 0, o = t.getElementsByTagName(e);

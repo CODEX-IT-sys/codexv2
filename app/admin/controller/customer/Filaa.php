@@ -153,7 +153,7 @@ class Filaa extends AdminController
 //未税金额=（单价x数量）/（1+税率）
 //增值税额=报价金额-未税金额
 //报价金额=单价x数量
-                        $post['no_vat']=$post['unit_price'] * $post['quotation_number']/($tax_rate / 100);
+                        $post['no_vat']=$post['unit_price'] * $post['quotation_number']/(1+$tax_rate / 100);
                         $post['vat'] = $post['unit_price'] * $post['quotation_number'] -  $post['no_vat'];
                         $post['quotation_price'] = $post['unit_price'] * $post['quotation_number'];
                     }
@@ -179,13 +179,7 @@ class Filaa extends AdminController
                         $post['customer_file_code'] = filing_number($company_code,$post['entrust_date']);
                     }
                 }
-//                dump($post);die;
-                for ($x = 1; $x <= $post['number']; $x++) {
-                    $a++;
-                    $save = new $this->model;
-                    $save->save($post);
-                }
-
+                $save = $this->model->save($post);
             } catch (\Exception $e) {
                 $this->error('保存失败:' . $e->getMessage());
             }
@@ -257,6 +251,16 @@ class Filaa extends AdminController
                 $post['contract_id'] = CustomerDemand::where('id', $post['demand_id'])->value('contract_id');
                 //客户id
                 $post['customer_id'] = CustomerDemand::where('id', $post['demand_id'])->value('customer_id');
+                //文件状态为接受时生成文件编号
+                if (isset($post['file_status'])) {
+                    if ($post['file_status'] == 2) {
+//                    客户公司编码
+                        $company_code = CustomerContract::where('id', $post['contract_id'])->value('company_code');
+
+                        //生成文件编号
+                        $post['customer_file_code'] = filing_number($company_code,$post['entrust_date']);
+                    }
+                }
                 $save = $row->save($post);
             } catch (\Exception $e) {
                 $this->error('保存失败',$e->getMessage());
@@ -292,8 +296,9 @@ class Filaa extends AdminController
             $e = Customer::find($a['customer_id']);
             //合同编码 $c['contract_code']
             $info = [];
+
             // 报价单编码
-            $info['quotation_code'] = 'Q-' . $c['company_code'] . '-' . date('Ymd') . ($d + 1);
+            $info['quotation_code'] = 'Q-' . $c['company_code'] . date('Ymd') . str_pad(($d+1),2,0,STR_PAD_LEFT );
             //客户id
             $info['customer_id'] = $a['customer_id'];
             //合同id

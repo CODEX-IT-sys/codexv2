@@ -70,7 +70,7 @@ define(["jquery", "easy-admin"], function ($, ea) {
                     {field: 'dw.content', title: '单位', search: 'false'},
                     {field: 'quotation_number', title: '报价数量', search: 'false', edit: true},
                     {field: 'rate.content', title: '税率', search: 'false'},
-                    {field: 'vat', title: '增值税', search: 'false',},
+
                     {field: 'quotation_price', title: '报价金额', search: 'false'},
                     {field: 'customer_submit_date', title: '客户期望提交日期',search: 'range'},
                     {field: 'completion_date', title: '交付日期',search: 'range'},
@@ -212,7 +212,7 @@ define(["jquery", "easy-admin"], function ($, ea) {
                     {field: 'dw.content', title: '单位', search: 'false'},
                     {field: 'quotation_number', title: '报价数量', search: 'false', edit: true},
                     {field: 'rate.content', title: '税率', search: 'false'},
-                    {field: 'vat', title: '增值税', search: 'false',},
+
                     {field: 'quotation_price', title: '报价金额', search: 'false'},
                     {field: 'customer_submit_date', title: '客户期望提交日期',search: 'range'},
                     {field: 'completion_date', title: '交付日期',search: 'range'},
@@ -348,7 +348,7 @@ define(["jquery", "easy-admin"], function ($, ea) {
                     {field: 'dw.content', title: '单位', search: 'false'},
                     {field: 'quotation_number', title: '报价数量', search: 'false', edit: true},
                     {field: 'rate.content', title: '税率', search: 'false'},
-                    {field: 'vat', title: '增值税', search: 'false',},
+
                     {field: 'quotation_price', title: '报价金额', search: 'false'},
                     {field: 'customer_submit_date', title: '客户期望提交日期',search: 'range'},
                     {field: 'completion_date', title: '交付日期',search: 'range'},
@@ -472,7 +472,7 @@ define(["jquery", "easy-admin"], function ($, ea) {
                     {field: 'dw.content', title: '单位', search: 'false'},
                     {field: 'quotation_number', title: '报价数量', search: 'false', edit: true},
                     {field: 'rate.content', title: '税率', search: 'false'},
-                    {field: 'vat', title: '增值税', search: 'false',},
+
                     {field: 'quotation_price', title: '报价金额', search: 'false'},
                     {field: 'customer_submit_date', title: '客户期望提交日期',search: 'range'},
                     {field: 'completion_date', title: '交付日期',search: 'range'},

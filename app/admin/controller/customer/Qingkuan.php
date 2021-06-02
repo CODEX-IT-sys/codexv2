@@ -74,9 +74,9 @@ class Qingkuan extends AdminController
             $num2 += $v['vat1'];//报价金额
         }
         $num3 = $num1 - $num2;//报价金额
-        $a['num1'] = $num1;
-        $a['num2'] = $num2;
-        $a['num3'] = $num3;
+        $a['num1'] = number_format($num1,2);
+        $a['num2'] = number_format($num2,2);
+        $a['num3'] = number_format($num3,2);
 
         $this->assign(['a' => $a, 'b' => $b]);
 

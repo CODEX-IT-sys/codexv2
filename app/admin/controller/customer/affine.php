@@ -264,7 +264,7 @@ class affine extends AdminController
                 //写入更新人
                 $admin = session('admin');
                 $post['up_id'] = $admin['id'];
-                $post['tax_rate']= Db::name('database_content')->where('id', $post['tax_rate'])->value('content');
+                $tax_rate= Db::name('database_content')->where('id', $post['tax_rate'])->value('content');
                 if(isset($post['unit_price'])&&$post['completion_quantity']&&$post['tax_rate']){
 //                    单价不含税
                     // 未税金额=单价x数量
@@ -273,14 +273,14 @@ class affine extends AdminController
                     if($post['tax_radio']==0)
                     {
                         $post['no_vat1']=$post['unit_price'] * $post['completion_quantity'];
-                        $post['vat1'] = $post['unit_price'] * $post['completion_quantity'] * $post['tax_rate'] / 100;
+                        $post['vat1'] = $post['unit_price'] * $post['completion_quantity'] * $tax_rate / 100;
                         $post['quotation_price1'] = $post['unit_price'] * $post['completion_quantity'] + $post['vat1'];
                     }else{
 //单价含税
 //未税金额=（单价x数量）/（1+税率）
 //增值税额=报价金额-未税金额
 //报价金额=单价x数量
-                        $post['no_vat1']=$post['unit_price'] * $post['completion_quantity']/(1+$post['tax_rate'] / 100);
+                        $post['no_vat1']=$post['unit_price'] * $post['completion_quantity']/(1+$tax_rate / 100);
                         $post['vat1'] = $post['unit_price'] * $post['completion_quantity'] -  $post['no_vat1'];
                         $post['quotation_price1'] = $post['unit_price'] * $post['completion_quantity'];
                     }
@@ -360,7 +360,7 @@ class affine extends AdminController
             //合同编码 $c['contract_code']
             $info = [];
             // 报价单编码
-            $info['qingkuan_code'] = 'I-' . $c['company_code'] . '-' . date('Ymd') . ($d + 1);
+            $info['qingkuan_code'] = 'I-' . $c['company_code'] . date('Ymd') . str_pad(($d+1),2,0,STR_PAD_LEFT );
             //客户id
             $info['customer_id'] = $a['customer_id'];
             //合同id
