@@ -225,7 +225,7 @@ define(["jquery", "easy-admin"], function ($, ea) {
                     {field: 'tr_fluency_of_expression', search: 'select', selectList: {"1":"A","2":"B","3":"C","4":"D"}, title: '翻译表达流畅度',search:false},
                     {field: 'tr_reference', search: 'select', selectList: {"1":"A","2":"B","3":"C","4":"D"}, title: '翻译是否认真参考参考文件',search:false},
                     {field: 'tr_repeatedly', search: 'select', selectList: {"1":"A","2":"B","3":"C","4":"D"}, title: '翻译既往纠正问题反复',search:false},
-                    {field: 'tr_overall_evaluation', title: '翻译综合评估',search:false},
+                    {field: 'tr_overall_evaluation', title: '翻译综合评估',selectList: {"1":"A","2":"B","3":"C","4":"D"},search:false},
                     {field: 'tr_remark', title: '翻译备注',search:false},
                     {field: 'write.username', title: '填表人'},
                     {field: 'create_time', title: '创建时间',search:false},

@@ -22,12 +22,15 @@
             elem: '#myTable'
             ,height: 'full-50'
             ,toolbar:'#toolbar'
+            ,skin: 'line' //行边框风格
+            ,even: true //开启隔行背景
+
             ,defaultToolbar: ['print', 'exports','filter']
             , url: "{:url('trcompare')}"
             , cols: [[
                 {type: 'numbers', title: '序号', rowspan: 3, fixed: 'left'},
                 {field: 'gongsi', merge: true, title: '公司', fixed: 'left', width: 250, rowspan: 3, sort: true,filter: true},
-                {field: 'total',title: '合计',  rowspan: 3, align: 'center',filter: true, sort: true,},
+                {field: 'total',title: '合计',  rowspan: 3, align: 'center',filter: true, sort: true,merge: true},
                 {title: '页数', colspan: 12, rowspan: 2, align: 'center'},
 
             ], [
@@ -103,11 +106,11 @@
 
 
             ]]
-            , done: function () {
-                soulTable.render(this)
+            , done: function (res,curr,curr) {
+                soulTable.render(this);
             }
             ,filter: {
-            items:['column', 'condition'] // 只显示表格列和导出excel两个菜单项
+                items:['column','data','condition','editCondition'] // 只显示表格列和导出excel两个菜单项
                , bottom: false
             }
 
