@@ -25,6 +25,39 @@
             </div>
         </div>
         <div class="layui-form-item">
+            <label class="layui-form-label">预排字体段落</label>
+            <div class="layui-input-block">
+                <select name="yp_font" lay-verify="required">
+                    <option value=''></option>
+                    {foreach $getYpLayoutFormatList as $k=>$v}
+                    <option value='{$k}' {in name="k" value="$row.yp_font"} selected=""{/in}>{$v}</option>
+                    {/foreach}
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">预排图片、表格和文本框</label>
+            <div class="layui-input-block">
+                <select name="yp_table_img" lay-verify="required">
+                    <option value=''></option>
+                    {foreach $getYpLayoutFormatList as $k=>$v}
+                    <option value='{$k}' {in name="k" value="$row.yp_table_img"} selected=""{/in}>{$v}</option>
+                    {/foreach}
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">预排目录、超链接和交叉引用</label>
+            <div class="layui-input-block">
+                <select name="yp_directory_link" lay-verify="required">
+                    <option value=''></option>
+                    {foreach $getYpLayoutFormatList as $k=>$v}
+                    <option value='{$k}'  {in name="k" value="$row.yp_directory_link"} selected=""{/in}>{$v}</option>
+                    {/foreach}
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
             <label class="layui-form-label">预排内容检查</label>
             <div class="layui-input-block">
                 <select name="yp_content_check" lay-verify="required">
@@ -46,17 +79,7 @@
                 </select>
             </div>
         </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">预排综合评估</label>
-            <div class="layui-input-block">
-                <select name="yp_overall_evaluation" lay-verify="required">
-                    <option value=''></option>
-                    {foreach $getYpOverallEvaluationList as $k=>$v}
-                    <option value='{$k}' {in name="k" value="$row.yp_overall_evaluation"} selected=""{/in}>{$v}</option>
-                    {/foreach}
-                </select>
-            </div>
-        </div>
+
         <div class="layui-form-item">
             <label class="layui-form-label">预排备注</label>
             <div class="layui-input-block">
@@ -71,7 +94,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label">后排排布局格式</label>
             <div class="layui-input-block">
-                <select name="hp__layout_format" lay-verify="required">
+                <select name="hp_layout_format" lay-verify="required">
                     <option value=''></option>
                     {foreach $getHpLayoutFormatList as $k=>$v}
                     <option value='{$k}' {in name="k" value="$row.hp__layout_format"} selected=""{/in}>{$v}</option>

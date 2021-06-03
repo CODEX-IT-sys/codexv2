@@ -36,11 +36,11 @@
         code: "modules/code",
         jquery: "modules/jquery",
         mobile: "modules/mobile",
-        soulTable: 'soulTable/soulTable',
-        tableChild: 'soulTable/tableChild',
-        tableMerge: 'soulTable/tableMerge',
-        tableFilter: 'soulTable/tableFilter',
-        excel: 'soulTable/excel',
+        // soulTable: 'soulTable/soulTable',
+        // tableChild: 'soulTable/tableChild',
+        // tableMerge: 'soulTable/tableMerge',
+        // tableFilter: 'soulTable/tableFilter',
+        // excel: 'soulTable/excel',
         "layui.all": "../layui.all"
     };
     r.prototype.cache = n, r.prototype.define = function (e, t) {

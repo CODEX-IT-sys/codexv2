@@ -22,6 +22,7 @@ define(["jquery", "easy-admin"], function ($, ea) {
                     {field: 'description_id', title: 'description_id'},
                     {field: 'type', title: '评估类型'},
                     {field: 'yp_layout_format', search: 'select', selectList: {"1":"A","2":"B","3":"C","4":"D"}, title: '预排布局格式'},
+
                     {field: 'yp_content_check', search: 'select', selectList: {"1":"A","2":"B","3":"C","4":"D"}, title: '预排内容检查'},
                     {field: 'yp_customer_request', search: 'select', selectList: {"1":"A","2":"B","3":"C","4":"D"}, title: '预排客户要求'},
                     {field: 'yp_overall_evaluation', search: 'select', selectList: {"1":"A","2":"B","3":"C","4":"D"}, title: '预排综合评估'},
@@ -84,11 +85,14 @@ define(["jquery", "easy-admin"], function ($, ea) {
                     'delete',],
                 cols: [[
                     {type: 'checkbox'},
-                    {field: 'id', title: 'id'},
+                    {field: 'id', title: 'id',search:false},
                     {field: 'yp.username', title: '预排人员'},
                     {field: 'file.file_name_project', title: '文件名称'},
                     {field: 'file.file_code_project', title: '文件编号'},
                     {field: 'yp_layout_format', search: 'select', selectList: {"1":"A","2":"B","3":"C","4":"D"}, title: '预排布局格式',search:false},
+                    {field: 'yp_font', search: 'select', selectList: {"1":"A","2":"B","3":"C","4":"D"}, title: '字体段落'},
+                    {field: 'yp_table_img', search: 'select', selectList: {"1":"A","2":"B","3":"C","4":"D"}, title: '图片、表格和文本框'},
+                    {field: 'yp_directory_link', search: 'select', selectList: {"1":"A","2":"B","3":"C","4":"D"}, title: '目录、超链接和交叉引用'},
                     {field: 'yp_content_check', search: 'select', selectList: {"1":"A","2":"B","3":"C","4":"D"}, title: '预排内容检查',search:false},
                     {field: 'yp_customer_request', search: 'select', selectList: {"1":"A","2":"B","3":"C","4":"D"}, title: '预排客户要求',search:false},
                     {field: 'yp_overall_evaluation', search: 'select', selectList: {"1":"A","2":"B","3":"C","4":"D"}, title: '预排综合评估',search:false},
@@ -102,9 +106,9 @@ define(["jquery", "easy-admin"], function ($, ea) {
                     items: ['column', 'data', 'condition', 'editCondition', 'excel', 'clearCache'],
                     cache: true
                 }
-                // ,autoColumnWidth: {
-                //     init: true
-                // },
+                ,autoColumnWidth: {
+                    init: true
+                }
 
                 ,done: function () {
                     // 在 done 中开启
@@ -144,7 +148,7 @@ define(["jquery", "easy-admin"], function ($, ea) {
                     'delete',],
                 cols: [[
                     {type: 'checkbox'},
-                    {field: 'id', title: 'id'},
+                    {field: 'id', title: 'id',search:false},
                     {field: 'hp.username', title: '后排人员'},
                     {field: 'file.file_name_project', title: '文件名称'},
                     {field: 'file.file_code_project', title: '文件编号'},
@@ -162,9 +166,9 @@ define(["jquery", "easy-admin"], function ($, ea) {
                     items: ['column', 'data', 'condition', 'editCondition', 'excel', 'clearCache'],
                     cache: true
                 }
-                // ,autoColumnWidth: {
-                //     init: true
-                // },
+                ,autoColumnWidth: {
+                    init: true
+                }
 
                 ,done: function () {
                     // 在 done 中开启
@@ -204,7 +208,7 @@ define(["jquery", "easy-admin"], function ($, ea) {
                 overflow: 'tips',
                 cols: [[
                     {type: 'checkbox'},
-                    {field: 'id', title: 'id'},
+                    {field: 'id', title: 'id',search:false},
                     {field: 'tr.username', title: '翻译人员'},
                     {field: 'file.file_name_project', title: '文件名称'},
                     {field: 'file.file_code_project', title: '文件编号'},

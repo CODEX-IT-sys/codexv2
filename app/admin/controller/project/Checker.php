@@ -9,7 +9,7 @@ use EasyAdmin\annotation\NodeAnotation;
 use think\App;
 
 /**
- * @ControllerAnnotation(title="project_checker")
+ * @ControllerAnnotation(title="项目放行")
  */
 class Checker extends AdminController
 {

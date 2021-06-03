@@ -1,0 +1,123 @@
+<link rel="stylesheet" type="text/css" href="https://www.layuicdn.com/layui/css/layui.css" />
+<script type="text/html" id="toolbar">
+    <a class="layui-btn layui-btn-sm" lay-event="clearFilter">清除所有筛选条件</a>
+</script>
+<table id="myTable"></table>
+<script src="https://www.layuicdn.com/layui/layui.js"></script>
+<script>
+    layui.config({
+        base: '/static/plugs/layui-soul-table/',   // 第三方模块所在目录
+        version: 'v1.6.0' // 插件版本号
+    }).extend({
+        soulTable: 'ext/soulTable',
+        tableChild: 'ext/tableChild',
+        tableMerge: 'ext/tableMerge',
+        tableFilter: 'ext/tableFilter',
+        excel: 'ext/excel',
+    });
+    layui.use(['form', 'table', 'soulTable'], function () {
+        var table = layui.table,
+            soulTable = layui.soulTable;
+        table.render({
+            elem: '#myTable'
+            ,height: 'full-50'
+            ,toolbar:'#toolbar'
+            ,defaultToolbar: ['print', 'exports','filter']
+            , url: "{:url('trcompare')}"
+            , cols: [[
+                {type: 'numbers', title: '序号', rowspan: 3, fixed: 'left'},
+                {field: 'gongsi', merge: true, title: '公司', fixed: 'left', width: 250, rowspan: 3, sort: true,filter: true},
+                {field: 'total',title: '合计',  rowspan: 3, align: 'center',filter: true, sort: true,},
+                {title: '页数', colspan: 12, rowspan: 2, align: 'center'},
+
+            ], [
+
+            ], [
+                {
+                    field: 'page', title: '一月', templet: function (d) {
+                        return d.page['1'];
+                    }
+                },
+                {
+                    field: 'page', title: '二月', templet: function (d) {
+                        return d.page['2'];
+                    }
+                },
+                {
+                    field: 'page', title: '三月', templet: function (d) {
+                        return d.page['3'];
+                    }
+                },
+                {
+                    field: 'page', title: '四月', templet: function (d) {
+                        return d.page['4'];
+                    }
+                },
+                {
+                    field: 'page', title: '五月', templet: function (d) {
+                        return d.page['5'];
+                    }
+                },
+
+                {
+                    field: 'page', title: '六月', templet: function (d) {
+                        return d.page['6'];
+                    }
+                },
+
+                {
+                    field: 'page', title: '七月', templet: function (d) {
+                        return d.page['7'];
+                    }
+                },
+
+                {
+                    field: 'page', title: '八月', templet: function (d) {
+                        return d.page['8'];
+                    }
+                },
+
+                {
+                    field: 'page', title: '九月', templet: function (d) {
+                        return d.page['9'];
+                    }
+                },
+
+                {
+                    field: 'page', title: '十月', templet: function (d) {
+                        return d.page['10'];
+                    }
+                },
+
+                {
+                    field: 'page', title: '十一月', templet: function (d) {
+                        return d.page['11'];
+                    }
+                },
+
+                {
+                    field: 'page', title: '十二月', templet: function (d) {
+                        return d.page['12'];
+                    }
+                },
+
+
+            ]]
+            , done: function () {
+                soulTable.render(this)
+            }
+            ,filter: {
+            items:['column', 'condition'] // 只显示表格列和导出excel两个菜单项
+               , bottom: false
+            }
+
+        });
+        table.on('toolbar(myTable)', function(obj){
+            if (obj.event === 'clearFilter') {
+                // 清除所有筛选条件并重载表格
+                // 参数: tableId
+                soulTable.clearFilter('myTable')
+            }
+        });
+    })
+</script>

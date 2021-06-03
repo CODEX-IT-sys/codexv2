@@ -215,7 +215,7 @@ define(["jquery", "easy-admin"], function ($, ea) {
                                 url: init.assessyp_url,
                                 method: 'open',
                                 auth: 'assessyp',
-                                extend: 'data-full="true"',
+
                                 class: 'layui-btn layui-btn-xs layui-btn-normal',
                             },
                                 {
@@ -223,7 +223,7 @@ define(["jquery", "easy-admin"], function ($, ea) {
                                     url: init.assesstr_url,
                                     method: 'open',
                                     auth: 'assesstr',
-                                    extend: 'data-full="true"',
+
                                     class: 'layui-btn layui-btn-xs layui-btn-normal',
                                 },
                                 {
@@ -231,7 +231,7 @@ define(["jquery", "easy-admin"], function ($, ea) {
                                     url: init.assesshp_url,
                                     method: 'open',
                                     auth: 'assesshp',
-                                    extend: 'data-full="true"',
+
                                     class: 'layui-btn layui-btn-xs layui-btn-normal',
                                 }],
                         ]

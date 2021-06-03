@@ -84,11 +84,11 @@ class Assess extends AdminController
             }
             $save ? $this->success('保存成功') : $this->error('保存失败');
         }
-        $file=\app\admin\model\project\Description::field(['id','file_code_project','file_name_project'])->select();
+        $file = \app\admin\model\project\Description::field(['id', 'file_code_project', 'file_name_project'])->select();
 
         $this->assign(['type' => 1]);
         $this->assign(['file' => $file]);
-        if(isset( $data['id'])){
+        if (isset($data['id'])) {
             $this->assign(['id' => $data['id']]);
         }
         return $this->fetch('add');
@@ -112,11 +112,11 @@ class Assess extends AdminController
             }
             $save ? $this->success('保存成功') : $this->error('保存失败');
         }
-        $file=\app\admin\model\project\Description::field(['id','file_code_project','file_name_project'])->select();
+        $file = \app\admin\model\project\Description::field(['id', 'file_code_project', 'file_name_project'])->select();
 
         $this->assign(['type' => 2]);
         $this->assign(['file' => $file]);
-        if(isset( $data['id'])){
+        if (isset($data['id'])) {
             $this->assign(['id' => $data['id']]);
         }
         return $this->fetch('add');
@@ -140,11 +140,11 @@ class Assess extends AdminController
             }
             $save ? $this->success('保存成功') : $this->error('保存失败');
         }
-        $file=\app\admin\model\project\Description::field(['id','file_code_project','file_name_project'])->select();
+        $file = \app\admin\model\project\Description::field(['id', 'file_code_project', 'file_name_project'])->select();
 
         $this->assign(['type' => 3]);
         $this->assign(['file' => $file]);
-        if(isset( $data['id'])){
+        if (isset($data['id'])) {
             $this->assign(['id' => $data['id']]);
         }
         return $this->fetch('add');
@@ -158,11 +158,111 @@ class Assess extends AdminController
     public function save()
     {
         $post = $this->request->post();
+        $post['write_id'] = $this->admininfo()['id'];
+
+
+//        $post['pj_dbefore_ty_id'] = \app\admin\model\project\Description::where('id', $post['description_id'])->value('dbefore_ty_id');
+
+        if ($post['type'] == 2) {
+            $post['pj_dafter_ty_id'] = \app\admin\model\project\Description::where('id', $post['description_id'])->value('dafter_ty_id');
+            if ($post['pj_dafter_ty_id'] == '') {
+                echo '<script>
+   alert(\'保存失败:后排人员尚未指定\');
+                </script>';
+                echo "<script>history.go(-1);</script>";
+                return;
+            }
+
+            $f = [$post['hp_layout_format'], $post['hp_content_check'], $post['hp_customer_request']];
+            // 对数组中的所有值进行计数
+            $num = array_count_values($f);
+            $n['A'] = isset($num['1']) ? $num['1'] : 0;
+            $n['B'] = isset($num['2']) ? $num['2'] : 0;
+            $n['C'] = isset($num['3']) ? $num['3'] : 0;
+            $n['D'] = isset($num['4']) ? $num['4'] : 0;
+            if ($n['A'] == 3) {
+
+                $post['hp_overall_evaluation'] = '1';
+
+            } elseif ($n['A'] + $n['B'] >= 2 && $n['D'] == 0) {
+
+                $post['hp_overall_evaluation'] = '2';
+
+            } elseif ($n['C'] + $n['D'] == 3 or $n['D'] >= 2) {
+
+                $post['hp_overall_evaluation'] = '4';
+            } else {
+                $post['hp_overall_evaluation'] = '3';
+            }
+        } elseif ($post['type'] == 3) {
+            $post['pj_dtranslation_id'] = \app\admin\model\project\Description::where('id', $post['description_id'])->value('dtranslation_id');
+            if ($post['pj_dtranslation_id'] == '') {
+                echo '<script>
+   alert(\'保存失败:后排人员尚未指定\');
+                </script>';
+                echo "<script>history.go(-1);</script>";
+                return;
+            }
+            $f = [$post['tr_omissions'], $post['tr_redundant'], $post['tr_understanding'],
+                $post['tr_input_error'], $post['tr_not_uniform'],
+                $post['tr_not_uniform_with'], $post['tr_inappropriate_terminology'],
+                $post['tr_improper_punctuation'], $post['tr_out_habit'],
+                $post['tr_syntax_error'], $post['tr_fluency_of_expression'],
+                $post['tr_reference'], $post['tr_repeatedly'],
+            ];
+            // 对数组中的所有值进行计数
+            $num = array_count_values($f);
+            $n['A'] = isset($num['1']) ? $num['1'] : 0;
+            $n['B'] = isset($num['2']) ? $num['2'] : 0;
+            $n['C'] = isset($num['3']) ? $num['3'] : 0;
+            $n['D'] = isset($num['4']) ? $num['4'] : 0;
+            if ($n['A'] >= 10 && $n['C'] == 0 && $n['D'] == 0) {
+
+                $post['tr_overall_evaluation'] = '1';
+
+            } elseif ($n['A'] + $n['B'] >= 8 && $n['D'] == 0) {
+
+                $post['tr_overall_evaluation'] = '2';
+
+            } elseif ($n['C'] + $n['D'] >= 10 && $n['D'] >= 5) {
+
+                $post['tr_overall_evaluation'] = '4';
+            } else {
+                $post['tr_overall_evaluation'] = '3';
+            }
+
+        } elseif ($post['type'] == 1) {
+            $post['pj_dbefore_ty_id'] = \app\admin\model\project\Description::where('id', $post['description_id'])->value('dbefore_ty_id');
+            if ($post['pj_dbefore_ty_id'] == '') {
+                echo '<script>
+   alert(\'保存失败:后排人员尚未指定\');
+                </script>';
+                echo "<script>history.go(-1);</script>";
+                return;
+            }
+
+            /*计算 整体评价*/
+            $f = [$post['yp_layout_format'], $post['yp_font'], $post['yp_directory_link']
+                , $post['yp_table_img'], $post['yp_content_check'], $post['yp_customer_request']
+            ];
+            // 对数组中的所有值进行计数
+            $num = array_count_values($f);
+            $n['A'] = isset($num['1']) ? $num['1'] : 0;
+            $n['B'] = isset($num['2']) ? $num['2'] : 0;
+            $n['C'] = isset($num['3']) ? $num['3'] : 0;
+            $n['D'] = isset($num['4']) ? $num['4'] : 0;
+            if ($n['A'] >= 5 && $n['C'] == 0 && $n['D'] == 0) {
+                $post['yp_overall_evaluation'] = '1';
+            } elseif ($n['A'] + $n['B'] >= 5 && $n['D'] == 0) {
+                $post['yp_overall_evaluation'] = '2';
+            } elseif ($n['C'] + $n['D'] == 3 or $n['D'] >= 2) {
+                $post['yp_overall_evaluation'] = '4';
+            } else {
+                $post['yp_overall_evaluation'] = '3';
+            }
+        }
         try {
-            $post['write_id'] = $this->admininfo()['id'];
-            $post['pj_dafter_ty_id'] = \app\admin\model\project\Description::where('id',$post['description_id'])->value('dafter_ty_id');
-            $post['pj_dbefore_ty_id'] = \app\admin\model\project\Description::where('id',$post['description_id'])->value('dbefore_ty_id');
-            $post['pj_dtranslation_id'] = \app\admin\model\project\Description::where('id',$post['description_id'])->value('dtranslation_id');
+
             $save = $this->model->save($post);
         } catch (\Exception $e) {
             $this->error('保存失败:' . $e->getMessage());
@@ -173,6 +273,7 @@ class Assess extends AdminController
     </script>';
 
     }
+
     /**
      * @NodeAnotation(title="预排评估表")
      */
@@ -185,27 +286,27 @@ class Assess extends AdminController
             }
             list($page, $limit, $where) = $this->buildTableParames();
             $count = $this->model
-                ->when($this->admininfo()['id']!=1, function ($query) {
-                    // 满足条件后执行
-                    return $query->where('write_id','in',$this->admininfo()['top_id']);
-                })
                 ->where($where)
-                ->where('type',1)
-                ->withJoin(['file','write','yp'
-                ], 'LEFT')
+                ->when($this->admininfo()['id'] != 1, function ($query) {
+                    // 满足条件后执行
+                    return $query->where('write_id', 'in', $this->admininfo()['top_id']);
+                })
+                ->where('type', 1)
+                ->withJoin(['file', 'write', 'yp'
+                ])
                 ->count();
             $list = $this->model
                 ->where($where)
-                ->when($this->admininfo()['id']!=1, function ($query) {
+                ->when($this->admininfo()['id'] != 1, function ($query) {
                     // 满足条件后执行
-                    return $query->where('write_id','in',$this->admininfo()['top_id']);
+                    return $query->where('write_id', 'in', $this->admininfo()['top_id']);
                 })
-                ->where('type',1)
-                ->withJoin(['file','write','yp'
+                ->where('type', 1)
+                ->withJoin(['file', 'write', 'yp'
                 ])
                 ->page($page, $limit)
                 ->order($this->sort)
-                ->select()->toArray();
+                ->select();
 
 //            dump($list);die;
 //            foreach ($list as $k=>$v)
@@ -215,10 +316,10 @@ class Assess extends AdminController
 
 //            dump($list);die;
             $data = [
-                'code'  => 0,
-                'msg'   => '',
+                'code' => 0,
+                'msg' => '',
                 'count' => $count,
-                'data'  => $list,
+                'data' => $list,
             ];
             return json($data);
         }
@@ -241,31 +342,31 @@ class Assess extends AdminController
             list($page, $limit, $where) = $this->buildTableParames();
             $count = $this->model
                 ->where($where)
-                ->when($this->admininfo()['id']!=1, function ($query) {
+                ->when($this->admininfo()['id'] != 1, function ($query) {
                     // 满足条件后执行
-                    return $query->where('write_id','in',$this->admininfo()['top_id']);
+                    return $query->where('write_id', 'in', $this->admininfo()['top_id']);
                 })
-                ->where('type',2)
-                ->withJoin(['file','write','hp'
+                ->where('type', 2)
+                ->withJoin(['file', 'write', 'hp'
                 ], 'LEFT')
                 ->count();
             $list = $this->model
                 ->where($where)
-                ->where('type',2)
-                ->withJoin(['file','write','hp'
+                ->where('type', 2)
+                ->withJoin(['file', 'write', 'hp'
                 ], 'LEFT')
-                ->when($this->admininfo()['id']!=1, function ($query) {
+                ->when($this->admininfo()['id'] != 1, function ($query) {
                     // 满足条件后执行
-                    return $query->where('write_id','in',$this->admininfo()['top_id']);
+                    return $query->where('write_id', 'in', $this->admininfo()['top_id']);
                 })
                 ->page($page, $limit)
                 ->order($this->sort)
                 ->select()->toArray();
             $data = [
-                'code'  => 0,
-                'msg'   => '',
+                'code' => 0,
+                'msg' => '',
                 'count' => $count,
-                'data'  => $list,
+                'data' => $list,
             ];
             return json($data);
         }
@@ -284,31 +385,31 @@ class Assess extends AdminController
             list($page, $limit, $where) = $this->buildTableParames();
             $count = $this->model
                 ->where($where)
-                ->when($this->admininfo()['id']!=1, function ($query) {
+                ->when($this->admininfo()['id'] != 1, function ($query) {
                     // 满足条件后执行
-                    return $query->where('write_id','in',$this->admininfo()['top_id']);
+                    return $query->where('write_id', 'in', $this->admininfo()['top_id']);
                 })
-                ->where('type',3)
-                ->withJoin(['file','write','tr'
+                ->where('type', 3)
+                ->withJoin(['file', 'write', 'tr'
                 ], 'LEFT')
                 ->count();
             $list = $this->model
                 ->where($where)
-                ->when($this->admininfo()['id']!=1, function ($query) {
+                ->when($this->admininfo()['id'] != 1, function ($query) {
                     // 满足条件后执行
-                    return $query->where('write_id','in',$this->admininfo()['top_id']);
+                    return $query->where('write_id', 'in', $this->admininfo()['top_id']);
                 })
-                ->where('type',3)
-                ->withJoin(['file','write','tr'
+                ->where('type', 3)
+                ->withJoin(['file', 'write', 'tr'
                 ], 'LEFT')
                 ->page($page, $limit)
                 ->order($this->sort)
                 ->select()->toArray();
             $data = [
-                'code'  => 0,
-                'msg'   => '',
+                'code' => 0,
+                'msg' => '',
                 'count' => $count,
-                'data'  => $list,
+                'data' => $list,
             ];
             return json($data);
         }
@@ -328,13 +429,85 @@ class Assess extends AdminController
             $rule = [];
             $this->validate($post, $rule);
             try {
+                if ($post['type'] == 2) {
+                    $f = [$post['hp_layout_format'], $post['hp_content_check'], $post['hp_customer_request']];
+                    // 对数组中的所有值进行计数
+                    $num = array_count_values($f);
+                    $n['A'] = isset($num['1']) ? $num['1'] : 0;
+                    $n['B'] = isset($num['2']) ? $num['2'] : 0;
+                    $n['C'] = isset($num['3']) ? $num['3'] : 0;
+                    $n['D'] = isset($num['4']) ? $num['4'] : 0;
+                    if ($n['A'] == 3) {
+
+                        $post['hp_overall_evaluation'] = '1';
+
+                    } elseif ($n['A'] + $n['B'] >= 2 && $n['D'] == 0) {
+
+                        $post['hp_overall_evaluation'] = '2';
+
+                    } elseif ($n['C'] + $n['D'] == 3 or $n['D'] >= 2) {
+
+                        $post['hp_overall_evaluation'] = '4';
+                    } else {
+                        $post['hp_overall_evaluation'] = '3';
+                    }
+                } elseif ($post['type'] == 3) {
+                    $f = [$post['tr_omissions'], $post['tr_redundant'], $post['tr_understanding'],
+                        $post['tr_input_error'], $post['tr_not_uniform'],
+                        $post['tr_not_uniform_with'], $post['tr_inappropriate_terminology'],
+                        $post['tr_improper_punctuation'], $post['tr_out_habit'],
+                        $post['tr_syntax_error'], $post['tr_fluency_of_expression'],
+                        $post['tr_reference'], $post['tr_repeatedly'],
+                    ];
+                    // 对数组中的所有值进行计数
+                    $num = array_count_values($f);
+                    $n['A'] = isset($num['1']) ? $num['1'] : 0;
+                    $n['B'] = isset($num['2']) ? $num['2'] : 0;
+                    $n['C'] = isset($num['3']) ? $num['3'] : 0;
+                    $n['D'] = isset($num['4']) ? $num['4'] : 0;
+                    if ($n['A'] >= 10 && $n['C'] == 0 && $n['D'] == 0) {
+
+                        $post['tr_overall_evaluation'] = '1';
+
+                    } elseif ($n['A'] + $n['B'] >= 8 && $n['D'] == 0) {
+
+                        $post['tr_overall_evaluation'] = '2';
+
+                    } elseif ($n['C'] + $n['D'] >= 10 && $n['D'] >= 5) {
+
+                        $post['tr_overall_evaluation'] = '4';
+                    } else {
+                        $post['tr_overall_evaluation'] = '3';
+                    }
+
+                } elseif ($post['type'] == 1) {
+                    /*计算 整体评价*/
+                    $f = [$post['yp_layout_format'], $post['yp_font'], $post['yp_directory_link']
+                        , $post['yp_table_img'], $post['yp_content_check'], $post['yp_customer_request']
+                    ];
+                    // 对数组中的所有值进行计数
+                    $num = array_count_values($f);
+                    $n['A'] = isset($num['1']) ? $num['1'] : 0;
+                    $n['B'] = isset($num['2']) ? $num['2'] : 0;
+                    $n['C'] = isset($num['3']) ? $num['3'] : 0;
+                    $n['D'] = isset($num['4']) ? $num['4'] : 0;
+                    if ($n['A'] >= 5 && $n['C'] == 0 && $n['D'] == 0) {
+                        $post['yp_overall_evaluation'] = '1';
+                    } elseif ($n['A'] + $n['B'] >= 5 && $n['D'] == 0) {
+                        $post['yp_overall_evaluation'] = '2';
+                    } elseif ($n['C'] + $n['D'] == 3 or $n['D'] >= 2) {
+                        $post['yp_overall_evaluation'] = '4';
+                    } else {
+                        $post['yp_overall_evaluation'] = '3';
+                    }
+                }
                 $save = $row->save($post);
             } catch (\Exception $e) {
-                $this->error('保存失败');
+                $this->error('保存失败',$e->getMessage());
             }
             $save ? $this->success('保存成功') : $this->error('保存失败');
         }
-        $file=\app\admin\model\project\Description::field(['id','file_code_project','file_name_project'])->select();
+        $file = \app\admin\model\project\Description::field(['id', 'file_code_project', 'file_name_project'])->select();
         $this->assign(['file' => $file]);
 //        dump($row);die;
         $this->assign('row', $row);
