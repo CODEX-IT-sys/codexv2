@@ -14,7 +14,11 @@ class CustomerContract extends TimeModel
 
     protected $deleteTime = false;
 //    设置时间
-    protected $dateFormat = 'Y-m-d';
+    protected $dateFormat = 'Ymd';
+
+    // 定义时间戳字段名
+    protected $createTime = 'contraactcreate_at';
+    protected $updateTime = 'contraactupdate_at';
 
     //关联客户
     public function customerInformation()

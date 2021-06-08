@@ -161,6 +161,10 @@ class AdminController extends BaseController
         $tableName = CommonTool::humpToLine(lcfirst($this->model->getName()));
 
         foreach ($filters as $key => $val) {
+
+//            dump($val);
+//            dump($filters);
+//            dump($key);
             if (in_array($key, $excludeFields)) {
                 $excludes[$key] = $val;
                 continue;
@@ -187,10 +191,24 @@ class AdminController extends BaseController
                     $where[] = ["$key", '>=', strtotime($beginTime)];
                     $where[] = ["$key", '<=', strtotime($endTime)];
                     break;
+                case 'searchtime':
+                    $s = strtotime("$val".'00:00:00');
+                    $l = strtotime("$val".'23:59:59');
+                    $where[] = ["$key", '>=', $s];
+                    $where[] = ["$key", '<=', $l];
+                    break;
+                case 'filestatu':
+                    if($val>2){
+                        $where[] = ["$key", 'in',['2','3','4']];
+                    }
+                    $where[] = ["$key", '=', "$val"];
+                    break;
+                    break;
                 default:
                     $where[] = ["$key", $op, "%{$val}"];
             }
         }
+//        dump($where);die;
         return [$page, $limit, $where, $excludes];
     }
     //需要只显示自己录入的数据

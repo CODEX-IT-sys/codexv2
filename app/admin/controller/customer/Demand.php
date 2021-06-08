@@ -109,10 +109,11 @@ class Demand extends AdminController
      */
     public function edit($id)
     {
-        $row = $this->model->find($id);
-
+        $row = $this->model->find($id)->toArray();
+        $row['submission_time']=date("Y-m-d",strtotime($row['submission_time']));
         empty($row) && $this->error('数据不存在');
         if ($this->request->isAjax()) {
+            $row = $this->model->find($id);
             $post = $this->request->post();
             $rule = [];
             $this->validate($post, $rule);

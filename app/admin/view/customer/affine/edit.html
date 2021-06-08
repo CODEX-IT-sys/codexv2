@@ -134,7 +134,18 @@
                 </select>
             </div>
         </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">是否含税</label>
+            <div class="layui-input-block">
 
+                <input type="radio" name="tax_radio" value="0" title="不含税" {if (0==$row.tax_radio)}
+                       checked='checked'
+                       {/if}>
+                <input type="radio" name="tax_radio" value="1" title="含税" {if (1==$row.tax_radio)}
+                       checked='checked'
+                       {/if}>
+            </div>
+        </div>
 
         <!--        <div class="layui-form-item">
                     <label class="layui-form-label">增值税</label>
@@ -199,7 +210,7 @@
             <div class="layui-input-block">
                 <!--<input type="text" name="mid" class="layui-input" lay-verify="required" placeholder="请输入项目经理id" value="{$row.mid|default=''}">-->
                 <select name="c_status"  lay-search>
-                    <option value="">请选择结算状态{$row.c_status}</option>
+                    <option value="">请选择结算状态</option>
                     {foreach $jsstatus as $key=>$v }
                     <option value="{$v.id}"  {$v.id==$row.c_status?'selected':''} >{$v.content}</option>
                     {/foreach}
@@ -255,18 +266,7 @@
                        placeholder="请输入请款金额" value="{$row.quotation_price1|default=''}">
             </div>
         </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">是否含税</label>
-            <div class="layui-input-block">
 
-                <input type="radio" name="tax_radio" value="0" title="不含税" {if (0==$row.tax_radio)}
-                       checked='checked'
-                       {/if}>
-                <input type="radio" name="tax_radio" value="1" title="含税" {if (1==$row.tax_radio)}
-                       checked='checked'
-                       {/if}>
-            </div>
-        </div>
 
         <div class="layui-form-item">
             <label class="layui-form-label">折扣</label>
@@ -368,7 +368,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label">付款完成时间</label>
             <div class="layui-input-block">
-                <input type="text" name="payment_time" class="layui-input" data-date="" data-date-type="datetime" autocomplete="off"
+                <input type="text" name="payment_time" class="layui-input" data-date="" data-date-type="date" autocomplete="off"
                        placeholder="付款完成时间" value="{$row.payment_time|default=''}">
             </div>
         </div>
@@ -380,19 +380,17 @@
             </div>
         </div>
         <div class="layui-form-item">
-            <label class="layui-form-label">客户参考文件</label>
+            <label class="layui-form-label">参考文件</label>
             <div class="layui-input-block">
-                <!--<input type="text" name="customer_file_reference" class="layui-input" lay-verify="required" placeholder="请输入客户参考文件" value="{$row.customer_file_reference|default=''}">-->
-                <textarea name="customer_file_reference" placeholder="请输入客户参考文件" class="layui-textarea"> {$row.customer_file_reference|default=''}</textarea>
+                <!--<input type="text" name="customer_file_reference" class="layui-input" lay-verify="required" placeholder="请输入参考文件" value="{$row.customer_file_reference|default=''}">-->
+                <textarea name="customer_file_reference" placeholder="请输入参考文件" class="layui-textarea"> {$row.customer_file_reference|default=''}</textarea>
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">备注</label>
             <div class="layui-input-block">
-                <!--<input type="text" name="customer_file_remark" class="layui-input" lay-verify="required" placeholder="请输入客户参考文件备注" value="{$row.customer_file_remark|default=''}">-->
+                <!--<input type="text" name="customer_file_remark" class="layui-input" lay-verify="required" placeholder="请输入参考文件备注" value="{$row.customer_file_remark|default=''}">-->
                 <textarea name="customer_file_remark" placeholder="备注" class="layui-textarea">{$row.project_file_remark|default=''}</textarea>
-
-
             </div>
         </div>
         <div class="hr-line"></div>

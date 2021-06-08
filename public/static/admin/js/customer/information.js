@@ -25,13 +25,14 @@ define(["jquery", "easy-admin"], function ($, ea) {
                 , cols: [[
 
                     {type: 'checkbox',},
-                    {field: 'id', title: 'id'},
+                    {field: 'id', title: 'id',search:false},
+                    {field: 'customercreate_at', title: '登记日期',search:'searchtime'},
                     {field: 'customer_contact', title: '客户联系人', sort: true},
                     {field: 'contract.contract_code', title: '合同编码', sort: true},
                     {field: 'contract.sales', title: '销售', sort: true},
                     {field: 'department', title: '所在部门',},
                     {field: 'contract.company_name', title: '公司全称', sort: true},
-                    {field: 'contract.abbreviation_name', title: '公司简称', sort: true},
+                    {field: 'contract.abbreviation_name', title: '公司名称', sort: true},
                     {field: 'contract.company_code', title: '公司编码', sort: true},
                     {field: 'information_address', title: '客户联系地址'},
                     // {field: 'country', title: '国家', hide: true},
@@ -42,8 +43,8 @@ define(["jquery", "easy-admin"], function ($, ea) {
                     // {field: 'company_code', title: '公司编码', sort: true,search:false},
                     // {field: 'contract_code', title: '合同编码'},
                     {field: 'remarks', title: '备注',search:false},
-                    {field: 'create_time', title: '创建时间',search:false},
-                    {field: 'write.username', title: '录入人员'},
+                    {field: 'write.username', title: '填表人'},
+                    {field: 'customerupdate_at', title: '更新时间', search: 'false'},
                     {width: 250, title: '操作', templet: ea.table.tool, fixed: "right",},
 
                 ]],

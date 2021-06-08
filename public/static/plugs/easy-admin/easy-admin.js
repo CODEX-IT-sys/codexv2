@@ -334,6 +334,15 @@ define(["jquery", "tableSelect", "ckeditor", "soulTable",], function ($, tableSe
                                     '</div>\n' +
                                     '</div>';
                                 break;
+                            case 'searchtime':
+                                d.searchOp = 'searchtime';
+                                formHtml += '\t<div class="layui-form-item layui-inline">\n' +
+                                    '<label class="layui-form-label">' + d.title + '</label>\n' +
+                                    '<div class="layui-input-inline">\n' +
+                                    '<input id="c-' + d.fieldAlias + '" name="' + d.fieldAlias + '" data-search-op="' + d.searchOp + '" value="' + d.searchValue + '" placeholder="' + d.searchTip + '" class="layui-input">\n' +
+                                    '</div>\n' +
+                                    '</div>';
+                                break;
                         }
                         newCols.push(d);
                     }
@@ -1434,8 +1443,10 @@ define(["jquery", "tableSelect", "ckeditor", "soulTable",], function ($, tableSe
                 if (dateList.length > 0) {
                     $.each(dateList, function (i, v) {
                         var format = $(this).attr('data-date'),
+
                             type = $(this).attr('data-date-type'),
                             range = $(this).attr('data-date-range');
+                        console.log(format);
                         if(type === undefined || type === '' || type ===null){
                             type = 'datetime';
                         }

@@ -18,8 +18,6 @@ class Contract extends AdminController
 {
 
     use \app\admin\traits\Curd;
-
-
     public function __construct(App $app)
     {
         parent::__construct($app);
@@ -123,9 +121,13 @@ class Contract extends AdminController
      */
     public function edit($id)
     {
-        $row = $this->model->find($id);
+        $row = $this->model->find($id)->toArray();
+
+        $row['effective_date']=date("Y-m-d",strtotime($row['effective_date']));
+        $row['expiration_date']=date("Y-m-d",strtotime($row['expiration_date']));
         empty($row) && $this->error('数据不存在');
         if ($this->request->isAjax()) {
+            $row = $this->model->find($id);
             $post = $this->request->post();
             $rule = [];
             $this->validate($post, $rule);
@@ -138,6 +140,7 @@ class Contract extends AdminController
             }
             $save ? $this->success('保存成功') : $this->error('保存失败');
         }
+
         $this->assign('row', $row);
         return $this->fetch();
     }

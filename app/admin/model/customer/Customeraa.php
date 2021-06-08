@@ -5,16 +5,22 @@ namespace app\admin\model\customer;
 use app\common\model\TimeModel;
 use think\model\concern\SoftDelete;
 use think\facade\Db;
-//文件模型,多对多太麻烦.直接存字符串
+//文件模型,
 class Customeraa extends TimeModel
 {
 
     protected $name = "customer_filaa";
     use SoftDelete;
     protected $deleteTime = 'delete_time';
+    // 定义时间戳字段名
+    protected $createTime = 'filecreate_at';
+    protected $updateTime = 'fileupdate_at';
 //    protected $deleteTime = false;
+    protected $dateFormat = 'Ymd';
     protected $type = [
-        'customer_submit_date' => 'timestamp',
+        'date_of_balance'=>'timestamp',
+        'pre_payment_date'=>'timestamp',
+        'fapiao_date'=>'timestamp',
         'completion_date' => 'timestamp',
         'pr_start_time' => 'timestamp',
         'pr_end_time' => 'timestamp',
@@ -23,6 +29,7 @@ class Customeraa extends TimeModel
         'after_ty_time' => 'timestamp',
         'before_ty_time' => 'timestamp',
         'payment_time' => 'timestamp',
+        'entrust_date' => 'timestamp',
     ];
 
 
@@ -84,13 +91,13 @@ class Customeraa extends TimeModel
         }
         return  implode(",", $arr);
     }
-    //委托时间获取器
-    public function getEntrustDateAttr($val)
-    {
-        if($val){
-            return  date('Y-m-d',$val);
-        }
-    }
+//    //委托时间获取器
+//    public function getEntrustDateAttr($val)
+//    {
+//        if($val){
+//            return  date('Ymd',$val);
+//        }
+//    }
 //    public function getTaxRateAttr($val)
 //    {
 //       return   Db::name('database_content')->where('id', $val)->value('content');
@@ -100,10 +107,26 @@ class Customeraa extends TimeModel
     public function getCompletionDateAttr($val)
     {
         if($val){
-            return  date('Y-m-d',$val);
+            return  date('Ymd',$val);
         }
 
     }
+    //客户期望日期
+    public function getCustomerSubmitDateAttr($val)
+    {
+        if($val){
+            return  date('Y:m:d H:i:s',$val);
+        }
+
+    }
+    public function setCustomerSubmitDateAttr($val)
+    {
+        if($val){
+            return  strtotime($val);
+        }
+
+    }
+
     //生成项目需求
     public function getCooperationFirstList()
     {

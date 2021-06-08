@@ -18,11 +18,13 @@ class CustomerDemand extends TimeModel
         return ['1' => 'yes', '2' => 'no', '0' => 'N/A',];
     }
 
-    protected $dateFormat = 'Y-m-d';
+    protected $dateFormat = 'Ymd';
     protected $type = [
         'submission_time' => 'timestamp',
     ];
-
+    // 定义时间戳字段名
+    protected $createTime = 'demandcreate_at';
+    protected $updateTime = 'demandupdate_at';
     //合同关联
     public function contract()
     {

@@ -21,8 +21,6 @@ use app\admin\model\SystemAdmin;
  */
 class Filaa extends AdminController
 {
-//    protected $relationSearch = true;
-//    protected $searchFields=
     use \app\admin\traits\Curd;
 
     /**
@@ -41,6 +39,8 @@ class Filaa extends AdminController
         'is_delete',
         'is_auth',
         'title',
+        'm_approval',
+        'general_approval'
     ];
 
 //    protected $layout=false;
@@ -176,7 +176,7 @@ class Filaa extends AdminController
                         $company_code = CustomerContract::where('id', $post['contract_id'])->value('company_code');
 
                         //生成文件编号
-                        $post['customer_file_code'] = filing_number($company_code,$post['entrust_date']);
+                        $post['customer_file_code'] = filing_number($company_code,strtotime($post['entrust_date']));
                     }
                 }
                 $save = $this->model->save($post);
@@ -196,8 +196,10 @@ class Filaa extends AdminController
      */
     public function edit($id)
     {
-        $row = $this->model->find($id);
-
+        $row = $this->model->find($id)->toArray();
+        $row['entrust_date'] =date("Y-m-d",strtotime($row['entrust_date']));
+        $row['customer_submit_date'] =date("Y-m-d H:i:s",strtotime($row['customer_submit_date']));
+        $row['completion_date'] =date("Y-m-d",strtotime($row['completion_date']));
         //服务
         $g = Cache::get('fw');
         $n = [];
@@ -211,19 +213,18 @@ class Filaa extends AdminController
         }
         empty($row) && $this->error('数据不存在');
         if ($this->request->isAjax()) {
+            $row = $this->model->find($id);
             $post = $this->request->post();
-//            dump($post);die;
+
             $rule = [];
             $this->validate($post, $rule);
             try {
                 //写入更新人
                 $admin = session('admin');
                 $post['up_id'] = $admin['id'];
-                //委托日期转换时间戳
-                $post['entrust_date']=strtotime($post['entrust_date']);
-                if(!isset( $post['completion_date'])){
-                    $post['completion_date']=strtotime($post['completion_date']);
-                }
+
+
+
                 $tax_rate= Db::name('database_content')->where('id', $post['tax_rate'])->value('content');
 
                 if(isset($post['unit_price'])&&$post['quotation_number']&&$post['tax_rate']){
@@ -247,10 +248,12 @@ class Filaa extends AdminController
                     }
 
                 }
+
                 //合同id
                 $post['contract_id'] = CustomerDemand::where('id', $post['demand_id'])->value('contract_id');
                 //客户id
                 $post['customer_id'] = CustomerDemand::where('id', $post['demand_id'])->value('customer_id');
+
                 //文件状态为接受时生成文件编号
                 if (isset($post['file_status'])) {
                     if ($post['file_status'] == 2) {
@@ -258,9 +261,11 @@ class Filaa extends AdminController
                         $company_code = CustomerContract::where('id', $post['contract_id'])->value('company_code');
 
                         //生成文件编号
-                        $post['customer_file_code'] = filing_number($company_code,$post['entrust_date']);
+                        $post['customer_file_code'] = filing_number($company_code,strtotime($post['entrust_date']));
+
                     }
                 }
+
                 $save = $row->save($post);
             } catch (\Exception $e) {
                 $this->error('保存失败',$e->getMessage());

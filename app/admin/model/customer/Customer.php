@@ -11,7 +11,11 @@ class Customer extends TimeModel
     protected $name = "customer_information";
 
     protected $deleteTime = false;
-
+//    设置时间
+    protected $dateFormat = 'Ymd';
+    // 定义时间戳字段名
+    protected $createTime = 'customercreate_at';
+    protected $updateTime = 'customerupdate_at';
 
     // 设置废弃字段
     protected $disuse = [ 'contract_code',];

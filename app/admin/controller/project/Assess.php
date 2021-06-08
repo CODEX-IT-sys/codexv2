@@ -198,7 +198,7 @@ class Assess extends AdminController
             $post['pj_dtranslation_id'] = \app\admin\model\project\Description::where('id', $post['description_id'])->value('dtranslation_id');
             if ($post['pj_dtranslation_id'] == '') {
                 echo '<script>
-   alert(\'保存失败:后排人员尚未指定\');
+   alert(\'保存失败:翻译人员尚未指定\');
                 </script>';
                 echo "<script>history.go(-1);</script>";
                 return;
@@ -235,7 +235,7 @@ class Assess extends AdminController
             $post['pj_dbefore_ty_id'] = \app\admin\model\project\Description::where('id', $post['description_id'])->value('dbefore_ty_id');
             if ($post['pj_dbefore_ty_id'] == '') {
                 echo '<script>
-   alert(\'保存失败:后排人员尚未指定\');
+   alert(\'保存失败:预排人员尚未指定\');
                 </script>';
                 echo "<script>history.go(-1);</script>";
                 return;

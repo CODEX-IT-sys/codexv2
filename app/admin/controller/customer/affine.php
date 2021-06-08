@@ -39,6 +39,7 @@ class affine extends AdminController
         'is_delete',
         'is_auth',
         'title',
+
     ];
 
     public function __construct(App $app)
@@ -243,7 +244,13 @@ class affine extends AdminController
      */
     public function edit($id)
     {
-        $row = $this->model->find($id);
+        $row = $this->model->find($id)->toArray();
+        $row['customer_submit_date'] =date("Y-m-d H:i:s",strtotime($row['customer_submit_date']));
+        $row['completion_date'] =date("Y-m-d",strtotime($row['completion_date']));
+        $row['fapiao_date'] =date("Y-m-d",strtotime($row['fapiao_date']));
+        $row['date_of_balance'] =date("Y-m-d",strtotime($row['date_of_balance']));
+        $row['pre_payment_date'] =date("Y-m-d",strtotime($row['pre_payment_date']));
+        $row['payment_time'] =date("Y-m-d",strtotime($row['payment_time']));
         //服务
         $g = Cache::get('fw');
         $n = [];
@@ -257,6 +264,7 @@ class affine extends AdminController
         }
         empty($row) && $this->error('数据不存在');
         if ($this->request->isAjax()) {
+            $row = $this->model->find($id);
             $post = $this->request->post();
             $rule = [];
             $this->validate($post, $rule);
@@ -291,7 +299,6 @@ class affine extends AdminController
                 //文件状态为接受时生成文件编号
                 if (isset($post['c_status'])) {
                     if ($post['c_status'] == 28||$post['c_status'] == 29||$post['c_status'] == 30) {
-                        //生成文件编号
                         $post['fapiao_amount'] = $post['quotation_price'];
                     }
                 }

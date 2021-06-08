@@ -10,7 +10,7 @@
 
 
         <div class="layui-form-item">
-        <label class="layui-form-label">文件状态</label>
+        <label class="layui-form-label">订单状态</label>
         <div class="layui-input-block">
         <input type="radio" name="file_status" value="1" title="拒绝"
         {if (1==$row.file_status)}
@@ -50,10 +50,10 @@
             </div>
         </div>
         <div class="layui-form-item">
-            <label class="layui-form-label">源语数量</label>
+            <label class="layui-form-label">源语字数</label>
             <div class="layui-input-block">
                 <input type="text" name="number_of_words" class="layui-input" lay-verify="required"
-                       placeholder="请输入源语数量" value="{$row.number_of_words|default=''}">
+                       placeholder="请输入源语字数" value="{$row.number_of_words|default=''}">
             </div>
         </div>
         <div class="layui-form-item">
@@ -68,7 +68,7 @@
             </div>
         </div>
         <div class="layui-form-item">
-            <label class="layui-form-label">服务</label>
+            <label class="layui-form-label">服务类型</label>
             <div class="layui-input-block">
                 <div id="service"></div>
             </div>
@@ -114,7 +114,7 @@
             <label class="layui-form-label">税率</label>
             <div class="layui-input-block">
                 <select name="tax_rate">
-                    <option value="">请选择税率{$row.tax_rate}</option>
+                    <option value="">请选择税率</option>
                     {foreach $s as $k=>$v}
                     <option value="{$v.id}" {if condition="$v.id eq $row.tax_rate" } selected="" {/if}>{$v.content}</option>
                     {/foreach}
@@ -159,17 +159,17 @@
                     </div>
                 </div>-->
         <div class="layui-form-item">
-            <label class="layui-form-label">委托日期</label>
+            <label class="layui-form-label">来稿日期</label>
             <div class="layui-input-block">
                 <input type="text" name="entrust_date" data-date="" data-date-type="date" autocomplete="off"
-                       class="layui-input" placeholder="请输入委托日期"
+                       class="layui-input" placeholder="请输入来稿日期"
                        value="{$row.entrust_date|default=''}">
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">客户期望提交日期</label>
             <div class="layui-input-block">
-                <input type="text" name="customer_submit_date" data-date="" data-date-type="date" autocomplete="off"
+                <input type="text" name="customer_submit_date" data-date="" data-date-type="datetime" autocomplete="off"
                        class="layui-input" placeholder="请输入客户期望提交日期"
                        value="{$row.customer_submit_date|default=''}">
             </div>
@@ -192,16 +192,16 @@
             </div>
         </div>
         <div class="layui-form-item">
-            <label class="layui-form-label">客户参考文件</label>
+            <label class="layui-form-label">参考文件</label>
             <div class="layui-input-block">
-                <!--<input type="text" name="customer_file_reference" class="layui-input" lay-verify="required" placeholder="请输入客户参考文件" value="{$row.customer_file_reference|default=''}">-->
-                <textarea name="customer_file_reference" placeholder="请输入客户参考文件" class="layui-textarea"> {$row.customer_file_reference|default=''}</textarea>
+                <!--<input type="text" name="customer_file_reference" class="layui-input" lay-verify="required" placeholder="请输入参考文件" value="{$row.customer_file_reference|default=''}">-->
+                <textarea name="customer_file_reference" placeholder="请输入参考文件" class="layui-textarea"> {$row.customer_file_reference|default=''}</textarea>
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">备注</label>
             <div class="layui-input-block">
-                <!--<input type="text" name="customer_file_remark" class="layui-input" lay-verify="required" placeholder="请输入客户参考文件备注" value="{$row.customer_file_remark|default=''}">-->
+                <!--<input type="text" name="customer_file_remark" class="layui-input" lay-verify="required" placeholder="请输入参考文件备注" value="{$row.customer_file_remark|default=''}">-->
                 <textarea name="customer_file_remark" placeholder="备注" class="layui-textarea">{$row.customer_file_remark|default=''}</textarea>
 
 
@@ -217,13 +217,13 @@
 </div>
 <script src="__STATIC__/js/jquery-1.8.3.min.js" charset="utf-8"></script>
 <script>
-    //服务
+    //服务类型
     var n = '<?php echo  json_encode($n);?>';
     var n = JSON.parse(n);
     var service = xmSelect.render({
         el: '#service',
         language: 'zn',
-        tips: '请选择服务',
+        tips: '请选择服务类型',
         name: 'service',
         filterable: true,
         toolbar: {
