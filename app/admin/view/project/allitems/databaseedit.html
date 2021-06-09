@@ -1,0 +1,90 @@
+<link rel="stylesheet" type="text/css" href="https://www.layuicdn.com/layui/css/layui.css" />
+<script src="https://www.layuicdn.com/layui/layui.js"></script>
+<div class="layuimini-container">
+    <form id="app-form" class="layui-form layuimini-form" action="{:url('databaseupdate')}" method="post">
+
+        <input type="hidden" name="id" value="{$row.id}">
+        <div class="layui-form-item">
+            <label class="layui-form-label">是否更新公司主库</label>
+            <div class="layui-input-block">
+                <select name="update_company_tm"  lay-search>
+                    <option value="">请选择是否更新公司主库</option>
+                    <option value="No" {if $row.update_company_tm =='No'} selected{/if} >No</option>
+                    <option value="Yes" {if $row.update_company_tm =='Yes'} selected{/if} >Yes</option>
+                    <option value="N\A"  {if $row.update_company_tm =='N\A'} selected{/if} >N\A</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">是否更新文件主库</label>
+            <div class="layui-input-block">
+                <select name="update_file_tm"  lay-search>
+                    <option value="">请选择是否更新文件主库</option>
+                    <option value="No" {if $row.update_file_tm =='No'} selected{/if} >No</option>
+                    <option value="Yes" {if $row.update_file_tm =='Yes'} selected{/if} >Yes</option>
+                    <option value="N\A"  {if $row.update_file_tm =='N\A'} selected{/if} >N\A</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">更新方式</label>
+            <div class="layui-input-block">
+                <select name="updating_means"  lay-search>
+                    <option value="">请选择更新方式</option>
+                    <option value="SDL更库" {if $row.updating_means =='SDL更库'} selected{/if} >SDL更库</option>
+                    <option value="录入更库" {if $row.updating_means =='录入更库'} selected{/if} >录入更库</option>
+                    <option value="修订跟库"  {if $row.updating_means =='修订跟库'} selected{/if} >修订跟库</option>
+                    <option value="N\A"  {if $row.updating_means =='N\A'} selected{/if} >N\A</option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">更新时间</label>
+            <div class="layui-input-block">
+                <input type="date" value="{$row.updating_time|default=''}" name="updating_time">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">应用领域</label>
+            <div class="layui-input-block">
+                <input type="text" name="Industry_field" class="layui-input"
+                       placeholder="请输入应用领域" value="{$row.Industry_field|default=''}">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">品牌型号</label>
+            <div class="layui-input-block">
+                <input type="text" name="brand_and_model" class="layui-input"
+                       placeholder="请输入品牌型号" value="{$row.brand_and_model|default=''}">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">产品部件</label>
+            <div class="layui-input-block">
+                <input type="text" name="product_parts" class="layui-input"
+                       placeholder="请输入产品部件" value="{$row.product_parts|default=''}">
+            </div>
+        </div>
+
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">备注</label>
+            <div class="layui-input-block">
+                <!--<input type="text" name="customer_file_remark" class="layui-input" lay-verify="required" placeholder="请输入客户参考文件备注" value="{$row.customer_file_remark|default=''}">-->
+                <textarea name="database_remark" placeholder="备注" class="layui-textarea">{$row.customer_file_remark|default=''}</textarea>
+            </div>
+        </div>
+        <div class="hr-line"></div>
+        <div class="layui-form-item text-center">
+            <button type="submit" class="layui-btn layui-btn-normal layui-btn-sm" lay-submit>确认</button>
+            <button type="reset" class="layui-btn layui-btn-primary layui-btn-sm">重置</button>
+        </div>
+    </form>
+</div>
+
+
+<script>
+
+</script>

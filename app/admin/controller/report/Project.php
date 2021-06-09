@@ -55,7 +55,7 @@ class Project extends AdminController
 
 
             foreach ($gs as $k => $v) {
-                $list_date = Customeraa::with(['contract'])->whereBetweenTime('create_time', $s, $d)
+                $list_date = Customeraa::with(['contract'])->whereBetweenTime('filecreate_at', $s, $d)
                     ->where('contract_id', $v['contract_id'])->sum('page');
 //                        ->field(['contract_id','sum(page) page'])
 //                        ->group('contract_id')->select()->toarray();

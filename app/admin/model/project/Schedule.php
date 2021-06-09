@@ -2,6 +2,7 @@
 
 namespace app\admin\model\project;
 
+use app\admin\model\SystemAdmin;
 use app\common\model\TimeModel;
 
 class Schedule extends TimeModel
@@ -44,6 +45,19 @@ class Schedule extends TimeModel
     {
         return ['1'=>'yes','2'=>'no','0'=>'N/A',];
     }
+
+    public function desciption()
+    {
+        return $this->belongsTo(Description::class,'description_id','id');
+    }
+    public function write()
+    {
+        return $this->belongsTo(SystemAdmin::class,'schedule_write_id','id');
+    }
+/*    public function topics()
+    {
+        return $this->hasManyThrough('Topic','User');
+    }*/
 
 
 }

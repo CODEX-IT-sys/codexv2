@@ -417,7 +417,94 @@ define(["jquery", "easy-admin"], function ($, ea) {
             })
             ea.listen();
         },
+        database: function () {
+            var init = {
+                table_elem: '#currentTable',
+                table_render_id: 'currentTableRenderId',
+                index_url: 'project.allitems/database',
+                add_url: 'project.allitems/add',
+                edit_url: 'project.allitems/databaseedit',
+                delete_url: 'project.allitems/delete',
+                export_url: 'project.allitems/export',
+                modify_url: 'project.allitems/modify',
+                deliver_url: 'project.allitems/deliver',
+                m_url: 'project.allitems/m',
+                general_url: 'project.allitems/general',
+                batchedit_url: 'project.allitems/batchedit',
+            };
+            var allitemsc = ea.table.render({
+                init: init,
+                skin: 'line  ' //行边框风格
+                , even: true, //开启隔行背景
+                size: 'sm', //小尺寸的表格
+                toolbar: ['refresh',
 
+                ],
+                text: {none: '无数据'},
+                cols: [[
+                    {field: 'customer_file_code', title: '文件编号', fixed: true, width: 200},
+                    {type: 'checkbox', fixed: true,},
+                    {field: 'id', title: 'id'},
+                    {field: 'customer_file_name', title: '文件名称', edit: true, sort: true},
+                    {field: 'contract.company_name', title: '公司名称', edit: true, sort: true},
+                    {field: 'type.content', title: '类型', search: 'false',},
+                    {field: 'page', title: '页数', edit: true, search: 'false'},
+                    {field: 'number_of_words', title: '源语数量', edit: true, search: 'false'},
+                    {field: 'service', title: '服务', search: 'false'},
+                    {field: 'yz.content', title: '语种', search: 'false',},
+                    {field: 'completion_date', title: '交付日期', search: 'false'},
+                    {field: 'assistant.username', title: '项目助理', search: 'false'},
+                    {field: 'tyevel.content', title: '排版难易度', search: 'false'},
+                    {field: 'trevel.content', title: '翻译难易度', search: 'false'},
+                    {field: 'file_cate', title: '文件分类', search: 'false'},
+                    {field: 'translation_id', title: '翻译', search: 'false'},
+                    {field: 'proofreader_id', title: '校对', search: 'false'},
+                    {field: 'before_ty_id', title: '预排版', search: 'false'},
+                    {field: 'after_ty_id', title: '后排版', search: 'false'},
+                    {field: 'update_company_tm', title: '是否更新公司主库', search: 'false', },
+                    {field: 'update_file_tm', title: '是否更新文件主库', search: 'false', },
+                    {field: 'updating_means', title: '更新方式', search: 'false', },
+                    {field: 'updating_time', title: '更新时间', search: 'false', },
+                    {field: 'product_parts', title: '产品部件', search: 'false', },
+                    {field: 'brand_and_model', title: '品牌型号', search: 'false', },
+                    {field: 'Industry_field', title: '应用领域', search: 'false', },
+                    {field: 'database_remark', title: '备注', search: 'false'},
+                    {
+                        width: 250, title: '操作', templet: ea.table.tool, fixed: "right", operat:    [
+                            [{
+                                text: '编辑',
+                                url: init.edit_url,
+                                method: 'open',
+                                auth: 'edit',
+                                class: 'layui-btn layui-btn-xs layui-btn-normal',
+                            }]
+
+                        ],
+                    },
+
+                ]],
+                filter: {
+                    items: ['column', 'data', 'condition', 'editCondition', 'excel', 'clearCache'],
+                    cache: true
+                }
+                , autoColumnWidth: {
+                    init: true
+                },
+                done: function () {
+                    // 在 done 中开启
+                    soulTable.render(this)
+                }
+            });
+            $('#reload').on('click', function () {
+                // 表格重载
+                allitemsc.reload()
+            })
+            $('#clear').on('click', function () {
+                soulTable.clearCache(allitemsc.config.id)
+                layer.msg('已还原！', {icon: 1, time: 1000})
+            })
+            ea.listen();
+        },
         add: function () {
             ea.listen();
         },

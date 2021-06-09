@@ -54,16 +54,16 @@ define(["jquery", "easy-admin", "echarts", "echarts-theme", "miniAdmin", "miniTa
                     success: function (layero) {
                         var btn = layero.find('.layui-layer-btn');
                         btn.find('.layui-layer-btn0').attr({
-                            href: 'https://gitee.com/zhongshaofa/layuimini',
+                            href: '',
                             target: '_blank'
                         });
                     }
                 });
             });
 
-            /**
+/*            /!**
              * 报表功能
-             */
+             *!/
             var echartsRecords = echarts.init(document.getElementById('echarts-records'), 'walden');
             var optionRecords = {
                 title: {
@@ -130,14 +130,17 @@ define(["jquery", "easy-admin", "echarts", "echarts-theme", "miniAdmin", "miniTa
             echartsRecords.setOption(optionRecords);
             window.addEventListener("resize", function () {
                 echartsRecords.resize();
-            });
+            });*/
         },
         editAdmin: function () {
             ea.listen();
         },
         editPassword: function () {
             ea.listen();
-        }
+        },
+
     };
+
+
     return Controller;
 });

@@ -324,3 +324,18 @@
 
     });
 </script>
+
+<script>
+    layui.use('element', function(){
+        var element = layui.element;
+
+        //一些事件触发
+        element.on('tab(layuiminiTab)', function(data){
+            console.log(this); //当前Tab标题所在的原始DOM元素
+            console.log(data.index); //得到当前Tab的所在下标
+            console.log(data.elem); //得到当前的Tab大容器
+        });
+
+    });
+
+</script>

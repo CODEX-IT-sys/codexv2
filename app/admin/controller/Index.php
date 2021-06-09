@@ -3,6 +3,7 @@
 namespace app\admin\controller;
 
 
+use app\admin\model\customer\Customeraa;
 use app\admin\model\setting\DatabaseContent;
 use app\admin\model\SystemAdmin;
 use app\admin\model\SystemQuick;
@@ -77,10 +78,107 @@ class Index extends AdminController
         Cache::set('yp',$yp);
         Cache::set('hp',$hp);
         Cache::set('xd',$xd);
-
-
+        $notfile=Customeraa::with(['contract'])->where('file_status',3)->count();
+        $todaytfile=Customeraa::with(['contract'])->where('file_status',3)->whereTime('customer_submit_date', 'today')->count();
+        $exceedfile=Customeraa::with(['contract'])->where('file_status',3)->where('customer_submit_date', '<',time())->count();
+        $arrangefile=Customeraa::with(['contract'])->where('file_status',3)->where('assistant_id',null)->count();
+        $page=Customeraa::with(['contract'])->where('file_status',3)->sum('page');
+        $updatedatabase=Customeraa::with(['contract'])->where('file_status','in','3,4')->where('update_company_tm','No')->count();
+        $this->assign(['page'=>$page]);
+        $this->assign(['notfile'=>$notfile]);
+        $this->assign(['updatedatabase'=>$updatedatabase]);
+        $this->assign(['todaytfile'=>$todaytfile]);
+        $this->assign(['exceedfile'=>$exceedfile]);
+        $this->assign(['arrangefile'=>$arrangefile]);
         $this->assign('quicks', $quicks);
         return $this->fetch();
+    }
+
+    /**
+     * 待提交文件
+     * @return string
+     * @throws \Exception
+     */
+    public function notfile()
+    {
+        $arr=Customeraa::with(['contract'])->where('file_status',3)->select();
+        $data = [
+            'code' => 0,
+            'msg' => '',
+            'count' => count($arr),
+            'data' => $arr,
+        ];
+
+        return json($data);
+
+    }
+
+    /**
+     * 今日提交文件
+     * @return string
+     * @throws \Exception
+     */
+    public function todaytfile()
+    {
+        $arr=Customeraa::with(['contract'])->where('file_status',3)->whereTime('customer_submit_date', 'today')->select();
+        $data = [
+            'code' => 0,
+            'msg' => '',
+            'count' => count($arr),
+            'data' => $arr,
+        ];
+        return json($data);
+    }
+
+    /**
+     * 逾期文件
+     * @return string
+     * @throws \Exception
+     */
+    public function exceedfile()
+    {
+        $arr=Customeraa::with(['contract'])->where('file_status',3)->where('customer_submit_date', '<',time())->select();
+        $data = [
+            'code' => 0,
+            'msg' => '',
+            'count' => count($arr),
+            'data' => $arr,
+        ];
+        return json($data);
+
+    }
+    /**
+     * 待安排文件
+     * @return string
+     * @throws \Exception
+     */
+    public function arrangefile()
+    {
+        $arr=Customeraa::with(['contract'])->where('file_status',3)->where('assistant_id',null)->select();
+        $data = [
+            'code' => 0,
+            'msg' => '',
+            'count' => count($arr),
+            'data' => $arr,
+        ];
+        return json($data);
+    }
+
+    /**
+     * 待更库
+     * @return string
+     * @throws \Exception
+     */
+    public function updatedatabase()
+    {
+        $arr=Customeraa::with(['contract'])->where('file_status','in','3,4')->where('update_company_tm','No')->select();
+        $data = [
+            'code' => 0,
+            'msg' => '',
+            'count' => count($arr),
+            'data' => $arr,
+        ];
+        return json($data);
     }
 
     /**

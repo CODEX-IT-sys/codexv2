@@ -32,7 +32,12 @@ class Customeraa extends TimeModel
         'entrust_date' => 'timestamp',
     ];
 
+    public function getFileStatusList()
+    {
 
+        $status = ['1'=>'拒绝','2'=>'接受','0'=>'未确定',3=>'已批准',4=>'已交稿'];
+        return $status;
+    }
     public function getServiceAttr($val)
     {
         $val= explode(",", $val);
@@ -132,12 +137,7 @@ class Customeraa extends TimeModel
     {
         return ['1' => 'yes', '2' => 'no', '0' => 'N/A',];
     }
-    public function getFileStatusList()
-    {
 
-        $status = ['1'=>'拒绝','2'=>'接受','0'=>'未确定',3=>'已批准',4=>'已交稿'];
-        return $status;
-    }
     //关联录入人
     public function write()
     {

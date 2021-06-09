@@ -1,4 +1,3 @@
-<!--
 <link rel="stylesheet" href="__STATIC__/admin/css/welcome.css?v={:time()}" media="all">
 <div class="layuimini-container">
     <div class="layuimini-main">
@@ -19,8 +18,8 @@
                                                         <h5>统计</h5>
                                                     </div>
                                                     <div class="panel-content">
-                                                        <h1 class="no-margins">1234</h1>
-                                                        <small>当前分类总记录数</small>
+                                                        <h1 class="no-margins">{$page}</h1>
+                                                        <small>待提交文件总页数</small>
                                                     </div>
                                                 </div>
                                             </div>
@@ -34,7 +33,7 @@
                                                     </div>
                                                     <div class="panel-content">
                                                         <h1 class="no-margins">1234</h1>
-                                                        <small>当前分类总记录数</small>
+                                                        <small>待提交文件总页数</small>
                                                     </div>
                                                 </div>
                                             </div>
@@ -48,7 +47,7 @@
                                                     </div>
                                                     <div class="panel-content">
                                                         <h1 class="no-margins">1234</h1>
-                                                        <small>当前分类总记录数</small>
+                                                        <small>待提交文件总页数</small>
                                                     </div>
                                                 </div>
                                             </div>
@@ -62,7 +61,7 @@
                                                     </div>
                                                     <div class="panel-content">
                                                         <h1 class="no-margins">1234</h1>
-                                                        <small>当前分类总记录数</small>
+                                                        <small>待提交文件总页数</small>
                                                     </div>
                                                 </div>
                                             </div>
@@ -96,9 +95,34 @@
                     </div>
                     <div class="layui-col-md12">
                         <div class="layui-card">
-                            <div class="layui-card-header"><i class="fa fa-line-chart icon"></i>报表统计</div>
+                            <div class="layui-card-header"><i class="fa fa-line-chart icon"></i>文件提醒</div>
                             <div class="layui-card-body">
-                                <div id="echarts-records" style="width: 100%;min-height:500px"></div>
+                                <div class="layui-tab">
+                                    <ul class="layui-tab-title">
+                                        <li class="layui-this">待提交文件<span class="layui-badge">{$notfile}</span></li>
+                                        <li>待安排文件<span class="layui-badge">{$arrangefile}</span></li>
+                                        <li>待跟库文件<span class="layui-badge">{$updatedatabase}</span></li>
+                                        <li>今日提交提醒<span class="layui-badge">{$todaytfile}</span></li>
+                                        <li>进度异常提醒<span class="layui-badge">{$exceedfile}</span></li>
+                                    </ul>
+                                    <div class="layui-tab-content">
+                                        <div class="layui-tab-item layui-show">
+                                            <table id="notfile"></table>
+                                        </div>
+                                        <div class="layui-tab-item">
+                                            <table id="arrangefile"></table>
+                                        </div>
+                                        <div class="layui-tab-item">
+                                            <table id="updatedatabase"></table>
+                                        </div>
+                                        <div class="layui-tab-item">
+                                            <table id="todayfile"></table>
+                                        </div>
+                                        <div class="layui-tab-item">
+                                            <table id="exceedfile"></table>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -110,121 +134,121 @@
                 <div class="layui-card">
                     <div class="layui-card-header"><i class="fa fa-bullhorn icon icon-tip"></i>系统公告</div>
                     <div class="layui-card-body layui-text">
-                        这里是一些公告
+                        <!--                        这里是一些公告
 
-                        code
-                        <table class="layui-table">
-                            <colgroup>
-                                <col width="150">
-                                <col width="200">
-                                <col>
-                            </colgroup>
-                            <thead>
-                            <tr>
-                                <th>昵称</th>
-                                <th>加入时间</th>
-                                <th>签名</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                                <td>贤心</td>
-                                <td>2016-11-29</td>
-                                <td>人生就像是一场修行</td>
-                            </tr>
-                            <tr>
-                                <td>许闲心</td>
-                                <td>2016-11-28</td>
-                                <td>于千万人之中遇见你所遇见的人，于千万年之中，时间的无涯的荒野里…</td>
-                            </tr>
-                            </tbody>
-                        </table>
+                                                code
+                                                <table class="layui-table">
+                                                    <colgroup>
+                                                        <col width="150">
+                                                        <col width="200">
+                                                        <col>
+                                                    </colgroup>
+                                                    <thead>
+                                                    <tr>
+                                                        <th>昵称</th>
+                                                        <th>加入时间</th>
+                                                        <th>签名</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    <tr>
+                                                        <td>贤心</td>
+                                                        <td>2016-11-29</td>
+                                                        <td>人生就像是一场修行</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>许闲心</td>
+                                                        <td>2016-11-28</td>
+                                                        <td>于千万人之中遇见你所遇见的人，于千万年之中，时间的无涯的荒野里…</td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>-->
 
 
-                        &lt;!&ndash;                        <div class="layuimini-notice">
-                                                    <div class="layuimini-notice-title">修改选项卡样式</div>
-                                                    <div class="layuimini-notice-extra">2019-07-11 23:06</div>
-                                                    <div class="layuimini-notice-content layui-hide">
-                                                        界面足够简洁清爽。<br>
-                                                        一个接口几行代码而已直接初始化整个框架，无需复杂操作。<br>
-                                                        支持多tab，可以打开多窗口。<br>
-                                                        支持无限级菜单和对font-awesome图标库的完美支持。<br>
-                                                        失效以及报错菜单无法直接打开，并给出弹出层提示完美的线上用户体验。<br>
-                                                        url地址hash定位，可以清楚看到当前tab的地址信息。<br>
-                                                        刷新页面会保留当前的窗口，并且会定位当前窗口对应左侧菜单栏。<br>
-                                                        移动端的友好支持。<br>
-                                                    </div>
-                                                </div>
-                                                <div class="layuimini-notice">
-                                                    <div class="layuimini-notice-title">新增系统404模板</div>
-                                                    <div class="layuimini-notice-extra">2019-07-11 12:57</div>
-                                                    <div class="layuimini-notice-content layui-hide">
-                                                        界面足够简洁清爽。<br>
-                                                        一个接口几行代码而已直接初始化整个框架，无需复杂操作。<br>
-                                                        支持多tab，可以打开多窗口。<br>
-                                                        支持无限级菜单和对font-awesome图标库的完美支持。<br>
-                                                        失效以及报错菜单无法直接打开，并给出弹出层提示完美的线上用户体验。<br>
-                                                        url地址hash定位，可以清楚看到当前tab的地址信息。<br>
-                                                        刷新页面会保留当前的窗口，并且会定位当前窗口对应左侧菜单栏。<br>
-                                                        移动端的友好支持。<br>
-                                                    </div>
-                                                </div>
-                                                <div class="layuimini-notice">
-                                                    <div class="layuimini-notice-title">新增treetable插件和菜单管理样式</div>
-                                                    <div class="layuimini-notice-extra">2019-07-05 14:28</div>
-                                                    <div class="layuimini-notice-content layui-hide">
-                                                        界面足够简洁清爽。<br>
-                                                        一个接口几行代码而已直接初始化整个框架，无需复杂操作。<br>
-                                                        支持多tab，可以打开多窗口。<br>
-                                                        支持无限级菜单和对font-awesome图标库的完美支持。<br>
-                                                        失效以及报错菜单无法直接打开，并给出弹出层提示完美的线上用户体验。<br>
-                                                        url地址hash定位，可以清楚看到当前tab的地址信息。<br>
-                                                        刷新页面会保留当前的窗口，并且会定位当前窗口对应左侧菜单栏。<br>
-                                                        移动端的友好支持。<br>
-                                                    </div>
-                                                </div>
-                                                <div class="layuimini-notice">
-                                                    <div class="layuimini-notice-title">修改logo缩放问题</div>
-                                                    <div class="layuimini-notice-extra">2019-07-04 11:02</div>
-                                                    <div class="layuimini-notice-content layui-hide">
-                                                        界面足够简洁清爽。<br>
-                                                        一个接口几行代码而已直接初始化整个框架，无需复杂操作。<br>
-                                                        支持多tab，可以打开多窗口。<br>
-                                                        支持无限级菜单和对font-awesome图标库的完美支持。<br>
-                                                        失效以及报错菜单无法直接打开，并给出弹出层提示完美的线上用户体验。<br>
-                                                        url地址hash定位，可以清楚看到当前tab的地址信息。<br>
-                                                        刷新页面会保留当前的窗口，并且会定位当前窗口对应左侧菜单栏。<br>
-                                                        移动端的友好支持。<br>
-                                                    </div>
-                                                </div>
-                                                <div class="layuimini-notice">
-                                                    <div class="layuimini-notice-title">修复左侧菜单缩放tab无法移动</div>
-                                                    <div class="layuimini-notice-extra">2019-06-17 11:55</div>
-                                                    <div class="layuimini-notice-content layui-hide">
-                                                        界面足够简洁清爽。<br>
-                                                        一个接口几行代码而已直接初始化整个框架，无需复杂操作。<br>
-                                                        支持多tab，可以打开多窗口。<br>
-                                                        支持无限级菜单和对font-awesome图标库的完美支持。<br>
-                                                        失效以及报错菜单无法直接打开，并给出弹出层提示完美的线上用户体验。<br>
-                                                        url地址hash定位，可以清楚看到当前tab的地址信息。<br>
-                                                        刷新页面会保留当前的窗口，并且会定位当前窗口对应左侧菜单栏。<br>
-                                                        移动端的友好支持。<br>
-                                                    </div>
-                                                </div>
-                                                <div class="layuimini-notice">
-                                                    <div class="layuimini-notice-title">修复多模块菜单栏展开有问题</div>
-                                                    <div class="layuimini-notice-extra">2019-06-13 14:53</div>
-                                                    <div class="layuimini-notice-content layui-hide">
-                                                        界面足够简洁清爽。<br>
-                                                        一个接口几行代码而已直接初始化整个框架，无需复杂操作。<br>
-                                                        支持多tab，可以打开多窗口。<br>
-                                                        支持无限级菜单和对font-awesome图标库的完美支持。<br>
-                                                        失效以及报错菜单无法直接打开，并给出弹出层提示完美的线上用户体验。<br>
-                                                        url地址hash定位，可以清楚看到当前tab的地址信息。<br>
-                                                        刷新页面会保留当前的窗口，并且会定位当前窗口对应左侧菜单栏。<br>
-                                                        移动端的友好支持。<br>
-                                                    </div>
-                                                </div>&ndash;&gt;
+                        <div class="layuimini-notice">
+                            <div class="layuimini-notice-title">公告1</div>
+                            <div class="layuimini-notice-extra">2019-07-11 23:06</div>
+                            <div class="layuimini-notice-content layui-hide">
+                                界面足够简洁清爽。<br>
+                                一个接口几行代码而已直接初始化整个框架，无需复杂操作。<br>
+                                支持多tab，可以打开多窗口。<br>
+                                支持无限级菜单和对font-awesome图标库的完美支持。<br>
+                                失效以及报错菜单无法直接打开，并给出弹出层提示完美的线上用户体验。<br>
+                                url地址hash定位，可以清楚看到当前tab的地址信息。<br>
+                                刷新页面会保留当前的窗口，并且会定位当前窗口对应左侧菜单栏。<br>
+                                移动端的友好支持。<br>
+                            </div>
+                        </div>
+                        <div class="layuimini-notice">
+                            <div class="layuimini-notice-title">公告2</div>
+                            <div class="layuimini-notice-extra">2019-07-11 12:57</div>
+                            <div class="layuimini-notice-content layui-hide">
+                                界面足够简洁清爽。<br>
+                                一个接口几行代码而已直接初始化整个框架，无需复杂操作。<br>
+                                支持多tab，可以打开多窗口。<br>
+                                支持无限级菜单和对font-awesome图标库的完美支持。<br>
+                                失效以及报错菜单无法直接打开，并给出弹出层提示完美的线上用户体验。<br>
+                                url地址hash定位，可以清楚看到当前tab的地址信息。<br>
+                                刷新页面会保留当前的窗口，并且会定位当前窗口对应左侧菜单栏。<br>
+                                移动端的友好支持。<br>
+                            </div>
+                        </div>
+                        <div class="layuimini-notice">
+                            <div class="layuimini-notice-title">新增treetable插件和菜单管理样式</div>
+                            <div class="layuimini-notice-extra">2019-07-05 14:28</div>
+                            <div class="layuimini-notice-content layui-hide">
+                                界面足够简洁清爽。<br>
+                                一个接口几行代码而已直接初始化整个框架，无需复杂操作。<br>
+                                支持多tab，可以打开多窗口。<br>
+                                支持无限级菜单和对font-awesome图标库的完美支持。<br>
+                                失效以及报错菜单无法直接打开，并给出弹出层提示完美的线上用户体验。<br>
+                                url地址hash定位，可以清楚看到当前tab的地址信息。<br>
+                                刷新页面会保留当前的窗口，并且会定位当前窗口对应左侧菜单栏。<br>
+                                移动端的友好支持。<br>
+                            </div>
+                        </div>
+                        <div class="layuimini-notice">
+                            <div class="layuimini-notice-title">修改logo缩放问题</div>
+                            <div class="layuimini-notice-extra">2019-07-04 11:02</div>
+                            <div class="layuimini-notice-content layui-hide">
+                                界面足够简洁清爽。<br>
+                                一个接口几行代码而已直接初始化整个框架，无需复杂操作。<br>
+                                支持多tab，可以打开多窗口。<br>
+                                支持无限级菜单和对font-awesome图标库的完美支持。<br>
+                                失效以及报错菜单无法直接打开，并给出弹出层提示完美的线上用户体验。<br>
+                                url地址hash定位，可以清楚看到当前tab的地址信息。<br>
+                                刷新页面会保留当前的窗口，并且会定位当前窗口对应左侧菜单栏。<br>
+                                移动端的友好支持。<br>
+                            </div>
+                        </div>
+                        <div class="layuimini-notice">
+                            <div class="layuimini-notice-title">修复左侧菜单缩放tab无法移动</div>
+                            <div class="layuimini-notice-extra">2019-06-17 11:55</div>
+                            <div class="layuimini-notice-content layui-hide">
+                                界面足够简洁清爽。<br>
+                                一个接口几行代码而已直接初始化整个框架，无需复杂操作。<br>
+                                支持多tab，可以打开多窗口。<br>
+                                支持无限级菜单和对font-awesome图标库的完美支持。<br>
+                                失效以及报错菜单无法直接打开，并给出弹出层提示完美的线上用户体验。<br>
+                                url地址hash定位，可以清楚看到当前tab的地址信息。<br>
+                                刷新页面会保留当前的窗口，并且会定位当前窗口对应左侧菜单栏。<br>
+                                移动端的友好支持。<br>
+                            </div>
+                        </div>
+                        <div class="layuimini-notice">
+                            <div class="layuimini-notice-title">修复多模块菜单栏展开有问题</div>
+                            <div class="layuimini-notice-extra">2019-06-13 14:53</div>
+                            <div class="layuimini-notice-content layui-hide">
+                                界面足够简洁清爽。<br>
+                                一个接口几行代码而已直接初始化整个框架，无需复杂操作。<br>
+                                支持多tab，可以打开多窗口。<br>
+                                支持无限级菜单和对font-awesome图标库的完美支持。<br>
+                                失效以及报错菜单无法直接打开，并给出弹出层提示完美的线上用户体验。<br>
+                                url地址hash定位，可以清楚看到当前tab的地址信息。<br>
+                                刷新页面会保留当前的窗口，并且会定位当前窗口对应左侧菜单栏。<br>
+                                移动端的友好支持。<br>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -255,7 +279,7 @@
                                 <td></td>
                                 <td style="padding-bottom: 0;">
                                     <div class="layui-btn-container">
-                                                            xx
+                                        xx
                                     </div>
                                 </td>
                             </tr>
@@ -263,7 +287,7 @@
                                 <td></td>
                                 <td style="padding-bottom: 0;">
                                     <div class="layui-btn-container">
-                                                        xxx
+                                        xxx
                                     </div>
                                 </td>
                             </tr>
@@ -286,5 +310,163 @@
         </div>
     </div>
 </div>
--->
-<h1>首页内容待确定</h1>
+
+<script>
+    layui.config({
+        base: '/static/plugs/layui-soul-table/',   // 第三方模块所在目录
+        version: 'v1.6.0' // 插件版本号
+    }).extend({
+        soulTable: 'ext/soulTable',
+        tableChild: 'ext/tableChild',
+        tableMerge: 'ext/tableMerge',
+        tableFilter: 'ext/tableFilter',
+        excel: 'ext/excel',
+    });
+    layui.use(['form', 'table', 'soulTable',], function () {
+        var table = layui.table;
+        var table1 = layui.table;
+        var table2 = layui.table;
+        var table3 = layui.table;
+        var table4 = layui.table;
+        var soulTable = layui.soulTable;
+        //第一个实例
+        table.render({
+            elem: '#notfile'
+            // ,skin: 'nob' //行边框风格
+            , even: true //开启隔行背景
+            , drag: 'simple'
+            , overflow: 'tips'
+            , defaultToolbar: ['filter', 'print', 'exports']
+            , url: "{:url('notfile')}"
+            , page: true //开启分页
+            , cols: [[ //表头
+                {field: 'customer_file_code', title: '文件编号', filter: true},
+                {
+                    title: '公司名称', filter: true, templet: function (d) {
+                        return d.contract.company_name;
+                    }
+                },
+                {field: 'customer_file_name', title: '文件名称', filter: true},
+                {field: 'customer_submit_date', title: '客户期望提交日期', filter: true, sort: true}
+            ]]
+            , done: function () {
+                soulTable.render(this);
+            }
+            , filter: {
+                items: ['column', 'data', 'condition', 'editCondition'] // 只显示表格列和导出excel两个菜单项
+                , bottom: true
+            }
+        });
+
+        //第二个实例
+        table1.render({
+            elem: '#todayfile'
+            , skin: 'nob' //行边框风格
+            , even: true //开启隔行背景
+            , overflow: 'tips'
+            , url: "{:url('todaytfile')}"
+            , page: true //开启分页
+            , cols: [[ //表头
+                {field: 'customer_file_code', title: '文件编号', filter: true},
+                {
+                    title: '公司名称', templet: function (d) {
+                        return d.contract.company_name;
+                    }
+                },
+                {field: 'customer_file_name', title: '文件名称',},
+                {field: 'customer_submit_date', title: '客户期望提交日期', sort: true}
+
+            ]]
+            , done: function () {
+                soulTable.render(this);
+            }
+            , filter: {
+                items: ['column', 'data', 'condition', 'editCondition'] // 只显示表格列和导出excel两个菜单项
+                // , bottom: false
+            }
+        });
+
+        //第三个实例
+        table2.render({
+            elem: '#exceedfile'
+            , skin: 'nob' //行边框风格
+            , even: true //开启隔行背景
+            , overflow: 'tips'
+            , url: "{:url('exceedfile')}"
+            , page: true //开启分页
+            , cols: [[ //表头
+                {field: 'customer_file_code', filter: true, title: '文件编号'},
+                {
+                    title: '公司名称', filter: true, templet: function (d) {
+                        return d.contract.company_name;
+                    }
+                },
+                {field: 'customer_file_name', title: '文件名称', filter: true},
+                {field: 'customer_submit_date', title: '客户期望提交日期', filter: true, sort: true}
+
+            ]]
+            , done: function () {
+                soulTable.render(this);
+            }
+            , filter: {
+                items: ['column', 'data', 'condition', 'editCondition'] // 只显示表格列和导出excel两个菜单项
+                , bottom: false
+            }
+        });
+
+        //第四个实例
+        table3.render({
+            elem: '#arrangefile'
+            , skin: 'nob' //行边框风格
+            , even: true //开启隔行背景
+            , overflow: 'tips'
+            , url: "{:url('arrangefile')}"
+            , page: true //开启分页
+            , cols: [[ //表头
+                {field: 'customer_file_code', filter: true, title: '文件编号'},
+                {
+                    title: '公司名称', filter: true, templet: function (d) {
+                        return d.contract.company_name;
+                    }
+                },
+                {field: 'customer_file_name', title: '文件名称', filter: true},
+                {field: 'customer_submit_date', title: '客户期望提交日期', filter: true, sort: true}
+
+            ]]
+            , done: function () {
+                soulTable.render(this);
+            }
+            , filter: {
+                items: ['column', 'data', 'condition', 'editCondition'] // 只显示表格列和导出excel两个菜单项
+                , bottom: false
+            }
+        });
+        //第五个实例
+        table4.render({
+            elem: '#updatedatabase'
+            , skin: 'nob' //行边框风格
+            , even: true //开启隔行背景
+            , overflow: 'tips'
+            , url: "{:url('updatedatabase')}"
+            , page: true //开启分页
+            , cols: [[ //表头
+                {field: 'customer_file_code', filter: true, title: '文件编号'},
+                {
+                    title: '公司名称', filter: true, templet: function (d) {
+                        return d.contract.company_name;
+                    }
+                },
+                {field: 'customer_file_name', title: '文件名称', filter: true},
+                {field: 'customer_submit_date', title: '客户期望提交日期', filter: true, sort: true}
+
+            ]]
+            , done: function () {
+                soulTable.render(this);
+            }
+            , filter: {
+                items: ['column', 'data', 'condition', 'editCondition'] // 只显示表格列和导出excel两个菜单项
+                , bottom: false
+            }
+        });
+    });
+</script>

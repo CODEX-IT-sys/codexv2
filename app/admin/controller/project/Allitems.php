@@ -483,6 +483,85 @@ class Allitems extends AdminController
         echo "<script>window.parent.location.reload()</script>";
     }
 
+    /**
+     * @NodeAnotation(title="项目数据库")
+     */
+    public function database()
+    {
+        if ($this->request->isAjax()) {
+            if (input('selectFields')) {
+                return $this->selectList();
+            }
+            list($page, $limit, $where) = $this->buildTableParames();
+            $count = $this->model
+                ->where($where)
+                ->where('file_status', 'in','3,4')
+                ->when($this->admininfo()['id']!=1, function ($query) {
+                    // 满足条件后执行
+                    return $query->where('mid|assistant_id','in',$this->admininfo()['top_id']);
+                })
+                ->withJoin(['type', 'rate', 'yz', 'dw', 'contract', 'xm',
+                    'tyevel', 'trevel', 'assistant','customerInformation'
+                ], 'LEFT')
+                ->count();
+            $list = $this->model
+                ->where($where)
+                ->where('file_status', 'in','3,4')
+                ->when($this->admininfo()['id']!=1, function ($query) {
+                    // 满足条件后执行
+                    return $query->where('mid|assistant_id','in',$this->admininfo()['top_id']);
+                })
+                ->withJoin(['type', 'rate', 'yz', 'dw', 'contract', 'xm',
+                    'tyevel', 'trevel', 'assistant','customerInformation'
+                ], 'LEFT')
+                ->page($page, $limit)
+                ->order($this->sort)
+                ->select()->toArray();
+            $data = [
+                'code' => 0,
+                'msg' => '',
+                'count' => $count,
+                'data' => $list,
+            ];
+            return json($data);
+        }
+        return $this->fetch('index');
+    }
+
+    /**
+     * @NodeAnotation(title="项目数据库编辑页面")
+     */
+
+    public function databaseedit($id)
+    {
+        $row = $this->model->find($id);
+        empty($row) && $this->error('数据不存在');
+        $this->assign('row', $row);
+        return $this->fetch('databaseedit');
+    }
+    /**
+     * @NodeAnotation(title="项目数据库修改")
+     */
+
+    public function databaseupdate($id)
+    {
+        $row = $this->model->find($id);
+        empty($row) && $this->error('数据不存在');
+
+            $post = $this->request->post();
+            $rule = [];
+            $this->validate($post, $rule);
+            try {
+                $admin = $this->admininfo();
+//                $post['assistant_id'] = $admin['id'];
+                $save = $row->save($post);
+            } catch (\Exception $e) {
+                $this->error('保存失败', $e->getMessage());
+            }
+        echo "<script>window.parent.location.reload()</script>";
+//            $save ? $this->success('保存成功') : $this->error('保存失败');
+
+    }
 
 
     }

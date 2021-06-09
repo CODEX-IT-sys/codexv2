@@ -52,7 +52,7 @@ class Basic extends AdminController
             $count = $this->model
                 ->when($this->admininfo()['id']!=1, function ($query) {
                     // 满足条件后执行
-                    return $query->where('write_id|principal_id','in',$this->admininfo()['top_id']);
+                    return $query->where('write_id|principal_id','find in set',$this->admininfo()['id']);
                 })
                 ->where($where)
                 ->count();
@@ -60,7 +60,7 @@ class Basic extends AdminController
                 ->where($where)
                 ->when($this->admininfo()['id']!=1, function ($query) {
                     // 满足条件后执行
-                    return $query->where('write_id|principal_id','in',$this->admininfo()['top_id']);
+                    return $query->where('write_id|principal_id','find in set',$this->admininfo()['id']);
                 })
                 ->page($page, $limit)
                 ->order($this->sort)

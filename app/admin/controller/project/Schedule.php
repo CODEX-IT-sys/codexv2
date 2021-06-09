@@ -34,6 +34,72 @@ class Schedule extends AdminController
 
     }
 
+    /**
+     * @NodeAnotation(title="排版进度表")
+     */
+    public function myypindex()
+    {
+        if ($this->request->isAjax()) {
+            if (input('selectFields')) {
+                return $this->selectList();
+            }
+
+            list($page, $limit, $where) = $this->buildTableParames();
+            $list = $this->model
+                ->where($where)
+                ->where('type','in','1,4')
+                ->withJoin(['desciption','write'], 'LEFT')
+                ->when($this->admininfo()['id'] != 1, function ($query){
+                    $query->where('schedule_write_id', $this->admininfo()['id']);
+
+                })
+                ->page($page, $limit)
+                ->order($this->sort)
+                ->select()->toArray();
+            $data = [
+                'code' => 0,
+                'msg' => '',
+                'count' => count($list),
+                'data' => $list,
+            ];
+            return json($data);
+        }
+        $this->assign(['description_id' => '']);
+        $this->assign(['type' => '']);
+        return $this->fetch('index');
+    }
+    /**
+     * @NodeAnotation(title="翻译校对进度表")
+     */
+    public function mytrindex()
+    {
+        if ($this->request->isAjax()) {
+            if (input('selectFields')) {
+                return $this->selectList();
+            }
+            list($page, $limit, $where) = $this->buildTableParames();
+            $list = $this->model
+                ->where($where)
+                ->where('type','in','2,3')
+                ->withJoin(['desciption','write'], 'LEFT')
+                ->when($this->admininfo()['id'] != 1, function ($query){
+                    $query->where('schedule_write_id', $this->admininfo()['id']);
+                })
+                ->page($page, $limit)
+                ->order($this->sort)
+                ->select()->toArray();
+            $data = [
+                'code' => 0,
+                'msg' => '',
+                'count' => count($list),
+                'data' => $list,
+            ];
+            return json($data);
+        }
+        $this->assign(['description_id' => '']);
+        $this->assign(['type' => '']);
+        return $this->fetch('index');
+    }
 
     /**
      * @NodeAnotation(title="项目排版进度列表")
@@ -51,17 +117,19 @@ class Schedule extends AdminController
             list($page, $limit, $where) = $this->buildTableParames();
             $count = $this->model
                 ->where($where)
+                ->where('description_id', $a)
                 ->when($this->admininfo()['id'] != 1, function ($query, $a) {
                     // 满足条件后执行
-                    return $query->where('description_id', $a)->where('write_id', $this->admininfo()['id']);
+                    return $query->where('description_id', $a)->where('schedule_write_id', $this->admininfo()['id']);
 
                 })
                 ->count();
 
             $list = $this->model
                 ->where($where)
+                ->where('description_id', $a)
                 ->when($this->admininfo()['id'] != 1, function ($query)use ($a) {
-                        $query->where('description_id', $a)->where('write_id', $this->admininfo()['id']);
+                        $query->where('schedule_write_id', $this->admininfo()['id']);
 
                 })
                 ->page($page, $limit)
@@ -100,17 +168,19 @@ class Schedule extends AdminController
             list($page, $limit, $where) = $this->buildTableParames();
             $count = $this->model
                 ->where($where)
+                ->where('description_id', $a)
                 ->when($this->admininfo()['id'] != 1, function ($query)use ($a) {
                     // 满足条件后执行
-                    return $query->where('description_id', $a)->where('write_id', $this->admininfo()['id']);
+                    return $query->where('schedule_write_id', $this->admininfo()['id']);
 
                 })
                 ->count();
             $list = $this->model
                 ->where($where)
+                ->where('description_id', $a)
                 ->when($this->admininfo()['id'] != 1, function ($query)use ($a) {
                     // 满足条件后执行
-                    return $query->where('description_id', $a)->where('write_id', $this->admininfo()['id']);
+                    return $query->where('schedule_write_id', $this->admininfo()['id']);
 
                 })
                 ->page($page, $limit)
@@ -162,7 +232,7 @@ class Schedule extends AdminController
 
                 $admin = session('admin');
 
-                $post['write_id'] = $admin['id'];
+                $post['schedule_write_id'] = $admin['id'];
 
                 $save = $this->model->save($post);
             } catch (\Exception $e) {
@@ -204,7 +274,7 @@ class Schedule extends AdminController
                 }
 
                 $admin = session('admin');
-                $post['write_id'] = $admin['id'];
+                $post['schedule_write_id'] = $admin['id'];
                 $save = $row->save($post);
             } catch (\Exception $e) {
                 $this->error('保存失败', $e->getMessage());
