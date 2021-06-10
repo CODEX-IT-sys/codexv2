@@ -77,7 +77,7 @@ define(["jquery", "easy-admin"], function ($, ea) {
                     {field: 'page', title: '页数',  search: 'false'},
                     {field: 'number_of_words', title: '源语字数',  search: 'false'},
                     {field: 'service', title: '服务类型', search: 'false'},
-                    {field: 'yz.content', title: '语种',},
+                    {field: 'language', title: '语种',},
                     {field: 'unit_price', title: '单价', search: 'false'},
                     {field: 'dw.content', title: '单位', search: 'false'},
                     {field: 'quotation_number', title: '报价数量', search: 'false', edit: true},

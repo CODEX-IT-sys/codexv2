@@ -163,11 +163,11 @@ class Customeraa extends TimeModel
     {
         return $this->belongsTo('app\admin\model\setting\DatabaseContent', 'c_status', 'id');
     }
-    //关联语种
-    public function yz()
-    {
-        return $this->belongsTo('app\admin\model\setting\DatabaseContent', 'language', 'id');
-    }
+//    //关联语种
+//    public function yz()
+//    {
+//        return $this->belongsTo('app\admin\model\setting\DatabaseContent', 'language', 'id');
+//    }
     //关联服务
     public function fw()
     {

@@ -3,9 +3,11 @@
 
 namespace app\admin\controller\report;
 
+use app\admin\controller\customer\Filaa;
 use app\admin\model\customer\Customeraa;
 use app\admin\model\customer\CustomerContract;
 use app\admin\model\project\Assess;
+use app\admin\model\project\Schedule;
 use app\common\controller\AdminController;
 use think\App;
 use EasyAdmin\annotation\ControllerAnnotation;
@@ -200,5 +202,176 @@ class Project extends AdminController
         return $this->fetch();
     }
 
+    /**
+     * @NodeAnotation(title="每日项目通道")
+     */
+    public function projectpage()
+    {
+        $data=request()->param('month');
+
+        if(isset($data)){
+            $time= strtotime($data);
+            $year = date("Y", $time);
+            $month = date("m", $time);
+            $day = date("d", $time);
+            // 本月一共有几天
+            $firstTime = mktime(0, 0, 0, $month, 1, $year);     // 创建本月开始时间
+            $day = date('t',$firstTime);
+            $lastTime = $firstTime + 86400 * $day  - 1; //结束时间戳
+            $firstTime=date("Ymd",$firstTime);
+            $lastTime=date("Ymd",$lastTime);
+            if($data==''){
+                $firstTime=19701201;
+                $lastTime=20351201;
+
+                $time= time();
+                $year = date("Y", $time);
+
+                $month = date("m", $time);
+
+                $day = date("d", $time);
+                // 本月一共有几天
+                $firstTime = mktime(0, 0, 0, $month, 1, $year);     // 创建本月开始时间
+                $day = date('t',$firstTime);
+                $lastTime = $firstTime + 86400 * $day  - 1; //结束时间戳
+                $firstTime=date("Ymd",$firstTime);
+                $lastTime=date("Ymd",$lastTime);
+            }
+        }else{
+
+            $time= time();
+            $year = date("Y", $time);
+
+            $month = date("m", $time);
+
+            $day = date("d", $time);
+            // 本月一共有几天
+            $firstTime = mktime(0, 0, 0, $month, 1, $year);     // 创建本月开始时间
+            $day = date('t',$firstTime);
+            $lastTime = $firstTime + 86400 * $day  - 1; //结束时间戳
+            $firstTime=date("Ymd",$firstTime);
+            $lastTime=date("Ymd",$lastTime);
+        }
+
+        $mt = Customeraa::whereBetweenTime('completion_date',$firstTime,$lastTime)->where('file_status','in','3,4')->field('sum(page) as sumpage,FROM_UNIXTIME(completion_date,"%Y-%m-%d") as date')->group('date')->select()->toArray();
+
+        $yp=Schedule::whereBetweenTime('work_date',$firstTime,$lastTime)->where('type',1)->field('sum(completion_page) as yppage,FROM_UNIXTIME(work_date,"%Y-%m-%d") as date')->group('date')->select()->toArray();
+        $hp=Schedule::whereBetweenTime('work_date',$firstTime,$lastTime)->where('type',4)->field('sum(completion_page) as hppage,FROM_UNIXTIME(work_date,"%Y-%m-%d") as date')->group('date')->select()->toArray();
+        $xd=Schedule::whereBetweenTime('work_date',$firstTime,$lastTime)->where('type',3)->field('sum(completion_page) as xdpage,FROM_UNIXTIME(work_date,"%Y-%m-%d") as date')->group('date')->select()->toArray();
+        $tr=Schedule::whereBetweenTime('work_date',$firstTime,$lastTime)->where('type',2)->field('sum(completion_page) as trpage,FROM_UNIXTIME(work_date,"%Y-%m-%d") as date')->group('date')->select()->toArray();
+        $hb=[];
+        $c = array_merge($hp,$yp,$mt,$tr,$xd);
+
+        foreach ($c as $k1=>$v1)
+        {
+            if(isset($v1['yppage'])){
+                $hb[$v1['date']]['yppage']= intval($v1['yppage']);
+            }
+            if(isset($v1['hppage'])){
+                $hb[$v1['date']]['hppage']= intval($v1['hppage']);
+            }
+            if(isset($v1['trpage'])){
+                $hb[$v1['date']]['trpage']= intval($v1['trpage']);
+            }
+            if(isset($v1['xdpage'])){
+                $hb[$v1['date']]['xdpage']= intval($v1['xdpage']);
+            }
+            if(isset($v1['sumpage'])){
+                $hb[$v1['date']]['sumpage']= intval($v1['sumpage']);
+            }
+
+        }
+        $list=[];
+        foreach ($hb as $k2=>$v)
+        {
+            $hb[$k2]['date']=$k2;
+            $list[]=$hb[$k2];
+        }
+        if(!isset($list)){
+            return '无数据';
+        }
+
+        if (!request()->isAjax()) {
+            $this->assign(['list'=>$list]);
+            return $this->fetch();
+        }
+        return [
+            'code'  => 0,
+            'msg'   => '',
+            'count' => count($list),
+            'data'  =>$list,
+        ];
+
+    }
+
+    /**
+     * @NodeAnotation(title="PA项目助理文件统计")
+     */
+    public function pa()
+    {
+        $data=request()->param('month');
+
+        if(isset($data)){
+            $time= strtotime($data);
+            $year = date("Y", $time);
+            $month = date("m", $time);
+            $day = date("d", $time);
+            // 本月一共有几天
+            $firstTime = mktime(0, 0, 0, $month, 1, $year);     // 创建本月开始时间
+            $day = date('t',$firstTime);
+            $lastTime = $firstTime + 86400 * $day  - 1; //结束时间戳
+            $firstTime=date("Ymd",$firstTime);
+            $lastTime=date("Ymd",$lastTime);
+            if($data==''){
+                $firstTime=19701201;
+                $lastTime=20351201;
+
+                $time= time();
+                $year = date("Y", $time);
+
+                $month = date("m", $time);
+
+                $day = date("d", $time);
+                // 本月一共有几天
+                $firstTime = mktime(0, 0, 0, $month, 1, $year);     // 创建本月开始时间
+                $day = date('t',$firstTime);
+                $lastTime = $firstTime + 86400 * $day  - 1; //结束时间戳
+                $firstTime=date("Ymd",$firstTime);
+                $lastTime=date("Ymd",$lastTime);
+            }
+        }else{
+
+            $time= time();
+            $year = date("Y", $time);
+
+            $month = date("m", $time);
+
+            $day = date("d", $time);
+            // 本月一共有几天
+            $firstTime = mktime(0, 0, 0, $month, 1, $year);     // 创建本月开始时间
+            $day = date('t',$firstTime);
+            $lastTime = $firstTime + 86400 * $day  - 1; //结束时间戳
+            $firstTime=date("Ymd",$firstTime);
+            $lastTime=date("Ymd",$lastTime);
+        }
+
+        $pa=Customeraa::with('assistant')->whereBetweenTime('completion_date',$firstTime,$lastTime)->where('assistant_id','<>','null')
+            ->where('file_status','in','3,4')->field('assistant_id,sum(page) as sumpage,count(id) as num')->group('assistant_id')->select()->toarray();
+        $pa2=Customeraa::with('assistant')->whereBetweenTime('completion_date','19701201','20351201')
+            ->where('assistant_id','<>','null')
+            ->where('file_status','3')->field('assistant_id,sum(page) as sumpage1,count(id) as num')->group('assistant_id')->select()->toarray();
+//        dump($pa2);
+//        dump($pa);
+        if (!request()->isAjax()) {
+            $this->assign(['pa2'=>$pa2]);
+            return $this->fetch();
+        }
+        return [
+            'code'  => 0,
+            'msg'   => '',
+            'count' => 0,
+            'data'  =>$pa,
+        ];
+    }
 
 }

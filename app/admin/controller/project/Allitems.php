@@ -91,14 +91,14 @@ class Allitems extends AdminController
             $count = $this->model
                 ->where($where)
                 ->where('file_status', 3)
-                ->withJoin(['type', 'rate', 'yz', 'dw', 'contract', 'xm',
+                ->withJoin(['type',  'rate', 'dw', 'contract', 'xm',
                     'tyevel', 'trevel', 'assistant'
                 ], 'LEFT')
                 ->count();
             $list = $this->model
                 ->where($where)
                 ->where('file_status', 3)
-                ->withJoin(['type', 'rate', 'yz', 'dw', 'contract', 'xm',
+                ->withJoin(['type',  'rate', 'dw', 'contract', 'xm',
                    'tyevel', 'trevel', 'assistant'
                 ], 'LEFT')
                 ->page($page, $limit)
@@ -133,7 +133,7 @@ class Allitems extends AdminController
                     // 满足条件后执行
                     return $query->where('mid|assistant_id','in',$this->admininfo()['top_id']);
                 })
-                ->withJoin(['type', 'rate', 'yz', 'dw', 'contract', 'xm',
+                ->withJoin(['type',  'rate', 'dw', 'contract', 'xm',
                     'tyevel', 'trevel', 'assistant','customerInformation'
                 ], 'LEFT')
                 ->count();
@@ -144,7 +144,7 @@ class Allitems extends AdminController
                     // 满足条件后执行
                     return $query->where('mid|assistant_id','in',$this->admininfo()['top_id']);
                 })
-                ->withJoin(['type', 'rate', 'yz', 'dw', 'contract', 'xm',
+                ->withJoin(['type',  'rate', 'dw', 'contract', 'xm',
                      'tyevel', 'trevel', 'assistant','customerInformation'
                 ], 'LEFT')
                 ->page($page, $limit)
@@ -179,7 +179,7 @@ class Allitems extends AdminController
                     // 满足条件后执行
                     return $query->where('mid|assistant_id','in',$this->admininfo()['top_id']);
                 })
-                ->withJoin(['type', 'rate', 'yz', 'dw', 'contract', 'xm',
+                ->withJoin(['type',  'rate', 'dw', 'contract', 'xm',
                      'tyevel', 'trevel', 'assistant','customerInformation'
                 ], 'LEFT')
                 ->count();
@@ -191,7 +191,7 @@ class Allitems extends AdminController
                     return $query->where('mid|assistant_id','in',$this->admininfo()['top_id']);
                 })
 
-                ->withJoin(['type', 'rate', 'yz', 'dw', 'contract', 'xm',
+                ->withJoin(['type',  'rate', 'dw', 'contract', 'xm',
                  'tyevel', 'trevel', 'assistant','customerInformation'
                 ], 'LEFT')
                 ->page($page, $limit)
@@ -500,7 +500,7 @@ class Allitems extends AdminController
                     // 满足条件后执行
                     return $query->where('mid|assistant_id','in',$this->admininfo()['top_id']);
                 })
-                ->withJoin(['type', 'rate', 'yz', 'dw', 'contract', 'xm',
+                ->withJoin(['type',  'rate', 'dw', 'contract', 'xm',
                     'tyevel', 'trevel', 'assistant','customerInformation'
                 ], 'LEFT')
                 ->count();
@@ -511,7 +511,7 @@ class Allitems extends AdminController
                     // 满足条件后执行
                     return $query->where('mid|assistant_id','in',$this->admininfo()['top_id']);
                 })
-                ->withJoin(['type', 'rate', 'yz', 'dw', 'contract', 'xm',
+                ->withJoin(['type',  'rate', 'dw', 'contract', 'xm',
                     'tyevel', 'trevel', 'assistant','customerInformation'
                 ], 'LEFT')
                 ->page($page, $limit)

@@ -1,0 +1,54 @@
+<link rel="stylesheet" type="text/css" href="https://www.layuicdn.com/layui/css/layui.css"/>
+<div class="layui-card">
+    <div class="layui-card-body">
+
+        <form class="layui-form layui-inline" action="/admin/report.project/pa" id="sub">
+            <div class="layui-form-item">
+                <label class="layui-form-label">选择月份</label>
+                <div class="layui-input-block">
+                    <input type="month" name="month" placeholder="" value="{:input('month')}" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+        </form>
+        <div class="layui-form">
+            <table class="layui-table" lay-filter="demo" lay-data="{ url:'/admin/report.project/pa?month={:input('month')}',limit:99999,toolbar: true,}">
+                <thead >
+                <tr>
+                    <th lay-data="{field:'assistant.username',sort: true,templet: function (d) {
+                        return d.assistant.username;
+                    }}">项目助理</th>
+                    <th lay-data="{field:'sumpage',sort:true}">负责的文件总页数</th>
+                    <th lay-data="{field:'num',sort: true}">负责的文件总份数</th>
+                </tr>
+                </thead>
+
+            </table>
+            <table class="layui-table" lay-filter="demo" lay-data="{toolbar: true,}">
+                <thead >
+                <tr>
+                    <th lay-data="{field:'assistant.username',sort: true}">项目助理</th>
+                    <th lay-data="{field:'sumpage1',sort:true}">未提交页数</th>
+                    <th lay-data="{field:'num1',sort: true}">未提交份数</th>
+                </tr>
+                </thead>
+                <tbody>
+                {foreach $pa2 as $key=>$vo }
+                <tr>
+                    <td>{$vo.assistant.username}</td>
+                    <td>{$vo.sumpage1}</td>
+                    <td>{$vo.num1|default=0}  </td>
+                </tr>
+                {/foreach}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<script src="http://cdn.bootcss.com/jquery/3.1.0/jquery.min.js"></script>
+<script src="https://www.layuicdn.com/layui/layui.js"></script>
+<script>
+    $("input[name='month']").change(function () {
+        console.log( $("input[name='month']").val())
+        $('#sub').submit();
+    })
+</script>

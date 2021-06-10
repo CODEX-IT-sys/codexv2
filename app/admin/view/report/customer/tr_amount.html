@@ -1,0 +1,285 @@
+<link rel="stylesheet" type="text/css" href="https://www.layuicdn.com/layui/css/layui.css"/>
+<script type="text/html" id="toolbar">
+    <a class="layui-btn layui-btn-sm" lay-event="clearFilter">清除所有筛选条件</a>
+</script>
+<table id="myTable"></table>
+<script src="https://www.layuicdn.com/layui/layui.js"></script>
+<script>
+    layui.config({
+        base: '/static/plugs/layui-soul-table/',   // 第三方模块所在目录
+        version: 'v1.6.0' // 插件版本号
+    }).extend({
+        soulTable: 'ext/soulTable',
+        tableChild: 'ext/tableChild',
+        tableMerge: 'ext/tableMerge',
+        tableFilter: 'ext/tableFilter',
+        excel: 'ext/excel',
+    });
+    layui.use(['form', 'table', 'soulTable'], function () {
+        var table = layui.table,
+            soulTable = layui.soulTable;
+        table.render({
+            elem: '#myTable'
+            , height: 'full-50'
+            , toolbar: '#toolbar'
+            , skin: 'line ' //行边框风格
+            , even: true //开启隔行背景
+            , defaultToolbar: ['print', 'exports', 'filter']
+            , url: "{:url('tr_amount')}"
+            , cols: [[
+                {type: 'numbers', title: '序号', rowspan: 3, fixed: 'left'},
+                {
+                    field: 'gongsi',
+                    title: '公司',
+                    merge: true,
+                    fixed: 'left',
+                    rowspan: 3,
+                    sort: true,
+                    filter: true
+                },
+                {field: 'total', title: '合计', rowspan: 2, align: 'center', filter: true, sort: true, colspan: 3,},
+                {title: '今年', colspan: 12, rowspan: 2, align: 'center'},
+                {title: '去年', colspan: 12, rowspan: 2, align: 'center'},
+                {title: '差值(今年-去年)', colspan: 12, rowspan: 2, align: 'center'},
+            ], [],
+                [
+                    {
+                        field: 'jtotal', title: '今年'
+
+                    },
+                    {
+                        field: 'qtotal', title: '去年',
+                    },
+                    {
+                        field: 'jamount', title: '差值(今年-去年)', templet: function (d) {
+                            return d.jtotal - d.qtotal;
+                        }
+                    },
+
+                    {
+                        field: 'jamount', title: '一月', templet: function (d) {
+                            return d.jamount['1'];
+                        }
+                    },
+                    {
+                        field: 'jamount', title: '二月', templet: function (d) {
+                            return d.jamount['2'];
+                        }
+                    },
+                    {
+                        field: 'jamount', title: '三月', templet: function (d) {
+                            return d.jamount['3'];
+                        }
+                    },
+                    {
+                        field: 'jamount', title: '四月', templet: function (d) {
+                            return d.jamount['4'];
+                        }
+                    },
+                    {
+                        field: 'jamount', title: '五月', templet: function (d) {
+                            return d.jamount['5'];
+                        }
+                    },
+
+                    {
+                        field: 'jamount', title: '六月', templet: function (d) {
+                            return d.jamount['6'];
+                        }
+                    },
+
+                    {
+                        field: 'jamount', title: '七月', templet: function (d) {
+                            return d.jamount['7'];
+                        }
+                    },
+
+                    {
+                        field: 'jamount', title: '八月', templet: function (d) {
+                            return d.jamount['8'];
+                        }
+                    },
+
+                    {
+                        field: 'jamount', title: '九月', templet: function (d) {
+                            return d.jamount['9'];
+                        }
+                    },
+
+                    {
+                        field: 'jamount', title: '十月', templet: function (d) {
+                            return d.jamount['10'];
+                        }
+                    },
+
+                    {
+                        field: 'jamount', title: '十一月', templet: function (d) {
+                            return d.jamount['11'];
+                        }
+                    },
+
+                    {
+                        field: 'jamount', title: '十二月', templet: function (d) {
+                            return d.jamount['12'];
+                        }
+                    },
+                    {
+                        field: 'qamount', title: '一月', templet: function (d) {
+                            return d.qamount['1'];
+                        }
+                    },
+                    {
+                        field: 'qamount', title: '二月', templet: function (d) {
+                            return d.qamount['2'];
+                        }
+                    },
+                    {
+                        field: 'qamount', title: '三月', templet: function (d) {
+                            return d.qamount['3'];
+                        }
+                    },
+                    {
+                        field: 'qamount', title: '四月', templet: function (d) {
+                            return d.qamount['4'];
+                        }
+                    },
+                    {
+                        field: 'qamount', title: '五月', templet: function (d) {
+                            return d.qamount['5'];
+                        }
+                    },
+
+                    {
+                        field: 'qamount', title: '六月', templet: function (d) {
+                            return d.qamount['6'];
+                        }
+                    },
+
+                    {
+                        field: 'qamount', title: '七月', templet: function (d) {
+                            return d.qamount['7'];
+                        }
+                    },
+
+                    {
+                        field: 'qamount', title: '八月', templet: function (d) {
+                            return d.qamount['8'];
+                        }
+                    },
+
+                    {
+                        field: 'qamount', title: '九月', templet: function (d) {
+                            return d.qamount['9'];
+                        }
+                    },
+
+                    {
+                        field: 'qamount', title: '十月', templet: function (d) {
+                            return d.qamount['10'];
+                        }
+                    },
+
+                    {
+                        field: 'qamount', title: '十一月', templet: function (d) {
+                            return d.qamount['11'];
+                        }
+                    },
+
+                    {
+                        field: 'qamount', title: '十二月', templet: function (d) {
+                            return d.qamount['12'];
+                        }
+                    },
+                    {
+                        title: '一月', templet: function (d) {
+                            return d.jamount['1'] - d.qamount['1'];
+                        }
+                    },
+                    {
+                        field: 'qamount', title: '二月', templet: function (d) {
+                            return d.jamount['2'] - d.qamount['2'];
+                        }
+                    },
+                    {
+                        field: 'qamount', title: '三月', templet: function (d) {
+                            return d.jamount['3'] - d.qamount['3'];
+                        }
+                    },
+                    {
+                        field: 'qamount', title: '四月', templet: function (d) {
+                            return d.jamount['4'] - d.qamount['4'];
+                        }
+                    },
+                    {
+                        field: 'qamount', title: '五月', templet: function (d) {
+                            return d.jamount['5'] - d.qamount['5'];
+                        }
+                    },
+
+                    {
+                        field: 'qamount', title: '六月', templet: function (d) {
+                            return d.jamount['6'] - d.qamount['6'];
+                        }
+                    },
+
+                    {
+                        field: 'qamount', title: '七月', templet: function (d) {
+                            return d.jamount['7'] - d.qamount['7'];
+                        }
+                    },
+
+                    {
+                        field: 'qamount', title: '八月', templet: function (d) {
+                            return d.jamount['8'] - d.qamount['8'];
+                        }
+                    },
+
+                    {
+                        field: 'qamount', title: '九月', templet: function (d) {
+                            return d.jamount['9'] - d.qamount['9'];
+                        }
+                    },
+
+                    {
+                        field: 'qamount', title: '十月', templet: function (d) {
+                            return d.jamount['10'] - d.qamount['10'];
+                        }
+                    },
+
+                    {
+                        field: 'qamount', title: '十一月', templet: function (d) {
+                            return d.jamount['11'] - d.qamount['11'];
+                        }
+                    },
+
+                    {
+                        field: 'qamount', title: '十二月', templet: function (d) {
+                            return d.jamount['12'] - d.qamount['12'];
+                        }
+                    },
+
+
+                ]
+
+            ]
+            , done: function (res) {
+                soulTable.render(this);
+            }
+            , autoColumnWidth: {
+                init: true
+            }
+            , filter: {
+                items: ['column', 'data', 'condition', 'editCondition'] // 只显示表格列和导出excel两个菜单项
+                , bottom: false
+            }
+
+        });
+        table.on('toolbar(myTable)', function (obj) {
+            if (obj.event === 'clearFilter') {
+                // 清除所有筛选条件并重载表格
+                // 参数: tableId
+                soulTable.clearFilter('myTable')
+            }
+        });
+    })
+</script>

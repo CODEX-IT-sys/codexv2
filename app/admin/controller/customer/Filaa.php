@@ -91,7 +91,7 @@ class Filaa extends AdminController
             list($page, $limit, $where) = $this->buildTableParames();
             $count = $this->model
                 ->where($where)
-                ->withJoin(['type', 'rate', 'yz', 'dw', 'contract' ,'customerInformation'], 'LEFT')
+                ->withJoin(['type', 'rate', 'dw', 'contract' ,'customerInformation'], 'LEFT')
                 ->when($a, function ($query) use ($a) {
                     // 满足条件后执行
                     return $query->where('demand_id', $a);
@@ -99,7 +99,7 @@ class Filaa extends AdminController
                 ->count();
             $list = $this->model
                 ->where($where)
-                ->withJoin(['type', 'rate', 'yz', 'dw', 'contract','customerInformation'], 'LEFT')
+                ->withJoin(['type', 'rate', 'dw', 'contract','customerInformation'], 'LEFT')
                 ->when($a, function ($query) use ($a) {
                     // 满足条件后执行
                     return $query->where('demand_id', $a);

@@ -82,7 +82,7 @@ class affine extends AdminController
             $count = $this->model
                 ->where('file_status', 'in',[2,3])
                 ->where($where)
-                ->withJoin(['type', 'rate', 'yz', 'dw', 'customerInformation','demand','contract','jsstatus'], 'LEFT')
+                ->withJoin(['type', 'rate', 'dw', 'customerInformation','demand','contract','jsstatus'], 'LEFT')
                 ->when($this->admininfo()['id'] != 1, function ($query) {
                     // 满足条件后执行
                     return $query->where('file_writer_id', 'in', $this->admininfo()['top_id']);
@@ -91,7 +91,7 @@ class affine extends AdminController
             $list = $this->model
                 ->where('file_status', 'in',[2,3])
                 ->where($where)
-                ->withJoin(['type', 'rate', 'yz', 'dw', 'customerInformation','demand','contract','jsstatus'], 'LEFT')
+                ->withJoin(['type', 'rate', 'dw', 'customerInformation','demand','contract','jsstatus'], 'LEFT')
                 ->when($this->admininfo()['id'] != 1, function ($query) {
                     // 满足条件后执行
                     return $query->where('file_writer_id', 'in', $this->admininfo()['top_id']);
@@ -125,7 +125,7 @@ class affine extends AdminController
             $count = $this->model
                 ->where('file_status', 'in',[1,0])
                 ->where($where)
-                ->withJoin(['type', 'rate', 'yz', 'dw', 'customerInformation','demand','contract','jsstatus'], 'LEFT')
+                ->withJoin(['type', 'rate', 'dw', 'customerInformation','demand','contract','jsstatus'], 'LEFT')
                 ->when($this->admininfo()['id'] != 1, function ($query) {
                     // 满足条件后执行
                     return $query->where('file_writer_id', 'in', $this->admininfo()['top_id']);
@@ -134,7 +134,7 @@ class affine extends AdminController
             $list = $this->model
                 ->where($where)
                 ->where('file_status', 'in',[1,0])
-                ->withJoin(['type', 'rate', 'yz', 'dw', 'customerInformation','demand','contract','jsstatus'], 'LEFT')
+                ->withJoin(['type', 'rate', 'dw', 'customerInformation','demand','contract','jsstatus'], 'LEFT')
                 ->when($this->admininfo()['id'] != 1, function ($query) {
                     // 满足条件后执行
                     return $query->where('file_writer_id', 'in', $this->admininfo()['top_id']);
@@ -168,7 +168,7 @@ class affine extends AdminController
             $count = $this->model
                 ->where('file_status', 2)
                 ->where($where)
-                ->withJoin(['type', 'rate', 'yz', 'dw','demand','customerInformation','contract','jsstatus'], 'LEFT')
+                ->withJoin(['type', 'rate', 'dw','demand','customerInformation','contract','jsstatus'], 'LEFT')
                 ->when($this->admininfo()['id'] != 1, function ($query) {
                     // 满足条件后执行
                     return $query->where('file_writer_id', 'in', $this->admininfo()['top_id']);
@@ -177,7 +177,7 @@ class affine extends AdminController
             $list = $this->model
                 ->where($where)
                 ->where('file_status', 2)
-                ->withJoin(['type', 'rate', 'yz', 'dw','demand','customerInformation','contract','jsstatus'], 'LEFT')
+                ->withJoin(['type', 'rate', 'dw','demand','customerInformation','contract','jsstatus'], 'LEFT')
                 ->when($this->admininfo()['id'] != 1, function ($query) {
                     // 满足条件后执行
                     return $query->where('file_writer_id', 'in', $this->admininfo()['top_id']);
@@ -210,7 +210,7 @@ class affine extends AdminController
             $count = $this->model
                 ->where('file_status', 3)
                 ->where($where)
-                ->withJoin(['type', 'rate', 'yz', 'dw', 'customerInformation','demand','contract','jsstatus','xm'], 'LEFT')
+                ->withJoin(['type', 'rate', 'dw', 'customerInformation','demand','contract','jsstatus','xm'], 'LEFT')
                 ->when($this->admininfo()['id'] != 1, function ($query) {
                     // 满足条件后执行
                     return $query->where('file_writer_id', 'in', $this->admininfo()['top_id']);
@@ -219,7 +219,7 @@ class affine extends AdminController
             $list = $this->model
                 ->where($where)
                 ->where('file_status', 3)
-                ->withJoin(['type', 'rate', 'yz', 'dw', 'customerInformation','demand','contract','jsstatus','xm'], 'LEFT')
+                ->withJoin(['type', 'rate', 'dw', 'customerInformation','demand','contract','jsstatus','xm'], 'LEFT')
                 ->when($this->admininfo()['id'] != 1, function ($query) {
                     // 满足条件后执行
                     return $query->where('file_writer_id', 'in', $this->admininfo()['top_id']);

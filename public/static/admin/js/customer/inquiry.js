@@ -35,7 +35,7 @@ define(["jquery", "easy-admin"], function ($, ea) {
                     {field: 'page', title: '页数',  search: 'false'},
                     {field: 'number_of_words', title: '源语数量',  search: 'false'},
                     {field: 'service', title: '服务',},
-                    {field: 'yz.content', title: '语种',},
+                    {field: 'language', title: '语种',},
                     {field: 'customer_submit_date', title: '客户期望提交日期', search: 'false'},
                     {field: 'customerInformation.customer_contact', title: '客户联系人', search: 'false', hide: true},
                     {field: 'customer_file_request', title: '客户要求', search: 'false'},

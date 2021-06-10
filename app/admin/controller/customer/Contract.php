@@ -62,7 +62,7 @@ class Contract extends AdminController
             }
             list($page, $limit, $where) = $this->buildTableParames();
             $count = $this->model
-                ->withJoin([  'company', 'write', 'dw', 'bz', 'fw', 'yz'], 'LEFT')
+                ->withJoin([  'company', 'write', 'dw', 'bz', 'fw'], 'LEFT')
                 ->when($this->admininfo()['id'] != 1, function ($query) {
                     // 满足条件后执行
                     return $query->where('writer_id', 'in', $this->admininfo()['top_id']);
@@ -70,7 +70,7 @@ class Contract extends AdminController
                 ->where($where)
                 ->count();
             $list = $this->model
-                ->withJoin([  'company', 'write', 'dw', 'bz', 'fw', 'yz'], 'LEFT')
+                ->withJoin([  'company', 'write', 'dw', 'bz', 'fw'], 'LEFT')
                 ->where($where)
                 ->when($this->admininfo()['id'] != 1, function ($query) {
                     // 满足条件后执行
@@ -136,7 +136,7 @@ class Contract extends AdminController
                 $post['up_id'] = $admin['id'];
                 $save = $row->save($post);
             } catch (\Exception $e) {
-                $this->error('保存失败');
+                $this->error('保存失败',$e->getMessage());
             }
             $save ? $this->success('保存成功') : $this->error('保存失败');
         }

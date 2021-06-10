@@ -96,7 +96,7 @@ class Quotation extends AdminController
         //报价单信息
         $a = CustomerqQuotation::with(['customerInformation', 'contract.bz', 'company'])->where('id', $id)->find()->toArray();
 //        dump($a);die;
-        $b = Customeraa::where('id', 'in', json_decode($a['quotation_file']))->with(['type', 'rate', 'yz', 'dw',])->select()->toArray();
+        $b = Customeraa::where('id', 'in', json_decode($a['quotation_file']))->with(['type', 'rate', 'dw',])->select()->toArray();
         $num1 = 0;
         $num2 = 0;
         foreach ($b as $k => $v) {

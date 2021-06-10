@@ -64,7 +64,7 @@ class Qingkuan extends AdminController
         //报价单信息
         $a = Customerqingkuan::with(['customerInformation', 'contract.bz', 'company'])->where('id', $id)->find()->toArray();
 //        dump($a);
-        $b = Customeraa::where('id', 'in', json_decode($a['quotation_file']))->with(['type', 'rate', 'yz', 'dw',])->select()->toArray();
+        $b = Customeraa::where('id', 'in', json_decode($a['quotation_file']))->with(['type',  'rate', 'dw',])->select()->toArray();
 
 //        dump($b);die;
         $num1 = 0;
