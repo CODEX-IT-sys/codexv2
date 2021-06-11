@@ -9,6 +9,7 @@ use app\admin\model\SystemAdmin;
 use app\admin\model\SystemQuick;
 use app\common\controller\AdminController;
 use think\App;
+use think\facade\Cookie;
 use think\facade\Env;
 use think\facade\Cache;
 class Index extends AdminController
@@ -21,10 +22,26 @@ class Index extends AdminController
      */
     public function index()
     {
-//        echo lang('hello');
         return $this->fetch('', [
             'admin' => session('admin'),
         ]);
+    }
+
+    public function enlang() {
+
+        $lang=input('lang');
+        switch ($lang) {
+            case 'en':
+                cookie('cookie_lang', 'en-us');
+                break;
+            case 'zn':
+                cookie('cookie_lang', 'zh-cn');
+                break;
+            default:
+                break;
+        }
+
+        return   Cookie::get('think_lang');
     }
 
     /**

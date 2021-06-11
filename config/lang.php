@@ -13,9 +13,9 @@ return [
     // 多语言自动侦测变量名
     'detect_var'      => 'lang',
     // 是否使用Cookie记录
-    'use_cookie'      => true,
+    'use_cookie'      => false,
     // 多语言cookie变量
-    'cookie_var'      => 'think_lang',
+    'cookie_var'      => 'cookie_lang',
     // 扩展语言包
     'extend_list'     => [],
     // Accept-Language转义为对应语言包名称

@@ -2,6 +2,8 @@
 <link rel="stylesheet" href="__STATIC__/plugs/lay-module/layuimini/themes/default.css?v={:time()}" media="all">
 <style id="layuimini-bg-color">
 </style>
+
+
 <body class="layui-layout-body layuimini-all">
 <div class="layui-layout layui-layout-admin">
 
@@ -15,6 +17,7 @@
 
             <!--电脑端头部菜单-->
             <ul class="layui-nav layui-layout-left layuimini-header-menu layuimini-menu-header-pc layuimini-pc-show">
+
             </ul>
 
             <!--手机端头部菜单-->
@@ -36,6 +39,14 @@
                 </li>
                 <li class="layui-nav-item" lay-unselect>
                     <a href="javascript:;" title="我的消息" id="message">我的消息</a>
+                </li>
+
+                <li class="layui-nav-item" lay-unselect>
+                    <a href="javascript:;" title="英文" id="en">英文</a>
+                </li>
+
+                <li class="layui-nav-item" lay-unselect>
+                    <a href="javascript:;" title="中文" id="zh">中文</a>
                 </li>
                 <li class="layui-nav-item mobile layui-hide-xs" lay-unselect>
                     <a href="javascript:;" data-check-screen="full"><i class="fa fa-arrows-alt"></i></a>
@@ -302,7 +313,7 @@
                 //聊天还有不在线
                 case 'ctUserOutline':
                     console.log('11111');
-                    //layer.msg('好友不在线', {'time' : 1000});
+                    layer.msg('好友不在线', {'time' : 1000});
                     break;
 
             }
@@ -338,4 +349,24 @@
 
     });
 
+
+    $('#zh').click(function () {
+        console.log(123);
+        lang('zn');
+    });
+    $('#en').click(function () {
+        lang('en');
+    });
+    function lang(lang) {
+            $.ajax({
+                //几个参数需要注意一下
+                type: "POST",//方法类型
+                dataType: "json",//预期服务器返回的数据类型
+                url: "{:url('enlang')}",//url
+                data:{lang:lang},
+                success: function (result) {
+               // location.reload();
+                }
+            });
+    }
 </script>
