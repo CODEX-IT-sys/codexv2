@@ -13,6 +13,7 @@
 namespace app\admin\controller\system;
 
 
+use app\admin\model\setting\DatabaseContent;
 use app\admin\model\SystemAdmin;
 use app\admin\service\TriggerService;
 use app\common\constants\AdminConstant;
@@ -89,6 +90,13 @@ class Admin extends AdminController
                 unset($staff[$k]);
             }
         }
+        //部门信息
+        $bumen=DatabaseContent::where('list_id',15)->select();
+        $bm=[];
+        foreach ($bumen as $k => $v) {
+            $bm[$k]['name'] = $v['content'];
+            $bm[$k]['value'] = $v['id'];
+        }
         if ($this->request->isAjax()) {
             $post = $this->request->post();
             $authIds = $this->request->post('auth_ids', []);
@@ -103,7 +111,8 @@ class Admin extends AdminController
             $save ? $this->success('保存成功') : $this->error('保存失败');
         }
         $this->assign([
-            'staff' => array_values($staff)
+            'staff' => array_values($staff),
+            'bm'=>$bm
         ]);
         return $this->fetch();
     }
@@ -124,6 +133,17 @@ class Admin extends AdminController
             $staff[$k]['value'] = $v['id'];
             if (in_array($v['id'], $value)) {
                 $staff[$k]['selected'] = true;
+            }
+        }
+
+        //部门信息
+        $bumen=DatabaseContent::where('list_id',15)->select();
+        $bm=[];
+        foreach ($bumen as $k => $v) {
+            $bm[$k]['name'] = $v['content'];
+            $bm[$k]['value'] = $v['id'];
+            if ($v['id']== $row['department_id']) {
+                $bm[$k]['selected'] = true;
             }
         }
         empty($row) && $this->error('数据不存在');
@@ -147,7 +167,8 @@ class Admin extends AdminController
         $row->auth_ids = explode(',', $row->auth_ids);
         $this->assign('row', $row);
         $this->assign([
-            'staff' => array_values($staff)
+            'staff' => array_values($staff),
+             'bm'=>$bm
         ]);
         return $this->fetch();
     }

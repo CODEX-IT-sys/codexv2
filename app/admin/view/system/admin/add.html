@@ -43,6 +43,13 @@
                 <div id="staff"></div>
             </div>
         </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">部门</label>
+            <div class="layui-input-block">
+                <div id="bm"></div>
+            </div>
+        </div>
         <div class="layui-form-item">
             <label class="layui-form-label">IM分组</label>
             <div class="layui-input-block">
@@ -86,6 +93,22 @@
             list: ['ALL', 'CLEAR', 'REVERSE']
         },
         data: staff
+    })
+    // 部门
+    var bm = '<?php echo  json_encode($bm);?>';
+    var bm = JSON.parse(bm);
+     xmSelect.render({
+        el: '#bm',
+        language: 'zn',
+        tips: '请选择部门',
+         radio: true,
+        name: 'department_id',
+        filterable: true,
+        toolbar: {
+            show: true,
+            list: ['ALL', 'CLEAR', 'REVERSE']
+        },
+        data: bm
     })
 
 

@@ -168,7 +168,7 @@ class Filaa extends AdminController
                 $post['mid'] = CustomerDemand::where('id', $post['demand_id'])->value('mid');
                 //项目经理同步
                 $post['entrust_date']=strtotime($post['entrust_date']);
-//                dump($post);die;
+
                 //文件状态为接受时生成文件编号
                 if (isset($post['file_status'])) {
                     if ($post['file_status'] == 2) {
@@ -176,7 +176,7 @@ class Filaa extends AdminController
                         $company_code = CustomerContract::where('id', $post['contract_id'])->value('company_code');
 
                         //生成文件编号
-                        $post['customer_file_code'] = filing_number($company_code,strtotime($post['entrust_date']));
+                        $post['customer_file_code'] = filing_number($company_code,$post['entrust_date']);
                     }
                 }
                 $save = $this->model->save($post);

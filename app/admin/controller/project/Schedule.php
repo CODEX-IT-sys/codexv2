@@ -7,7 +7,7 @@ use EasyAdmin\annotation\ControllerAnnotation;
 use EasyAdmin\annotation\NodeAnotation;
 use think\App;
 use app\admin\model\project\Description;
-
+use think\facade\Cache;
 /**
  * @ControllerAnnotation(title="进度")
  */
@@ -31,6 +31,12 @@ class Schedule extends AdminController
         $this->assign('getTerminologySubmitList', $this->model->getTerminologySubmitList());
 
         $this->assign('getFinalizedSubmitList', $this->model->getFinalizedSubmitList());
+        //语种
+        $h = Cache::get('trxdwork');
+        //文件类型
+        $f = Cache::get('pbwork');
+//        dump($h);
+        $this->assign(['h'=>$h,'f'=>$f]);
 
     }
 
@@ -48,7 +54,7 @@ class Schedule extends AdminController
             $list = $this->model
                 ->where($where)
                 ->where('type','in','1,4')
-                ->withJoin(['desciption','write'], 'LEFT')
+                ->withJoin(['desciption','write','workContent'], 'LEFT')
                 ->when($this->admininfo()['id'] != 1, function ($query){
                     $query->where('schedule_write_id', $this->admininfo()['id']);
 
@@ -81,7 +87,7 @@ class Schedule extends AdminController
             $list = $this->model
                 ->where($where)
                 ->where('type','in','2,3')
-                ->withJoin(['desciption','write'], 'LEFT')
+                ->withJoin(['desciption','write','workContent'], 'LEFT')
                 ->when($this->admininfo()['id'] != 1, function ($query){
                     $query->where('schedule_write_id', $this->admininfo()['id']);
                 })
@@ -117,6 +123,7 @@ class Schedule extends AdminController
             list($page, $limit, $where) = $this->buildTableParames();
             $count = $this->model
                 ->where($where)
+                ->withJoin(['workContent'], 'LEFT')
                 ->where('description_id', $a)
                 ->where('type', $type)
                 ->when($this->admininfo()['id'] != 1, function ($query, $a) {
@@ -125,9 +132,9 @@ class Schedule extends AdminController
 
                 })
                 ->count();
-
             $list = $this->model
                 ->where($where)
+                ->withJoin(['workContent'], 'LEFT')
                 ->where('description_id', $a)
                 ->where('type', $type)
                 ->when($this->admininfo()['id'] != 1, function ($query)use ($a) {
@@ -171,6 +178,7 @@ class Schedule extends AdminController
             $count = $this->model
                 ->where($where)
                 ->where('description_id', $a)
+                ->withJoin(['workContent'], 'LEFT')
                 ->where('type', $type)
                 ->when($this->admininfo()['id'] != 1, function ($query)use ($a) {
                     // 满足条件后执行
@@ -181,7 +189,10 @@ class Schedule extends AdminController
             $list = $this->model
                 ->where($where)
                 ->where('description_id', $a)
+
                 ->where('type', $type)
+
+                ->withJoin(['workContent'], 'LEFT')
                 ->when($this->admininfo()['id'] != 1, function ($query)use ($a) {
                     // 满足条件后执行
                     return $query->where('schedule_write_id', $this->admininfo()['id']);

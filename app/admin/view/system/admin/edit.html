@@ -23,7 +23,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label">用户手机</label>
             <div class="layui-input-block">
-                <input type="text" name="phone" class="layui-input" lay-reqtext="请输入用户手机" placeholder="请输入用户手机" value="{$row.username|default=''}">
+                <input type="text" name="phone" class="layui-input" lay-reqtext="请输入用户手机" placeholder="请输入用户手机" value="{$row.phone|default=''}">
                 <tip>填写用户手机。</tip>
             </div>
         </div>
@@ -37,9 +37,15 @@
             </div>
         </div>
         <div class="layui-form-item">
+            <label class="layui-form-label">部门</label>
+            <div class="layui-input-block">
+                <div id="bm"></div>
+            </div>
+        </div>
+        <div class="layui-form-item">
             <label class="layui-form-label">IM分组</label>
             <div class="layui-input-block">
-                <select name="groupid" lay-verify="required" lay-search>
+                <select name="groupid" lay-search>
                     <option value="">请选择IM分组</option>
                     <option value="0">未分组</option>
                     <option value="1">市场</option>
@@ -86,5 +92,21 @@
         data: staff
     })
 
+    // 部门
+    var bm = '<?php echo  json_encode($bm);?>';
+    var bm = JSON.parse(bm);
+    xmSelect.render({
+        el: '#bm',
+        language: 'zn',
+        tips: '请选择部门',
+        radio: true,
+        name: 'department_id',
+        filterable: true,
+        toolbar: {
+            show: true,
+            list: ['ALL', 'CLEAR', 'REVERSE']
+        },
+        data: bm
+    })
 
 </script>

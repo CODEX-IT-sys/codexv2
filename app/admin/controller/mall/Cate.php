@@ -517,8 +517,10 @@ class Cate extends AdminController
         }
     }
 
-    //上传图片
-    public function uploadImg()
+    /**
+     * @NodeAnotation(title="发送图片")
+     */
+    public function uploadimg()
     {
         $file = request()->file('file');
         //文件名
@@ -534,7 +536,10 @@ class Cate extends AdminController
         }
     }
 
-    //上传文件
+
+    /**
+     * @NodeAnotation(title="发送文件")
+     */
     public function uploadFile()
     {
         $file = request()->file('file');

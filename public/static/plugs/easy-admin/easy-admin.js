@@ -1443,7 +1443,6 @@ define(["jquery", "tableSelect", "ckeditor", "soulTable",], function ($, tableSe
                 if (dateList.length > 0) {
                     $.each(dateList, function (i, v) {
                         var format = $(this).attr('data-date'),
-
                             type = $(this).attr('data-date-type'),
                             range = $(this).attr('data-date-range');
                         console.log(format);
@@ -1453,8 +1452,9 @@ define(["jquery", "tableSelect", "ckeditor", "soulTable",], function ($, tableSe
                         var options = {
                             elem: this,
                             type: type,
+                            theme: '#1B3382',
                             position: 'fixed',
-                            trigger:'click'//增加这个，解决闪屏
+                            trigger:'click'//增加这个，解决闪屏,
                         };
                         if (format !== undefined && format !== '' && format !== null) {
                             options['format'] = format;

@@ -15,7 +15,7 @@ class Content extends AdminController
 {
 
     use \app\admin\traits\Curd;
-    protected $relationSerach = true;
+
     public function __construct(App $app)
     {
         parent::__construct($app);
@@ -39,9 +39,6 @@ class Content extends AdminController
                 return $this->selectList();
             }
             list($page, $limit, $where) = $this->buildTableParames();
-            $count = $this->model
-                ->where($where)
-                ->count();
             $list = $this->model
                 ->withJoin('directory', 'LEFT')
                 ->where($where)
@@ -52,7 +49,7 @@ class Content extends AdminController
             $data = [
                 'code'  => 0,
                 'msg'   => '',
-                'count' => $count,
+                'count' => count($list),
                 'data'  => $list,
             ];
             return json($data);

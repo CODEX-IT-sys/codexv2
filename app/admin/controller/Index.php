@@ -84,6 +84,12 @@ class Index extends AdminController
         //文件分类
         $cate=DatabaseContent::where('list_id',6)->select();
         Cache::set('cate',$cate);
+        //翻译校对工作内容
+        $trxdwork=DatabaseContent::where('list_id',16)->select();
+        Cache::set('trxdwork',$trxdwork);
+        //排版工作内容
+        $pbwork=DatabaseContent::where('list_id',17)->select();
+        Cache::set('pbwork',$pbwork);
         //翻译人员
         $tr=SystemAdmin::where('auth_ids', 'find in set',8)->select();
         //预排.后排.校对

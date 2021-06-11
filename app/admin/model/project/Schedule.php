@@ -54,6 +54,12 @@ class Schedule extends TimeModel
     {
         return $this->belongsTo(SystemAdmin::class,'schedule_write_id','id');
     }
+
+    //关联工作内容
+    public function workContent()
+    {
+        return $this->belongsTo('app\admin\model\setting\DatabaseContent', 'work_content', 'id');
+    }
 /*    public function topics()
     {
         return $this->hasManyThrough('Topic','User');

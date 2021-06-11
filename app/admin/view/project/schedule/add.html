@@ -47,12 +47,7 @@
                        value="">
             </div>
         </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">工作内容</label>
-            <div class="layui-input-block">
-                <input type="text" autocomplete="off" name="work_content" class="layui-input" placeholder="请输入工作内容" value="">
-            </div>
-        </div>
+
         <div class="layui-form-item">
             <label class="layui-form-label">自检</label>
             <div class="layui-input-block">
@@ -64,7 +59,17 @@
         </div>
         {switch $type }
         {case 2||3 }
-
+        <div class="layui-form-item">
+            <label class="layui-form-label">工作内容</label>
+            <div class="layui-input-block">
+                <select name="work_content">
+                    <option value="">请选择工作内容</option>
+                    {foreach $h as $k1=>$v }
+                    <option value="{$v.id}" >{$v.content}</option>
+                    {/foreach}
+                </select>
+            </div>
+        </div>
 
         <div class="layui-form-item">
             <label class="layui-form-label">会否更新主库</label>
@@ -127,7 +132,17 @@
         {/case}
         {case 1||4 }
 
-
+        <div class="layui-form-item">
+            <label class="layui-form-label">工作内容</label>
+            <div class="layui-input-block">
+                <select name="work_content">
+                    <option value="">请选择工作内容</option>
+                    {foreach $f as $k1=>$v }
+                    <option value="{$v.id}" >{$v.content}</option>
+                    {/foreach}
+                </select>
+            </div>
+        </div>
 
         <div class="layui-form-item">
             <label class="layui-form-label">是否延迟提交</label>

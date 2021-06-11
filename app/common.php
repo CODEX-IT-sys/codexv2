@@ -131,6 +131,8 @@ function filing_number($company_code,$a)
     // 获取当前时间
     $now = date("Ymd",$a);
 
+
+
     $no=\app\admin\model\customer\Customeraa::wheretime('filecreate_at', $now)->where('customer_file_code','<>','')->count();
 //    dump($no);die;
 //    // 补位生成 序列单号
