@@ -4,6 +4,8 @@
 namespace app\admin\controller\report;
 
 use app\admin\model\customer\Customeraa;
+use app\admin\model\project\Schedule;
+use app\admin\model\SystemAdmin;
 use app\common\controller\AdminController;
 use think\App;
 use EasyAdmin\annotation\ControllerAnnotation;
@@ -105,6 +107,66 @@ class Customer extends AdminController
             return json($data);
         }
         return $this->fetch();
+    }
+
+    /**
+     * @NodeAnotation(title="工作绩效统计")
+     */
+
+    public function workperformance()
+    {
+        $user=SystemAdmin::select()->toArray();
+        $s = $this->request->param('start', '20000101');
+        $d = $this->request->param('end', '20990701');
+        if ($s == '' || $d == '') {
+            $s = '20000101';
+            $d = '20990701';
+        }
+        foreach ($user as $k=>$v)
+        {
+            //完成页码
+            $user[$k]['completion_page']= Schedule::where('schedule_write_id',$v['id'])->whereBetweenTime('create_time', $s,$d)->sum('completion_page');
+            //原总字数
+            $user[$k]['original_word_count']= Schedule::where('schedule_write_id',$v['id'])->whereBetweenTime('create_time', $s,$d)->sum('completion_page');
+            //中文字数统计
+            $user[$k]['chinese_word_count']= Schedule::where('schedule_write_id',$v['id'])->whereBetweenTime('create_time', $s,$d)->sum('chinese_word_count');
+//            校对中文字数
+            $user[$k]['xd_chinese_word_count']= Schedule::where('schedule_write_id',$v['id'])->whereBetweenTime('create_time', $s,$d)->where('type',3)->sum('chinese_word_count');
+            //工作时间
+            $user[$k]['xd_actual_time']= Schedule::where('schedule_write_id',$v['id'])->whereBetweenTime('create_time', $s,$d)->where('type',3)->sum('actual_time');
+            //效率
+//            $user[$k]['efficiency']=round($user[$k]['xd_chinese_word_count'] / $user[$k]['xd_actual_time'],2) ;
+            if($user[$k]['xd_actual_time']<=0||  $user[$k]['xd_chinese_word_count']<=0){
+                $user[$k]['xd_efficiency']=0;
+            }else{
+                $user[$k]['xd_efficiency']=round($user[$k]['xd_chinese_word_count'] / $user[$k]['xd_actual_time'],2) ;
+            }
+            // 校对中文字数
+            $user[$k]['tr_chinese_word_count']= Schedule::where('schedule_write_id',$v['id'])->whereBetweenTime('create_time', $s,$d)->where('type',2)->sum('chinese_word_count');
+            //工作时间
+            $user[$k]['tr_actual_time']= Schedule::where('schedule_write_id',$v['id'])->whereBetweenTime('create_time', $s,$d)->where('type',2)->sum('actual_time');
+            //效率
+//            $user[$k]['efficiency']=round($user[$k]['xd_chinese_word_count'] / $user[$k]['xd_actual_time'],2) ;
+            if($user[$k]['tr_chinese_word_count']<=0||$user[$k]['tr_actual_time']<=0){
+                $user[$k]['tr_efficiency']=0;
+            }else{
+                $user[$k]['tr_efficiency']=round($user[$k]['tr_chinese_word_count'] / $user[$k]['tr_actual_time'],2) ;
+            }
+
+        }
+
+//        dump($user);
+        if ($this->request->isAjax()) {
+            $data = [
+                'code' => 0,
+                'msg' => '',
+                'count' => count($user),
+                'data' => $user,
+            ];
+            return json($data);
+        }
+        return $this->fetch();
+
     }
 
 }

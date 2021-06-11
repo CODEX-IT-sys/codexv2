@@ -20,7 +20,7 @@ define(["jquery", "easy-admin"], function ($, ea) {
                 skin: 'line  ' //行边框风格
                 , even: true, //开启隔行背景
                 size: 'sm', //小尺寸的表格
-                where: {id: description_id},//如果无需传递额外参数，可不加该参数
+                where: {id: description_id,type:type},//如果无需传递额外参数，可不加该参数
                 toolbar: ['refresh',
                     [{
                         text: '添加',
@@ -84,7 +84,7 @@ define(["jquery", "easy-admin"], function ($, ea) {
                 skin: 'line  ' //行边框风格
                 , even: true, //开启隔行背景
                 size: 'sm', //小尺寸的表格
-                where: {id: description_id},//如果无需传递额外参数，可不加该参数
+                where: {id: description_id,type:type},//如果无需传递额外参数，可不加该参数
                 toolbar: ['refresh',
                     [{
                         text: '添加',

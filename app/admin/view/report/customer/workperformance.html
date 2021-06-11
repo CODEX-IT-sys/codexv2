@@ -1,0 +1,153 @@
+<link rel="stylesheet" type="text/css" href="https://www.layuicdn.com/layui/css/layui.css"/>
+<script type="text/html" id="toolbar">
+    <a class="layui-btn layui-btn-sm" lay-event="clearFilter">清除所有筛选条件</a>
+</script>
+<form>
+    <div class="layui-form">
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">查询日期</label>
+                <div class="layui-inline" id="test6">
+                    <div class="layui-input-inline">
+                        <input type="text" autocomplete="off" id="test-startDate-1" class="layui-input" name="start"
+                               placeholder="开始日期">
+                    </div>
+                    <div class="layui-form-mid">-</div>
+                    <div class="layui-input-inline">
+                        <input type="text" autocomplete="off" id="test-endDate-1" class="layui-input" name="end"
+                               placeholder="结束日期">
+                    </div>
+                </div>
+            </div>
+            <div class="layui-inline">
+                <button class="layui-btn" type="button" id="where">查询</button>
+            </div>
+        </div>
+
+    </div>
+</form>
+<table id="myTable"></table>
+
+<script src="https://www.layuicdn.com/layui/layui.js"></script>
+<script>
+    layui.config({
+        base: '/static/plugs/layui-soul-table/',   // 第三方模块所在目录
+        version: 'v1.6.0' // 插件版本号
+    }).extend({
+        soulTable: 'ext/soulTable',
+        tableChild: 'ext/tableChild',
+        tableMerge: 'ext/tableMerge',
+        tableFilter: 'ext/tableFilter',
+        excel: 'ext/excel',
+    });
+    layui.use(['form', 'table', 'soulTable', 'laydate'], function () {
+        var table = layui.table,
+            soulTable = layui.soulTable;
+        var laydate = layui.laydate;
+        laydate.render({
+            elem: '#test6'
+            //设置开始日期、日期日期的 input 选择器
+            //数组格式为 2.6.6 开始新增，之前版本直接配置 true 或任意分割字符即可
+            , range: ['#test-startDate-1', '#test-endDate-1']
+        });
+        $("#where").click(function () {
+            var strart = $("#test-startDate-1").val()
+            var end = $("#test-endDate-1").val()
+            console.log(strart);
+            // 表格重载
+            table.reload('myTable', {
+                where: {start: strart, end: end},  // 设定异步数据接口的额外参数
+            });
+
+        })
+        table.render({
+            elem: '#myTable'
+            , height: 'full-50'
+            , toolbar: '#toolbar'
+            , skin: 'line ' //行边框风格
+            , even: true //开启隔行背景
+
+            , defaultToolbar: ['print', 'exports', 'filter']
+            , url: "{:url('workperformance')}"
+            , cols: [[
+                {type: 'numbers', title: '序号', rowspan: 3, fixed: 'left'},
+                {
+                    field: 'username',
+
+                    title: '姓名',
+                    fixed: 'left',
+                    rowspan: 3,
+                    sort: true,
+                    filter: true,
+
+                },
+                {
+                    field: 'completion_page',
+                    title: '页数',
+                    fixed: 'left',
+                    rowspan: 3,
+                    sort: true,
+                    filter: true,
+                },
+                {
+                    field: 'chinese_word_count',
+                    title: '中文字数统计',
+                    rowspan: 3,
+                    align: 'center',
+                    filter: true,
+                    sort: true,
+
+                },
+                {
+                    field: 'original_word_count',
+                    title: '原总字数',
+                    rowspan: 3,
+                    align: 'center',
+                    filter: true,
+                    sort: true,
+                },
+                {title: '校对', colspan: 3, rowspan: 2, align: 'center'},
+                {title: '翻译', colspan: 3, rowspan: 2, align: 'center'},
+
+            ], [], [
+                {
+                    field: 'xd_chinese_word_count', title: '校对中文统计字数',
+                },
+                {
+                    field: 'xd_actual_time', title: '工作小时'
+                },
+                {
+                    field: 'xd_efficiency', title: '效率'
+
+                },
+                {
+                    field: 'tr_chinese_word_count', title: '翻译中文统计字数',
+                },
+                {
+                    field: 'tr_actual_time', title: '工作小时'
+                },
+
+                {
+                    field: 'tr_efficiency', title: '效率'
+                },
+
+
+            ]]
+            , done: function (res, curr, curr) {
+                soulTable.render(this);
+            }
+            , filter: {
+                items: ['column', 'data', 'condition', 'editCondition'] // 只显示表格列和导出excel两个菜单项
+                , bottom: false
+            }
+
+        });
+        table.on('toolbar(myTable)', function (obj) {
+            if (obj.event === 'clearFilter') {
+                // 清除所有筛选条件并重载表格
+                // 参数: tableId
+                soulTable.clearFilter('myTable')
+            }
+        });
+    })
+</script>

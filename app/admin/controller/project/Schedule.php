@@ -118,9 +118,10 @@ class Schedule extends AdminController
             $count = $this->model
                 ->where($where)
                 ->where('description_id', $a)
+                ->where('type', $type)
                 ->when($this->admininfo()['id'] != 1, function ($query, $a) {
                     // 满足条件后执行
-                    return $query->where('description_id', $a)->where('schedule_write_id', $this->admininfo()['id']);
+                    return $query->where('schedule_write_id', $this->admininfo()['id']);
 
                 })
                 ->count();
@@ -128,6 +129,7 @@ class Schedule extends AdminController
             $list = $this->model
                 ->where($where)
                 ->where('description_id', $a)
+                ->where('type', $type)
                 ->when($this->admininfo()['id'] != 1, function ($query)use ($a) {
                         $query->where('schedule_write_id', $this->admininfo()['id']);
 
@@ -161,7 +163,7 @@ class Schedule extends AdminController
 
 
         if ($this->request->isAjax()) {
-//            dump($a);die;
+
             if (input('selectFields')) {
                 return $this->selectList();
             }
@@ -169,6 +171,7 @@ class Schedule extends AdminController
             $count = $this->model
                 ->where($where)
                 ->where('description_id', $a)
+                ->where('type', $type)
                 ->when($this->admininfo()['id'] != 1, function ($query)use ($a) {
                     // 满足条件后执行
                     return $query->where('schedule_write_id', $this->admininfo()['id']);
@@ -178,6 +181,7 @@ class Schedule extends AdminController
             $list = $this->model
                 ->where($where)
                 ->where('description_id', $a)
+                ->where('type', $type)
                 ->when($this->admininfo()['id'] != 1, function ($query)use ($a) {
                     // 满足条件后执行
                     return $query->where('schedule_write_id', $this->admininfo()['id']);

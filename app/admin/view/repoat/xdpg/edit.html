@@ -1,0 +1,47 @@
+<div class="layuimini-container">
+    <form id="app-form" class="layui-form layuimini-form">
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">抽取页码</label>
+            <div class="layui-input-block">
+                <input type="text" name="page_numbers" class="layui-input" lay-verify="required" placeholder="请输入抽取页码" value="{$row.page_numbers|default=''}">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">严重误译</label>
+            <div class="layui-input-block">
+                <input type="text" name="mistake_tr" class="layui-input" lay-verify="required" placeholder="请输入严重误译" value="{$row.mistake_tr|default=''}">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">表述不恰当</label>
+            <div class="layui-input-block">
+                <input type="text" name="expression" class="layui-input" lay-verify="required" placeholder="请输入表述不恰当" value="{$row.expression|default=''}">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">术语错误</label>
+            <div class="layui-input-block">
+                <input type="text" name="term" class="layui-input" lay-verify="required" placeholder="请输入术语错误" value="{$row.term|default=''}">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">评估结果</label>
+            <div class="layui-input-block">
+                <input type="text" name="result" class="layui-input" lay-verify="required" placeholder="请输入评估结果" value="{$row.result|default=''}">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">备注</label>
+            <div class="layui-input-block">
+                <textarea name="xdpg_remark" placeholder="请输入备注" class="layui-textarea">{$row.xdpg_remark|default=''}</textarea>
+            </div>
+        </div>
+        <div class="hr-line"></div>
+        <div class="layui-form-item text-center">
+            <button type="submit" class="layui-btn layui-btn-normal layui-btn-sm" lay-submit>确认</button>
+            <button type="reset" class="layui-btn layui-btn-primary layui-btn-sm">重置</button>
+        </div>
+
+    </form>
+</div>
