@@ -153,6 +153,14 @@ class Customer extends AdminController
                 $user[$k]['tr_efficiency']=round($user[$k]['tr_chinese_word_count'] / $user[$k]['tr_actual_time'],2) ;
             }
 
+            //总工作时间
+            $user[$k]['actual_time']=Schedule::where('schedule_write_id',$v['id'])->whereBetweenTime('create_time', $s,$d)->sum('actual_time');
+            //校对占比
+            if($user[$k]['xd_actual_time']<=0||  $user[$k]['xd_chinese_word_count']<=0){
+                $user[$k]['xdzb']= 0;
+            }else{
+                $user[$k]['xdzb']=round($user[$k]['xd_chinese_word_count'] /  $user[$k]['chinese_word_count'] * 1,2) ;
+            }
         }
 
 //        dump($user);
