@@ -23,7 +23,7 @@ class Cate extends AdminController
     public function test()
     {
 
-        $this->notification('你好哇,我一点都不好');
+        $this->notification('你好哇,hello,world');
        return $this->fetch();
     }
 

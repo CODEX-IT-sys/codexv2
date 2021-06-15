@@ -306,7 +306,7 @@ class affine extends AdminController
             foreach ($post['id'] as $k => $v) {
                 //增值税报价金额
                 $res = Customeraa::where('id', $v)->find();
-                $res->confirmor_id = $admin['id'];
+                $res->confirmor = $admin['username'];
                 $res->file_status = 3;
                 $res->save();
             }

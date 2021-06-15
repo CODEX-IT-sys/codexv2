@@ -40,7 +40,8 @@ class Filaa extends AdminController
         'is_auth',
         'title',
         'm_approval',
-        'general_approval'
+        'general_approval',
+        'confirmor'
     ];
 
 //    protected $layout=false;
