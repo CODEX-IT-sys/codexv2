@@ -24,7 +24,7 @@ class affine extends AdminController
 
     use \app\admin\traits\Curd;
     /**
-     * 允许修改的字段1
+     * 允许修改的字段
      * @var array
      */
     protected $allowModifyFields = [
