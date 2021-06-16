@@ -279,7 +279,15 @@ define(["jquery", "easy-admin"], function ($, ea) {
                     {field: 'file_name_project', title: '文件名称'},
                     {field: 'file_code_project', title: '文件编号'},
                     {field: 'basic.project_name', title: '项目名称'},
-                    {field: 'yp.username', title: '预排人员', search: false},
+                    {
+                        title: '预排人员', templet: function (d) {
+                            if (d.yp == null) {
+                                return ''
+                            } else {
+                                return d.yp.username
+                            }
+                        }
+                    },
                     {field: 'be_start_time', title: '预排开始时间', search: false},
                     {field: 'be_end_time', title: '预排结束时间', search: false},
                     {field: 'project_page', title: '页数', search: false},
@@ -363,7 +371,15 @@ define(["jquery", "easy-admin"], function ($, ea) {
                     {field: 'file_name_project', title: '文件名称'},
                     {field: 'file_code_project', title: '文件编号'},
                     {field: 'basic.project_name', title: '项目名称'},
-                    {field: 'tr.username', title: '翻译人员'},
+                    {
+                        title: '翻译人员', templet: function (d) {
+                            if (d.tr == null) {
+                                return ''
+                            } else {
+                                return d.tr.username
+                            }
+                        }
+                    },
                     {field: 'tr_start_time', title: '翻译开始时间', search: false},
                     {field: 'tr_end_time', title: '翻译结束时间', search: false},
                     {field: 'project_page', title: '页数', search: false},
@@ -447,7 +463,15 @@ define(["jquery", "easy-admin"], function ($, ea) {
                     {field: 'file_name_project', title: '文件名称'},
                     {field: 'file_code_project', title: '文件编号'},
                     {field: 'basic.project_name', title: '项目名称'},
-                    {field: 'xd.username', title: '校对人员',},
+                    {
+                        title: '校对', templet: function (d) {
+                            if (d.xd == null) {
+                                return ''
+                            } else {
+                                return d.xd.username
+                            }
+                        }
+                    },
                     {field: 'pr_start_time', title: '校对开始时间', search: false},
                     {field: 'pr_end_time', title: '校对结束时间', search: false},
                     {field: 'project_page', title: '页数', search: false},
@@ -530,7 +554,15 @@ define(["jquery", "easy-admin"], function ($, ea) {
                     {field: 'file_name_project', title: '文件名称'},
                     {field: 'file_code_project', title: '文件编号'},
                     {field: 'basic.project_name', title: '项目名称'},
-                    {field: 'hp.username', title: '后排人员',},
+                    {
+                        title: '后排人员', templet: function (d) {
+                            if (d.hp == null) {
+                                return ''
+                            } else {
+                                return d.hp.username
+                            }
+                        }
+                    },
                     {field: 'after_start_time', title: '后排开始时间', search: false},
                     {field: 'after_end_time', title: '后排结束时间', search: false},
                     {field: 'project_page', title: '页数', search: false},

@@ -43,7 +43,7 @@ define(["jquery", "easy-admin"], function ($, ea) {
                     {field: 'feedback_correction', title: '纠正措施'},
                     {field: 'feedback_evaluate', title: '客户评价'},
                     {field: 'feedback_advance', title: '后续更进'},
-                    {field: 'create_time', title: '创建时间'},
+                    {field: 'create_time', title: '创建时间',search:false,sort:true},
                     {width: 250, title: '操作', templet: ea.table.tool},
 
                 ]],

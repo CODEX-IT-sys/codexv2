@@ -46,8 +46,7 @@
                 <select name="language" lay-verify="required">
                     <option value="">请选择语种</option>
                     {foreach $h as $k1=>$v }
-                    <option value="{$v.id}" {if condition="$row.language eq $v.id" } selected="selected" {
-                    /if}>{$v.content}</option>
+                    <option value="{$v.content}" {in name="$v.content" value="$row.language"} selected=""{/in}>{$v.content}</option>
                     {/foreach}
                 </select>
             </div>

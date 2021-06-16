@@ -38,7 +38,7 @@ define(["jquery", "easy-admin"], function ($, ea) {
                     {field: 'other', search: 'select', selectList: {"1":"C","2":"NC"}, title: '其他'},
                     {field: 'existing_problem', search: 'select', selectList: {"1":"C","2":"NC"}, title: '现有问题'},
                     {field: 'correct_situation', search: 'select', selectList: {"1":"C","2":"NC"}, title: '纠正情况'},
-                    {field: 'create_time', title: '创建时间'},
+                    {field: 'create_time', title: '创建时间',search:false,sort:true},
                     {width: 250, title: '操作', templet: ea.table.tool},
 
                 ]],

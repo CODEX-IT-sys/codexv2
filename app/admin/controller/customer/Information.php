@@ -19,7 +19,7 @@ class Information extends AdminController
     {
         parent::__construct($app);
 //        客户
-        $b = CustomerContract::select();
+        $b = CustomerContract::order('id','desc')->select();
 //        dump($b->toArray());
         $this->assign('b', $b);
         $this->model = new \app\admin\model\customer\Customer();

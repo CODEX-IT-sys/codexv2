@@ -4,6 +4,7 @@ namespace app\admin\controller\customer;
 
 use app\admin\model\MainCompany;
 use app\admin\model\customer\Customer;
+use app\admin\model\setting\DatabaseContent;
 use app\admin\model\SystemAdmin;
 use app\common\controller\AdminController;
 use EasyAdmin\annotation\ControllerAnnotation;
@@ -29,7 +30,7 @@ class Contract extends AdminController
 
 
         //销售人员
-        $c = SystemAdmin::wherein('auth_ids', [9])->select();
+        $c=DatabaseContent::where('list_id',18)->select();
         $d = Cache::get('dw');
         $g = Cache::get('fw');
         $h = Cache::get('yz');

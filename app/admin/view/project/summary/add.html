@@ -27,6 +27,12 @@
             </div>
         </div>
         <div class="layui-form-item">
+            <label class="layui-form-label">涉及产品</label>
+            <div class="layui-input-block">
+                <textarea name="language" placeholder="请输入涉及产品" class="layui-textarea">{$row.Involved_products|default=''}</textarea>
+            </div>
+        </div>
+        <div class="layui-form-item">
             <label class="layui-form-label">项目总结</label>
             <div class="layui-input-block">
                 <textarea name="project_summary" placeholder="请输入项目总结" class="layui-textarea">{$row.project_summary|default=''}</textarea>

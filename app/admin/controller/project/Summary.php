@@ -21,7 +21,8 @@ class Summary extends AdminController
     {
         parent::__construct($app);
 
-        $basic = Basic::field(['project_name', 'id'])->where('write_id|principal_id', 'find in set', $this->admininfo()['id'])->select();
+        $basic = Basic::field(['project_name', 'id'])->select();
+//        $basic = Basic::field(['project_name', 'id'])->where('write_id|principal_id', 'find in set', $this->admininfo()['id'])->select();
         $ba = $this->xmdata($basic, 'sd', 'project_name');
         $this->assign(['basic' => $ba]);
         $this->model = new \app\admin\model\project\Summary();
@@ -37,7 +38,7 @@ class Summary extends AdminController
             $post = $this->request->post();
             $ne = \app\admin\model\project\Description::field('id, basic_id')->where('basic_id', $post['basic_id'])->find();
             $post['Involved_products'] = $ne['related_products'];
-            $post['language'] = '语种';
+//            $post['language'] = '语种';
             $post['summary_write_id'] = $this->admininfo()['id'];
             $rule = [];
             $this->validate($post, $rule);

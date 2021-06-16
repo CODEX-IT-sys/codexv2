@@ -46,7 +46,13 @@
         <div class="layui-form-item">
             <label class="layui-form-label">销售</label>
             <div class="layui-input-block">
-                <input type="text" name="sales" class="layui-input" lay-verify="required" placeholder="请输入销售" value="">
+                <!--<input type="text" name="sales" class="layui-input" lay-verify="required" placeholder="请输入销售" value="">-->
+                <select name="sales" lay-search>
+                    <option value="">请输入销售</option>
+                    {foreach $c as $k1=>$v }
+                    <option value="{$v.content}">{$v.content}</option>
+                    {/foreach}
+                </select>
             </div>
         </div>
         <div class="layui-form-item">
