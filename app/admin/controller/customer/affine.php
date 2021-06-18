@@ -79,7 +79,15 @@ class affine extends AdminController
                 return $this->selectList();
             }
             list($page, $limit, $where) = $this->buildTableParames();
-
+            $count=$this->model
+                ->where('file_status', 'in',[2,3])
+                ->where($where)
+                ->withJoin(['type', 'rate', 'dw', 'customerInformation','demand','contract','jsstatus'], 'LEFT')
+                ->when($this->admininfo()['id'] != 1, function ($query) {
+                    // 满足条件后执行
+                    return $query->where('file_writer_id', 'in', $this->admininfo()['top_id']);
+                })
+                ->count();
             $list = $this->model
                 ->where('file_status', 'in',[2,3])
                 ->where($where)
@@ -91,11 +99,10 @@ class affine extends AdminController
                 ->page($page, $limit)
                 ->order($this->sort)
                 ->select()->toArray();
-
             $data = [
                 'code' => 0,
                 'msg' => '',
-                'count' => count($list),
+                'count' => $count,
                 'data' => $list,
             ];
             return json($data);
@@ -114,7 +121,15 @@ class affine extends AdminController
                 return $this->selectList();
             }
             list($page, $limit, $where) = $this->buildTableParames();
-
+            $count=$this->model
+                ->where('file_status', 'in',[1,0])
+                ->where($where)
+                ->withJoin(['type', 'rate', 'dw', 'customerInformation','demand','contract','jsstatus'], 'LEFT')
+                ->when($this->admininfo()['id'] != 1, function ($query) {
+                    // 满足条件后执行
+                    return $query->where('file_writer_id', 'in', $this->admininfo()['top_id']);
+                })
+                ->count();
             $list = $this->model
                 ->where($where)
                 ->where('file_status', 'in',[1,0])
@@ -130,7 +145,7 @@ class affine extends AdminController
             $data = [
                 'code' => 0,
                 'msg' => '',
-                'count' => count($list),
+                'count' => $count,
                 'data' => $list,
             ];
             return json($data);
@@ -149,7 +164,15 @@ class affine extends AdminController
                 return $this->selectList();
             }
             list($page, $limit, $where) = $this->buildTableParames();
-
+            $count=$this->model
+                ->where('file_status', 2)
+                ->where($where)
+                ->withJoin(['type', 'rate', 'dw', 'customerInformation','demand','contract','jsstatus'], 'LEFT')
+                ->when($this->admininfo()['id'] != 1, function ($query) {
+                    // 满足条件后执行
+                    return $query->where('file_writer_id', 'in', $this->admininfo()['top_id']);
+                })
+                ->count();
             $list = $this->model
                 ->where($where)
                 ->where('file_status', 2)
@@ -165,7 +188,7 @@ class affine extends AdminController
             $data = [
                 'code' => 0,
                 'msg' => '',
-                'count' => count($list),
+                'count' => $count,
                 'data' => $list,
             ];
             return json($data);
@@ -183,6 +206,15 @@ class affine extends AdminController
                 return $this->selectList();
             }
             list($page, $limit, $where) = $this->buildTableParames();
+            $count=$this->model
+                ->where('file_status', 3)
+                ->where($where)
+                ->withJoin(['type', 'rate', 'dw', 'customerInformation','demand','contract','jsstatus'], 'LEFT')
+                ->when($this->admininfo()['id'] != 1, function ($query) {
+                    // 满足条件后执行
+                    return $query->where('file_writer_id', 'in', $this->admininfo()['top_id']);
+                })
+                ->count();
             $list = $this->model
                 ->where($where)
                 ->where('file_status', 3)
@@ -198,7 +230,7 @@ class affine extends AdminController
             $data = [
                 'code' => 0,
                 'msg' => '',
-                'count' => count($list),
+                'count' => $count,
                 'data' => $list,
             ];
             return json($data);
